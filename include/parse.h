@@ -31,4 +31,6 @@ typedef struct s_word_list
 	
 }	t_world_list;
 
+void	input_processing(char *input);
+
 #endif
