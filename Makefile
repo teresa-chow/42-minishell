@@ -34,7 +34,7 @@ BUILD_DIR	= .build
 # ============================================================================ #
 
 CC	= cc
-CFLAGS	=  -Wall -Wextra -Werror
+CFLAGS	=  -Wall -Wextra -Werror -lreadline
 CFLAGS	+= -g
 MAKE	= make -C
 
