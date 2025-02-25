@@ -5,11 +5,15 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int main(int ac, char **av) {
+int main(int ac, char **av)
+{
+	char	*env_var;
 	char	*input;
-	(void)ac;
-	(void)input;
 	pid_t pid;
+
+	(void)ac;
+	env_var = getenv("PATH");
+	printf("PATH: %s\n", env_var);
 	while (1)
 	{
 		input = readline("minishell>");
