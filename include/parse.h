@@ -13,6 +13,13 @@
 #ifndef PARSE_H
 # define PARSE_H
 
+#include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
 /* The basic data structure the bash shell uses to pass information from one
 stage to the next, and to operate on data units within each processing stage,
 is the WORD_DESC */
