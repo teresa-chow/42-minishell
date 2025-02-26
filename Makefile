@@ -121,8 +121,7 @@ re: fclean all	## Purge and recompile
 ##@ STANDARD COMPLIANCE CHECK
 
 norm:	## Execute norminette
-	norminette $(INC_DIR)
-	norminette $(SRC_DIR)
+	norminette $(INC_DIR) $(LIB_DIR) $(SRC_DIR)
 
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
