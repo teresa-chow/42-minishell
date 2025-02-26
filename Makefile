@@ -16,7 +16,7 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
-SRC		= $(addprefix $(SRC_DIR)/, main.c input_read.c tokenizer.c)
+SRC		= $(addprefix $(SRC_DIR)/, main.c input_read.c tokenizer.c echo.c)
 OBJS	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
