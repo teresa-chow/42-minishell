@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
-#include "../../include/builtins.h"
+#include "../../include/parse.h"
+#include "../../include/builtins.h" //tmp
 
 void	read_input(void)
 {

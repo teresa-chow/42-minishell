@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "../../include/parse.h"
 
 void	input_processing(char *input)
 {
