@@ -94,12 +94,12 @@ $(BUILD_DIR)/%.o: $(ECHO_DIR)/%.c
 # Library directories
 $(LIBFT_DIR):
 	git clone https://github.com/teresa-chow/42-libft-extended.git libs/libft
-	@printf "$(GRN)>> Cloned Libft$(RES)\n\n"
+	@printf "$(GRN)>> Cloned Libft$(NC)\n\n"
 
 # Library archives
 $(LIBFT_ARC): $(LIBFT_DIR)
 	$(MAKE) $(LIBFT_DIR)
-	@printf "$(GRN)>> Created Libft archive$(RES)\n\n"
+	@printf "$(GRN)>> Created Libft archive$(NC)\n\n"
 
 
 ##@ CLEAN-UP RULES
@@ -113,7 +113,7 @@ fclean: clean	## Remove executable files
 	$(RM) $(NAME)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
 	$(MAKE) $(LIBFT_DIR) fclean
-	@printf "$(GRN)>> Removed Libft archive$(RES)\n\n"
+	@printf "$(GRN)>> Removed Libft archive$(NC)\n\n"
 
 re: fclean all	## Purge and recompile
 
