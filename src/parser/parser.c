@@ -1,32 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_read.c                                       :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/02/24 11:40:56 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/02/24 11:41:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
-
-void	read_input(void)
-{
-	char	*input;
-	char	**tokens;
-
-	input = readline("minishell> ");
-	if (input && *input)
-		add_history(input);
-	tokens = tokenizer(input);
-	printf("%s %s\n", tokens[0], tokens[1]);
-	//lexer -- attaches content to tokenizer
-	free(input); // free memory alloc'ed by readline
-}
-
-/*
-OBS.
-- readline() can return NULL when the users exits
-*/
