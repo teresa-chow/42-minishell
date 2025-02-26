@@ -14,9 +14,12 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	char	*path;
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	path = get_path(envp);
+	if (path)
+		printf("%s\n", path);
 	while (1)
 	{
 		read_input();

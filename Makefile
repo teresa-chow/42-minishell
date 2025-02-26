@@ -17,7 +17,8 @@ NAME		= minishell
 # ============================================================================ #
 
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
-SRC_PARSER		= $(addprefix $(PARSER_DIR)/, input_read.c tokenizer.c)
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, get_path.c input_read.c \
+	tokenizer.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c)
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
