@@ -25,10 +25,12 @@ LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 # PATHS                                                                        #
 # ============================================================================ #
 
-INC_DIR		= include
-SRC_DIR 	= src
-BUILD_DIR	= .build
-LIB_DIR		= lib
+INC_DIR			= include
+SRC_DIR 		= src
+BUILTINS_DIR	= builtins/echo
+
+BUILD_DIR		= .build
+LIB_DIR			= lib
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
