@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../../include/builtins.h"
 
 void	read_input(void)
 {
@@ -21,7 +22,7 @@ void	read_input(void)
 	if (input && *input)
 		add_history(input);
 	tokens = tokenizer(input);
-	printf("%s %s\n", tokens[0], tokens[1]);
+	echo(tokens);
 	//lexer -- attaches content to tokenizer
 	free(input); // free memory alloc'ed by readline
 }

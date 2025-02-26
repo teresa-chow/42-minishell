@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_read.c                                       :+:      :+:    :+:   */
+/*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/02/24 14:49:01 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/02/24 14:49:01 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
 
-void	read_input(void)
+void	input_processing(char *input)
 {
-	char	*input;
-	char	**tokens;
-
-	input = readline("minishell> ");
+	lex_analysis(input);
 	if (input && *input)
+	{
 		add_history(input);
-	tokens = tokenizer(input);
-	printf("%s %s\n", tokens[0], tokens[1]);
-	//lexer -- attaches content to tokenizer
-	free(input); // free memory alloc'ed by readline
+		rl_on_new_line();
+	}
 }
 
-/*
-OBS.
-- readline() can return NULL when the users exits
-*/
+// rl_redisplay(); -- when updating command line prompt (?)
