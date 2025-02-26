@@ -16,8 +16,9 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
-SRC		= $(addprefix $(SRC_DIR)/, main.c)
+SRC		= $(addprefix $(SRC_DIR)/, main.c input_read.c tokenizer.c)
 OBJS	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
+LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
 
 # ============================================================================ #
@@ -27,6 +28,10 @@ OBJS	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 INC_DIR		= include
 SRC_DIR 	= src
 BUILD_DIR	= .build
+LIB_DIR		= lib
+
+# Libraries
+LIBFT_DIR	= $(LIB_DIR)/libft
 
 
 # ============================================================================ #
@@ -36,9 +41,12 @@ BUILD_DIR	= .build
 CC	= cc
 CFLAGS	=  -Wall -Wextra -Werror -lreadline
 CFLAGS	+= -g
+RLFLAGS = -lreadline
+
 MAKE	= make -C
 
 RM	= rm -rf
+AR	= ar rcs
 MKDIR	= mkdir -p
 
 
@@ -50,9 +58,9 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-$(NAME): $(BUILD_DIR) $(OBJS)
+$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 $(BUILD_DIR):
@@ -62,16 +70,29 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Library directories
+$(LIBFT_DIR):
+	git clone https://github.com/teresa-chow/42-libft-extended.git libs/libft
+	@printf "$(GRN)>> Cloned Libft$(RES)\n\n"
+
+# Library archives
+$(LIBFT_ARC): $(LIBFT_DIR)
+	$(MAKE) $(LIBFT_DIR)
+	@printf "$(GRN)>> Created Libft archive$(RES)\n\n"
+
 
 ##@ CLEAN-UP RULES
 
 clean:	## Remove object files
 	$(RM) $(BUILD_DIR)
+	$(MAKE) $(LIBFT_DIR) clean
 	@printf "$(GRN)>> Removed object files$(NC)\n\n"
 
 fclean: clean	## Remove executable files
 	$(RM) $(NAME)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
+	$(MAKE) $(LIBFT_DIR) fclean
+	@printf "$(GRN)>> Removed Libft archive$(RES)\n\n"
 
 re: fclean all	## Purge and recompile
 

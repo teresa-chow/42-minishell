@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/02/24 14:49:01 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/02/24 14:49:01 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
 
-int	main(int argc, char **argv, char **envp)
+void	input_processing(char *input)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
+	lex_analysis(input);
+	if (input && *input)
 	{
-		read_input();
+		add_history(input);
+		rl_on_new_line();
 	}
-	return (0);
 }
 
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/
+// rl_redisplay(); -- when updating command line prompt (?)
