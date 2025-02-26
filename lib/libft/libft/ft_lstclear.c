@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2023/11/09 14:27:06 by tchow-so          #+#    #+#             */
+/*   Updated: 2023/11/09 14:54:12 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
-	{
-		read_input();
-	}
-	return (0);
-}
+	t_list	*tmp;
+	t_list	*node;
 
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/
+	if (!lst)
+		return ;
+	node = *lst;
+	while (node != NULL)
+	{
+		tmp = node;
+		(*del)(node->content);
+		node = node->next;
+		free(tmp);
+	}
+	*lst = NULL;
+}

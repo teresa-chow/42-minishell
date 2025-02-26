@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2023/11/09 08:53:37 by tchow-so          #+#    #+#             */
+/*   Updated: 2023/11/09 10:38:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_lstsize(t_list *lst)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
-	{
-		read_input();
-	}
-	return (0);
-}
+	int	node_count;
 
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/
+	node_count = 0;
+	if (!lst)
+		return (0);
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		node_count++;
+	}
+	return (node_count);
+}

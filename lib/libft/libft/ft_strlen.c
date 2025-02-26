@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2023/10/03 16:18:02 by tchow-so          #+#    #+#             */
+/*   Updated: 2024/03/28 17:00:21 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+size_t	ft_strlen(const char *s)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
-	{
-		read_input();
-	}
-	return (0);
-}
+	size_t	i;
 
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}

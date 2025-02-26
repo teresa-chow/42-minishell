@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2023/11/13 14:26:54 by tchow-so          #+#    #+#             */
+/*   Updated: 2024/03/29 15:25:39 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "ft_printf.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_printchar(int c)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
-	{
-		read_input();
-	}
-	return (0);
+	return (write(1, &c, 1));
 }
-
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/

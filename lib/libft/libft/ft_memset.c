@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2023/10/14 13:36:50 by tchow-so          #+#    #+#             */
+/*   Updated: 2024/03/28 17:25:13 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	while (1)
-	{
-		read_input();
-	}
-	return (0);
-}
+	unsigned char	*ptr;
 
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/
+	ptr = (unsigned char *)s;
+	while (n--)
+		*ptr++ = (unsigned char) c;
+	return (s);
+}
