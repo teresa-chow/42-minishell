@@ -6,12 +6,12 @@
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/26 10:21:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
-#include "../include/builtins.h"
+#include "../../include/builtins.h"
 
 void	read_input(void)
 {
