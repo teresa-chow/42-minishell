@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parse.h"
+#include "../../include/parse.h"
 
 static unsigned int	substr_count(const char *str);
 static unsigned int	substr_len(const char *str);

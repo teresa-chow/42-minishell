@@ -16,8 +16,14 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
-SRC		= $(addprefix $(SRC_DIR)/, main.c input_read.c tokenizer.c echo.c)
-OBJS	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
+SRC				= $(addprefix $(SRC_DIR)/, main.c)
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, input_read.c tokenizer.c)
+SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c)
+
+OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
+OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
+OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
+
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
 
@@ -27,10 +33,14 @@ LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
 INC_DIR			= include
 SRC_DIR 		= src
-BUILTINS_DIR	= builtins/echo
-
 BUILD_DIR		= .build
 LIB_DIR			= lib
+
+# Sources
+PARSER_DIR		= $(SRC_DIR)/parser
+
+BUILTINS_DIR	= $(SRC_DIR)/builtins
+ECHO_DIR		= $(BUILTINS_DIR)/echo
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
@@ -43,7 +53,6 @@ LIBFT_DIR	= $(LIB_DIR)/libft
 CC	= cc
 CFLAGS	=  -Wall -Wextra -Werror -lreadline
 CFLAGS	+= -g
-RLFLAGS = -lreadline
 
 MAKE	= make -C
 
@@ -60,10 +69,12 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS)
+$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(LIBFT_ARC) \
+	-o $(NAME)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
+
 
 $(BUILD_DIR):
 	$(MKDIR) $(BUILD_DIR)
@@ -71,6 +82,13 @@ $(BUILD_DIR):
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(ECHO_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 
 # Library directories
 $(LIBFT_DIR):
