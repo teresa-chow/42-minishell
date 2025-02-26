@@ -17,6 +17,7 @@ NAME		= minishell
 # ============================================================================ #
 
 SRC		= $(addprefix $(SRC_DIR)/, main.c input_read.c tokenizer.c)
+SRC		+= $(addprefix $(BUILTINS_DIR)/, echo.c)
 OBJS	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
@@ -25,10 +26,12 @@ LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 # PATHS                                                                        #
 # ============================================================================ #
 
-INC_DIR		= include
-SRC_DIR 	= src
-BUILD_DIR	= .build
-LIB_DIR		= lib
+INC_DIR			= include
+SRC_DIR 		= src
+BUILTINS_DIR	= builtins/echo
+
+BUILD_DIR		= .build
+LIB_DIR			= lib
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
