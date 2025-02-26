@@ -39,7 +39,7 @@ LIBFT_DIR	= $(LIB_DIR)/libft
 # ============================================================================ #
 
 CC	= cc
-CFLAGS	=  -Wall -Wextra -Werror
+CFLAGS	=  -Wall -Wextra -Werror -lreadline
 CFLAGS	+= -g
 RLFLAGS = -lreadline
 
