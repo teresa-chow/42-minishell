@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42porto.co      +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/02/14 15:11:59 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/02/27 11:15:05 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ LIBFT_DIR	= $(LIB_DIR)/libft
 # ============================================================================ #
 
 CC	= cc
-CFLAGS	=  -Wall -Wextra -Werror
+CFLAGS	=  -Wall -Wextra -Werror -lreadline
 CFLAGS	+= -g
 
 MAKE	= make -C
@@ -74,8 +74,8 @@ all: $(NAME)	## Compile minishell
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
-######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(LIBFT_ARC) -L/usr/lib/aarch64-linux-gnu -lreadline -lncurses \
+######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(LIBFT_ARC)  \
 	-o $(NAME)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
