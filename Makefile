@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42porto.co      +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/02/14 15:11:59 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/02/27 11:15:05 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,12 @@ NAME		= minishell
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, get_path.c input_read.c \
 	word_tokenization.c)
-SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c)
+SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) $(addprefix $(CD_DIR)/, cd.c) \
+		$(addprefix $(PWD_DIR)/, pwd.c)
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
-OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
+OBJS_BUILTINS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
@@ -42,6 +43,8 @@ PARSER_DIR		= $(SRC_DIR)/parser
 
 BUILTINS_DIR	= $(SRC_DIR)/builtins
 ECHO_DIR		= $(BUILTINS_DIR)/echo
+CD_DIR		= $(BUILTINS_DIR)/cd
+PWD_DIR		= $(BUILTINS_DIR)/pwd
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
@@ -72,7 +75,8 @@ all: $(NAME)	## Compile minishell
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(LIBFT_ARC) \
+######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(LIBFT_ARC)  \
 	-o $(NAME)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
@@ -90,6 +94,11 @@ $(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
 $(BUILD_DIR)/%.o: $(ECHO_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(BUILD_DIR)/%.o: $(CD_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+$(BUILD_DIR)/%.o: $(PWD_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Library directories
 $(LIBFT_DIR):
