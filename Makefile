@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/02/27 11:15:05 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/02/27 16:05:58 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
+SRC_DIRS 	= SRC SRC_PARSER SRC_BUILTINS SRC_EXECVE SRC_UTILS
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, input_read.c \
 	word_tokenization.c)
