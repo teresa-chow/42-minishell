@@ -22,7 +22,12 @@ void	read_input(void)
 	if (input && *input)
 		add_history(input);
 	tokens = tokenizer(input);
-	echo(tokens);
+	if (ft_strncmp(tokens[0], "echo", 4) == 0)
+		echo(tokens);  //// this is to test with echo
+	else if (ft_strncmp(tokens[0], "cd", 2) == 0)
+		cd(tokens); ///// this is to test cd
+	else if (ft_strncmp(tokens[0], "pwd", 3) == 0)
+		pwd(tokens);
 	//lexer -- attaches content to tokenizer
 	free(input); // free memory alloc'ed by readline
 }
