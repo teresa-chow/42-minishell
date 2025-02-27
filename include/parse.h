@@ -54,6 +54,6 @@ typedef struct s_word_list
 void	read_input(void);
 char	*get_path(char **envp);
 // Tokenizer
-char	**tokenizer(const char *input);
+char	**w_token(const char *input);
 
 #endif
