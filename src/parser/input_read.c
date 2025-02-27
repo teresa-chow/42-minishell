@@ -21,7 +21,7 @@ void	read_input(void)
 	input = readline("minishell> ");
 	if (input && *input)
 		add_history(input);
-	tokens = tokenizer(input);
+	tokens = w_token(input);
 	echo(tokens);
 	//lexer -- attaches content to tokenizer
 	free(input); // free memory alloc'ed by readline
