@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../include/execve.h"
 
 int	main(int argc, char **argv, char **envp)
 {
