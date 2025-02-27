@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
+#include "../../include/execve.h"
+#include "../../include/utils.h"
 
 static int	ft_strcmp(const char *s1, const char *s2);
 
@@ -27,7 +28,11 @@ char	*get_path(char **envp)
 		env_var = envp[i];
 		key = ft_split(env_var, '=');
 		if (ft_strcmp(key[0], "PATH") == 0)
+		{
+			free_strarray(key);
 			return (env_var);
+		}
+		free_strarray(key);
 		i++;
 	}
 	return (env_var);

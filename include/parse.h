@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/27 14:20:53 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/02/27 11:24:37 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ stage to the next, and to operate on data units within each processing stage,
 is the WORD_DESC */
 typedef struct s_word_desc
 {
-	struct s_word_desc *next;
+	struct s_word_desc	*next;
 	char	*word;
 	int		flags;
 }	t_word_desc;
