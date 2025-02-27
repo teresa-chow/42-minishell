@@ -51,9 +51,16 @@ typedef struct s_word_list
 	
 }	t_world_list;
 
-// Input processing
-void	read_input(void);
-// Tokenizer
+/* -------------------------------------------------------------------------- */
+/*                                Input processing                            */
+/* -------------------------------------------------------------------------- */
+void	read_input(char **envp);
+char	*get_path(char **envp);
+/* -------------------------------------------------------------------------- */
+/*                                Tokenizer                                */
+/* -------------------------------------------------------------------------- */
 char	**w_token(const char *input);
 
 #endif
+
+
