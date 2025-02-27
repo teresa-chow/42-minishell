@@ -4,11 +4,11 @@
 .DS_Store
 */.DS_Store
 
-./build/
-*/.build
+.build/
+*/*/.build/
 
 minishell
-*/*.a
+*/*/*.a
 */*.swp
 */*.swo
 

@@ -21,7 +21,7 @@ void	read_input(void)
 	input = readline("minishell> ");
 	if (input && *input)
 		add_history(input);
-	tokens = tokenizer(input);
+	tokens = w_token(input);
 	if (ft_strncmp(tokens[0], "echo", 4) == 0)
 		echo(tokens);  //// this is to test with echo
 	else if (ft_strncmp(tokens[0], "cd", 2) == 0)

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   word_tokenization.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,7 @@ static unsigned int	substr_len(const char *str);
 static char	**free_array(char **str, int i);
 static int	ft_isspace(int c);
 
-char	**tokenizer(const char *input)
+char	**w_token(const char *input)
 {
 	char	**tokens;
 	int		i;

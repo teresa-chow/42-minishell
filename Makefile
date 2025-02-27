@@ -17,7 +17,8 @@ NAME		= minishell
 # ============================================================================ #
 
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
-SRC_PARSER		= $(addprefix $(PARSER_DIR)/, input_read.c tokenizer.c)
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, get_path.c input_read.c \
+	word_tokenization.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) $(addprefix $(CD_DIR)/, cd.c) \
 		$(addprefix $(PWD_DIR)/, pwd.c)
 
@@ -102,12 +103,12 @@ $(BUILD_DIR)/%.o: $(PWD_DIR)/%.c
 # Library directories
 $(LIBFT_DIR):
 	git clone https://github.com/teresa-chow/42-libft-extended.git libs/libft
-	@printf "$(GRN)>> Cloned Libft$(RES)\n\n"
+	@printf "$(GRN)>> Cloned Libft$(NC)\n\n"
 
 # Library archives
 $(LIBFT_ARC): $(LIBFT_DIR)
 	$(MAKE) $(LIBFT_DIR)
-	@printf "$(GRN)>> Created Libft archive$(RES)\n\n"
+	@printf "$(GRN)>> Created Libft archive$(NC)\n\n"
 
 
 ##@ CLEAN-UP RULES
@@ -121,7 +122,7 @@ fclean: clean	## Remove executable files
 	$(RM) $(NAME)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
 	$(MAKE) $(LIBFT_DIR) fclean
-	@printf "$(GRN)>> Removed Libft archive$(RES)\n\n"
+	@printf "$(GRN)>> Removed Libft archive$(NC)\n\n"
 
 re: fclean all	## Purge and recompile
 
@@ -129,8 +130,7 @@ re: fclean all	## Purge and recompile
 ##@ STANDARD COMPLIANCE CHECK
 
 norm:	## Execute norminette
-	norminette $(INC_DIR)
-	norminette $(SRC_DIR)
+	norminette $(INC_DIR) $(LIB_DIR) $(SRC_DIR)
 
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
