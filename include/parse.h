@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/27 11:24:37 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:20:53 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ stage to the next, and to operate on data units within each processing stage,
 is the WORD_DESC */
 typedef struct s_word_desc
 {
+	struct s_word_desc *next;
 	char	*word;
 	int		flags;
 }	t_word_desc;
@@ -50,10 +51,16 @@ typedef struct s_word_list
 	
 }	t_world_list;
 
-// Input processing
-void	read_input(void);
+/* -------------------------------------------------------------------------- */
+/*                                Input processing                            */
+/* -------------------------------------------------------------------------- */
+void	read_input(char **envp);
 char	*get_path(char **envp);
-// Tokenizer
+/* -------------------------------------------------------------------------- */
+/*                                Tokenizer                                */
+/* -------------------------------------------------------------------------- */
 char	**w_token(const char *input);
 
 #endif
+
+
