@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   input_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:10:03 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/builtins.h" //tmp
 
-void	read_input(void)
+void	read_input(char **envp)
 {
 	char	*input;
 	char	**tokens;
@@ -28,6 +28,8 @@ void	read_input(void)
 		cd(tokens); ///// this is to test cd
 	else if (ft_strncmp(tokens[0], "pwd", 3) == 0)
 		pwd(tokens);
+	else
+		get_path(envp);
 	//lexer -- attaches content to tokenizer
 	free(input); // free memory alloc'ed by readline
 }
