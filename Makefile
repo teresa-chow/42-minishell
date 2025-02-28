@@ -66,6 +66,7 @@ LIBFT_DIR	= $(LIB_DIR)/libft
 CC	= cc
 CFLAGS	=  -Wall -Wextra -Werror -lreadline
 CFLAGS	+= -g
+CFLAGS	+= -Wno-unused-command-line-argument # delete
 
 MAKE	= make -C
 
