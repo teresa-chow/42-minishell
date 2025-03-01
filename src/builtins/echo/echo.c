@@ -13,15 +13,16 @@
 #include "../../../include/builtins.h"
 #include "../../../include/parse.h"
 
-void	echo(t_world_list *input)
+void	echo(t_word_lst *input)
 {
 	int	flag;
-	t_word_desc	*start;
+	t_word	*start;
 	
-	(void)flag;
 	flag = input->word->next->flags;
 	if (flag == 2)
 		start = input->word->next->next;
+	else
+		start = input->word->next;
 	while (start)
 	{
 		ft_putstr_fd(start->word, 1);

@@ -11,27 +11,34 @@
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../include/builtins.h"
 #include "../include/execve.h"
+
+static void	test_builtins(t_word_lst *word_lst, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*path;
+	t_word_lst	word_lst;
+
 	(void)argc;
 	(void)argv;
-	path = get_path(envp);
-	if (path)
-		printf("%s\n", path);
 	while (1)
 	{
-		read_input(envp);
+		read_input(envp, &word_lst);
+		test_builtins(&word_lst, envp);
 	}
 	return (0);
 }
 
-/*
-pid = fork();
-if (pid == 0)
-	execve(input, av + 1, NULL);
-else
-wait(NULL);
-*/
+/* temp test function: echo, cd, pwd */
+static void	test_builtins(t_word_lst *word_lst, char **envp)
+{
+	if (ft_strncmp(word_lst->word->word, "echo", 4) == 0)
+		echo(word_lst);
+	// else if (ft_strncmp(word_lst.word->word, "cd", 2) == 0)
+	// 	cd(word_lst);
+	// else if (ft_strncmp(word_lst.word->word, "pwd", 3) == 0)
+	// 	pwd(word_lst.word);
+	else
+		get_path(envp);
+}
