@@ -26,7 +26,7 @@ void	echo(t_world_list *input)
 	
 	(void)flag;
 	if (input->word->next)
-	flag = input->word->next->flags;
+		flag = input->word->next->flags;
 	if (flag == 2)
 		start = input->word->next->next;
 	else
