@@ -18,9 +18,10 @@ void	echo(t_word_lst *input)
 {
 	int	flag;
 	t_word	*start;
-	
-	if (input->word->next)
-	  flag = input->word->next->flags;
+
+	flag = 0;
+	if (input->word->next != NULL)
+		flag = input->word->next->flags;
 	if (flag == 2)
 		start = input->word->next->next;
 	else
