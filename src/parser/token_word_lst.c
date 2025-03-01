@@ -22,8 +22,6 @@ int	tokenize_w_lst(char *input, t_word_lst *word_lst)
 	int			i;
 
 	word_desc = NULL;
-	if (!input)
-		return (-1); // handle error ?
 	i = 0;
 	while (input[i] != '\0')
 	{

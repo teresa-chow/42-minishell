@@ -17,13 +17,13 @@ void	read_input(char **envp, t_word_lst *word_lst)
 	char	*input;
 
 	(void)envp;
+	word_lst->word = NULL;
 	input = readline("minishell> ");
 	if (input && *input)
+	{
 		add_history(input);
-	tokenize_w_lst(input, word_lst);
+		tokenize_w_lst(input, word_lst);
+	}
+	else if (input)
+		free(input);
 }
-
-/*
-OBS.
-- readline() can return NULL when the users exits
-*/

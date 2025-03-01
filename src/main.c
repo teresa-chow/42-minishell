@@ -25,7 +25,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		read_input(envp, &word_lst);
-		test_builtins(&word_lst, envp);
+		if (word_lst.word != NULL)
+			test_builtins(&word_lst, envp);
 	}
 	return (0);
 }
@@ -38,7 +39,7 @@ static void	test_builtins(t_word_lst *word_lst, char **envp)
 	// else if (ft_strncmp(word_lst.word->word, "cd", 2) == 0)
 	// 	cd(word_lst);
 	// else if (ft_strncmp(word_lst.word->word, "pwd", 3) == 0)
-	// 	pwd(word_lst.word);
+	// 	pwd(word_lst);
 	else
 		get_path(envp);
 }

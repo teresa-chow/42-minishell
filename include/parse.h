@@ -62,5 +62,3 @@ void	read_input(char **envp, t_word_lst *word_lst);
 int		tokenize_w_lst(char *input, t_word_lst *word_lst);
 
 #endif
-
-
