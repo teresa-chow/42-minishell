@@ -17,6 +17,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <errno.h>
 
 # include "../lib/libft/libft/libft.h"
 
@@ -32,9 +33,6 @@ enum	e_flags
 	SPECIAL = 7 // commands fall in this cat
 };
 
-/* The basic data structure the bash shell uses to pass information from one
-stage to the next, and to operate on data units within each processing stage,
-is the WORD_DESC */
 typedef struct s_word
 {
 	struct s_word	*next;
@@ -42,23 +40,19 @@ typedef struct s_word
 	int		flags;
 }	t_word;
 
-/* A command is a word list, the result of expansion is a word list, and the
-built-in commands each take a word list of argumenst */
 typedef struct s_word_lst
 {
 	struct s_word_lst	*next;
 	struct s_word		*word;
-	
 }	t_word_lst;
 
 /* -------------------------------------------------------------------------- */
 /*                                Input processing                            */
 /* -------------------------------------------------------------------------- */
 void	read_input(char **envp, t_word_lst *word_lst);
-
-/* -------------------------------------------------------------------------- */
-/*                                Tokenizer                                   */
-/* -------------------------------------------------------------------------- */
 int		tokenize_w_lst(char *input, t_word_lst *word_lst);
 
 #endif
+
+/* A command is a word list, the result of expansion is a word list, and the
+built-in commands each take a word list of arguments */

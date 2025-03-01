@@ -11,15 +11,3 @@
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
-
-void	input_processing(char *input)
-{
-	lex_analysis(input);
-	if (input && *input)
-	{
-		add_history(input);
-		rl_on_new_line();
-	}
-}
-
-// rl_redisplay(); -- when updating command line prompt (?)

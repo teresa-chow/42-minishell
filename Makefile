@@ -19,7 +19,7 @@ NAME		= minishell
 SRC_DIRS 	= SRC SRC_PARSER SRC_BUILTINS SRC_EXECVE SRC_UTILS
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
-	token_word_lst.c)
+	tokenize.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c)
