@@ -12,15 +12,15 @@
 
 #include "../../../include/builtins.h"
 
-void	cd(t_world_list *input)
+void	cd(t_word *input)
 {
 	char	*path;
 
-	if (input->word->next)
-		path = input->word->next->word;
+	if (input->next)
+		path = input->next->word;
 	// 	//// if there is not word->next, means that we only have cd command,
     //     //so we have to get $HOME path
-	printf("we are in %s\n", getcwd(NULL, 0));
+	printf("we are in %s\n", getcwd(NULL, 0)); // we have to free the return of getcwd but this call is only to test
 	if (chdir(path) == 0)
 		ft_printf("Now, we are in %s\n", getcwd(NULL, 0));
     else
