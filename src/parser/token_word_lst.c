@@ -35,6 +35,7 @@ int	tokenize_w_lst(char *input, t_word_lst *word_lst)
 					word_lst = NULL;
 					return (-1); // handle memory alloc error
 				}
+				word_desc->next = NULL;
 				word_lst->word = word_desc;
 			}
 			else

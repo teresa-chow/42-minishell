@@ -18,7 +18,7 @@ void	read_input(char **envp, t_word_lst *word_lst)
 
 	(void)envp;
 	word_lst->word = NULL;
-	input = readline("minishell> ");
+	input = readline("minishell> "); // append the current path to the argument
 	if (input && *input)
 	{
 		add_history(input);
