@@ -1,65 +1,68 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   word_tokenization.c                                :+:      :+:    :+:   */
+/*   token_word_lst.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/25 15:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/02/27 16:09:23 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/03/01 11:25:31 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-static unsigned int	substr_count(const char *str);
+static int	add_word(t_word **word_desc);
 static unsigned int	substr_len(const char *str);
-static char	**free_array(char **str, int i);
 static int	ft_isspace(int c);
 
-char	**w_token(const char *input)
+int	tokenize_w_lst(char *input, t_word_lst *word_lst)
 {
-	char	**tokens;
-	int		i;
-	int		j;
+	t_word		*word_desc;
+	int			i;
 
-	tokens = malloc((substr_count(input) + 1) * sizeof(char *));
-	if (!input || !tokens)
-		return (0);
+	word_desc = NULL;
 	i = 0;
-	j = 0;
 	while (input[i] != '\0')
 	{
 		if (!ft_isspace(input[i]))
 		{
-			tokens[j] = ft_substr(input, i, substr_len(&input[i]));
-			if (!tokens[j])
-				return (free_array(tokens, j));
-			j++;
+			if (!word_desc)
+			{
+				word_desc = malloc(sizeof(t_word));
+				if (!word_desc)
+				{
+					word_lst = NULL;
+					return (-1); // handle memory alloc error
+				}
+				word_lst->word = word_desc;
+			}
+			else
+				add_word(&word_desc); // handle mem alloc error (-1)
+			word_desc->word = ft_substr(input, i, substr_len(&input[i]));
+			//if (!word_desc->word)
+			//failed mem alloc
 			i += substr_len(&input[i]);
 		}
 		else
 			i++;
 	}
-	tokens[j] = 0;
-	return (tokens);
+	word_lst->next = NULL; // future fix: multiple commands
+	free(input);
+	return (0);
 }
 
-static unsigned int	substr_count(const char *str)
+static int	add_word(t_word **word_desc)
 {
-	unsigned int	i;
-	unsigned int	count;
+	t_word	*new;
 
-	i = 0;
-	count = 0;
-	while (str[i] != '\0')
-	{
-		if ((!ft_isspace(str[i]) && (ft_isspace(str[i + 1])))
-            || str[i + 1] == '\0')
-			count++;
-		i++;
-	}
-	return (count);
+	new = malloc(sizeof(t_word));
+	if (!new)
+		return (-1);
+	(*word_desc)->next = new;
+	new->next = NULL;
+	*word_desc = new;
+	return (0);
 }
 
 static unsigned int	substr_len(const char *str)
@@ -70,17 +73,6 @@ static unsigned int	substr_len(const char *str)
 	while (str[i] && !ft_isspace(str[i]))
 		i++;
 	return (i);
-}
-
-static char	**free_array(char **str, int i)
-{
-	while (i >= 0)
-	{
-		free(str[i]);
-		i--;
-	}
-	free(str);
-	return (NULL);
 }
 
 static int	ft_isspace(int c)

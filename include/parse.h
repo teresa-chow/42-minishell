@@ -35,32 +35,30 @@ enum	e_flags
 /* The basic data structure the bash shell uses to pass information from one
 stage to the next, and to operate on data units within each processing stage,
 is the WORD_DESC */
-typedef struct s_word_desc
+typedef struct s_word
 {
-	struct s_word_desc	*next;
+	struct s_word	*next;
 	char	*word;
 	int		flags;
-}	t_word_desc;
+}	t_word;
 
 /* A command is a word list, the result of expansion is a word list, and the
 built-in commands each take a word list of argumenst */
-typedef struct s_word_list
+typedef struct s_word_lst
 {
-	struct s_word_list	*next;
-	struct s_word_desc	*word;
+	struct s_word_lst	*next;
+	struct s_word		*word;
 	
-}	t_world_list;
+}	t_word_lst;
 
 /* -------------------------------------------------------------------------- */
 /*                                Input processing                            */
 /* -------------------------------------------------------------------------- */
-void	read_input(char **envp);
-char	*get_path(char **envp);
+void	read_input(char **envp, t_word_lst *word_lst);
+
 /* -------------------------------------------------------------------------- */
 /*                                Tokenizer                                   */
 /* -------------------------------------------------------------------------- */
-char	**w_token(const char *input);
+int		tokenize_w_lst(char *input, t_word_lst *word_lst);
 
 #endif
-
-

@@ -11,30 +11,19 @@
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
-#include "../../include/builtins.h" //tmp
 
-void	read_input(char **envp)
+void	read_input(char **envp, t_word_lst *word_lst)
 {
 	char	*input;
-	char	**tokens;
 
+	(void)envp;
+	word_lst->word = NULL;
 	input = readline("minishell> ");
 	if (input && *input)
+	{
 		add_history(input);
-	tokens = w_token(input);
-	if (ft_strncmp(tokens[0], "echo", 4) == 0)
-		echo(tokens);  //// this is to test with echo
-	else if (ft_strncmp(tokens[0], "cd", 2) == 0)
-		cd(tokens); ///// this is to test cd
-	else if (ft_strncmp(tokens[0], "pwd", 3) == 0)
-		pwd(tokens);
-	else
-		get_path(envp);
-	//lexer -- attaches content to tokenizer
-	free(input); // free memory alloc'ed by readline
+		tokenize_w_lst(input, word_lst);
+	}
+	else if (input)
+		free(input);
 }
-
-/*
-OBS.
-- readline() can return NULL when the users exits
-*/

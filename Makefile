@@ -18,8 +18,8 @@ NAME		= minishell
 
 SRC_DIRS 	= SRC SRC_PARSER SRC_BUILTINS SRC_EXECVE SRC_UTILS
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
-SRC_PARSER		= $(addprefix $(PARSER_DIR)/, input_read.c \
-	word_tokenization.c)
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
+	token_word_lst.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c)
@@ -64,9 +64,9 @@ LIBFT_DIR	= $(LIB_DIR)/libft
 # ============================================================================ #
 
 CC	= cc
-CFLAGS	=  -Wall -Wextra -Werror -lreadline
+CFLAGS	=  -Wall -Wextra -Werror
 CFLAGS	+= -g
-CFLAGS	+= -Wno-unused-command-line-argument # delete
+RLFLAGS = -lreadline
 
 MAKE	= make -C
 
@@ -88,7 +88,7 @@ $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(LIBFT_ARC) -o $(NAME)
+	$(OBJS_UTILS) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 
