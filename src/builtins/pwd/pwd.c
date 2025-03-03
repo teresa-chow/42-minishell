@@ -2,9 +2,12 @@
 
 void	pwd(void)
 {
-	char	*buf;
+	char	*path;
 
-	buf = getcwd(NULL, 0);
-	printf ("%s\n", buf);
-	free(buf);
+	path = getcwd(NULL, 0);
+	if (!path)
+		perror("minishell");
+	else
+		ft_printf ("%s\n", path);
+	free(path);
 }

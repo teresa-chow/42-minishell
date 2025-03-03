@@ -16,6 +16,7 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 #include "parse.h"
+#include "utils.h"
 #include <errno.h>
 
 /* ================================== ECHO ================================== */
