@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42porto.co      +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/02/14 15:11:59 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/02/27 16:05:58 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,27 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
+<<<<<<< HEAD
 SRC		= $(addprefix $(SRC_DIR)/, main.c input_read.c tokenizer.c)
 SRC		+= $(addprefix $(BUILTINS_DIR)/, echo.c)
 OBJS	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
+=======
+SRC_DIRS 	= SRC SRC_PARSER SRC_BUILTINS SRC_EXECVE SRC_UTILS
+SRC				= $(addprefix $(SRC_DIR)/, main.c)
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
+	token_word_lst.c)
+SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
+	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
+
+OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
+OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
+OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
+OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
+OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
+
+>>>>>>> 7bcf96d74d721b13d5a18b7b16f64214a68fee1c
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
 
@@ -28,11 +46,29 @@ LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
 INC_DIR			= include
 SRC_DIR 		= src
+<<<<<<< HEAD
 BUILTINS_DIR	= builtins/echo
 
 BUILD_DIR		= .build
 LIB_DIR			= lib
 
+=======
+BUILD_DIR		= .build
+LIB_DIR			= lib
+
+# Sources
+PARSER_DIR		= $(SRC_DIR)/parser
+
+BUILTINS_DIR	= $(SRC_DIR)/builtins
+ECHO_DIR		= $(BUILTINS_DIR)/echo
+CD_DIR		= $(BUILTINS_DIR)/cd
+PWD_DIR		= $(BUILTINS_DIR)/pwd
+
+EXECVE_DIR	= $(SRC_DIR)/execve
+
+UTILS_DIR	= $(SRC_DIR)/utils
+
+>>>>>>> 7bcf96d74d721b13d5a18b7b16f64214a68fee1c
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
 
@@ -61,10 +97,20 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
+<<<<<<< HEAD
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+=======
+$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
+	$(OBJS_EXECVE) $(OBJS_UTILS)
+	@printf "$(GRN)>> Generated object files$(NC)\n\n"
+######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
+	$(OBJS_UTILS) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+>>>>>>> 7bcf96d74d721b13d5a18b7b16f64214a68fee1c
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
+
 
 $(BUILD_DIR):
 	$(MKDIR) $(BUILD_DIR)
@@ -73,15 +119,45 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+<<<<<<< HEAD
 # Library directories
 $(LIBFT_DIR):
 	git clone https://github.com/teresa-chow/42-libft-extended.git libs/libft
 	@printf "$(GRN)>> Cloned Libft$(RES)\n\n"
+=======
+$(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(ECHO_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(CD_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+	
+$(BUILD_DIR)/%.o: $(PWD_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(UTILS_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
+# Library directories
+$(LIBFT_DIR):
+	git clone https://github.com/teresa-chow/42-libft-extended.git libs/libft
+	@printf "$(GRN)>> Cloned Libft$(NC)\n\n"
+>>>>>>> 7bcf96d74d721b13d5a18b7b16f64214a68fee1c
 
 # Library archives
 $(LIBFT_ARC): $(LIBFT_DIR)
 	$(MAKE) $(LIBFT_DIR)
+<<<<<<< HEAD
 	@printf "$(GRN)>> Created Libft archive$(RES)\n\n"
+=======
+	@printf "$(GRN)>> Created Libft archive$(NC)\n\n"
+>>>>>>> 7bcf96d74d721b13d5a18b7b16f64214a68fee1c
 
 
 ##@ CLEAN-UP RULES
@@ -95,7 +171,11 @@ fclean: clean	## Remove executable files
 	$(RM) $(NAME)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
 	$(MAKE) $(LIBFT_DIR) fclean
+<<<<<<< HEAD
 	@printf "$(GRN)>> Removed Libft archive$(RES)\n\n"
+=======
+	@printf "$(GRN)>> Removed Libft archive$(NC)\n\n"
+>>>>>>> 7bcf96d74d721b13d5a18b7b16f64214a68fee1c
 
 re: fclean all	## Purge and recompile
 
@@ -103,8 +183,7 @@ re: fclean all	## Purge and recompile
 ##@ STANDARD COMPLIANCE CHECK
 
 norm:	## Execute norminette
-	norminette $(INC_DIR)
-	norminette $(SRC_DIR)
+	norminette $(INC_DIR) $(LIB_DIR) $(SRC_DIR)
 
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
