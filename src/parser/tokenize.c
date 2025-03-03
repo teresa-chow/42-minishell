@@ -14,8 +14,8 @@
 
 static int	add_word(t_word **word_desc);
 static unsigned int	substr_len(const char *str);
-static int	ft_isspace(int c);
 
+/* TO DO: handle memory alloc errors (returns -1) */
 int	tokenize_w_lst(char *input, t_word_lst *word_lst)
 {
 	t_word		*word_desc;
@@ -25,7 +25,7 @@ int	tokenize_w_lst(char *input, t_word_lst *word_lst)
 	i = 0;
 	while (input[i] != '\0')
 	{
-		if (!ft_isspace(input[i]))
+		if (!is_delimiter(input[i]))
 		{
 			if (!word_desc)
 			{
@@ -33,15 +33,18 @@ int	tokenize_w_lst(char *input, t_word_lst *word_lst)
 				if (!word_desc)
 				{
 					word_lst = NULL;
-					return (-1); // handle memory alloc error
+					return (-1);
 				}
 				word_lst->word = word_desc;
 			}
 			else
-				add_word(&word_desc); // handle mem alloc error (-1)
+			{
+				if (add_word(&word_desc) == -1)
+					return (-1);
+			}
 			word_desc->word = ft_substr(input, i, substr_len(&input[i]));
-			//if (!word_desc->word)
-			//failed mem alloc
+			if (!word_desc->word)
+				return (-1);
 			i += substr_len(&input[i]);
 		}
 		else
@@ -70,13 +73,7 @@ static unsigned int	substr_len(const char *str)
 	unsigned int	i;
 
 	i = 0;
-	while (str[i] && !ft_isspace(str[i]))
+	while (str[i] && !is_delimiter(str[i]))
 		i++;
 	return (i);
-}
-
-static int	ft_isspace(int c)
-{
-	return (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r');
 }

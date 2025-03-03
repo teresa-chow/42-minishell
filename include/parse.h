@@ -51,6 +51,12 @@ typedef struct s_word_lst
 /* -------------------------------------------------------------------------- */
 void	read_input(char **envp, t_word_lst *word_lst);
 int		tokenize_w_lst(char *input, t_word_lst *word_lst);
+// Utils
+int		is_quote(int c);
+int		is_delimiter(int c);
+int		is_special(int c);
+int		is_unhandled(int c);
+
 
 #endif
 

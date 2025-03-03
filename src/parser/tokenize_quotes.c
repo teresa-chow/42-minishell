@@ -30,18 +30,5 @@ int	check_single_quotes()
 int	check_double_quotes()
 {}*/
 
-int	is_quote(int c)
-{
-	if (c == '\'')
-		return (1);
-	if (c == '\"')
-		return (2);
-	return (0);
-}
 
-/* Special characters: ~ * (not incl.) */
-int	is_unhandled(int c)
-{
-	return (c == '`' || c == '#' || c == '&' || c == '\\' || c == '['
-		|| c == ']' || c == '{' || c == '}' || c == ';' || c == '!');
-}
+
