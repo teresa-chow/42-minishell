@@ -14,14 +14,16 @@
 # define BUILTINS_H
 
 # include "../lib/libft/libft/libft.h"
+# include "../lib/libft/ft_printf/ft_printf.h"
 #include "parse.h"
+#include <errno.h>
 
 /* ================================== ECHO ================================== */
-void	echo(t_word_lst *input);
+void	echo(t_word *input);
 /* =================================== CD =================================== */
-void	cd(char **input);
+void	cd(t_word *input);
 /* ================================== PWD =================================== */
-void	pwd(char **input);
+void	pwd(void);
 /* ================================= EXPORT ================================= */
 
 /* ================================= UNSET ================================== */

@@ -14,17 +14,18 @@
 #include "../../../include/parse.h"
 
 /* TODO: fix echo with no arguments */
-void	echo(t_word_lst *input)
+void	echo(t_word *input)
 {
 	int	flag;
 	t_word	*start;
-	
-	if (input->word->next)
-	  flag = input->word->next->flags;
+
+	flag = 0;
+	if (input->next != NULL)
+		flag = input->next->flags;
 	if (flag == 2)
-		start = input->word->next->next;
+		start = input->next->next;
 	else
-		start = input->word->next;
+		start = input->next;
 	while (start)
 	{
 		ft_putstr_fd(start->word, 1);

@@ -1,8 +1,7 @@
 #include "../../../include/builtins.h"
 
-void	pwd(char **input)
+void	pwd(void)
 {
-	(void)input;
 	char	*buf;
 
 	buf = getcwd(NULL, 0);
