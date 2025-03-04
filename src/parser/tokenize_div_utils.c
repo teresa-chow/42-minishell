@@ -13,7 +13,7 @@
 #include "../../include/parse.h"
 
 static int	add_word(t_word **word_desc);
-static unsigned int	substr_len(const char *str);
+static unsigned int	substr_len(const char *str, unsigned int start);
 static unsigned int	next_quote(const char *str, int	code);
 
 int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
@@ -34,14 +34,10 @@ int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
 		if (add_word(word) == -1) //handle mem_alloc err
 			return (-1);
 	}
-	(*word)->word = ft_substr(cmd, *j, substr_len(cmd)); // not working 3rd parcel (cause: substrlen handling of delimiters)
-	ft_printf("utils :: cmd: %s\n", cmd);
-	ft_printf("utils :: word: %s\n", (*word)->word);
+	(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
 	if (!(*word)->word)
 		return (-1);
-	*j += substr_len(cmd);
-	ft_printf("j: %d\n", *j);
-	sleep(3);
+	*j += substr_len(cmd, *j);
 	return (0);
 }
 
@@ -82,14 +78,11 @@ static int	add_word(t_word **word_desc)
 	return (0);
 }
 
-static unsigned int	substr_len(const char *str)
+static unsigned int	substr_len(const char *str, unsigned int start)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (str[i] && (!is_delimiter(str[i])))
-		i++;
-	return (i);
+	while (str[start] && (!is_delimiter(str[start])))
+		start++;
+	return (start);
 }
 
 static unsigned int	next_quote(const char *str, int	code)
