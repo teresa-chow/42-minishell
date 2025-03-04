@@ -2,34 +2,34 @@
 #include "../../include/utils.h"
 #include "../../include/parse.h"
 
-static	char	**creat_arr(t_world_list *input)
+static	char	**creat_arr(t_word_lst *input)
 {
 	int	count;
-	t_word_desc	*curr;
+	t_word	*curr;
 	char	**arr;
 	int	i;
 
-	curr = input->word->word;
+	curr = input->word;
 	count = 0;
 	while (curr)
 	{
 		count++;
 		curr = curr->next;
 	}
-	arr = ft_calloc(count + 1, sizeof(t_word_desc *));
+	arr = ft_calloc(count + 1, sizeof(t_word *));
 	arr[count] = 0;
 	// if faill i have to free....
-	curr = input->word->word;
+	curr = input->word;
 	i = 0;
 	while (curr)
 	{
-		arr[i++] = curr;
+		arr[i++] = curr->word;
 		curr = curr->next;
 	}
 	return (arr);
 }
 
-int	find_slash(char *s)
+static int	find_slash(char *s)
 {
 	while (*s)
 	{
@@ -39,13 +39,22 @@ int	find_slash(char *s)
 	}
 	return (0);
 }
-
-void	check_command(t_world_list *input)
+void	check_command(t_word_lst *input, char **envp)
 {
 	char	**arr;
+	__pid_t	pid;
 
 	arr = creat_arr(input);
 	if (find_slash(arr[0]))
-		execve(arr[0], arr, NULL);
-
+	{
+		pid = fork();
+		/*TODO: get_path and then access*/
+		if (pid == 0)
+		{
+			if (execve(arr[0], arr, envp) == -1)
+				perror("error");
+		}
+		else
+			wait(NULL);
+	}
 }

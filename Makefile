@@ -22,7 +22,7 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	token_word_lst.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
-SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c)
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))

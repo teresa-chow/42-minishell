@@ -16,7 +16,10 @@
 # include <stdlib.h>
 
 # include "../lib/libft/libft/libft.h"
+# include "parse.h"
+# include <sys/wait.h>
 
 char	*get_path(char **envp);
+void	check_command(t_word_lst *input, char **envp);
 
 #endif

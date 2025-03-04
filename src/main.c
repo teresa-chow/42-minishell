@@ -41,5 +41,5 @@ static void	test_builtins(t_word_lst *word_lst, char **envp)
 	else if (ft_strncmp(word_lst->word->word, "pwd", 3) == 0)
 		pwd();
 	else
-		get_path(envp);
+		check_command(word_lst, envp);
 }
