@@ -17,9 +17,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <errno.h>
 
 # include "../lib/libft/libft/libft.h"
+# include "../lib/libft/ft_printf/ft_printf.h"
 
 enum	e_flags
 {
@@ -32,6 +34,13 @@ enum	e_flags
 	ERR = 6,
 	SPECIAL = 7 // commands fall in this cat
 };
+
+typedef struct	s_data
+{
+	char	**envp;
+	char	**cmd_lst;
+}	t_data;
+
 
 typedef struct s_word
 {
@@ -46,17 +55,20 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;
 
-/* -------------------------------------------------------------------------- */
-/*                                Input processing                            */
-/* -------------------------------------------------------------------------- */
-void	read_input(char **envp, t_word_lst *word_lst);
-int		tokenize_w_lst(char *input, t_word_lst *word_lst);
+/* =========================== INPUT PROCESSING ============================= */
+void	read_input(t_data *data, t_word_lst *word_lst);
+
+/* ==================== TOKENIZE: turn input into tokens ==================== */
+char	**tokenize_op(char *input);
+int		tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
 // Utils
-int		is_quote(int c);
+int		is_operator(int c);
 int		is_delimiter(int c);
+int		is_quote(int c);
 int		is_special(int c);
 int		is_unhandled(int c);
-
+int		handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word);
+int		handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word);
 
 #endif
 

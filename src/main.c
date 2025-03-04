@@ -14,25 +14,27 @@
 #include "../include/builtins.h"
 #include "../include/execve.h"
 
-static void	test_builtins(t_word_lst *word_lst, char **envp);
+//static void	test_builtins(t_word_lst *word_lst, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data		data;
 	t_word_lst	word_lst;
 
 	(void)argc;
 	(void)argv;
 	while (1)
 	{
-		read_input(envp, &word_lst);
-		if (word_lst.word != NULL)
-			test_builtins(&word_lst, envp);
+		data.envp = envp;
+		read_input(&data, &word_lst);
+		//if (word_lst.word != NULL)
+		//	test_builtins(&word_lst, data.envp);
 	}
 	return (0);
 }
 
 /* temp test function: echo, cd, pwd */
-static void	test_builtins(t_word_lst *word_lst, char **envp)
+/*static void	test_builtins(t_word_lst *word_lst, char **envp)
 {
 	if (ft_strncmp(word_lst->word->word, "echo", 4) == 0)
 		echo(word_lst->word);
@@ -42,4 +44,4 @@ static void	test_builtins(t_word_lst *word_lst, char **envp)
 		pwd();
 	else
 		get_path(envp);
-}
+}*/

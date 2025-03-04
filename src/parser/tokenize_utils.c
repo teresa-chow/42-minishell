@@ -12,13 +12,9 @@
 
 #include "../../include/parse.h"
 
-int	is_quote(int c)
+int	is_operator(int c)
 {
-	if (c == '\'')
-		return (1);
-	if (c == '\"')
-		return (2);
-	return (0);
+	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
 int	is_delimiter(int c)
@@ -27,9 +23,13 @@ int	is_delimiter(int c)
 		|| c == '\v' || c == '\f' || c == '\r');
 }
 
-int	is_operator(int c)
+int	is_quote(int c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&');
+	if (c == '\'')
+		return (1);
+	if (c == '\"')
+		return (2);
+	return (0);
 }
 
 int	is_special(int c)
