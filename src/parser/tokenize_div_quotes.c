@@ -42,21 +42,27 @@ int	handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word) //
 static unsigned int	next_quote(const char *str, unsigned int start, int	code)
 {
 	unsigned int	end;
-	unsigned int	len;
 
 	end = start + 1;
 	if (code == 1)
 	{
 		while (str[end] && (str[end] != '\''))
 			end++;
+		if (str[end] && (str[end] == '\''))
+			end++;
+		//else
+			//TODO: unclosed quotes
+			//return (-1);
 	}
 	else if (code == 2)
 	{
 		while (str[end] && (str[end] != '\"'))
 			end++;
+		if (str[end] && (str[end] == '\"'))
+			end++;
+		//else
+			//TODO: unclosed quotes
+			//return (-1);
 	}
-	if (str[end])
-		end++;
-	len = end - start;
-	return (len);
+	return (end - start);
 }
