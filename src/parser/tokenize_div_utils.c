@@ -18,7 +18,7 @@ int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
 {
 	if (!*word)
 	{
-		*word = malloc(sizeof(t_word)); //handle mem_alloc err
+		*word = malloc(sizeof(t_word)); //TODO: handle mem_alloc err
 		if (!*word)
 		{
 			word_lst = NULL;
@@ -29,7 +29,7 @@ int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
 	}
 	else
 	{
-		if (add_word(word) == -1) //handle mem_alloc err
+		if (add_word(word) == -1) //TODO: handle mem_alloc err
 			return (-1);
 	}
 	(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));

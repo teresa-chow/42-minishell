@@ -154,8 +154,8 @@ norm:	## Execute norminette
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
 
-valgrind:	## Run valgrind (suppress readline() memory leaks)
-	echo "{\\nignore_libreadline_leaks\\nMemcheck:Leak\\n...\\n \
+valgrind: all	## Run valgrind (suppress readline() memory leaks)
+	printf "{\\nignore_libreadline_leaks\\nMemcheck:Leak\\n...\\n \
     obj:*/libreadline.so.*\\n}" > rl.supp
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \

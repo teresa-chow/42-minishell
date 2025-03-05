@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../include/parse.h"
+#include "../../include/utils.h"
 
 void	read_input(t_data *data, t_word_lst *word_lst)
 {
@@ -22,7 +22,7 @@ void	read_input(t_data *data, t_word_lst *word_lst)
 	if (input && *input)
 	{
 		add_history(input);
-		data->cmd_lst = tokenize_op(input); //handle mem_alloc err
+		data->cmd_lst = tokenize_op(input); //TODO: handle mem_alloc err
 		tokenize_w_lst(data->cmd_lst, word_lst);
 	}
 	else if (input)
