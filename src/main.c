@@ -35,6 +35,7 @@ int	main(int argc, char **argv, char **envp)
 		//if (word_lst.word != NULL)
 		//	test_builtins(&word_lst, data.envp);
 	}
+	rl_clear_history();
 	return (0);
 }
 
