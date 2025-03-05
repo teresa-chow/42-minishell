@@ -16,6 +16,7 @@
 #include "../include/utils.h"
 
 //static void	test_builtins(t_word_lst *word_lst, char **envp);
+//static void	print_word_lst(t_data *data, t_word_lst *word_lst);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -28,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.envp = envp;
 		read_input(&data, &word_lst);
+		//print_word_lst(&data, &word_lst); //test
 		//if (word_lst.word != NULL)
 		//	test_builtins(&word_lst, data.envp);
 	}
@@ -46,4 +48,24 @@ int	main(int argc, char **argv, char **envp)
 		pwd();
 	else
 		get_path(envp);
+}*/
+
+/*static void	print_word_lst(t_data *data, t_word_lst *word_lst)
+{
+	int	i = 0;
+
+	while (data->cmd_lst[i])
+	{
+		ft_printf("cmd: %s\n", data->cmd_lst[i]);
+		i++;
+	}
+	while (word_lst)
+	{
+		while (word_lst->word)
+		{
+			ft_printf("%s\n", word_lst->word->word);
+			word_lst->word = word_lst->word->next;
+		}
+		word_lst = word_lst->next;
+	}
 }*/
