@@ -15,7 +15,7 @@
 #include "../include/execve.h"
 #include "../include/utils.h"
 
-static void	test_builtins(t_word_lst *word_lst, char **envp, t_env_node *env_lst);
+static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,13 +31,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		read_input(envp, &word_lst);
 		if (word_lst.word != NULL)
-			test_builtins(&word_lst, envp, env_lst);
+			test_builtins(&word_lst, &env_lst);
 	}
 	return (0);
 }
 
 /* temp test function: echo, cd, pwd */
-static void	test_builtins(t_word_lst *word_lst, char **envp, t_env_node *env_lst)
+static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 {
 	if (ft_strcmp(word_lst->word->word, "echo") == 0)
 		echo(word_lst->word);
@@ -46,7 +46,9 @@ static void	test_builtins(t_word_lst *word_lst, char **envp, t_env_node *env_lst
 	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
 		pwd();
 	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
-		export(word_lst->word ,env_lst);
+		export(word_lst->word , *env_lst);
+	else if (ft_strcmp(word_lst->word->word ,"unset") == 0)
+		unset(env_lst, word_lst->word->next);
 	else
-		check_command(word_lst, envp);
+		check_command(word_lst, *env_lst); // change env_parameter to an bidimensional array
 }

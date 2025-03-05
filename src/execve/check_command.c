@@ -48,7 +48,7 @@ void	check_command(t_word_lst *input, char **envp)
 	if (find_slash(arr[0]))
 	{
 		pid = fork();
-		/*TODO: get_path and then access*/
+		/*TODO: get path and then access*/
 		if (pid == 0)
 		{
 			if (execve(arr[0], arr, envp) == -1)
