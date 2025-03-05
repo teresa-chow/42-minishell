@@ -24,3 +24,15 @@ void	free_strarray(char **array)
 	}
 	free(array);
 }
+
+void	free_env_list(t_env_node *lst)
+{
+	t_env_node *tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->var);
+		lst = tmp;
+	}
+}

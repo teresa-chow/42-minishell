@@ -21,9 +21,10 @@ SRC				= $(addprefix $(SRC_DIR)/, main.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	token_word_lst.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
-	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
+	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
+	$(addprefix $(EXPORT_DIR)/, export.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c ft_strcmp.c)
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
@@ -50,6 +51,7 @@ BUILTINS_DIR	= $(SRC_DIR)/builtins
 ECHO_DIR		= $(BUILTINS_DIR)/echo
 CD_DIR		= $(BUILTINS_DIR)/cd
 PWD_DIR		= $(BUILTINS_DIR)/pwd
+EXPORT_DIR	= $(BUILTINS_DIR)/exp
 
 EXECVE_DIR	= $(SRC_DIR)/execve
 
@@ -109,6 +111,9 @@ $(BUILD_DIR)/%.o: $(CD_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 	
 $(BUILD_DIR)/%.o: $(PWD_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(EXPORT_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
