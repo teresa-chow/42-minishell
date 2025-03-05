@@ -30,10 +30,10 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 		{
 			if (!is_delimiter(cmd_lst[i][j]) && !is_quote(cmd_lst[i][j]))
 				handle_other(cmd_lst[i], &j, word_lst, &word_desc);
+			if (is_quote(cmd_lst[i][j]))
+				handle_quote(cmd_lst[i], &j, word_lst, &word_desc);
 			else
 			{
-				if (is_quote(cmd_lst[i][j]))
-					handle_quote(cmd_lst[i], &j, word_lst, &word_desc);
 				while (is_delimiter(cmd_lst[i][j]))
 					j++;
 			}
@@ -41,6 +41,5 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 		i++;
 	}
 	word_lst->next = NULL; // future fix: multiple commands
-
 	return (0);
 }

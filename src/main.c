@@ -27,6 +27,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.envp = envp;
 		read_input(&data, &word_lst);
+		while (word_lst.word != NULL)
+		{
+			ft_printf("%s\n", word_lst.word->word);
+			word_lst.word = word_lst.word->next;
+		}
 		//if (word_lst.word != NULL)
 		//	test_builtins(&word_lst, data.envp);
 	}

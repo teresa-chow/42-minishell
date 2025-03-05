@@ -51,6 +51,7 @@ int	handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word) //
 			word_lst = NULL;
 			return (-1);
 		}
+		(*word)->next = NULL;
 		word_lst->word = *word;
 	}
 	else
@@ -61,7 +62,7 @@ int	handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word) //
 	(*word)->word = ft_substr(cmd, *j, next_quote(cmd, is_quote(cmd[*j])));
 	if (!(*word)->word)
 		return (-1);
-	j += next_quote(&cmd[*j], is_quote(cmd[*j]));
+	*j += next_quote(cmd, is_quote(cmd[*j]));
 	return (0);
 }
 
@@ -100,5 +101,7 @@ static unsigned int	next_quote(const char *str, int	code)
 		while (str[i] && (str[i] != '\"'))
 			i++;
 	}
+	if (str[i])
+		i++;
 	return (i);
 }
