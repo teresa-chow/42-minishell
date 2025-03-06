@@ -13,33 +13,25 @@
 #include "../include/parse.h"
 #include "../include/builtins.h"
 #include "../include/execve.h"
+#include "../include/utils.h"
 
-static void	test_builtins(t_word_lst *word_lst, char **envp);
+#include "../tests/test.h" //tmp
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data		data;
 	t_word_lst	word_lst;
 
 	(void)argc;
 	(void)argv;
 	while (1)
 	{
-		read_input(envp, &word_lst);
-		if (word_lst.word != NULL)
-			test_builtins(&word_lst, envp);
+		data.envp = envp;
+		read_input(&data, &word_lst);
+		print_word_lst(&data, &word_lst); //tmp
+		//if (word_lst.word != NULL)
+		//	test_builtins(&word_lst, data.envp);
 	}
+	//rl_clear_history();
 	return (0);
-}
-
-/* temp test function: echo, cd, pwd */
-static void	test_builtins(t_word_lst *word_lst, char **envp)
-{
-	if (ft_strncmp(word_lst->word->word, "echo", 4) == 0)
-		echo(word_lst->word);
-	else if (ft_strncmp(word_lst->word->word, "cd", 2) == 0)
-		cd(word_lst->word);
-	else if (ft_strncmp(word_lst->word->word, "pwd", 3) == 0)
-		pwd();
-	else
-		get_path(envp);
 }

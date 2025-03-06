@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_read.c                                       :+:      :+:    :+:   */
+/*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/27 14:10:03 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/03 18:03:35 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/03/04 13:26:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+#include "../../include/utils.h"
 
-void	read_input(char **envp, t_word_lst *word_lst)
+void	read_input(t_data *data, t_word_lst *word_lst)
 {
 	char	*input;
 
-	(void)envp;
 	word_lst->word = NULL;
-	input = readline("minishell> "); // append the current path to the argument
+	input = readline("minishell> ");
 	if (input && *input)
 	{
 		add_history(input);
-		tokenize_w_lst(input, word_lst);
+		data->cmd_lst = tokenize_op(input); //TODO: handle mem_alloc err
+		tokenize_w_lst(data->cmd_lst, word_lst);
 	}
 	else if (input)
 		free(input);
