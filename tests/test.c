@@ -3,16 +3,20 @@
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
-void	test_builtins(t_word_lst *word_lst, char **envp)
+void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 {
-	if (ft_strncmp(word_lst->word->word, "echo", 4) == 0)
+	if (ft_strcmp(word_lst->word->word, "echo") == 0)
 		echo(word_lst->word);
-	else if (ft_strncmp(word_lst->word->word, "cd", 2) == 0)
+	else if (ft_strcmp(word_lst->word->word, "cd") == 0)
 		cd(word_lst->word);
-	else if (ft_strncmp(word_lst->word->word, "pwd", 3) == 0)
+	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
 		pwd();
+	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
+		export(word_lst->word , *env_lst);
+	else if (ft_strcmp(word_lst->word->word ,"unset") == 0)
+		unset(env_lst, word_lst->word->next);
 	else
-		get_path(envp);
+		check_command(word_lst, *env_lst); // change env_parameter to an bidimensional array
 }
 
 /*****************************************************************************\
