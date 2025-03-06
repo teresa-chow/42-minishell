@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/03/06 11:22:46 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/03/06 11:39:54 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
 	$(addprefix $(EXPORT_DIR)/, export.c) $(addprefix $(UNSET_DIR)/, unset.c)
-	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
