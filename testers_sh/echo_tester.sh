@@ -1,7 +1,10 @@
-!/bin/bash
+#!/bin/bash
 
 printf "\033[0;33mecho \"Hello\"\n\033[0m"
 echo "Hello"
+
+printf "\033[0;33m\necho \"-n Hello\"\n\033[0m"
+echo "-n Hello"
 
 printf "\n\033[2;37mprint without newline\033[0m"
 printf "\n\033[0;33mecho -n \"Hello\"\n\033[0m"

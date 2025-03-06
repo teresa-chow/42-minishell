@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 16:14:04 by tchow-so          #+#    #+#              #
-#    Updated: 2024/03/26 16:07:32 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/03/06 11:18:03 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_SRC	= $(addprefix $(LIBFT_PATH)/, ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 	ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 	ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 	ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
-	ft_lstiter.c ft_lstmap.c)
+	ft_lstiter.c ft_lstmap.c ft_strcmp.c)
 
 FTPRINTF_PATH = ./ft_printf
 FTPRINTF_SRC	= $(addprefix $(FTPRINTF_PATH)/, ft_printf.c ft_printchar.c \

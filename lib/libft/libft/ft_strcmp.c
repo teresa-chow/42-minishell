@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve.h                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/06 11:22:26 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/06 11:19:20 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/06 11:19:55 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECVE_H
-# define EXECVE_H
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
 
-# include <stdlib.h>
-
-# include "../lib/libft/libft/libft.h"
-# include "parse.h"
-# include "utils.h"
-# include <sys/wait.h>
-
-char	*get_path(char **envp);
-void	check_command(t_word_lst *input, t_env_node *env_lst);
-
-#endif
+	i = 0;
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}
