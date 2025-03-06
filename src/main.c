@@ -26,7 +26,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)envp;
 	(void)argv;
-	envp = NULL;
 	env_lst = NULL;
 	data.envp = envp;
 	if (init_env_lst(data.envp, &env_lst) == 0)

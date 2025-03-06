@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-06 22:18:54 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-03-06 22:18:54 by carlaugu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/builtins.h"
 
 static	void sort_env(t_env_node *env_lst)
@@ -91,38 +103,30 @@ void	add_var(t_env_node **env_lst, t_word *word_lst)
 		word_lst = word_lst->next;
 	}
 }
-int	exist_var(t_env_node **env_lst, char *argument)
-{
-	t_env_node	*tmp;
-	t_env_node	*box;
-	char	**var;
-	char	**arg_splt;
+// int	update_var(t_env_node **env_lst, char *argument)
+// {
+// 	char	*env_equal;
+// 	char	*arg_equal;
+// 	t_env_node	*tmp;
 
-	if (!*env_lst)
-		return (1);
-	tmp = *env_lst;
-	arg_splt = ft_split(argument, '=');
-	while (tmp)
-	{	
-		var = ft_split((*env_lst)->var,  '=');
-		// if (!var)
-		if (ft_strcmp(var[0], arg_splt[0]) == 0 && arg_splt[1])
-		{
-			box = tmp;
-			if (tmp->prev)
-				tmp->prev->next = tmp->next;
-			else
-				*env_lst = tmp->next;
-			free(box);
-			free_strarray(var);
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	free_strarray(arg_splt);
-	return (0);
-}
-
+// 	if (!*env_lst)
+// 		return (0);
+// 	arg_equal = ft_strchr(argument, '=');
+// 	tmp = *env_lst;
+// 	while (tmp)
+// 	{
+// 		env_equal = ft_strchr(tmp->var, '=');
+// 		// if (!env_var)
+// 		if (!ft_strcmp(arg_equal, env_equal))
+// 		{
+// 			free (tmp->var);
+// 			tmp->var = ft_strdup(argument);                      ///////  IMPROVE THIS FUNCTION ////
+// 			return (1);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
 void	export(t_word *word_lst, t_env_node **env_lst)
 {
 	if (!word_lst->next)
@@ -135,7 +139,7 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 		word_lst = word_lst->next;
 		while (word_lst)
 		{
-			if(exist_var(env_lst, word_lst->word))
+			if(!update_var(env_lst, word_lst->word))
 				add_var(env_lst, word_lst);
 			word_lst = word_lst->next;
 		}
