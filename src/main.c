@@ -15,29 +15,33 @@
 #include "../include/execve.h"
 #include "../include/utils.h"
 
-static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst);
+//static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst);
+#include "../tests/test.h" //tmp
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data		data;
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
 
 	(void)argc;
 	(void)argv;
 	env_lst = NULL;
-	if (init_env_lst(envp, &env_lst) == 0)
+  data.envp = envp;
+	if (init_env_lst(data.envp, &env_lst) == 0)
 		ft_putstr_fd("Error\n", 2); //improve this error situation 
 	while (1)
 	{
-		read_input(envp, &word_lst);
+		read_input(&data, &word_lst);
+    print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
 			test_builtins(&word_lst, &env_lst);
 	}
+	//rl_clear_history();
 	return (0);
 }
-
 /* temp test function: echo, cd, pwd */
-static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
+/*static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 {
 	if (ft_strcmp(word_lst->word->word, "echo") == 0)
 		echo(word_lst->word);
@@ -51,4 +55,4 @@ static void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 		unset(env_lst, word_lst->word->next);
 	else
 		check_command(word_lst, *env_lst); // change env_parameter to an bidimensional array
-}
+}*/

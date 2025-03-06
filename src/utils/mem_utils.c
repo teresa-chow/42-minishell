@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/parse.h"
 #include "../../include/utils.h"
 
 void	free_strarray(char **array)
@@ -34,5 +35,31 @@ void	free_env_list(t_env_node *lst)
 		tmp = lst->next;
 		free(lst->var);
 		lst = tmp;
+  }
+}
+
+void	free_words(t_word **word)
+{
+	t_word	*tmp;
+
+	while (*word != NULL)
+	{
+		free((*word)->word);
+		tmp = *word;
+		*word = (*word)->next;
+		free(tmp);
 	}
+}
+
+void	free_word_lst(t_word_lst *word_lst)
+{
+	t_word_lst	*tmp;
+
+	while (word_lst != NULL)
+	{
+		free_words(&word_lst->word);
+		tmp = word_lst;
+		word_lst = word_lst->next;
+		free(tmp);
+  }
 }
