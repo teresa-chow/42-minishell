@@ -6,6 +6,8 @@ static	void sort_env(t_env_node *env_lst)
 	char	*box;
 	t_env_node	*tmp;
 
+	if (!env_lst)
+		return ;
 	check = 1;
 	while (check)
 	{
@@ -68,31 +70,74 @@ static t_env_node	*get_last(t_env_node *env_lst)
 	}
 	return (env_lst);
 }
-void	add_var(t_env_node *env_lst, t_word *word_lst)
+void	add_var(t_env_node **env_lst, t_word *word_lst)
 {
 	t_env_node	*last;
 	t_env_node	*tmp;
 
-	last = get_last(env_lst);
+	last = get_last(*env_lst);
 	while (word_lst)
 	{
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		// if (!tmp)
 			/*here: free everything or continue withou add var??*/
 		tmp->var = word_lst->word;
-		last->next = tmp;
+		tmp->prev = last;
+		if (last)
+			last->next = tmp;
+		if (!*env_lst)
+			*env_lst = tmp;
 		last = tmp;
 		word_lst = word_lst->next;
 	}
 }
+int	exist_var(t_env_node **env_lst, char *argument)
+{
+	t_env_node	*tmp;
+	t_env_node	*box;
+	char	**var;
+	char	**arg_splt;
 
-void	export(t_word *word_lst, t_env_node *env_lst)
+	if (!*env_lst)
+		return (1);
+	tmp = *env_lst;
+	arg_splt = ft_split(argument, '=');
+	while (tmp)
+	{	
+		var = ft_split((*env_lst)->var,  '=');
+		// if (!var)
+		if (ft_strcmp(var[0], arg_splt[0]) == 0 && arg_splt[1])
+		{
+			box = tmp;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
+			else
+				*env_lst = tmp->next;
+			free(box);
+			free_strarray(var);
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	free_strarray(arg_splt);
+	return (0);
+}
+
+void	export(t_word *word_lst, t_env_node **env_lst)
 {
 	if (!word_lst->next)
 	{
-		sort_env(env_lst);
-		print_export(env_lst);
+		sort_env(*env_lst);
+		print_export(*env_lst);
 	}
 	else
-		add_var(env_lst, word_lst->next);
+	{
+		word_lst = word_lst->next;
+		while (word_lst)
+		{
+			if(exist_var(env_lst, word_lst->word))
+				add_var(env_lst, word_lst);
+			word_lst = word_lst->next;
+		}
+	}
 }

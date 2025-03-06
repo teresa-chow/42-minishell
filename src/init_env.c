@@ -8,7 +8,9 @@ int	init_env_lst(char **envp, t_env_node **env_lst)
 
 	i = -1;
 	last = NULL;
-	while (envp[++i])
+	if (!envp)
+		return (0);
+	while (envp && envp[++i])
 	{
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
@@ -19,6 +21,7 @@ int	init_env_lst(char **envp, t_env_node **env_lst)
 		tmp->var = ft_strdup(envp[i]);
 		if (last)
 			last->next = tmp;
+		tmp->prev = last;
 		if (!*env_lst)
 			*env_lst = tmp;
 		last = tmp;

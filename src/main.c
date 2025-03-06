@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/06 11:40:27 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:41:32 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,17 @@ int	main(int argc, char **argv, char **envp)
 	t_env_node	*env_lst;
 
 	(void)argc;
+	(void)envp;
 	(void)argv;
+	envp = NULL;
 	env_lst = NULL;
-  data.envp = envp;
+	data.envp = envp;
 	if (init_env_lst(data.envp, &env_lst) == 0)
-		ft_putstr_fd("Error\n", 2); //improve this error situation 
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2); //improve this error situation 
 	while (1)
 	{
 		read_input(&data, &word_lst);
-    print_word_lst(&data, &word_lst); //tmp
+		    print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
 			test_builtins(&word_lst, &env_lst);
 	}
