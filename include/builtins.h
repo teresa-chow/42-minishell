@@ -15,8 +15,10 @@
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
-#include "parse.h"
-#include <errno.h>
+# include "parse.h"
+# include "utils.h"
+# include <errno.h>
+
 
 /* ================================== ECHO ================================== */
 void	echo(t_word *input);
@@ -25,9 +27,9 @@ void	cd(t_word *input);
 /* ================================== PWD =================================== */
 void	pwd(void);
 /* ================================= EXPORT ================================= */
-
+void	export(t_word *word_lst, t_env_node *env_lst);
 /* ================================= UNSET ================================== */
-
+void	unset(t_env_node **env_lst, t_word *word_lst);
 /* ================================== ENV =================================== */
 
 /* ================================== EXIT ================================== */

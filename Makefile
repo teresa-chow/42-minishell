@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/02/27 16:05:58 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/03/06 11:39:54 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,10 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_op.c tokenize_div.c tokenize_div_quotes.c tokenize_div_utils.c \
 	tokenize_utils.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
-	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c)
-SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
+	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
+	$(addprefix $(EXPORT_DIR)/, export.c) $(addprefix $(UNSET_DIR)/, unset.c)
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -53,6 +54,8 @@ BUILTINS_DIR	= $(SRC_DIR)/builtins
 ECHO_DIR		= $(BUILTINS_DIR)/echo
 CD_DIR		= $(BUILTINS_DIR)/cd
 PWD_DIR		= $(BUILTINS_DIR)/pwd
+EXPORT_DIR	= $(BUILTINS_DIR)/exp
+UNSET_DIR	= $(BUILTINS_DIR)/unset
 
 EXECVE_DIR	= $(SRC_DIR)/execve
 
@@ -114,6 +117,12 @@ $(BUILD_DIR)/%.o: $(CD_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 	
 $(BUILD_DIR)/%.o: $(PWD_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(EXPORT_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(UNSET_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c

@@ -26,6 +26,18 @@ void	free_strarray(char **array)
 	free(array);
 }
 
+void	free_env_list(t_env_node *lst)
+{
+	t_env_node *tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->var);
+		lst = tmp;
+  }
+}
+
 void	free_words(t_word **word)
 {
 	t_word	*tmp;
@@ -49,5 +61,5 @@ void	free_word_lst(t_word_lst *word_lst)
 		tmp = word_lst;
 		word_lst = word_lst->next;
 		free(tmp);
-	}
+  }
 }
