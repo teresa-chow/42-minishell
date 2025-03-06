@@ -39,11 +39,12 @@ static int	find_slash(char *s)
 	}
 	return (0);
 }
-void	check_command(t_word_lst *input, char **envp)
+void	check_command(t_word_lst *input, t_env_node *env_lst)
 {
 	char	**arr;
 	__pid_t	pid;
 
+	(void)env_lst;
 	arr = creat_arr(input);
 	if (find_slash(arr[0]))
 	{
@@ -51,7 +52,7 @@ void	check_command(t_word_lst *input, char **envp)
 		/*TODO: get path and then access*/
 		if (pid == 0)
 		{
-			if (execve(arr[0], arr, envp) == -1)
+			if (execve(arr[0], arr, NULL) == -1)
 				perror("error");
 		}
 		else
