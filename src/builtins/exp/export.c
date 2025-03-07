@@ -82,57 +82,68 @@ static t_env_node	*get_last(t_env_node *env_lst)
 	}
 	return (env_lst);
 }
-void	add_var(t_env_node **env_lst, t_word *word_lst)
-{
-	t_env_node	*last;
-	t_env_node	*tmp;
 
-	last = get_last(*env_lst);
-	tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
-	// if (!tmp)
-		/*here: free everything or continue withou add var??*/
-	tmp->var = word_lst->word;
-	tmp->prev = last;
-	if (last)
-		last->next = tmp;
-	if (!*env_lst)
-		*env_lst = tmp;
-}
-
-int	update_var(t_env_node *tmp, char *arg, char **env_var, char **arg_var)
+char	find_sep(char *word)
 {
-	if (ft_strcmp(tmp->var, arg) != 0)
+	while (*word)
 	{
-		free(tmp->var);
-		tmp->var = arg;
+		if (*word == '+' && *(word + 1) == '=')
+			return ('+');
+		word++;
 	}
-	free_strarray(env_var);
-	free_strarray(arg_var);
-	return (1);
+	return ('=');
 }
-
-int	exist_var(t_env_node *env_lst, char *argument)
+int	exist_var(t_env_node *env_lst, char *arg ,char sep)
 {
 	char	**env_var;
 	char	**arg_var;
 
-	if (!env_lst)
-		return (0);
-	arg_var = ft_split(argument, '=');
+	arg_var = ft_split(arg, sep);
 	while (env_lst)
 	{
 		env_var = ft_split(env_lst->var, '=');
-		// if (!env_var)
-		if (!ft_strcmp(arg_var[0], env_var[0]))
-			return (update_var(env_lst, argument, env_var, arg_var));
+		if (!ft_strcmp(env_var[0], arg_var[0]))
+		{
+			///if existe update var
+			return (1);
+		}
 		free_strarray(env_var);
 		env_lst = env_lst->next;
 	}
 	free_strarray(arg_var);
 	return (0);
 }
+
+void	add_var(t_env_node **env_lst, char *arg, char sep)
+{
+	t_env_node	*last;
+	t_env_node	*tmp;
+	char	**var;
+
+	last = get_last(*env_lst);
+	tmp = ft_calloc((sizeof(t_env_node)), sizeof(char)); ///if faill malloc....
+	if (sep == '+')
+	{
+		var = ft_split(arg, sep);
+		tmp->var = ft_strjoin(var[0], var[1]);
+		free_strarray(var);
+	}
+	else
+		tmp->var = ft_strdup(arg);
+	if (last)
+	{
+		last->next = tmp;
+		tmp->prev = last;
+	}
+	if (!*env_lst)
+		*env_lst = tmp;
+	
+}
+
 void	export(t_word *word_lst, t_env_node **env_lst)
 {
+	char	sep;
+
 	if (!word_lst->next)
 	{
 		sort_env(*env_lst);
@@ -143,8 +154,13 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 		word_lst = word_lst->next;
 		while (word_lst)
 		{
-			if(!exist_var(*env_lst, word_lst->word))
-				add_var(env_lst, word_lst);
+			sep = find_sep(word_lst->word);
+			if(exist_var(*env_lst, word_lst->word, sep))
+			{
+
+			}
+			else
+				add_var(env_lst, word_lst->word, sep);
 			word_lst = word_lst->next;
 		}
 	}

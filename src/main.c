@@ -25,6 +25,9 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+
+	*envp = NULL;
+
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&word_lst, sizeof(t_word_lst));
 	ft_bzero(&env_lst, sizeof(t_env_node));
@@ -37,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&data, &word_lst);
 		    print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
-			test_builtins(&word_lst, &env_lst);
+				test_builtins(&word_lst, &env_lst);
 	}
 	//rl_clear_history();
 	return (0);
