@@ -3,48 +3,41 @@
 
 static	t_env_node	*find_in_env(t_env_node **env_lst, char	*word)
 {
-	char	**var;
-	t_env_node	*last;
 	t_env_node	*tmp;
+	char	**var;
 
-	last = NULL;
 	tmp = *env_lst;
 	while (tmp)
 	{
 		var = ft_split(tmp->var, '=');
 		// if (!var)
-		if (ft_strcmp(var[0], word) != 0)
-			free_strarray(var);
-		else
+		if (!ft_strcmp(var[0], word))
 		{
-			if (last)
-				last->next = tmp->next;
+			if (tmp->prev)
+				tmp->prev->next = tmp->next;
 			else
 				*env_lst = tmp->next;
+			if (tmp->next)
+				tmp->next->prev = tmp->prev;
 			free_strarray(var);
 			return (tmp);
 		}
-		last = tmp;
+		free_strarray(var);
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (tmp);
 }
 
 void	unset(t_env_node **env_lst, t_word *word_lst)
 {
 	t_env_node	*tmp;
-	t_env_node	*box;
 	
-	(void)box;
 	while (word_lst)
 	{
 		tmp = *env_lst;
 		tmp = find_in_env(env_lst, word_lst->word);
 		if (tmp)
-		{
-			box = tmp->next;
 			free(tmp);
-		}
 		word_lst = word_lst->next;
 	}
 }

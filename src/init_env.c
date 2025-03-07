@@ -8,7 +8,7 @@ int	init_env_lst(char **envp, t_env_node **env_lst)
 
 	i = -1;
 	last = NULL;
-	if (!envp)
+	if (!envp || !*envp)
 		return (0);
 	while (envp && envp[++i])
 	{

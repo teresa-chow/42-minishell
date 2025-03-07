@@ -88,45 +88,49 @@ void	add_var(t_env_node **env_lst, t_word *word_lst)
 	t_env_node	*tmp;
 
 	last = get_last(*env_lst);
-	while (word_lst)
-	{
-		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
-		// if (!tmp)
-			/*here: free everything or continue withou add var??*/
-		tmp->var = word_lst->word;
-		tmp->prev = last;
-		if (last)
-			last->next = tmp;
-		if (!*env_lst)
-			*env_lst = tmp;
-		last = tmp;
-		word_lst = word_lst->next;
-	}
+	tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
+	// if (!tmp)
+		/*here: free everything or continue withou add var??*/
+	tmp->var = word_lst->word;
+	tmp->prev = last;
+	if (last)
+		last->next = tmp;
+	if (!*env_lst)
+		*env_lst = tmp;
 }
-// int	update_var(t_env_node **env_lst, char *argument)
-// {
-// 	char	*env_equal;
-// 	char	*arg_equal;
-// 	t_env_node	*tmp;
 
-// 	if (!*env_lst)
-// 		return (0);
-// 	arg_equal = ft_strchr(argument, '=');
-// 	tmp = *env_lst;
-// 	while (tmp)
-// 	{
-// 		env_equal = ft_strchr(tmp->var, '=');
-// 		// if (!env_var)
-// 		if (!ft_strcmp(arg_equal, env_equal))
-// 		{
-// 			free (tmp->var);
-// 			tmp->var = ft_strdup(argument);                      ///////  IMPROVE THIS FUNCTION ////
-// 			return (1);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	return (0);
-// }
+int	update_var(t_env_node *tmp, char *arg, char **env_var, char **arg_var)
+{
+	if (ft_strcmp(tmp->var, arg) != 0)
+	{
+		free(tmp->var);
+		tmp->var = arg;
+	}
+	free_strarray(env_var);
+	free_strarray(arg_var);
+	return (1);
+}
+
+int	exist_var(t_env_node *env_lst, char *argument)
+{
+	char	**env_var;
+	char	**arg_var;
+
+	if (!env_lst)
+		return (0);
+	arg_var = ft_split(argument, '=');
+	while (env_lst)
+	{
+		env_var = ft_split(env_lst->var, '=');
+		// if (!env_var)
+		if (!ft_strcmp(arg_var[0], env_var[0]))
+			return (update_var(env_lst, argument, env_var, arg_var));
+		free_strarray(env_var);
+		env_lst = env_lst->next;
+	}
+	free_strarray(arg_var);
+	return (0);
+}
 void	export(t_word *word_lst, t_env_node **env_lst)
 {
 	if (!word_lst->next)
@@ -139,7 +143,7 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 		word_lst = word_lst->next;
 		while (word_lst)
 		{
-			if(!update_var(env_lst, word_lst->word))
+			if(!exist_var(*env_lst, word_lst->word))
 				add_var(env_lst, word_lst);
 			word_lst = word_lst->next;
 		}

@@ -24,12 +24,14 @@ int	main(int argc, char **argv, char **envp)
 	t_env_node	*env_lst;
 
 	(void)argc;
-	(void)envp;
 	(void)argv;
+	ft_bzero(&data, sizeof(t_data));
+	ft_bzero(&word_lst, sizeof(t_word_lst));
+	ft_bzero(&env_lst, sizeof(t_env_node));
 	env_lst = NULL;
 	data.envp = envp;
-	if (init_env_lst(data.envp, &env_lst) == 0)
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2); //improve this error situation 
+	if (!init_env_lst(data.envp, &env_lst)) //TODO: handle with empty env like bash
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 	while (1)
 	{
 		read_input(&data, &word_lst);
