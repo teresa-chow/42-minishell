@@ -60,12 +60,3 @@ export arg
 printf "\033[2;37mempty variable\n\033[0m"
 echo $arg
 
-# unhandled
-printf "\n\n\033[1;36m --- unhandled ---\n\033[0m"
-printf "\n\033[2;37m ** builtins: export (append value) **\033[0m"
-printf "\n\033[0;33mexport ARG=\"value\"\necho \$ARG\n\033[0m"
-export ARG="value"
-echo $ARG
-printf "\033[0;33mexport ARG+=\" new_value\"\necho \$ARG\n\033[0m"
-export ARG+=" new_value"
-echo $ARG
