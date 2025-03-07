@@ -60,5 +60,3 @@ export arg
 printf "\033[2;37mempty variable\n\033[0m"
 echo $arg
 
-# cat | cat | ls
-# ^C
