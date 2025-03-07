@@ -22,7 +22,7 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 	int			j;
 
 	i = 0;
-	word_desc = NULL;
+	word_desc = NULL; //TODO: divide list of words by command
 	while (cmd_lst[i])
 	{
 		j = 0;
@@ -30,7 +30,7 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 		{
 			if (!is_delimiter(cmd_lst[i][j]) && !is_quote(cmd_lst[i][j]))
 				handle_other(cmd_lst[i], &j, word_lst, &word_desc);
-			if (is_quote(cmd_lst[i][j]))
+			if (is_quote(cmd_lst[i][j])) // TODO: unclosed quotes
 				handle_quote(cmd_lst[i], &j, word_lst, &word_desc);
 			else
 			{
@@ -38,8 +38,11 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 					j++;
 			}
 		}
+		word_desc->next = NULL;
+		if (cmd_lst[i + 1])
+			add_word_lst(&word_lst);
 		i++;
 	}
-	word_lst->next = NULL; // future fix: multiple commands
+	word_lst->next = NULL; // TODO: fix multiple commands
 	return (0);
 }

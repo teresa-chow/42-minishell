@@ -65,11 +65,13 @@ int		tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
 int		is_operator(int c);
 int		is_delimiter(int c);
 int		is_quote(int c);
+int		is_equal_next(const char *str, int i);
 int		is_special(int c);
 int		is_unhandled(int c);
 int		handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word);
 int		handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word);
 int		add_word(t_word **word_desc);
+int		add_word_lst(t_word_lst **word_lst);
 
 #endif
 

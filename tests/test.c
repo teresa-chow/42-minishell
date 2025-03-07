@@ -25,6 +25,7 @@ void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 void	print_word_lst(t_data *data, t_word_lst *word_lst)
 {
 	int			i = 0;
+	int			cmd_n = 0;
 	t_word		*word_ptr;
 	t_word_lst	*lst_ptr;
 
@@ -37,11 +38,13 @@ void	print_word_lst(t_data *data, t_word_lst *word_lst)
 	}
 	while (lst_ptr)
 	{
+		ft_printf("cmd no.: %d\n", cmd_n);
 		while (word_ptr)
 		{
 			ft_printf("word: %s\n", word_ptr->word);
 			word_ptr = word_ptr->next;
 		}
 		lst_ptr = lst_ptr->next;
+		cmd_n++;
 	}
 }

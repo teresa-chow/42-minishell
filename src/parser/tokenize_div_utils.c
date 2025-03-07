@@ -52,6 +52,20 @@ int	add_word(t_word **word_desc)
 	return (0);
 }
 
+int	add_word_lst(t_word_lst **word_lst)
+{
+	t_word_lst	*new;
+
+	new = malloc(sizeof(t_word_lst));
+	if (!new)
+		return (-1);
+	new->word = malloc(sizeof(t_word));
+	new->next = NULL;
+	(*word_lst)->next = new;
+	*word_lst = (*word_lst)->next;
+	return (0);
+}
+
 static unsigned int	substr_len(const char *str, unsigned int start)
 {
 	unsigned int	end;

@@ -62,8 +62,9 @@ static unsigned int	substr_count(char const *input)
 		else
 		{
 			count++;
-			while (is_operator(input[i]))
+			while (input[i] && is_equal_next(input, i))
 				i++;
+			i++;
 		}
 	}
 	return (count);
@@ -85,8 +86,9 @@ static unsigned int	substr_len(const char *str)
 	}
 	else
 	{
-		while (str[i] && is_operator(str[i]))
+		while (str[i] && is_equal_next(str, i))
 			i++;
+		i++;
 	}
 	return (i);
 }
