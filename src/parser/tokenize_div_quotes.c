@@ -16,22 +16,8 @@ static unsigned int	next_quote(const char *str, unsigned int start, int	code);
 
 int	handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word) //
 {
-	if (!*word)
-	{
-		*word = malloc(sizeof(t_word)); //TODO: handle mem_alloc err
-		if (!*word)
-		{
-			word_lst = NULL;
-			return (-1);
-		}
-		(*word)->next = NULL;
-		word_lst->word = *word;
-	}
-	else
-	{
-		if (add_word(word) == -1) //TODO: handle mem_alloc err
-			return (-1);
-	}
+	(void)word_lst; //tmp
+	init_word(word);
 	(*word)->word = ft_substr(cmd, *j, next_quote(cmd, *j, is_quote(cmd[*j])));
 	if (!(*word)->word)
 		return (-1);

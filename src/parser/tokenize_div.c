@@ -17,28 +17,28 @@
 /* Tokenization (2): split words (divide by whitespaces) */
 int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 {
-	t_word		*word_desc;
+	//t_word		*word_desc;
 	int			i;
 	int			j;
 
 	i = 0;
-	word_desc = NULL; //TODO: divide list of words by command
 	while (cmd_lst[i])
 	{
 		j = 0;
+		word_lst->word = NULL;
 		while (cmd_lst[i][j] != '\0')
 		{
 			if (!is_delimiter(cmd_lst[i][j]) && !is_quote(cmd_lst[i][j]))
-				handle_other(cmd_lst[i], &j, word_lst, &word_desc);
+				handle_other(cmd_lst[i], &j, word_lst, &word_lst->word);
 			if (is_quote(cmd_lst[i][j])) // TODO: unclosed quotes
-				handle_quote(cmd_lst[i], &j, word_lst, &word_desc);
+				handle_quote(cmd_lst[i], &j, word_lst, &word_lst->word);
 			else
 			{
 				while (is_delimiter(cmd_lst[i][j]))
 					j++;
 			}
 		}
-		word_desc->next = NULL;
+		word_lst->word->next = NULL;
 		if (cmd_lst[i + 1])
 			add_word_lst(&word_lst);
 		i++;

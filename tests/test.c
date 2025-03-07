@@ -30,7 +30,7 @@ void	print_word_lst(t_data *data, t_word_lst *word_lst)
 	t_word_lst	*lst_ptr;
 
 	lst_ptr = word_lst;
-	word_ptr = word_lst->word;
+	word_ptr = lst_ptr->word;
 	while (data->cmd_lst[i])
 	{
 		ft_printf("cmd: %s\n", data->cmd_lst[i]);
@@ -45,6 +45,7 @@ void	print_word_lst(t_data *data, t_word_lst *word_lst)
 			word_ptr = word_ptr->next;
 		}
 		lst_ptr = lst_ptr->next;
+		word_ptr = lst_ptr->word;
 		cmd_n++;
 	}
 }

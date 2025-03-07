@@ -72,6 +72,7 @@ int		handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word);
 int		handle_quote(char *cmd, int *j, t_word_lst *word_lst, t_word **word);
 int		add_word(t_word **word_desc);
 int		add_word_lst(t_word_lst **word_lst);
+int		init_word(t_word **word);
 
 #endif
 

@@ -16,22 +16,8 @@ static unsigned int	substr_len(const char *str, unsigned int start);
 
 int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
 {
-	if (!*word)
-	{
-		*word = malloc(sizeof(t_word)); //TODO: handle mem_alloc err
-		if (!*word)
-		{
-			word_lst = NULL;
-			return (-1);
-		}
-		(*word)->next = NULL;
-		word_lst->word = *word;
-	}
-	else
-	{
-		if (add_word(word) == -1) //TODO: handle mem_alloc err
-			return (-1);
-	}
+	(void)word_lst; //tmp
+	init_word(word);
 	(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
 	if (!(*word)->word)
 		return (-1);
@@ -63,6 +49,23 @@ int	add_word_lst(t_word_lst **word_lst)
 	new->next = NULL;
 	(*word_lst)->next = new;
 	*word_lst = (*word_lst)->next;
+	return (0);
+}
+
+int	init_word(t_word **word)
+{
+	if (!*word)
+	{
+		*word = malloc(sizeof(t_word)); //TODO: handle mem_alloc err
+		if (!*word)
+			return (-1);
+		(*word)->next = NULL;
+	}
+	else
+	{
+		if (add_word(word) == -1) //TODO: handle mem_alloc err
+			return (-1);
+	}
 	return (0);
 }
 
