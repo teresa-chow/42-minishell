@@ -42,7 +42,7 @@ static int	find_slash(char *s)
 void	check_command(t_word_lst *input, t_env_node *env_lst)
 {
 	char	**arr;
-	__pid_t	pid;
+	pid_t	pid;
 
 	(void)env_lst;
 	arr = creat_arr(input);
