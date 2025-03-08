@@ -14,11 +14,21 @@
 
 static unsigned int	substr_len(const char *str, unsigned int start);
 
-int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
+int	handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
+{
+	init_word(*word_lst, word);
+	(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
+	if (!(*word)->word)
+		return (-1);
+	*j += substr_len(cmd, *j);
+	return (0);
+}
+
+int	init_word(t_word_lst *word_lst, t_word **word)
 {
 	if (!*word)
 	{
-		*word = malloc(sizeof(t_word)); //TODO: handle mem_alloc err
+		*word = ft_calloc(1, sizeof(t_word)); //TODO: handle mem_alloc err
 		if (!*word)
 		{
 			word_lst = NULL;
@@ -32,18 +42,14 @@ int	handle_other(char *cmd, int *j, t_word_lst *word_lst, t_word **word)
 		if (add_word(word) == -1) //TODO: handle mem_alloc err
 			return (-1);
 	}
-	(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
-	if (!(*word)->word)
-		return (-1);
-	*j += substr_len(cmd, *j);
-	return (0);
+	return(0);
 }
 
 int	add_word(t_word **word_desc)
 {
 	t_word	*new;
 
-	new = malloc(sizeof(t_word));
+	new = ft_calloc(1, sizeof(t_word));
 	if (!new)
 		return (-1);
 	new->next = NULL;
@@ -56,10 +62,9 @@ int	add_word_lst(t_word_lst **word_lst)
 {
 	t_word_lst	*new;
 
-	new = malloc(sizeof(t_word_lst));
+	new = ft_calloc(1, sizeof(t_word_lst));
 	if (!new)
 		return (-1);
-	new->word = malloc(sizeof(t_word));
 	new->next = NULL;
 	(*word_lst)->next = new;
 	*word_lst = (*word_lst)->next;

@@ -56,8 +56,15 @@ static unsigned int	substr_count(char const *input)
 		if (input[i] && !is_operator(input[i]))
 		{
 			count++;
-			while (input[i] && !is_operator(input[i]))
-				i++;
+			while (input[i])
+			{
+				if (is_operator(input[i]))
+					break ;
+				if (is_quote((int)input[i]))
+					i += next_quote(input, i, is_quote((int)input[i]));
+				else
+					i++;
+			}
 		}
 		else
 		{
@@ -73,16 +80,19 @@ static unsigned int	substr_count(char const *input)
 static unsigned int	substr_len(const char *str)
 {
 	unsigned int	i;
-	bool			op;
 
 	i = 0;
-	op = 0;
-	if (is_operator(str[i]))
-		op = 1;
-	if (op == 0)
+	if (!is_operator(str[i]))
 	{
-		while (str[i] && !is_operator(str[i]))
-			i++;
+		while (str[i])
+		{
+			if (is_operator(str[i]))
+					break ;
+			if (is_quote((int)str[i]))
+				i += next_quote(str, i, is_quote((int)str[i]));
+			else
+				i++;
+		}
 	}
 	else
 	{
