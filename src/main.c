@@ -25,9 +25,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-
-	*envp = NULL;
-
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&word_lst, sizeof(t_word_lst));
 	ft_bzero(&env_lst, sizeof(t_env_node));

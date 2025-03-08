@@ -93,6 +93,37 @@ char	find_sep(char *word)
 	}
 	return ('=');
 }
+int	has_content(char *str)
+{
+	if ((*str == '=') && (*(str + 1) != '\0'))
+		return (1);
+	return (0);
+}
+
+int	update_var(t_env_node *env_lst, char *arg, char **env_v, char **arg_v, char sep)
+{
+	char	**var_arg;
+	char	**var_env;
+	char	*tmp;
+
+	(void)var_env;
+	if (sep == '+' && has_content(arg_v[1]))
+	{
+		// if i have only ZZZ, then not append the '='
+		var_arg = ft_split(arg, '=');
+		tmp = ft_strjoin(env_lst->var, var_arg[1]);
+		free(env_lst->var);
+		env_lst->var = tmp;
+		free_strarray(var_arg);
+	}
+	else
+	{
+
+	}
+	free_strarray(env_v);
+	free_strarray(arg_v);
+	return (1);
+}
 int	exist_var(t_env_node *env_lst, char *arg ,char sep)
 {
 	char	**env_var;
@@ -103,10 +134,7 @@ int	exist_var(t_env_node *env_lst, char *arg ,char sep)
 	{
 		env_var = ft_split(env_lst->var, '=');
 		if (!ft_strcmp(env_var[0], arg_var[0]))
-		{
-			///if existe update var
-			return (1);
-		}
+			return (update_var(env_lst, arg, env_var, arg_var, sep));
 		free_strarray(env_var);
 		env_lst = env_lst->next;
 	}
