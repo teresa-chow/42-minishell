@@ -1,4 +1,5 @@
 #include "../include/utils.h"
+#include "../include/builtins.h"
 
 int	init_env_lst(char **envp, t_env_node **env_lst)
 {

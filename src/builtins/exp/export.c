@@ -11,67 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../../include/builtins.h"
+#include "../../../include/utils.h"
 
-static	void sort_env(t_env_node *env_lst)
-{
-	int	check;
-	char	*box;
-	t_env_node	*tmp;
-
-	if (!env_lst)
-		return ;
-	check = 1;
-	while (check)
-	{
-		check = 0;
-		tmp = env_lst;
-		while (tmp && tmp->next)
-		{
-			if (ft_strcmp(tmp->var, tmp->next->var) > 0)
-			{
-				check = 1;
-				box = tmp->var;
-				tmp->var = tmp->next->var;
-				tmp->next->var = box;
-			}
-			tmp = tmp->next;
-		}
-	}
-}
-static	int	print_var_name(char *s)
-{
-	while (*s)
-	{
-		ft_putchar_fd(*s, 1);
-		if (*s == '=')
-			return (1);
-		s++;
-	}
-	return (0);
-}
-static	void	print_var_val(char *s)
-{
-	while (*s && *s != '=')
-		s++;
-	if (*s == '=')
-		s++;
-	ft_putchar_fd('"', 1);
-	while (*s)
-		ft_putchar_fd(*s++, 1);
-	ft_putchar_fd('"', 1);
-}
-
-static void	print_export(t_env_node *env_lst)
-{
-	while (env_lst)
-	{
-		ft_putstr_fd("declare -x ", 1);
-		if (print_var_name(env_lst->var))
-			print_var_val(env_lst->var);
-		write(1, "\n", 1);
-		env_lst = env_lst->next;
-	}
-}
 static t_env_node	*get_last(t_env_node *env_lst)
 {
 	while (env_lst)
@@ -89,36 +30,66 @@ char	find_sep(char *word)
 	{
 		if (*word == '+' && *(word + 1) == '=')
 			return ('+');
+		else if (*word == '+' && *(word + 1) != '=')
+			return (0);
 		word++;
 	}
 	return ('=');
 }
-int	has_content(char *str)
+static int	has_content(char *str)
 {
 	if ((*str == '=') && (*(str + 1) != '\0'))
 		return (1);
 	return (0);
 }
 
+static int	has_equal(char *s)
+{
+	while (*s)
+	{
+		if (*s == '=')
+			return (1);
+		s++;
+	}
+	return (0);
+}
+
 int	update_var(t_env_node *env_lst, char *arg, char **env_v, char **arg_v, char sep)
 {
 	char	**var_arg;
-	char	**var_env;
 	char	*tmp;
+	char	*tmp1;
 
-	(void)var_env;
 	if (sep == '+' && has_content(arg_v[1]))
 	{
-		// if i have only ZZZ, then not append the '='
 		var_arg = ft_split(arg, '=');
-		tmp = ft_strjoin(env_lst->var, var_arg[1]);
-		free(env_lst->var);
-		env_lst->var = tmp;
+		if (!has_equal(env_lst->var))
+		{
+			tmp = ft_strjoin(env_v[0], "=");
+			tmp1 = ft_strjoin(tmp, env_v[1]);
+			if (tmp != tmp1)
+				free(tmp);
+			tmp = ft_strjoin(tmp1, var_arg[1]);
+			free(tmp1);
+			free(env_lst->var);
+			env_lst->var = tmp;
+		}
+		else
+		{
+			tmp = ft_strjoin(env_lst->var, var_arg[1]);
+			free(env_lst->var);
+			env_lst->var = tmp;
+		}
+
 		free_strarray(var_arg);
 	}
-	else
+	else if (sep == '=')
 	{
-
+		free(env_lst->var);
+		tmp = ft_strjoin(env_v[0], "=");
+		env_lst->var = ft_strjoin(tmp, arg_v[1]);
+		if (env_lst->var != tmp)
+			free(tmp);
 	}
 	free_strarray(env_v);
 	free_strarray(arg_v);
@@ -167,10 +138,11 @@ void	add_var(t_env_node **env_lst, char *arg, char sep)
 		*env_lst = tmp;
 	
 }
-
 void	export(t_word *word_lst, t_env_node **env_lst)
 {
 	char	sep;
+	char	*tmp;
+	char	*tmp1;
 
 	if (!word_lst->next)
 	{
@@ -183,6 +155,15 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 		while (word_lst)
 		{
 			sep = find_sep(word_lst->word);
+			if (sep != '+' && sep != '=')
+			{
+				tmp = ft_strjoin("minishell: export: `", word_lst->word);
+				tmp1 = ft_strjoin(tmp, "': not a valid identifier");
+				free(tmp);
+				ft_putendl_fd(tmp1, 2);
+				free(tmp1);
+				return ;
+			}
 			if(exist_var(*env_lst, word_lst->word, sep))
 			{
 

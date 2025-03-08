@@ -22,7 +22,7 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_utils.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
-	$(addprefix $(EXPORT_DIR)/, export.c) $(addprefix $(UNSET_DIR)/, unset.c)
+	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) $(addprefix $(UNSET_DIR)/, unset.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
