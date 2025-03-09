@@ -60,7 +60,9 @@ static unsigned int	substr_count(char const *input)
 			{
 				if (is_operator(input[i]))
 					break ;
-				if (is_quote((int)input[i]))
+				if ((int)input[i] == '(')
+					i += close_group(input, i);
+				else if (is_quote((int)input[i]))
 					i += next_quote(input, i, is_quote((int)input[i]));
 				else
 					i++;
@@ -87,8 +89,10 @@ static unsigned int	substr_len(const char *str)
 		while (str[i])
 		{
 			if (is_operator(str[i]))
-					break ;
-			if (is_quote((int)str[i]))
+				break ;
+			if ((int)str[i] == '(')
+				i += close_group(str, i);
+			else if (is_quote((int)str[i]))
 				i += next_quote(str, i, is_quote((int)str[i]));
 			else
 				i++;
@@ -101,4 +105,16 @@ static unsigned int	substr_len(const char *str)
 		i++;
 	}
 	return (i);
+}
+
+unsigned int	close_group(const char *str, unsigned int start)
+{
+	unsigned int	end;
+
+	end = start + 1;
+	while (str[end] && (str[end] != ')'))
+		end++;
+	if (str[end] && (str[end] == ')'))
+		end++;
+	return (end - start);
 }

@@ -33,9 +33,6 @@ unsigned int	next_quote(const char *str, unsigned int start, int	code)
 			end++;
 		if (str[end] && (str[end] == '\''))
 			end++;
-		//else
-			//TODO: unclosed quotes
-			//return (-1);
 	}
 	else if (code == 2)
 	{
@@ -43,9 +40,6 @@ unsigned int	next_quote(const char *str, unsigned int start, int	code)
 			end++;
 		if (str[end] && (str[end] == '\"'))
 			end++;
-		//else
-			//TODO: unclosed quotes
-			//return (-1);
 	}
 	return (end - start);
 }
