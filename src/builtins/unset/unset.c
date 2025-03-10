@@ -1,5 +1,6 @@
 #include "../../../include/utils.h"
 #include "../../../include/parse.h"
+#include "../../../include/errors.h"
 
 static	t_env_node	*find_in_env(t_env_node **env_lst, char	*word)
 {
@@ -10,7 +11,8 @@ static	t_env_node	*find_in_env(t_env_node **env_lst, char	*word)
 	while (tmp)
 	{
 		var = ft_split(tmp->var, '=');
-		// if (!var)
+		if (!var)
+			return (error_allocation());
 		if (!ft_strcmp(var[0], word))
 		{
 			if (tmp->prev)

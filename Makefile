@@ -16,7 +16,7 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
-SRC				= $(addprefix $(SRC_DIR)/, main.c)
+SRC				= $(addprefix $(SRC_DIR)/, main.c init_env.c errors.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_op.c tokenize_div.c tokenize_div_quotes.c tokenize_div_utils.c \
 	tokenize_utils.c)
@@ -24,7 +24,7 @@ SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
 	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) $(addprefix $(UNSET_DIR)/, unset.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c )
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -60,6 +60,8 @@ UNSET_DIR	= $(BUILTINS_DIR)/unset
 EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
+
+ERRORS_DIR	= $(SRC_DIR)
 
 TEST_DIR	= tests
 
