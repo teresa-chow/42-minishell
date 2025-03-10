@@ -21,7 +21,6 @@ int handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 	{
 		init_word(*word_lst, word);
 		len = group_len(cmd, *j);
-		ft_printf("cmd[*j]: %c\n", cmd[*j]);
 		(*word)->word = ft_substr(cmd, *j, len);
 		if (!(*word)->word)
 			return (-1);
