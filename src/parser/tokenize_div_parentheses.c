@@ -14,13 +14,18 @@
 
 int handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
+	unsigned int	len;
+
+	len = 0;
 	if (cmd[*j] == '(')
 	{
 		init_word(*word_lst, word);
-		(*word)->word = ft_substr(cmd, *j, group_len(cmd, *j));
+		len = group_len(cmd, *j);
+		ft_printf("cmd[*j]: %c\n", cmd[*j]);
+		(*word)->word = ft_substr(cmd, *j, len);
 		if (!(*word)->word)
 			return (-1);
-		*j += group_len(cmd, *j);
+		*j += len;
 	}
 	return (0);
 }
@@ -30,12 +35,12 @@ unsigned int	group_len(const char *str, unsigned int start)
 	unsigned int	end;
 	unsigned int	len;
 
-	end = start + 1;
+	end = start;
 	while (str[end] && str[end] != ')')
 	{
-		if (str[end] == '(')
-			end += group_len(str, end + 1);
 		end++;
+		while (str[end] == '(')
+			end += group_len(str, end);
 	}
 	if (str[end] == ')')
 		end++;
