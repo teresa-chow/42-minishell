@@ -33,6 +33,7 @@ void	cd(t_word *input);
 void	pwd(void);
 /* ================================= EXPORT ================================= */
 void	export(t_word *word_lst, t_env_node **env_lst);
+t_env_node	*get_last(t_env_node *env_lst);  ///used to creat env when empty too
 /* ================================= UNSET ================================== */
 void	unset(t_env_node **env_lst, t_word *word_lst);
 /* ================================== ENV =================================== */

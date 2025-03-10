@@ -37,7 +37,9 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&data, &word_lst);
 		    print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
-				test_builtins(&word_lst, &env_lst);
+			test_builtins(&word_lst, &env_lst);
+		// free_word_lst(&word_lst); // this will try free a static structure like word_lst and
+					//   will fail. We have to create a pointer to struct
 	}
 	//rl_clear_history();
 	return (0);

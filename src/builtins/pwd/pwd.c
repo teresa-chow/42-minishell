@@ -20,6 +20,8 @@ void	pwd(void)
 	if (!path)
 		perror("minishell");
 	else
+	{
 		ft_printf ("%s\n", path);
-	free(path);
+		free(path);
+	}
 }

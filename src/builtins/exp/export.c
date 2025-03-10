@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-10 21:13:12 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-03-10 21:13:12 by carlaugu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/builtins.h"
 #include "../../../include/utils.h"
 #include "../../../include/errors.h"
@@ -53,6 +65,7 @@ int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 {
 	char	*key;
 	
+	key = NULL;
 	while (env)
 	{
 		key = ft_substr(env->var, 0, ft_strlen(env->var) - ft_strlen(ft_strchr(env->var, '=')));
@@ -68,7 +81,7 @@ int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 	}
 	return (0);
 }
-static t_env_node	*get_last(t_env_node *env_lst)
+t_env_node	*get_last(t_env_node *env_lst)
 {
 	while (env_lst)
 	{
@@ -77,6 +90,17 @@ static t_env_node	*get_last(t_env_node *env_lst)
 		env_lst = env_lst->next;
 	}
 	return (env_lst);
+}
+
+static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
+{
+	if (last)
+	{
+		last->next = tmp;
+		tmp->prev = last;
+	}
+	if (!*env)
+		*env = tmp;
 }
 
 int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
@@ -100,17 +124,10 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 			free(tmp);
 			return (-1);
 		}
-		if (last)
-		{
-			last->next = tmp;
-			tmp->prev = last;
-		}
-		if (!*env)
-			*env = tmp;
+		change_ptrs(last, tmp, env);
 	}
 	return (0); 
 }
-
 int	set_inf(char *word, t_ipt_inf *inf_arg)
 {
 	inf_arg->sep = find_sep(word);
@@ -136,6 +153,7 @@ void	reset_inf(t_ipt_inf *inf)
 }
 /// this builtin can't have (export ARG++23), the sintax is not correct, so we have
 // to handle with this, maybe in expand part??
+// --> same to (export ZA,ZB)
 
 void	export(t_word *word_lst, t_env_node **env_lst)
 {
