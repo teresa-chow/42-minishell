@@ -68,7 +68,7 @@ int		is_quote(int c);
 int		is_equal_next(const char *str, int i);
 int		is_special(int c);
 int		is_unhandled(int c);
-unsigned int	close_group(const char *str, unsigned int start);
+unsigned int	group_len(const char *str, unsigned int start);
 int 	handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
 			t_word **word);
 int		handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word);

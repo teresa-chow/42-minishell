@@ -28,15 +28,11 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 		word_tmp = NULL;
 		while (cmd_lst[i][j] != '\0')
 		{
-			if (cmd_lst[i][j] == '(')
-				handle_parentheses(cmd_lst[i], &j, &word_lst, &word_tmp);
-			if (!is_delimiter(cmd_lst[i][j]) && !is_quote(cmd_lst[i][j]))
-				handle_other(cmd_lst[i], &j, &word_lst, &word_tmp);
-			if (is_quote(cmd_lst[i][j]))
-				handle_quote(cmd_lst[i], &j, &word_lst, &word_tmp);
-			else
-				while (is_delimiter(cmd_lst[i][j]))
-					j++;
+			handle_parentheses(cmd_lst[i], &j, &word_lst, &word_tmp);
+			handle_other(cmd_lst[i], &j, &word_lst, &word_tmp);
+			handle_quote(cmd_lst[i], &j, &word_lst, &word_tmp);
+			while (is_delimiter(cmd_lst[i][j]))
+				j++;
 		}
 		i++;
 		if (cmd_lst[i])

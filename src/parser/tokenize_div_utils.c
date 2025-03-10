@@ -16,11 +16,15 @@ static unsigned int	substr_len(const char *str, unsigned int start);
 
 int	handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
-	init_word(*word_lst, word);
-	(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
-	if (!(*word)->word)
-		return (-1);
-	*j += substr_len(cmd, *j);
+	if (cmd[*j] && !is_delimiter(cmd[*j]) && !is_quote(cmd[*j])
+		&& cmd[*j] != '(')
+	{
+		init_word(*word_lst, word);
+		(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
+		if (!(*word)->word)
+			return (-1);
+		*j += substr_len(cmd, *j);
+	}
 	return (0);
 }
 
@@ -42,7 +46,7 @@ int	init_word(t_word_lst *word_lst, t_word **word)
 		if (add_word(word) == -1) //TODO: handle mem_alloc err
 			return (-1);
 	}
-	return(0);
+	return (0);
 }
 
 int	add_word(t_word **word_desc)

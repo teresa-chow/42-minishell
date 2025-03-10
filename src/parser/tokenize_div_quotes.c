@@ -14,15 +14,19 @@
 
 int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word) //
 {
-	init_word(*word_lst, word);
-	(*word)->word = ft_substr(cmd, *j, next_quote(cmd, *j, is_quote(cmd[*j])));
-	if (!(*word)->word)
-		return (-1);
-	*j += next_quote(cmd, *j, is_quote(cmd[*j]));
+	if (is_quote(cmd[*j]))
+	{
+		init_word(*word_lst, word);
+		(*word)->word = ft_substr(cmd, *j,
+				next_quote(cmd, *j, is_quote(cmd[*j])));
+		if (!(*word)->word)
+			return (-1);
+		*j += next_quote(cmd, *j, is_quote(cmd[*j]));
+	}
 	return (0);
 }
 
-unsigned int	next_quote(const char *str, unsigned int start, int	code)
+unsigned int	next_quote(const char *str, unsigned int start, int code)
 {
 	unsigned int	end;
 
