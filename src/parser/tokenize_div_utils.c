@@ -77,7 +77,7 @@ static unsigned int	substr_len(const char *str, unsigned int start)
 	unsigned int	len;
 
 	end = start;
-	while (str[end] && !is_delimiter(str[end]))
+	while (str[end] && !is_delimiter(str[end]) && str[end] != '(')
 		end++;
 	len = end - start;
 	return (len);
