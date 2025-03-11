@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 printf "\033[0;33mecho \"Hello\"\n\033[0m"
 echo "Hello"

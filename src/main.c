@@ -26,15 +26,15 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	env_lst = NULL;
-  data.envp = envp;
+	data.envp = envp;
 	if (init_env_lst(data.envp, &env_lst) == 0)
 		ft_putstr_fd("Error\n", 2); //improve this error situation 
 	while (1)
 	{
 		read_input(&data, &word_lst);
-    print_word_lst(&data, &word_lst); //tmp
-		if (word_lst.word != NULL)
-			test_builtins(&word_lst, &env_lst);
+		print_word_lst(&data, &word_lst); //tmp
+//		if (word_lst.word != NULL)
+//			test_builtins(&word_lst, &env_lst);
 	}
 	//rl_clear_history();
 	return (0);

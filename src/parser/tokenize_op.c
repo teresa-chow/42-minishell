@@ -20,8 +20,8 @@ static unsigned int	substr_len(const char *str);
 char	**tokenize_op(char *input)
 {
 	char	**cmd_lst;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -35,7 +35,7 @@ char	**tokenize_op(char *input)
 		{
 			free_strarray(cmd_lst);
 			return (NULL);
-		}
+		}	
 		j++;
 		i += substr_len(&input[i]);
 	}
@@ -44,7 +44,7 @@ char	**tokenize_op(char *input)
 	return (cmd_lst);
 }
 
-static unsigned int	substr_count(char const *input)
+static unsigned int	substr_count(char const *input) //TODO: refactor
 {
 	unsigned int	i;
 	unsigned int	count;
@@ -56,14 +56,24 @@ static unsigned int	substr_count(char const *input)
 		if (input[i] && !is_operator(input[i]))
 		{
 			count++;
-			while (input[i] && !is_operator(input[i]))
-				i++;
+			while (input[i])
+			{
+				if (is_operator(input[i]))
+					break ;
+				if ((int)input[i] == '(')
+					i += group_len(input, i);
+				else if (is_quote((int)input[i]))
+					i += next_quote(input, i, is_quote((int)input[i]));
+				else
+					i++;
+			}
 		}
 		else
 		{
 			count++;
-			while (is_operator(input[i]))
+			while (input[i] && is_equal_next(input, i))
 				i++;
+			i++;
 		}
 	}
 	return (count);
@@ -72,21 +82,27 @@ static unsigned int	substr_count(char const *input)
 static unsigned int	substr_len(const char *str)
 {
 	unsigned int	i;
-	bool			op;
 
 	i = 0;
-	op = 0;
-	if (is_operator(str[i]))
-		op = 1;
-	if (op == 0)
+	if (!is_operator(str[i]))
 	{
-		while (str[i] && !is_operator(str[i]))
-			i++;
+		while (str[i])
+		{
+			if (is_operator(str[i]))
+				break ;
+			if ((int)str[i] == '(')
+				i += group_len(str, i);
+			else if (is_quote((int)str[i]))
+				i += next_quote(str, i, is_quote((int)str[i]));
+			else
+				i++;
+		}
 	}
 	else
 	{
-		while (str[i] && is_operator(str[i]))
+		while (str[i] && is_equal_next(str, i))
 			i++;
+		i++;
 	}
 	return (i);
 }
