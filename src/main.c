@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/06 17:41:32 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:47:54 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&word_lst, sizeof(t_word_lst));
 	ft_bzero(&env_lst, sizeof(t_env_node));
+
+	envp = NULL;
+
 	env_lst = NULL;
 	data.envp = envp;
 	if (!init_env_lst(data.envp, &env_lst)) //TODO: handle with empty env like bash

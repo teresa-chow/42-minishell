@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-10 21:12:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-10 21:12:51 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/10 21:12:51 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/11 10:51:34 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	creat_env(t_env_node **env)
 		}
 		if (!*env)
 			*env = tmp;
-		free(val);
+		if (*val)
+			free(val);
 	}
 }
 
