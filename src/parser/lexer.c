@@ -14,10 +14,10 @@
 #include "../../include/execve.h"
 
 /* Lexical analysis(1): command identification*/
-int	is_builtin()
+/*int	is_builtin()
 {
-	
-}
+
+}*/
 
 /*
 ! see quote removal

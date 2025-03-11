@@ -12,11 +12,11 @@
 
 #include "../../include/errors.h"
 
-int	error_allocation(void)
+/*int	error_allocation(void)
 {
 	ft_putendl_fd("minishell: Cannot allocate memory",2);
 	return (-1);
-}
+}*/
 
 // int	wrong_export_sintax(char *inpt)
 // {

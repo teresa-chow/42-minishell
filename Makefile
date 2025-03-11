@@ -25,7 +25,8 @@ SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) $(addprefix $(UNSET_DIR)/, unset.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
-SRC_ERRORS		= $(addprefix $(UTILS_DIR)/, errors.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, errors.c)
+TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
@@ -33,11 +34,9 @@ OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
+OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
-
-TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
-OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
 
 # ============================================================================ #
@@ -65,7 +64,7 @@ EXECVE_DIR	= $(SRC_DIR)/execve
 UTILS_DIR	= $(SRC_DIR)/utils
 ERRORS_DIR	= $(SRC_DIR)/errors
 
-TEST_DIR	= tests #delete
+TEST_DIR	= tests
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
