@@ -15,8 +15,8 @@
 #include "../include/utils.h"
 #include "../include/execve.h"
 
-//TODO:SHLVL should increment +1 when we initialize ./minishell
 
+//if we press enter when wait an input, we have seg fault
 #include "../tests/test.h" //tmp
 
 int	main(int argc, char **argv, char **envp)

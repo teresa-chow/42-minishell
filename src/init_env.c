@@ -14,7 +14,7 @@
 #include "../include/builtins.h"
 #include "../include/errors.h"
 
-void	change_ptrs(t_env_node **env, t_env_node *last, char *val, t_env_node *tmp)
+static void	change_ptrs(t_env_node **env, t_env_node *last, char *val, t_env_node *tmp)
 {
 	if (last)
 	{
@@ -25,13 +25,12 @@ void	change_ptrs(t_env_node **env, t_env_node *last, char *val, t_env_node *tmp)
 		*env = tmp;
 	if (val)
 		free(val);
-}
-	
-int	creat_env(t_env_node **env)
+}	
+static int	creat_env(t_env_node **env)
 {
 	char	*keys[] = {"OLDPWD", "PWD=", "SHLVL=", 0};
-	t_env_node *tmp;
 	char	*val;
+	t_env_node *tmp;
 	t_env_node *last;
 	int	i;
 	
@@ -55,23 +54,40 @@ int	creat_env(t_env_node **env)
 	return (0);
 }
 
-void	check_shlvl(t_env_node *tmp)
+static void	check_return(t_env_node *tmp, char **box)
+{
+	if (!tmp->var)
+		tmp->var = *box;
+	else
+		free(*box);
+}
+
+static void	check_shlvl(t_env_node *tmp)
 {
 	char	*key;
 	char	*val;
+	char	*box;
 	int	n;
 
-	(void)key;
-	(void)n;
-	// key = ft_substr(tmp->var, 0, ft_strlen(tmp->var) - ft_strlen(ft_strchr(tmp->var, '=')));
-	// val = ft_substr(tmp->var, 6, ft_strlen(ft_strchr(tmp->var, '=')));
-	if (!ft_strcmp(key, "SHLVL"))
+	key = ft_substr(tmp->var, 0, ft_strlen(tmp->var) - ft_strlen(ft_strchr(tmp->var, '=') + 1));
+	if (!key)
+		return ;
+	if (!ft_strcmp(key, "SHLVL="))
 	{
-		n = ft_atoi(val);
-		free(tmp->var);
+		val = ft_substr(tmp->var, 6, ft_strlen(ft_strchr(tmp->var, '=') + 1));
+		if (!val)
+		{
+			free(key);
+			return ;
+		}
+		n = ft_atoi(val) + 1;
+		box = tmp->var;
+		tmp->var = ft_strjoin(key, ft_itoa(n));
+		check_return(tmp, &box);
+		free(val);
 	}
+	free(key);
 }
-
 int	init_env_lst(char **envp, t_env_node **env_lst)
 {
 	int	i;
@@ -88,9 +104,9 @@ int	init_env_lst(char **envp, t_env_node **env_lst)
 		if (!tmp)
 			return (free_env_list(*env_lst, 1));
 		tmp->var = ft_strdup(envp[i]);
-		check_shlvl(tmp);
 		if (!tmp->var)
-			return (free_env_list(*env_lst, 1));
+		return (free_env_list(*env_lst, 1));
+		check_shlvl(tmp);
 		if (last)
 			last->next = tmp;
 		tmp->prev = last;
