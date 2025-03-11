@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/errors.h"
-#include "../include/builtins.h"
+#include "../../include/errors.h"
 
 int	error_allocation(void)
 {
