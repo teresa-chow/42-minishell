@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
 #include "../../include/utils.h"
+#include "../../include/builtins.h"
+#include "../../include/parse.h"
 
 void	free_strarray(char **array)
 {

@@ -12,7 +12,7 @@ void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
 		pwd();
 	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
-		export(word_lst->word , *env_lst);
+		export(word_lst->word, env_lst);
 	else if (ft_strcmp(word_lst->word->word ,"unset") == 0)
 		unset(env_lst, word_lst->word->next);
 	else

@@ -1,50 +1,47 @@
 #include "../../../include/utils.h"
 #include "../../../include/parse.h"
+#include "../../../include/errors.h"
 
-static	t_env_node	*find_in_env(t_env_node **env_lst, char	*word)
+static int	update_env(t_env_node **env, t_env_node *tmp, char *key)
 {
-	char	**var;
-	t_env_node	*last;
-	t_env_node	*tmp;
+	free(key);
+	if (tmp->prev)
+	{
+		tmp->prev->next = tmp->next;
+		if (tmp->next)
+			tmp->next->prev = tmp->prev;
+	}
+	else
+		*env = tmp->next;
+	free(tmp);
+	return (0);
+}
 
-	last = NULL;
-	tmp = *env_lst;
+static int	clean_env(t_env_node **env, char *word)
+{
+	t_env_node	*tmp;
+	char	*key;
+
+	tmp = *env;
 	while (tmp)
 	{
-		var = ft_split(tmp->var, '=');
-		// if (!var)
-		if (ft_strcmp(var[0], word) != 0)
-			free_strarray(var);
-		else
-		{
-			if (last)
-				last->next = tmp->next;
-			else
-				*env_lst = tmp->next;
-			free_strarray(var);
-			return (tmp);
-		}
-		last = tmp;
+		key = ft_substr(tmp->var, 0, ft_strlen(tmp->var) - ft_strlen(ft_strchr(tmp->var, '=')));
+		if (!key)
+			return(error_allocation());
+		if (!ft_strcmp(key, word))
+			return(update_env(env, tmp, key));
+		free(key);
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (0);
 }
 
 void	unset(t_env_node **env_lst, t_word *word_lst)
 {
-	t_env_node	*tmp;
-	t_env_node	*box;
-	
-	(void)box;
 	while (word_lst)
 	{
-		tmp = *env_lst;
-		tmp = find_in_env(env_lst, word_lst->word);
-		if (tmp)
-		{
-			box = tmp->next;
-			free(tmp);
-		}
+		if (clean_env(env_lst, word_lst->word) == -1)
+			return ;
 		word_lst = word_lst->next;
 	}
 }
