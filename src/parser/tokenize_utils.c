@@ -32,6 +32,15 @@ int	is_quote(int c)
 	return (0);
 }
 
+int	is_equal_next(const char *str, int i)
+{
+	if (!str[i + 1])
+		return (0);
+	if (str[i] == str[i + 1])
+		return (1);
+	return (0);
+}
+
 int	is_special(int c)
 {
 	return (c == '$' || c == '|' || c == '<' || c == '>' || c == '&'

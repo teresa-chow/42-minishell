@@ -17,7 +17,7 @@ void	read_input(t_data *data, t_word_lst *word_lst)
 {
 	char	*input;
 
-	word_lst->word = NULL;
+	word_lst->next = NULL;
 	input = readline("minishell> ");
 	if (input && *input)
 	{

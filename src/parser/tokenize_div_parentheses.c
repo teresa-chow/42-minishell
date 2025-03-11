@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_div_quotes.c                              :+:      :+:    :+:   */
+/*   tokenize_div_parentheses.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,38 +12,37 @@
 
 #include "../../include/parse.h"
 
-int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word) //
+int handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
-	if (is_quote(cmd[*j]))
+	unsigned int	len;
+
+	len = 0;
+	if (cmd[*j] == '(')
 	{
 		init_word(*word_lst, word);
-		(*word)->word = ft_substr(cmd, *j,
-				next_quote(cmd, *j, is_quote(cmd[*j])));
+		len = group_len(cmd, *j);
+		(*word)->word = ft_substr(cmd, *j, len);
 		if (!(*word)->word)
 			return (-1);
-		*j += next_quote(cmd, *j, is_quote(cmd[*j]));
+		*j += len;
 	}
 	return (0);
 }
 
-unsigned int	next_quote(const char *str, unsigned int start, int code)
+unsigned int	group_len(const char *str, unsigned int start)
 {
 	unsigned int	end;
+	unsigned int	len;
 
-	end = start + 1;
-	if (code == 1)
+	end = start;
+	while (str[end] && str[end] != ')')
 	{
-		while (str[end] && (str[end] != '\''))
-			end++;
-		if (str[end] && (str[end] == '\''))
-			end++;
+		end++;
+		while (str[end] == '(')
+			end += group_len(str, end);
 	}
-	else if (code == 2)
-	{
-		while (str[end] && (str[end] != '\"'))
-			end++;
-		if (str[end] && (str[end] == '\"'))
-			end++;
-	}
-	return (end - start);
+	if (str[end] == ')')
+		end++;
+	len = end - start;
+	return (len);
 }
