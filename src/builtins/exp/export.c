@@ -53,10 +53,11 @@ int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 	}
 	else
 	{
-		free(env->var);
-		env->var = ft_strjoin(arg_inf->key, arg_inf->val);
-		if (!env->var)
+		new = ft_strjoin(arg_inf->key, arg_inf->val);
+		if (!new)
 			return (error_allocation());
+		free(env->var);
+		env->var = new;
 	}
 	return (1);
 }
@@ -74,7 +75,10 @@ int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 		if (!ft_strcmp(key, inf_arg->key))
 		{
 			free(key);
-			return (update_var(env, inf_arg));
+			if (*inf_arg->val)
+				return (update_var(env, inf_arg));
+			else
+				return (1);
 		}
 		free(key);
 		env = env->next;
