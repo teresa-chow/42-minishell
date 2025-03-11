@@ -19,7 +19,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data;
+	t_data		data; //TODO: review struct elements
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
 
@@ -29,8 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&word_lst, sizeof(t_word_lst));
 	ft_bzero(&env_lst, sizeof(t_env_node));
 
-	envp = NULL;
-
 	env_lst = NULL;
 	data.envp = envp;
 	if (!init_env_lst(data.envp, &env_lst)) //TODO: handle with empty env like bash
@@ -38,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		read_input(&data, &word_lst);
-		    print_word_lst(&data, &word_lst); //tmp
+		print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
 			test_builtins(&word_lst, &env_lst);
 		// free_word_lst(&word_lst); // this will try free a static structure like word_lst and

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/03 18:03:35 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/06 15:48:14 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/03/11 15:18:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	read_input(t_data *data, t_word_lst *word_lst)
 		add_history(input);
 		data->cmd_lst = tokenize_op(input); //TODO: handle mem_alloc err
 		tokenize_w_lst(data->cmd_lst, word_lst);
+		//lexer
 	}
 	else if (input)
 		free(input);
