@@ -48,7 +48,7 @@ GNL_OBJS	= $(addprefix $(BUILD_PATH)/, $(notdir $(GNL_SRC:.c=.o)))
 # ============================================================================ #
 
 MAKE	= make -C
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 
 CC	= cc
 RM	= rm -rf
