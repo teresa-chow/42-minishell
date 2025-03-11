@@ -6,19 +6,10 @@ int	error_allocation(void)
 	ft_putendl_fd("minishell: Cannot allocate memory",2);
 	return (-1);
 }
-
 // int	wrong_export_sintax(char *inpt)
 // {
-// 	char	*tmp;
-// 	char	*tmp1;
-
-// 	tmp = ft_strjoin("minishell: export: `", inpt);
-// 	if (!tmp)
-// 		return(error_allocation());
-// 	tmp1 = ft_strjoin(tmp, "': not a valid identifier");
-// 	free(tmp);
-// 	if (!tmp1)
-// 		return (error_allocation());
-// 	ft_putendl_fd(tmp1, 2);
+// 	ft_putstr_fd("minishell: export: `", 2);
+// 	ft_putstr_fd(inpt, 2);
+// 	ft_putstr_fd ("': not a valid identifier\n", 2);
 // 	return (0);
 // }

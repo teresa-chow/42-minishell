@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/11 10:47:54 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:06:55 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../include/builtins.h"
 #include "../include/utils.h"
 #include "../include/execve.h"
+
+//TODO:SHLVL should increment +1 when we initialize ./minishell
 
 #include "../tests/test.h" //tmp
 
@@ -28,12 +30,9 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&word_lst, sizeof(t_word_lst));
 	ft_bzero(&env_lst, sizeof(t_env_node));
-
-	envp = NULL;
-
 	env_lst = NULL;
 	data.envp = envp;
-	if (!init_env_lst(data.envp, &env_lst)) //TODO: handle with empty env like bash
+	if (init_env_lst(data.envp, &env_lst) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 	while (1)
 	{

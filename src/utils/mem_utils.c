@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/27 12:06:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:15:48 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 #include "../../include/parse.h"
+#include "../../include/errors.h"
 
 void	free_strarray(char **array)
 {
@@ -27,7 +28,7 @@ void	free_strarray(char **array)
 	free(array);
 }
 
-void	free_env_list(t_env_node *lst)
+int	free_env_list(t_env_node *lst, int i)
 {
 	t_env_node *tmp;
 
@@ -35,8 +36,12 @@ void	free_env_list(t_env_node *lst)
 	{
 		tmp = lst->next;
 		free(lst->var);
+		free(lst);
 		lst = tmp;
-  }
+  	}
+	if (i)
+		return(error_allocation());
+	return (0);
 }
 
 void	free_words(t_word **word)
@@ -62,5 +67,5 @@ void	free_word_lst(t_word_lst *word_lst)
 		tmp = word_lst;
 		word_lst = word_lst->next;
 		free(tmp);
-  }
+  	}
 }
