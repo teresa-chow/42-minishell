@@ -16,15 +16,17 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
-SRC				= $(addprefix $(SRC_DIR)/, main.c init_env.c errors.c)
+SRC				= $(addprefix $(SRC_DIR)/, main.c init_env.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
-	tokenize_div_quotes.c tokenize_div_utils.c tokenize_utils.c)
+	tokenize_div_quotes.c tokenize_div_utils.c tokenize_utils.c lexer.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
-	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) $(addprefix $(UNSET_DIR)/, unset.c)
+	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) \
+	$(addprefix $(UNSET_DIR)/, unset.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c )
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, errors.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -32,6 +34,7 @@ OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
+OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
 OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
@@ -60,8 +63,7 @@ UNSET_DIR	= $(BUILTINS_DIR)/unset
 EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
-
-ERRORS_DIR	= $(SRC_DIR)
+ERRORS_DIR	= $(SRC_DIR)/errors
 
 TEST_DIR	= tests
 
@@ -94,11 +96,11 @@ MKDIR	= mkdir -p
 all: $(NAME)	## Compile minishell
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_TEST)
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+	$(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 
@@ -131,6 +133,9 @@ $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(UTILS_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(ERRORS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(TEST_DIR)/%.c

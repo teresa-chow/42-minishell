@@ -23,7 +23,10 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
-enum	e_flags
+# define BUILTIN
+# define EXT_CMD
+
+/* enum	e_flags
 {
 	NONE = 0,
 	VAR = 1,
@@ -32,12 +35,12 @@ enum	e_flags
 	EXP = 4,
 	EOF_FLAG = 5,
 	ERR = 6,
-	SPECIAL = 7 // commands fall in this cat
-};
+	SPECIAL = 7
+}; */
 
 typedef struct	s_data
 {
-	char	**envp;
+	char	**envp; //TODO: our own env_node, word_lst(?) 1st node, errcode(?)
 	char	**cmd_lst;
 }	t_data;
 

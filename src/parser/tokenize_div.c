@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// TO DO: handle memory alloc errors (returns -1)
+// TODO: handle memory alloc errors (returns -1)
 
 #include "../../include/parse.h"
+#include "../../include/utils.h"
 
 /* Tokenization (2): split words (divide by whitespaces) */
 int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
