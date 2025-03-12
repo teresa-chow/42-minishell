@@ -14,14 +14,40 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-void	free_arrays(char **wrd_arr, char **env_arr, int i)
+
+char	*get_path(char **env)
+{
+	char	*key;
+	int	len;
+	int	i;
+
+	len = 0;
+	i = -1;
+	while (env[++i])
+	{
+		len = ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '='));
+		key = ft_substr(env[i], 0, len);
+		if (!key)
+			return (NULL);
+		if (ft_strcmp(key, "PATH") == 0)
+		{
+			free(key);
+			return (env[i]);
+		}
+		free(key);
+	}
+	return (NULL);
+}
+
+int	free_arrays(char **wrd_arr, char **env_arr, int i)
 {
 	free_strarray(wrd_arr);
 	wrd_arr = NULL;
 	free_strarray(env_arr);
 	env_arr = NULL;
 	if (i)
-		error_allocation();
+		return(error_allocation());
+	return (0);
 }
 
 static int	count_words(t_env_node *env, t_word *word)
