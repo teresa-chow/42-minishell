@@ -15,7 +15,6 @@
 #include "../include/utils.h"
 #include "../include/execve.h"
 
-
 //if we press enter when wait an input, we have seg fault  <<<<---------------------------------
 #include "../tests/test.h" //tmp
 
@@ -24,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data		data; /// Add t_word_lst and t_env_node
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
+	
 
 	(void)argc;
 	(void)argv;

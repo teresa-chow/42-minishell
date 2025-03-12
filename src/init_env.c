@@ -69,6 +69,9 @@ static void	check_shlvl(t_env_node *tmp)
 	char	*box;
 	int	n;
 
+	val = NULL;
+	box = NULL;
+	n = 0;
 	key = ft_substr(tmp->var, 0, ft_strlen(tmp->var) - ft_strlen(ft_strchr(tmp->var, '=') + 1));
 	if (!key)
 		return ;

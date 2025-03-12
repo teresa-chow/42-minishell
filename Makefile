@@ -25,7 +25,7 @@ SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(PWD_DIR)/, pwd.c) \
 	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) \
 	$(addprefix $(UNSET_DIR)/, unset.c) \
-	$(addprefix $(ENV_DIR)/, env.c)
+	$(addprefix $(ENV_DIR)/, env.c execve_utils.c)
 
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c exec.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c )

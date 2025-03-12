@@ -12,6 +12,7 @@
 
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
+#include "../../include/errors.h"
 
 /*
 [ ]   /absolute/path/
@@ -22,21 +23,39 @@
 [ ] $? 127 if cmd not found
 */
 
-int	check_command()
+static char	*usr_exec(char *inpt)
 {
-	
+	char	*c;
+	char	*c1;
+
+	c = ft_strchr(inpt, '.');
+	c1 = c + 1;
+	if (c && c1 && *c1 == '/')
+		return (ft_strchr(inpt, '/') + 1);
+	return (NULL);
 }
-
-
 void	exec(t_env_node *env, t_word *word)
 {
+	char	**wrd_arr;
 	char	*path;
-	char	**argv;
-	int	i;
+	char	**env_arr;
 
-	
-	i = check_command();
-	argv = creat_arr(word);
-	path = get_path(env);
+	wrd_arr = creat_wrd_arr(word);
+	env_arr = creat_env_arr(env);
+	if (!wrd_arr || !env_arr)
+	{
+		free_arrays(wrd_arr,env_arr, 1);
+		return ;
+	}
+	if (usr_exec(word->word))
+	{
+		path = ft_strjoin(getcwd(NULL, 0), usr_exec(word->word));
+		(void)path;
+		// if (access(), F_OK) == -1)
+		// 	perror("error");
+		// else
+		// 	execve("/home/carlaugu/42_commoncore/42-minishell/minishell", wrd_arr, env_arr);
+
+	}
+	free_arrays(wrd_arr, env_arr, 0);
 }
-

@@ -20,7 +20,14 @@
 # include "utils.h"
 # include <sys/wait.h>
 
+
 char	*get_path(t_env_node *env);
 void	exec(t_env_node *env, t_word *word);
+/* -------------------------------------------------------------------------- */
+/*                                Execve Utils                                */
+/* -------------------------------------------------------------------------- */
+void	free_arrays(char **wrd_arr, char **env_arr, int i);
+char	**creat_wrd_arr(t_word *word);
+char	**creat_env_arr(t_env_node *env);
 
 #endif
