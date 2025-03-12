@@ -16,16 +16,16 @@
 /* TODO: fix echo with no arguments */
 void	echo(t_word *input)
 {
-	int	flag;
+	//int	flag;
 	t_word	*start;
 
-	flag = 0;
+	/*flag = 0;
 	if (input->next != NULL)
 		flag = input->next->flags;
 	if (flag == 2)
 		start = input->next->next;
-	else
-		start = input->next;
+	else*/
+	start = input->next;
 	while (start)
 	{
 		ft_putstr_fd(start->word, 1);
@@ -33,8 +33,8 @@ void	echo(t_word *input)
 			write (1, " ", 1);
 		start = start->next;
 	}
-	if (flag != 2)
-		write (1, "\n", 1);
+	//if (flag != 2)
+	write (1, "\n", 1);
 }
 
 // int	main(void)

@@ -19,29 +19,16 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <unistd.h>
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
-
-# define BUILTIN
-# define EXT_CMD
-
-/* enum	e_flags
-{
-	NONE = 0,
-	VAR = 1,
-	OPT = 2,
-	LIT = 3,
-	EXP = 4,
-	EOF_FLAG = 5,
-	ERR = 6,
-	SPECIAL = 7
-}; */
 
 typedef struct	s_data
 {
 	char	**envp; //TODO: our own env_node, word_lst(?) 1st node, errcode(?)
 	char	**cmd_lst;
+	char	**exec_dirs;
 }	t_data;
 
 
@@ -49,7 +36,6 @@ typedef struct s_word
 {
 	struct s_word	*next;
 	char	*word;
-	int		flags;
 }	t_word;
 
 typedef struct s_word_lst

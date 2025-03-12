@@ -43,6 +43,8 @@ void	print_word_lst(t_data *data, t_word_lst *word_lst)
 
 	lst_ptr = word_lst;
 	word_ptr = word_lst->word;
+	if (data->cmd_lst == NULL)
+		return ;
 	ft_printf("--------------------------------------\n");
 	while (data->cmd_lst[i])
 	{
