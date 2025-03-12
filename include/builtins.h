@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/06 13:38:26 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:36:39 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	unset(t_env_node **env_lst, t_word *word_lst);
 void	sort_env(t_env_node *env_lst);
 void	print_export(t_env_node *env_lst);
 int	init_env_lst(char **envp, t_env_node **env_lst);
+void	env_cmd(t_env_node *env);
 /* ================================== EXIT ================================== */
 
 #endif

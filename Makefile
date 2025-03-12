@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/03/06 11:39:54 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/03/12 13:50:32 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,13 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
 	tokenize_div_quotes.c tokenize_div_utils.c tokenize_utils.c)
 SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
-	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
-	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) $(addprefix $(UNSET_DIR)/, unset.c)
-SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
+	$(addprefix $(CD_DIR)/, cd.c) \
+	$(addprefix $(PWD_DIR)/, pwd.c) \
+	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) \
+	$(addprefix $(UNSET_DIR)/, unset.c) \
+	$(addprefix $(ENV_DIR)/, env.c)
+
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c exec.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c )
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
@@ -56,6 +60,7 @@ CD_DIR		= $(BUILTINS_DIR)/cd
 PWD_DIR		= $(BUILTINS_DIR)/pwd
 EXPORT_DIR	= $(BUILTINS_DIR)/exp
 UNSET_DIR	= $(BUILTINS_DIR)/unset
+ENV_DIR	= $(BUILTINS_DIR)/env
 
 EXECVE_DIR	= $(SRC_DIR)/execve
 
@@ -125,6 +130,9 @@ $(BUILD_DIR)/%.o: $(EXPORT_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(UNSET_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(ENV_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c

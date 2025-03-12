@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/11 13:06:55 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/12 11:18:20 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data;
+	t_data		data; /// Add t_word_lst and t_env_node
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
 

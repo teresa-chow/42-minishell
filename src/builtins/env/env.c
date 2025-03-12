@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 13:57:47 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/12 13:33:30 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/12 11:32:22 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/12 11:36:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/builtins.h"
-#include "../../../include/parse.h"
 
-/* TODO: check here if there is -n or -nnnn, etc*/
-void	echo(t_word *input)
+void	env_cmd(t_env_node *env)
 {
-	int	flag;
-	t_word	*start;
+	char	*equal;
 
-	flag = 0;
-	if (input->next != NULL)
-		flag = input->next->flags;
-	if (flag == 2)
-		start = input->next->next;
-	else
-		start = input->next;
-	while (start)
+	while (env)
 	{
-		ft_putstr_fd(start->word, 1);
-		if (start->next)
-			write (1, " ", 1);
-		start = start->next;
+		equal = ft_strchr(env->var, '=');
+		if (equal)
+			ft_putendl_fd(env->var, 1);
+		env = env->next;
 	}
-	if (flag != 2)
-		write (1, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/11 13:39:43 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/12 12:07:03 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,7 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 	t_ipt_inf	inf_arg;
 
 	if (!word_lst->next)
-	{
 		sort_env(*env_lst);
-		print_export(*env_lst);
-	}
 	else
 	{
 		ft_bzero(&inf_arg, sizeof(t_ipt_inf));

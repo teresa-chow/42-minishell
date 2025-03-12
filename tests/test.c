@@ -15,8 +15,10 @@ void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 		export(word_lst->word, env_lst);
 	else if (ft_strcmp(word_lst->word->word ,"unset") == 0)
 		unset(env_lst, word_lst->word->next);
+	else if (ft_strcmp(word_lst->word->word ,"env") == 0)
+		env_cmd(*env_lst);
 	else
-		check_command(word_lst, *env_lst); // change env_parameter to an bidimensional array
+		exec(*env_lst, word_lst->word);
 }
 
 /*****************************************************************************\

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/06 11:22:26 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:55:58 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "utils.h"
 # include <sys/wait.h>
 
-char	*get_path(char **envp);
-void	check_command(t_word_lst *input, t_env_node *env_lst);
+char	*get_path(t_env_node *env);
+void	exec(t_env_node *env, t_word *word);
 
 #endif

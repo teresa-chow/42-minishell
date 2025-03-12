@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path.c                                         :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 16:48:04 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/12 13:56:24 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/12 13:36:09 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/12 14:20:49 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/builtins.h"
 #include "../../include/execve.h"
-#include "../../include/utils.h"
 
-char	*get_path(t_env_node *env)
+/*
+[ ]   /absolute/path/
+[ ]  ../../relative/path/
+[ ]  exec_name
+[ ] ./user_exec
+[ ] ./path/to/user_exec
+[ ] $? 127 if cmd not found
+*/
+
+int	check_command()
 {
-	char	*env_var;
-	char	**key;
-
-	while (env)
-	{
-		env_var = env->var;
-		key = ft_split(env_var, '=');
-		if (ft_strcmp(key[0], "PATH") == 0)
-		{
-			free_strarray(key);
-			return (env_var);
-		}
-		free_strarray(key);
-		env = env->next;
-	}
-	return (env_var);
+	
 }
+
+
+void	exec(t_env_node *env, t_word *word)
+{
+	char	*path;
+	char	**argv;
+	int	i;
+
+	
+	i = check_command();
+	argv = creat_arr(word);
+	path = get_path(env);
+}
+

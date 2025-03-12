@@ -3,29 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-08 15:16:37 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/12 12:20:43 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/utils.h"
 #include "../../../include/builtins.h"
 
+int	creat_copy(t_env_node **copy, t_env_node *env)
+{
+	t_env_node	*tmp;
+	t_env_node	*last;
+
+	last = NULL;
+	while (env)
+	{
+		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
+		if (!tmp)
+			return (free_env_list(*copy, 1));
+		tmp->var = ft_strdup(env->var);
+		if (!tmp->var)
+			return (free_env_list(*copy, 1));
+		if (!*copy)
+			*copy = tmp;
+		tmp->prev = last;
+		if (tmp->prev)
+			tmp->prev->next = tmp;
+		last = tmp;
+		env = env->next;	
+	}
+	return (0);
+}
+
 void sort_env(t_env_node *env_lst)
 {
 	int	check;
 	char	*box;
 	t_env_node	*tmp;
+	t_env_node	*copy;
 
 	if (!env_lst)
 		return ;
 	check = 1;
+	copy = NULL;
+	if (creat_copy(&copy, env_lst) == -1)
+		return ;
 	while (check)
 	{
 		check = 0;
-		tmp = env_lst;
+		tmp = copy;
 		while (tmp && tmp->next)
 		{
 			if (ft_strcmp(tmp->var, tmp->next->var) > 0)
@@ -38,6 +67,8 @@ void sort_env(t_env_node *env_lst)
 			tmp = tmp->next;
 		}
 	}
+	print_export(copy);
+	free_env_list(copy, 0);
 }
 
 static	int	print_var_name(char *s)
