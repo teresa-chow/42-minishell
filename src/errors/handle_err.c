@@ -14,9 +14,9 @@
 
 int err_syntax(char *token)
 {
-	print_fd(2, "minishell: syntax error near unexpected token `%c'\n", 
+	print_fd(2, "minishell: syntax error near unexpected token `%s'\n", 
 		token);
-	return (2);
+	return (ERR_BI);
 }
 
 int	error_allocation(void)

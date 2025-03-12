@@ -67,6 +67,9 @@ unsigned int	next_quote(const char *str, unsigned int start, int	code);
 int		add_word(t_word **word_desc);
 int		add_word_lst(t_word_lst **word_lst);
 
+/* ============================ SYNTAX ANALYSIS ============================ */
+int		syntax_analysis(t_word_lst *word_lst);
+
 #endif
 
 /* A command is a word list, the result of expansion is a word list, and the

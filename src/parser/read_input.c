@@ -24,7 +24,7 @@ void	read_input(t_data *data, t_word_lst *word_lst)
 		add_history(input);
 		data->cmd_lst = tokenize_op(input); //TODO: handle mem_alloc err
 		tokenize_w_lst(data->cmd_lst, word_lst);
-		//lexer
+		syntax_analysis(word_lst);
 	}
 	else if (input)
 		free(input);
