@@ -24,12 +24,18 @@ by SIGINT; 255-exit status out of range */
 # define ERR_INT 130
 # define ERR_OOR 255
 
+# include <unistd.h>
+
 # include "parse.h"
 # include "builtins.h"
+
+/* ============================== PRINT ERROR ============================== */
+void	print_fd(int fd, const char *msg, char *token);
 
 /* -------------------------------------------------------------------------- */
 /*                                      Errors                                */
 /* -------------------------------------------------------------------------- */
+int err_syntax(char *token);
 int	error_allocation(void);
 // int	wrong_export_sintax(char *inpt);
 

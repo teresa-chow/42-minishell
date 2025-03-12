@@ -26,7 +26,7 @@ SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
 	$(addprefix $(UNSET_DIR)/, unset.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
-SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, errors.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c print_err.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))

@@ -14,6 +14,7 @@
 #include "../include/builtins.h"
 #include "../include/utils.h"
 #include "../include/execve.h"
+#include "../include/errors.h"
 
 #include "../tests/test.h" //tmp
 
