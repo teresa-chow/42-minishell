@@ -60,9 +60,9 @@ static void	check_shlvl(t_env_node *tmp)
 
 	box = NULL;
 	n = 0;
-	if (!ft_strcmp(tmp->key, "SHLVL="))
+	if (!ft_strcmp(tmp->key, "SHLVL"))
 	{
-		n = ft_atoi(tmp->val) + 1;
+		n = ft_atoi(ft_strchr(tmp->val, '=') + 1) + 1;
 		box = tmp->val;
 		tmp->val = ft_itoa(n);
 		if (!tmp->val)

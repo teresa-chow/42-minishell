@@ -16,22 +16,10 @@
 
 char	*get_path(t_env_node *env)
 {
-	char	*key;
-	int	len;
-
-	len = 0;
 	while (env)
 	{
-		len = ft_strlen(env->var) - ft_strlen(ft_strchr(env->var, '='));
-		key = ft_substr(env->var, 0, len);
-		if (!key)
-			return (NULL);
-		if (ft_strcmp(key, "PATH") == 0)
-		{
-			free(key);
-			return (env->var);
-		}
-		free(key);
+		if (ft_strcmp(env->key, "PATH") == 0)
+			return (env->val);
 		env = env->next;
 	}
 	return (NULL);
@@ -99,7 +87,7 @@ char	**creat_env_arr(t_env_node *env)
 	i = -1;
 	while (env)
 	{
-		arr[++i] = ft_strdup(env->var);
+		arr[++i] = ft_strjoin(env->key, env->val);
 		if (!arr[i])
 			return (NULL);
 		env = env->next; 

@@ -35,52 +35,34 @@ char	find_sep(char *s)
 
 int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 {
-	char	*new;
 	char	*new_val;
 
-	if (arg_inf->sep == '+' && ft_strchr(env->var, '='))
+	if (arg_inf->sep == '+' && ft_strchr(env->val, '='))
 	{
-		new_val = ft_strdup(ft_strchr(arg_inf->val, '=') + 1);
+		new_val = ft_strdup(ft_strchr(arg_inf->val, '='));
 		if (!new_val)
 			return (error_allocation());
 		free(arg_inf->val);
-		arg_inf->val = new_val;
-		new = ft_strjoin(env->var, arg_inf->val);
-		if (!new)
-			return (error_allocation());
-		free(env->var);
-		env->var = new;
 	}
 	else
 	{
-		new = ft_strjoin(arg_inf->key, arg_inf->val);
-		if (!new)
-			return (error_allocation());
-		free(env->var);
-		env->var = new;
+		free(env->val);
+		env->val = arg_inf->val;
 	}
 	return (1);
 }
 
 int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 {
-	char	*key;
-	
-	key = NULL;
 	while (env)
 	{
-		key = ft_substr(env->var, 0, ft_strlen(env->var) - ft_strlen(ft_strchr(env->var, '=')));
-		if (!key)
-			return (error_allocation());
-		if (!ft_strcmp(key, inf_arg->key))
+		if (!ft_strcmp(env->key, inf_arg->key))
 		{
-			free(key);
 			if (*inf_arg->val)
 				return (update_var(env, inf_arg));
 			else
 				return (1);
 		}
-		free(key);
 		env = env->next;
 	}
 	return (0);
@@ -122,9 +104,14 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
 			return (-1);
-		tmp->var = ft_strjoin(inf_arg->key, inf_arg->val);
-		if (!tmp->var)
+		tmp->key = inf_arg->key;
+		tmp->val = inf_arg->val;
+		if (!tmp->key || !tmp->val)
 		{
+			if (tmp->key)
+				free(tmp->key);
+			if (tmp->val)
+				free(tmp->val);
 			free(tmp);
 			return (-1);
 		}

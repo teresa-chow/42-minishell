@@ -18,9 +18,12 @@ void	env_cmd(t_env_node *env)
 
 	while (env)
 	{
-		equal = ft_strchr(env->var, '=');
+		equal = ft_strchr(env->val, '=');
 		if (equal)
-			ft_putendl_fd(env->var, 1);
+		{
+			ft_putstr_fd(env->key, 1);
+			ft_putendl_fd(env->val, 1);
+		}
 		env = env->next;
 	}
 }

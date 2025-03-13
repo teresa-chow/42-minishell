@@ -2,9 +2,8 @@
 #include "../../../include/parse.h"
 #include "../../../include/errors.h"
 
-static int	update_env(t_env_node **env, t_env_node *tmp, char *key)
+static int	update_env(t_env_node **env, t_env_node *tmp)
 {
-	free(key);
 	if (tmp->prev)
 	{
 		tmp->prev->next = tmp->next;
@@ -20,17 +19,12 @@ static int	update_env(t_env_node **env, t_env_node *tmp, char *key)
 static int	clean_env(t_env_node **env, char *word)
 {
 	t_env_node	*tmp;
-	char	*key;
 
 	tmp = *env;
 	while (tmp)
 	{
-		key = ft_substr(tmp->var, 0, ft_strlen(tmp->var) - ft_strlen(ft_strchr(tmp->var, '=')));
-		if (!key)
-			return(error_allocation());
-		if (!ft_strcmp(key, word))
-			return(update_env(env, tmp, key));
-		free(key);
+		if (!ft_strcmp(tmp->key, word))
+			return(update_env(env, tmp));
 		tmp = tmp->next;
 	}
 	return (0);
