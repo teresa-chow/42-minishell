@@ -137,7 +137,7 @@ int	set_inf(char *word, t_ipt_inf *inf_arg)
 	inf_arg->sep = find_sep(word);
 	inf_arg->key = ft_substr(word, 0, ft_strlen(word) - ft_strlen(ft_strchr(word, inf_arg->sep)));
 	if (!inf_arg->key)
-		return (error_allocation());
+		return (-1);
 	inf_arg->val_strt = ft_strlen(word) - ft_strlen(ft_strchr(word, '='));
 	inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(ft_strchr(word, '=')));
 	if (!inf_arg->val)
@@ -172,7 +172,10 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 		while (word_lst)
 		{
 			if (set_inf(word_lst->word, &inf_arg) == -1)
+			{
+				error_allocation();
 				return ;
+			}
 			if (add_var(env_lst, &inf_arg) == -1)
 				return ;
 			reset_inf(&inf_arg);

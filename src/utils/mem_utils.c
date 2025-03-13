@@ -37,7 +37,8 @@ int	free_env_list(t_env_node *lst, int i)
 	while (lst)
 	{
 		tmp = lst->next;
-		free(lst->var);
+		free(lst->key);
+		free(lst->val);
 		free(lst);
 		lst = tmp;
   	}

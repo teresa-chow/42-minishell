@@ -41,7 +41,7 @@ int	creat_copy(t_env_node **copy, t_env_node *env)
 void sort_env(t_env_node *env_lst)
 {
 	int	check;
-	char	*box;
+	t_env_node	*box;
 	t_env_node	*tmp;
 	t_env_node	*copy;
 
@@ -57,12 +57,11 @@ void sort_env(t_env_node *env_lst)
 		tmp = copy;
 		while (tmp && tmp->next)
 		{
-			if (ft_strcmp(tmp->var, tmp->next->var) > 0)
+			if (ft_strcmp(tmp->key, tmp->next->key) > 0)
 			{
 				check = 1;
-				box = tmp->var;
-				tmp->var = tmp->next->var;
-				tmp->next->var = box;
+				box = tmp;
+				tmp = tmp->next;
 			}
 			tmp = tmp->next;
 		}

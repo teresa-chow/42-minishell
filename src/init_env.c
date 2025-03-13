@@ -14,7 +14,7 @@
 #include "../include/builtins.h"
 #include "../include/errors.h"
 
-static void	change_ptrs(t_env_node **env, t_env_node *last, char *val, t_env_node *tmp)
+static void	change_ptrs(t_env_node **env, t_env_node *last, t_env_node *tmp)
 {
 	if (last)
 	{
@@ -23,8 +23,6 @@ static void	change_ptrs(t_env_node **env, t_env_node *last, char *val, t_env_nod
 	}
 	if (!*env)
 		*env = tmp;
-	if (val)
-		free(val);
 }	
 static int	creat_env(t_env_node **env)
 {
@@ -46,56 +44,74 @@ static int	creat_env(t_env_node **env)
 			val = getcwd(NULL, 0);
 		else if (!ft_strcmp(keys[i], "SHLVL="))
 			val = ft_strdup("1");
-		tmp->var = ft_strjoin(ft_strdup(keys[i]), val);
-		if (!tmp->var)
+		tmp->key = ft_strdup(keys[i]);
+		tmp->val = val;
+		if (!tmp->key || !tmp->val)
 			return (free_env_list(*env, 1));
-		change_ptrs(env, last, val, tmp);
+		change_ptrs(env, last, tmp);
 	}
 	return (0);
 }
 
-static void	check_return(t_env_node *tmp, char **box)
-{
-	if (!tmp->var)
-		tmp->var = *box;
-	else
-		free(*box);
-}
-
 static void	check_shlvl(t_env_node *tmp)
 {
-	char	*key;
-	char	*val;
 	char	*box;
 	int	n;
 
-	val = NULL;
 	box = NULL;
 	n = 0;
-	key = ft_substr(tmp->var, 0, ft_strlen(tmp->var) - ft_strlen(ft_strchr(tmp->var, '=') + 1));
-	if (!key)
-		return ;
-	if (!ft_strcmp(key, "SHLVL="))
+	if (!ft_strcmp(tmp->key, "SHLVL="))
 	{
-		val = ft_substr(tmp->var, 6, ft_strlen(ft_strchr(tmp->var, '=') + 1));
-		if (!val)
-		{
-			free(key);
-			return ;
-		}
-		n = ft_atoi(val) + 1;
-		box = tmp->var;
-		tmp->var = ft_strjoin(key, ft_itoa(n));
-		check_return(tmp, &box);
-		free(val);
+		n = ft_atoi(tmp->val) + 1;
+		box = tmp->val;
+		tmp->val = ft_itoa(n);
+		if (!tmp->val)
+			tmp->val = box;
+		else
+			free(box);
 	}
-	free(key);
+}
+
+char	find_sep_a(char *s) // this is duplicate by export
+{
+	char	*tmp;
+
+	tmp = s;
+	while (*tmp)
+	{
+		if (*tmp == '+' && *(tmp + 1) == '=')
+			return ('+');
+		// else if (*tmp == '+' && *(tmp + 1) != '=')
+		// {
+		// 	wrong_export_sintax(s);
+		// 	return (0);                
+		// }                               // -----> se the comment in 130 line about sintax
+		tmp++;
+	}
+	return ('=');
+}
+
+int	set_inf_a(char *word, t_ipt_inf *inf_arg) // this is duplicate by export
+{
+	inf_arg->sep = find_sep_a(word);
+	inf_arg->key = ft_substr(word, 0, ft_strlen(word) - ft_strlen(ft_strchr(word, inf_arg->sep)));
+	if (!inf_arg->key)
+		return (-1);
+	inf_arg->val_strt = ft_strlen(word) - ft_strlen(ft_strchr(word, '='));
+	inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(ft_strchr(word, '=')));
+	if (!inf_arg->val)
+	{
+		free(inf_arg->key);
+		return (-1);
+	}
+	return (0);
 }
 int	init_env_lst(char **envp, t_env_node **env_lst)
 {
 	int	i;
 	t_env_node	*tmp;
 	t_env_node	*last;
+	t_ipt_inf	inf;
 
 	i = -1;
 	last = NULL;
@@ -103,12 +119,13 @@ int	init_env_lst(char **envp, t_env_node **env_lst)
 		return(creat_env(env_lst));	
 	while (envp && envp[++i])
 	{
+		if(set_inf_a(envp[i], &inf) == -1)
+			return (free_env_list(*env_lst, 1));
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
 			return (free_env_list(*env_lst, 1));
-		tmp->var = ft_strdup(envp[i]);
-		if (!tmp->var)
-		return (free_env_list(*env_lst, 1));
+		tmp->key = inf.key;
+		tmp->val = inf.val;
 		check_shlvl(tmp);
 		if (last)
 			last->next = tmp;

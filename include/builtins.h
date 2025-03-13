@@ -20,7 +20,8 @@
 
 typedef struct s_env_node
 {
-	char	*var;
+	char	*key;
+	char	*val;
 	struct s_env_node *next;
 	struct s_env_node *prev;
 }	t_env_node;
