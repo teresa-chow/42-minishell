@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	(void)envp;
 	//ft_bzero(&data, sizeof(t_data)); //ft_bzero(&env_lst, sizeof(t_env_node));
 	//env_lst = NULL;
 	//if (!init_env_lst(envp, &env_lst)) //TODO: handle with empty env like bash

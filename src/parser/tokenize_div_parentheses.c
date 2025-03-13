@@ -38,6 +38,8 @@ unsigned int	group_len(const char *str, unsigned int start)
 	while (str[end] && str[end] != ')')
 	{
 		end++;
+		if (is_quote(str[end]))
+			end += next_quote(str, end, is_quote(str[end]));
 		while (str[end] == '(')
 			end += group_len(str, end);
 	}

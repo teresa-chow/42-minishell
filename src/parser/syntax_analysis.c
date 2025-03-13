@@ -18,10 +18,17 @@
 /*int	syntax_analysis(t_word_lst *word_lst)
 {
 	t_word_lst	*tmp_lst;
-	t_word		*tmt_data *data, 
-}
+	t_word		*tmp_word;
 
-static int	check_logical_op(t_word_lst *word_lst, t_word_lst *tmp_lst) //if first or next == NULL
+	tmp_lst = word_lst;
+	tmp_word = word_lst->word;
+	while (tmp_lst)
+	{check_logical_op()
+		tmp_lst = tmp_lst->next;
+	}
+}*/
+
+/*static int	check_logical_op(t_word_lst *word_lst, t_word_lst *tmp_lst) //if first or next == NULL
 {
 	if (is_operator(tmp_lst->word->word[0]))
 	{
