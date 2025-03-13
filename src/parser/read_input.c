@@ -13,19 +13,23 @@
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
-void	read_input(t_data *data, t_word_lst *word_lst)
+void	read_input(t_word_lst **word_lst)
 {
 	char	*input;
+	char	**cmd_lst;
 
-	word_lst->next = NULL;
 	input = readline("minishell> ");
 	if (input && *input)
 	{
 		add_history(input);
-		data->cmd_lst = tokenize_op(input); //TODO: handle mem_alloc err
-		tokenize_w_lst(data->cmd_lst, word_lst);
-		//syntax_analysis(word_lst);
+		cmd_lst = tokenize_op(input);
+		if (cmd_lst)
+		{
+			tokenize_w_lst(cmd_lst, *word_lst);
+			free_strarray(cmd_lst);
+			//syntax_analysis(word_lst);
+		}
 	}
-	else if (input)
+	if (input)
 		free(input);
 }

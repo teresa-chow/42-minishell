@@ -52,15 +52,15 @@ void	free_words(t_word **word)
 	}
 }
 
-void	free_word_lst(t_word_lst *word_lst)
+void	free_word_lst(t_word_lst **word_lst)
 {
 	t_word_lst	*tmp;
 
-	while (word_lst != NULL)
+	while (*word_lst)
 	{
-		free_words(&word_lst->word);
-		tmp = word_lst;
-		word_lst = word_lst->next;
+		free_words(&(*word_lst)->word);
+		tmp = *word_lst;
+		*word_lst = (*word_lst)->next;
 		free(tmp);
-  }
+	}
 }

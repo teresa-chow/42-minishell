@@ -35,7 +35,7 @@ void	print_fd(int fd, const char *msg, char *token);
 
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);
-void	free_word_lst(t_word_lst *word_lst);
+void	free_word_lst(t_word_lst **word_lst);
 void	free_words(t_word **word);
 void	free_env_list(t_env_node *lst);
 

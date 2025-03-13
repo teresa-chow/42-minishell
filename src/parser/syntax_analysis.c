@@ -18,15 +18,7 @@
 /*int	syntax_analysis(t_word_lst *word_lst)
 {
 	t_word_lst	*tmp_lst;
-	t_word		*tmp_word;
-
-	tmp_lst = word_lst;
-	tmp_word = word_lst->word;
-	check_op_syntax(tmp_word->word);
-	//logical operators need cmd before and after
-	//unclosed strong and weak quotes
-	//return (err_syntax());
-	return (0);
+	t_word		*tmt_data *data, 
 }
 
 static int	check_logical_op(t_word_lst *word_lst, t_word_lst *tmp_lst) //if first or next == NULL

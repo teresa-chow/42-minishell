@@ -27,8 +27,6 @@
 typedef struct	s_data
 {
 	char	**envp; //TODO: our own env_node, word_lst(?) 1st node, errcode(?)
-	char	**cmd_lst;
-	char	**exec_dirs;
 }	t_data;
 
 
@@ -45,7 +43,7 @@ typedef struct s_word_lst
 }	t_word_lst;
 
 /* =========================== INPUT PROCESSING ============================= */
-void	read_input(t_data *data, t_word_lst *word_lst);
+void	read_input(t_word_lst **word_lst);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char	**tokenize_op(char *input);
@@ -71,7 +69,7 @@ int		is_unhandled(int c);
 int		is_equal_next(const char *str, int i);
 
 /* ============================ SYNTAX ANALYSIS ============================ */
-//int		syntax_analysis(t_word_lst *word_lst);
+int		syntax_analysis(t_word_lst *word_lst);
 
 #endif
 

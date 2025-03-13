@@ -25,9 +25,9 @@ char	**tokenize_op(char *input)
 
 	i = 0;
 	j = 0;
-	cmd_lst = malloc((substr_count(input) + 1) * sizeof(char *));
+	cmd_lst = ft_calloc(1, ((substr_count(input) + 1) * sizeof(char *)));
 	if (!input || !cmd_lst)
-		return (0);
+		return (NULL);
 	while (input[i] != '\0')
 	{
 		cmd_lst[j] = ft_substr(input, i, substr_len(&input[i]));
@@ -40,7 +40,6 @@ char	**tokenize_op(char *input)
 		i += substr_len(&input[i]);
 	}
 	cmd_lst[j] = 0;
-	free(input);
 	return (cmd_lst);
 }
 

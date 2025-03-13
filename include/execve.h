@@ -21,6 +21,6 @@
 # include <sys/wait.h>
 
 char	*get_path(char **envp);
-void	check_command(t_word_lst *input, t_env_node *env_lst);
+void	check_command(t_word_lst **input, t_env_node *env_lst);
 
 #endif

@@ -39,13 +39,13 @@ static int	find_slash(char *s)
 	}
 	return (0);
 }
-void	check_command(t_word_lst *input, t_env_node *env_lst)
+void	check_command(t_word_lst **input, t_env_node *env_lst)
 {
 	char	**arr;
 	pid_t	pid;
 
 	(void)env_lst;
-	arr = creat_arr(input);
+	arr = creat_arr(*input);
 	if (find_slash(arr[0]))
 	{
 		pid = fork();

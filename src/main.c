@@ -20,28 +20,26 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data; //TODO: review struct elements
-	t_word_lst	word_lst;
-	t_env_node	*env_lst;
+	//t_data		data; //TODO: review struct elements
+	t_word_lst	*word_lst;
+	//t_env_node	*env_lst;
 
 	(void)argc;
 	(void)argv;
-	ft_bzero(&data, sizeof(t_data));
-	ft_bzero(&word_lst, sizeof(t_word_lst));
-	ft_bzero(&env_lst, sizeof(t_env_node));
-
-	env_lst = NULL;
-	data.envp = envp;
-	if (!init_env_lst(data.envp, &env_lst)) //TODO: handle with empty env like bash
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
+	//ft_bzero(&data, sizeof(t_data)); //ft_bzero(&env_lst, sizeof(t_env_node));
+	//env_lst = NULL;
+	//if (!init_env_lst(envp, &env_lst)) //TODO: handle with empty env like bash
+	//	ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 	while (1)
 	{
-		read_input(&data, &word_lst);
-		print_word_lst(&data, &word_lst); //tmp
-		if (word_lst.word != NULL)
-			test_builtins(&word_lst, &env_lst);
-		// free_word_lst(&word_lst); // this will try free a static structure like word_lst and
-					//   will fail. We have to create a pointer to struct
+		word_lst = ft_calloc(1, sizeof(t_word_lst));
+		if (!word_lst)
+			break ;
+		read_input(&word_lst);
+		print_word_lst(&word_lst); //tmp
+		//if (word_lst->word != NULL)
+		//	test_builtins(&word_lst, &env_lst);
+		free_word_lst(&word_lst);
 	}
 	//rl_clear_history();
 	return (0);
