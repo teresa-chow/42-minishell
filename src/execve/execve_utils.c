@@ -14,31 +14,28 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-
-char	*get_path(char **env)
+char	*get_path(t_env_node *env)
 {
 	char	*key;
 	int	len;
-	int	i;
 
 	len = 0;
-	i = -1;
-	while (env[++i])
+	while (env)
 	{
-		len = ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '='));
-		key = ft_substr(env[i], 0, len);
+		len = ft_strlen(env->var) - ft_strlen(ft_strchr(env->var, '='));
+		key = ft_substr(env->var, 0, len);
 		if (!key)
 			return (NULL);
 		if (ft_strcmp(key, "PATH") == 0)
 		{
 			free(key);
-			return (env[i]);
+			return (env->var);
 		}
 		free(key);
+		env = env->next;
 	}
 	return (NULL);
 }
-
 int	free_arrays(char **wrd_arr, char **env_arr, int i)
 {
 	free_strarray(wrd_arr);
@@ -49,7 +46,6 @@ int	free_arrays(char **wrd_arr, char **env_arr, int i)
 		return(error_allocation());
 	return (0);
 }
-
 static int	count_words(t_env_node *env, t_word *word)
 {
 	int	count;
@@ -73,7 +69,6 @@ static int	count_words(t_env_node *env, t_word *word)
 	}
 	return (count);
 }
-
 char	**creat_wrd_arr(t_word *word)
 {
 	int	i;

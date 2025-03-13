@@ -3,7 +3,7 @@
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
-void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
+void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst, t_data *data)
 {
 	if (ft_strcmp(word_lst->word->word, "echo") == 0)
 		echo(word_lst->word);
@@ -18,7 +18,7 @@ void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst)
 	else if (ft_strcmp(word_lst->word->word ,"env") == 0)
 		env_cmd(*env_lst);
 	else
-		exec(*env_lst, word_lst->word);
+		exec(*env_lst, word_lst->word, data);
 }
 
 /*****************************************************************************\

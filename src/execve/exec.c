@@ -33,47 +33,20 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
-int	handle_sys_exec(char **wrd_arr, char **env_arr, t_word *word)
+//WIFEXITED(status)
+int	handle_sys_exec(char **wrd_arr, char **env_arr, t_word *word, t_data *data)
 {
-	int	i;
-	pid_t	pid;
-	char	*env_path;
-	char	**path;
-	char	*box;
-	char	*box1;
 
-	(void)box1;
-	pid = fork();
-	env_path = get_path(env_arr);
-	path = ft_split(ft_strchr(env_path, '=') + 1, ':');
-	i = -1;
-	while (path[++i])
-	{
-		box = ft_strjoin("/", word->word);
-		box1 = path[i];
-		path[i] = ft_strjoin(path[i], box);
-		if (!access(path[i], F_OK) && !access(path[i], X_OK))
-		{
-			if (pid < 0)
-			{
-				perror("fork failed");
-				///how to do here if fail??? return error code?
-			}
-			else if (pid == 0)
-			{
-				if (execve(path[i], wrd_arr, env_arr) < 0)
-					perror("errorwe");
-			}
-			else
-				wait(NULL);
-		}
-		// else
-		// 	perror("error"); i have to see this
-	}
+	(void)wrd_arr;
+	(void)env_arr;
+	(void)word;
+	(void)data;
+	
+
 	return (0);
 }
 
-int	exec(t_env_node *env, t_word *word)
+int	exec(t_env_node *env, t_word *word, t_data *data)
 {
 	char	**wrd_arr;
 	char	**env_arr;
@@ -84,9 +57,7 @@ int	exec(t_env_node *env, t_word *word)
 	if (!wrd_arr || !env_arr)
 		return (free_arrays(wrd_arr, env_arr, 1));
 	if (!find_slash(word->word))
-	{
-		handle_sys_exec(wrd_arr, env_arr, word);
-	}
+		handle_sys_exec(wrd_arr, env_arr, word, data);
 	free_arrays(wrd_arr, env_arr, 0);
 	return (0);
 }

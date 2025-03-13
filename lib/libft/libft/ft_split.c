@@ -56,6 +56,8 @@ char	**ft_split(char const *s, char c)
 	int		i;
 	int		j;
 
+	if (!s)
+		return (NULL);
 	str = malloc((ft_substr_count(s, c) + 1) * sizeof(char *));
 	if (!s || !str)
 		return (0);

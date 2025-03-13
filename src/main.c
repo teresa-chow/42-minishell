@@ -18,28 +18,30 @@
 //if we press enter when wait an input, we have seg fault  <<<<---------------------------------
 #include "../tests/test.h" //tmp
 
+void	reset_structs(t_data *data, t_word_lst *word_lst)
+{
+	ft_bzero(&data, sizeof(t_data));
+	ft_bzero(&word_lst, sizeof(t_word_lst));
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		data; /// Add t_word_lst and t_env_node
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
 	
-
 	(void)argc;
 	(void)argv;
-	ft_bzero(&data, sizeof(t_data));
-	ft_bzero(&word_lst, sizeof(t_word_lst));
-	ft_bzero(&env_lst, sizeof(t_env_node));
-	env_lst = NULL;
-	data.envp = envp;
-	if (init_env_lst(data.envp, &env_lst) == -1)
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
+	reset_structs(&data, &word_lst);
+	if (init_env_lst(envp, &env_lst) == -1)
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);	
+	data.path = ft_split(ft_strchr(get_path(env_lst), '/'), ':');
 	while (1)
 	{
 		read_input(&data, &word_lst);
 		    print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
-			test_builtins(&word_lst, &env_lst);
+			test_builtins(&word_lst, &env_lst, &data);
 		// free_word_lst(&word_lst); // this will try free a static structure like word_lst and
 					//   will fail. We have to create a pointer to struct
 	}

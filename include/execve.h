@@ -21,8 +21,8 @@
 # include <sys/wait.h>
 
 
-char	*get_path(char **env);
-int	exec(t_env_node *env, t_word *word);
+char	*get_path(t_env_node *env);
+int	exec(t_env_node *env, t_word *word, t_data *data);
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */
 /* -------------------------------------------------------------------------- */

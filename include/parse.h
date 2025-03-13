@@ -37,8 +37,10 @@ enum	e_flags
 
 typedef struct	s_data
 {
-	char	**envp;
+	// char	**envp;
 	char	**cmd_lst;
+	char	**path;
+	// int	error_code
 }	t_data;
 
 
