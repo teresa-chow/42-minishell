@@ -13,11 +13,14 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+# include <unistd.h>
 # include <stdlib.h>
+
+# include "parse.h"
+# include "builtins.h"
+
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
-# include "builtins.h"
-# include "parse.h"
 
 typedef	struct s_ipt_inf
 {
@@ -26,6 +29,9 @@ typedef	struct s_ipt_inf
 	char	sep;
 	int	val_strt;
 }	t_ipt_inf;
+
+/* =============================== PRINT TO FD ============================== */
+void	print_fd(int fd, const char *msg, char *token);
 
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);

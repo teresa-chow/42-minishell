@@ -58,6 +58,13 @@ static unsigned int	substr_count(char const *input) //TODO: refactor
 			count++;
 			while (input[i])
 			{
+				if (is_redirection(input[i]))
+				{
+					while (is_redirection(input[i]))
+						i++;
+					while (input[i] == '|')
+						i++;
+				}
 				if (is_operator(input[i]))
 					break ;
 				if ((int)input[i] == '(')
@@ -88,6 +95,13 @@ static unsigned int	substr_len(const char *str)
 	{
 		while (str[i])
 		{
+			if (is_redirection(str[i]))
+			{
+				while (is_redirection(str[i]))
+					i++;
+				while (str[i] == '|')
+					i++;
+			}
 			if (is_operator(str[i]))
 				break ;
 			if ((int)str[i] == '(')

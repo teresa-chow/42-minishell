@@ -13,9 +13,9 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-static int	check_op_syntax(char *word);
+//static int	check_op_syntax(char *word);
 
-int	syntax_analysis(t_word_lst *word_lst)
+/*int	syntax_analysis(t_word_lst *word_lst)
 {
 	t_word_lst	*tmp_lst;
 	t_word		*tmp_word;
@@ -35,15 +35,15 @@ static int	check_logical_op(t_word_lst *word_lst, t_word_lst *tmp_lst) //if firs
 	{
 		if (tmp_lst == word_lst)
 		{
-			tmp_lst->word->word
+			tmp_lst->word->word;
 		}
 		if (tmp_lst->word->next == NULL)
 	}
 	return (0);
-}
+}*/
 /* >&& token & ; >&&& token && ; >|| token | ; >||| token ||*/
 
-static int	check_op_syntax(char *word) // if (is_operator())
+/*static int	check_op_syntax(char *word) // if (is_operator())
 {
 	if (ft_strlen(word) > 2)
 	{
@@ -57,7 +57,7 @@ static int	check_op_syntax(char *word) // if (is_operator())
 			return (err_syntax("&&"));
 	}
 	return (0);
-}
+}*/
 
 /* Operators in simple commands (not cmd groups) are always the first word in
 a word list: check the first node of a word_lst, if is_operator strlen > 2 */

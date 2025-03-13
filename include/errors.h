@@ -29,9 +29,6 @@ by SIGINT; 255-exit status out of range */
 # include "parse.h"
 # include "builtins.h"
 
-/* ============================ PRINT ERROR MSGS =========================== */
-void	print_fd(int fd, const char *msg, char *token);
-
 /* -------------------------------------------------------------------------- */
 /*                                      Errors                                */
 /* -------------------------------------------------------------------------- */
