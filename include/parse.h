@@ -22,7 +22,7 @@
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
-# include "strcuts.h"
+# include "struct.h"
 
 enum	e_flags
 {
