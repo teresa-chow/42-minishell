@@ -11,22 +11,56 @@
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+#include "../../include/utils.h"
 #include "../../include/errors.h"
 
-//static int	check_op_syntax(char *word);
+static int	check_first_word(t_word *word);
+static int	check_op_syntax(char *word);
 
-/*int	syntax_analysis(t_word_lst *word_lst)
+int	syntax_analysis(t_word_lst *word_lst)
 {
 	t_word_lst	*tmp_lst;
 	t_word		*tmp_word;
 
 	tmp_lst = word_lst;
 	tmp_word = word_lst->word;
+	if (check_first_word(tmp_word) != 0)
+		return (ERR_BI);
 	while (tmp_lst)
-	{check_logical_op()
+	{
+		tmp_word = tmp_lst->word;
+		while (tmp_word)
+		{
+			if (is_operator(tmp_word->word[0]) || is_redirection(tmp_word->word[0]))
+			{
+				if (check_op_syntax(tmp_word->word) != 0)
+					return (ERR_BI);
+			}
+			tmp_word = tmp_word->next;
+		}
 		tmp_lst = tmp_lst->next;
 	}
-}*/
+	return (0);
+}
+
+static int	check_first_word(t_word *word)
+{
+	char		token[3];
+
+	if (is_operator(word->word[0]))
+	{
+		if (ft_strlen(word->word) == 1)
+			return (err_syntax(&word->word[0]));
+		else
+		{
+			token[0] = word->word[0];
+			token[1] = word->word[1];
+			token[2] = '\0';
+			return (err_syntax(token));
+		}
+	}
+	return (0);
+}
 
 /*static int	check_logical_op(t_word_lst *word_lst, t_word_lst *tmp_lst) //if first or next == NULL
 {
@@ -42,7 +76,7 @@
 }*/
 /* >&& token & ; >&&& token && ; >|| token | ; >||| token ||*/
 
-/*static int	check_op_syntax(char *word) // if (is_operator())
+static int	check_op_syntax(char *word) // if (is_operator())
 {
 	if (ft_strlen(word) > 2)
 	{
@@ -56,7 +90,7 @@
 			return (err_syntax("&&"));
 	}
 	return (0);
-}*/
+}
 
 /* Operators in simple commands (not cmd groups) are always the first word in
 a word list: check the first node of a word_lst, if is_operator strlen > 2 */

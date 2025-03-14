@@ -27,7 +27,7 @@ void	read_input(t_word_lst **word_lst)
 		{
 			tokenize_w_lst(cmd_lst, *word_lst);
 			free_strarray(cmd_lst);
-			//syntax_analysis(*word_lst);
+			syntax_analysis(*word_lst);
 		}
 	}
 	if (input)
