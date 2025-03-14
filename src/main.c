@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+
 	data_init(&data, &word_lst, envp);
 	while (1)
 	{

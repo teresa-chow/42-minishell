@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
+#include "../../include/builtins.h"
 
 void	pwd(void)
 {

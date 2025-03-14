@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
+#include "../../include/builtins.h"
 
 /* TODO: check here if there is -n or -nnnn, etc*/
 void	echo(t_word *input)

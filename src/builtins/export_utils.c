@@ -10,8 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/utils.h"
-#include "../../../include/builtins.h"
+#include "../../include/utils.h"
+#include "../../include/builtins.h"
+
+void	reset_inf(t_ipt_inf *inf)
+{
+	free(inf->key);
+	if (inf->val)
+		free(inf->val);
+	inf->sep = 0;
+	inf->val_strt = 0;
+}
 
 int	creat_copy(t_env_node **copy, t_env_node *env)
 {

@@ -19,8 +19,6 @@
 # include "../lib/libft/ft_printf/ft_printf.h"
 # include "struct.h"
 
-
-
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);
 void	free_word_lst(t_word_lst *word_lst);

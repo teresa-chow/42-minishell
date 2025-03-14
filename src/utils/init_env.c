@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/utils.h"
-#include "../include/builtins.h"
-#include "../include/errors.h"
+#include "../../include/utils.h"
+#include "../../include/builtins.h"
+#include "../../include/errors.h"
 
 static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 {
@@ -32,7 +32,7 @@ static int	creat_env(t_env_node **env)
 	i = -1;
 	while (keys[++i])
 	{
-		last = get_last(*env);
+		last = last_node(*env);
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
 			return (free_env_list(env, 1));
@@ -68,52 +68,6 @@ static void	check_shlvl(t_env_node *tmp)
 			free(box);
 	}
 }
-
-char	find_sep_a(char *s) // this is duplicate by export
-{
-	char	*tmp;
-
-	tmp = s;
-	while (*tmp)
-	{
-		if (*tmp == '+' && *(tmp + 1) == '=')
-			return ('+');
-		// else if (*tmp == '+' && *(tmp + 1) != '=') OR "-="
-		// {
-		// 	wrong_export_sintax(s);
-		// 	return (0);                
-		// }                          // -----> se the comment in 130 line about sintax
-		else if (*tmp == '=')
-			return ('=');
-		tmp++;
-	}
-	return (0);
-}
-
-int	set_inf_a(char *word, t_ipt_inf *inf_arg) // this is duplicate by export
-{
-	int	len_wrd;
-	char	*equal;
-
-	equal = NULL;
-	len_wrd = ft_strlen(word);
-	inf_arg->sep = find_sep_a(word);
-	inf_arg->key = ft_substr(word, 0, len_wrd - ft_strlen(ft_strchr(word, inf_arg->sep)));
-	if (!inf_arg->key)
-	return (-1);
-	if (inf_arg->sep)
-	{
-		equal = ft_strchr(word, '=');
-		inf_arg->val_strt = len_wrd - ft_strlen(equal + 1);
-		inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(equal + 1));
-		if (!inf_arg->val)
-		{
-			free(inf_arg->key);
-			return (error_allocation());
-		}
-	}
-	return (0);
-}
 int	init_env_lst(char **envp, t_data *data)
 {
 	int	i;
@@ -127,7 +81,7 @@ int	init_env_lst(char **envp, t_data *data)
 		return(creat_env(&data->env));	
 	while (envp && envp[++i])
 	{
-		if(set_inf_a(envp[i], &inf) == -1)
+		if(set_inf(envp[i], &inf) == -1)
 			return (free_env_list(&data->env, 1));
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)

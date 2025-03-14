@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
+#include "../../include/builtins.h"
 
 static	void handle_error(char *path)
 {

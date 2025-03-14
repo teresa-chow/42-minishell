@@ -10,38 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
-#include "../../../include/utils.h"
-#include "../../../include/errors.h"
-
-void	reset_inf(t_ipt_inf *inf)
-{
-	free(inf->key);
-	if (inf->val)
-		free(inf->val);
-	inf->sep = 0;
-	inf->val_strt = 0;
-}
-char	find_sep(char *s)
-{
-	char	*tmp;
-
-	tmp = s;
-	while (*tmp)
-	{
-		if (*tmp == '+' && *(tmp + 1) == '=')
-			return ('+');
-		// else if (*tmp == '+' && *(tmp + 1) != '=') OR "-="
-		// {
-		// 	wrong_export_sintax(s);
-		// 	return (0);                
-		// }                          // -----> se the comment in 130 line about sintax
-		else if (*tmp == '=')
-			return ('=');
-		tmp++;
-	}
-	return (0);
-}
+#include "../../include/builtins.h"
+#include "../../include/utils.h"
+#include "../../include/errors.h"
 
 int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 {
@@ -70,7 +41,6 @@ int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 		free(arg_inf->key);
 	return (1);
 }
-
 int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 {
 	while (env)
@@ -89,17 +59,6 @@ int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 	}
 	return (0);
 }
-t_env_node	*get_last(t_env_node *env_lst)
-{
-	while (env_lst)
-	{
-		if (!env_lst->next)
-			break;
-		env_lst = env_lst->next;
-	}
-	return (env_lst);
-}
-
 static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 {
 	if (last)
@@ -122,7 +81,7 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 		return (check);
 	else
 	{
-		last = get_last(*env);
+		last = last_node(*env);
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
 			return (-1);
@@ -132,30 +91,6 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 	}
 	return (0); 
 }
-int	set_inf(char *word, t_ipt_inf *inf_arg)
-{
-	int	len_wrd;
-	char	*equal;
-
-	equal = NULL;
-	len_wrd = ft_strlen(word);
-	inf_arg->sep = find_sep(word);
-	inf_arg->key = ft_substr(word, 0, len_wrd - ft_strlen(ft_strchr(word, inf_arg->sep)));
-	if (!inf_arg->key)
-	return (-1);
-	if (inf_arg->sep)
-	{
-		equal = ft_strchr(word, '=');
-		inf_arg->val_strt = len_wrd - ft_strlen(equal + 1);
-		inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(equal + 1));
-		if (!inf_arg->val)
-		{
-			free(inf_arg->key);
-			return (error_allocation());
-		}
-	}
-	return (0);
-}
 
 /// this builtin can't have (export ARG++23), the sintax is not correct, so we have
 // to handle with this, maybe in expand part??
@@ -163,7 +98,6 @@ int	set_inf(char *word, t_ipt_inf *inf_arg)
 
 void	export(t_word *word_lst, t_data *data)
 {
-
 	t_ipt_inf	inf_arg;
 
 	if (!word_lst->next)

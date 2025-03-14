@@ -19,16 +19,19 @@
 # include "../lib/libft/ft_printf/ft_printf.h"
 # include "struct.h"
 
-
+/* ======================== Builtins Utils ================================== */
+t_env_node	*last_node(t_env_node *env_lst);
+int	set_inf(char *word, t_ipt_inf *inf_arg);
+char	find_sep(char *s);
 /* ================================== ECHO ================================== */
 void	echo(t_word *input);
 /* =================================== CD =================================== */
 void	cd(t_word *input);
 /* ================================== PWD =================================== */
 void	pwd(void);
-/* ================================= EXPORT ================================= */
+/* ================================= EXPORT================================= */
 void	export(t_word *word_lst, t_data *data);
-t_env_node	*get_last(t_env_node *env_lst);  ///used to creat env when empty too
+void	reset_inf(t_ipt_inf *inf);
 /* ================================= UNSET ================================== */
 void	unset(t_data * data, t_word *word_lst);
 /* ================================== ENV =================================== */

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
+#include "../../include/builtins.h"
 
 void	env_cmd(t_env_node *env)
 {
