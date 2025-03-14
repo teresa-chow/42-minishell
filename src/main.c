@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!word_lst)
 			break ;
 		read_input(&word_lst);
-		//print_word_lst(&word_lst); //tmp
+		print_word_lst(&word_lst); //tmp
 		//if (word_lst->word != NULL)
 		//	test_builtins(&word_lst, &env_lst);
 		free_word_lst(&word_lst);

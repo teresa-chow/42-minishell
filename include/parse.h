@@ -29,7 +29,6 @@ typedef struct	s_data
 	char	**envp; //TODO: our own env_node, word_lst(?) 1st node, errcode(?)
 }	t_data;
 
-
 typedef struct s_word
 {
 	struct s_word	*next;
@@ -41,6 +40,14 @@ typedef struct s_word_lst
 	struct s_word_lst	*next;
 	struct s_word		*word;
 }	t_word_lst;
+
+typedef struct s_tree_node
+{
+	int					val;
+	char				*str;
+	struct s_tree_node	*left;
+	struct s_tree_node	*right;
+}	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
 void	read_input(t_word_lst **word_lst);
