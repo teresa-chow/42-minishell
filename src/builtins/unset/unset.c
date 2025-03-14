@@ -35,11 +35,11 @@ static int	clean_env(t_env_node **env, char *word)
 	return (0);
 }
 
-void	unset(t_env_node **env_lst, t_word *word_lst)
+void	unset(t_data *data, t_word *word_lst)
 {
 	while (word_lst)
 	{
-		if (clean_env(env_lst, word_lst->word) == -1)
+		if (clean_env(&data->env, word_lst->word) == -1)
 			return ;
 		word_lst = word_lst->next;
 	}

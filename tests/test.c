@@ -3,22 +3,22 @@
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
-void	test_builtins(t_word_lst *word_lst, t_env_node **env_lst, t_data *data)
+void	test_builtins(t_word_lst *word_lst, t_data *data)
 {
 	if (ft_strcmp(word_lst->word->word, "echo") == 0)
 		echo(word_lst->word);
 	else if (ft_strcmp(word_lst->word->word, "cd") == 0)
 		cd(word_lst->word);
 	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
-		pwd();
+		pwd();	
 	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
-		export(word_lst->word, env_lst);
+		export(word_lst->word, data);
 	else if (ft_strcmp(word_lst->word->word ,"unset") == 0)
-		unset(env_lst, word_lst->word->next);
+		unset(data, word_lst->word->next);
 	else if (ft_strcmp(word_lst->word->word ,"env") == 0)
-		env_cmd(*env_lst);
+		env_cmd(data->env);
 	else
-		exec(*env_lst, word_lst->word, data);
+		exec(data->env, word_lst->word, data);
 }
 
 /*****************************************************************************\

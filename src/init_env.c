@@ -35,7 +35,7 @@ static int	creat_env(t_env_node **env)
 		last = get_last(*env);
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-		return (free_env_list(env, 1));
+			return (free_env_list(env, 1));
 		if (!*env)
 			*env = tmp;
 		if (!ft_strcmp(keys[i], "PWD"))
@@ -114,7 +114,7 @@ int	set_inf_a(char *word, t_ipt_inf *inf_arg) // this is duplicate by export
 	}
 	return (0);
 }
-int	init_env_lst(char **envp, t_env_node **env_lst)
+int	init_env_lst(char **envp, t_data *data)
 {
 	int	i;
 	t_env_node	*tmp;
@@ -124,22 +124,22 @@ int	init_env_lst(char **envp, t_env_node **env_lst)
 	i = -1;
 	last = NULL;
 	if (!envp || !*envp)
-		return(creat_env(env_lst));	
+		return(creat_env(&data->env));	
 	while (envp && envp[++i])
 	{
 		if(set_inf_a(envp[i], &inf) == -1)
-			return (free_env_list(env_lst, 1));
+			return (free_env_list(&data->env, 1));
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-			return (free_env_list(env_lst, 1));
+			return (free_env_list(&data->env, 1));
 		tmp->key = inf.key;
 		tmp->val = inf.val;
 		check_shlvl(tmp);
 		if (last)
 			last->next = tmp;
 		tmp->prev = last;
-		if (!*env_lst)
-			*env_lst = tmp;
+		if (!data->env)
+			data->env = tmp;
 		last = tmp;
 	}
 	return (0);

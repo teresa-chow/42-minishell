@@ -13,18 +13,12 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "../lib/libft/libft/libft.h"
-# include "../lib/libft/ft_printf/ft_printf.h"
-# include "parse.h"
 # include <errno.h>
 
-typedef struct s_env_node
-{
-	char	*key;
-	char	*val;
-	struct s_env_node *next;
-	struct s_env_node *prev;
-}	t_env_node;
+# include "../lib/libft/libft/libft.h"
+# include "../lib/libft/ft_printf/ft_printf.h"
+# include "strcuts.h"
+
 
 /* ================================== ECHO ================================== */
 void	echo(t_word *input);
@@ -33,14 +27,14 @@ void	cd(t_word *input);
 /* ================================== PWD =================================== */
 void	pwd(void);
 /* ================================= EXPORT ================================= */
-void	export(t_word *word_lst, t_env_node **env_lst);
+void	export(t_word *word_lst, t_data *data);
 t_env_node	*get_last(t_env_node *env_lst);  ///used to creat env when empty too
 /* ================================= UNSET ================================== */
-void	unset(t_env_node **env_lst, t_word *word_lst);
+void	unset(t_data * data, t_word *word_lst);
 /* ================================== ENV =================================== */
 void	sort_env(t_env_node *env_lst);
 void	print_export(t_env_node *env_lst);
-int	init_env_lst(char **envp, t_env_node **env_lst);
+int	init_env_lst(char **envp, t_data *data);
 void	env_cmd(t_env_node *env);
 /* ================================== EXIT ================================== */
 

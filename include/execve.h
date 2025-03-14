@@ -14,11 +14,10 @@
 # define EXECVE_H
 
 # include <stdlib.h>
+# include <sys/wait.h>
 
 # include "../lib/libft/libft/libft.h"
-# include "parse.h"
 # include "utils.h"
-# include <sys/wait.h>
 
 
 char	*get_path(t_env_node *env);

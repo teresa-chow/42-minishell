@@ -161,12 +161,13 @@ int	set_inf(char *word, t_ipt_inf *inf_arg)
 // to handle with this, maybe in expand part??
 // --> same to (export ZA,ZB)
 
-void	export(t_word *word_lst, t_env_node **env_lst)
+void	export(t_word *word_lst, t_data *data)
 {
+
 	t_ipt_inf	inf_arg;
 
 	if (!word_lst->next)
-		sort_env(*env_lst);
+		sort_env(data->env);
 	else
 	{
 		ft_bzero(&inf_arg, sizeof(t_ipt_inf));
@@ -178,7 +179,7 @@ void	export(t_word *word_lst, t_env_node **env_lst)
 				error_allocation();
 				return ;
 			}
-			if (add_var(env_lst, &inf_arg) == -1)
+			if (add_var(&data->env, &inf_arg) == -1)
 				return ;
 			word_lst = word_lst->next;
 		}

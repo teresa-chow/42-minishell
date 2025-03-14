@@ -22,6 +22,7 @@
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
+# include "strcuts.h"
 
 enum	e_flags
 {
@@ -34,28 +35,6 @@ enum	e_flags
 	ERR = 6,
 	SPECIAL = 7 // commands fall in this cat
 };
-
-typedef struct	s_data
-{
-	// char	**envp;
-	char	**cmd_lst;
-	char	**path;
-	// int	error_code
-}	t_data;
-
-
-typedef struct s_word
-{
-	struct s_word	*next;
-	char	*word;
-	int		flags;
-}	t_word;
-
-typedef struct s_word_lst
-{
-	struct s_word_lst	*next;
-	struct s_word		*word;
-}	t_word_lst;
 
 /* =========================== INPUT PROCESSING ============================= */
 void	read_input(t_data *data, t_word_lst *word_lst);
