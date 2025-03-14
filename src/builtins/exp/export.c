@@ -27,7 +27,8 @@ char	find_sep(char *s)
 		// {
 		// 	wrong_export_sintax(s);
 		// 	return (0);                
-		// }                               // -----> se the comment in 130 line about sintax
+		// }                             // -----> se the comment in 130 line about sintax
+		
 		tmp++;
 	}
 	return ('=');
@@ -36,18 +37,30 @@ char	find_sep(char *s)
 int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 {
 	char	*new_val;
+	char	*equal;
 
-	if (arg_inf->sep == '+' && ft_strchr(env->val, '='))
+	if (arg_inf->sep == '+' && ft_strlen(arg_inf->val) > 2)
 	{
-		new_val = ft_strdup(ft_strchr(arg_inf->val, '='));
+		equal = ft_strchr(env->val, '=');
+		new_val = ft_strjoin(equal, arg_inf->val);
 		if (!new_val)
 			return (error_allocation());
-		free(arg_inf->val);
+		free(env->val);
+		env->val = new_val;
 	}
 	else
 	{
-		free(env->val);
-		env->val = arg_inf->val;
+		equal = ft_strchr(arg_inf->val, '=');
+		if (equal && *(equal + 1))
+		{
+			free(env->val);
+			env->val = arg_inf->val;
+		}
+		else
+		{
+			free(env->val);
+			env->val = ft_strdup(arg_inf->val);
+		}
 	}
 	return (1);
 }
@@ -104,16 +117,16 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
 			return (-1);
-		tmp->key = inf_arg->key;
-		tmp->val = inf_arg->val;
-		if (!tmp->key || !tmp->val)
+		tmp->key = ft_strdup(inf_arg->key);
+		tmp->val = ft_strdup(inf_arg->val);
+		if (!tmp->key || !tmp->val) //------->> improve this part
 		{
 			if (tmp->key)
 				free(tmp->key);
-			if (tmp->val)
+			if (tmp->val)        
 				free(tmp->val);
 			free(tmp);
-			return (-1);
+			return (error_allocation());
 		}
 		change_ptrs(last, tmp, env);
 	}
@@ -125,7 +138,7 @@ int	set_inf(char *word, t_ipt_inf *inf_arg)
 	inf_arg->key = ft_substr(word, 0, ft_strlen(word) - ft_strlen(ft_strchr(word, inf_arg->sep)));
 	if (!inf_arg->key)
 		return (-1);
-	inf_arg->val_strt = ft_strlen(word) - ft_strlen(ft_strchr(word, '='));
+	inf_arg->val_strt = ft_strlen(word) - (ft_strlen(ft_strchr(word, '=')));
 	inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(ft_strchr(word, '=')));
 	if (!inf_arg->val)
 	{

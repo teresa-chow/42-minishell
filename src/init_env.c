@@ -27,12 +27,10 @@ static void	change_ptrs(t_env_node **env, t_env_node *last, t_env_node *tmp)
 static int	creat_env(t_env_node **env)
 {
 	char	*keys[] = {"OLDPWD", "PWD=", "SHLVL=", 0};
-	char	*val;
 	t_env_node *tmp;
 	t_env_node *last;
 	int	i;
 	
-	val = NULL;
 	i = -1;
 	while (keys[++i])
 	{
@@ -41,11 +39,12 @@ static int	creat_env(t_env_node **env)
 		if (!tmp)
 			return (free_env_list(*env, 1));
 		if (!ft_strcmp(keys[i], "PWD="))
-			val = getcwd(NULL, 0);
+			tmp->val = getcwd(NULL, 0);
 		else if (!ft_strcmp(keys[i], "SHLVL="))
-			val = ft_strdup("1");
+			tmp->val = ft_strdup("1");
+		else if (!ft_strcmp(keys[i], "OLDPWD"))
+			tmp->val = ft_strdup("");
 		tmp->key = ft_strdup(keys[i]);
-		tmp->val = val;
 		if (!tmp->key || !tmp->val)
 			return (free_env_list(*env, 1));
 		change_ptrs(env, last, tmp);
