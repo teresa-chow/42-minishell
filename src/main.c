@@ -29,10 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	t_data		data; /// Add t_word_lst and t_env_node
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
-
-
-	envp = NULL;
-	
 	(void)argc;
 	(void)argv;
 	reset_structs(&data, &word_lst);
