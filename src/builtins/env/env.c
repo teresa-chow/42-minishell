@@ -14,14 +14,12 @@
 
 void	env_cmd(t_env_node *env)
 {
-	char	*equal;
-
 	while (env)
 	{
-		equal = ft_strchr(env->val, '=');
-		if (equal)
+		if (env->val)
 		{
 			ft_putstr_fd(env->key, 1);
+			write (1, "=", 1);
 			ft_putendl_fd(env->val, 1);
 		}
 		env = env->next;

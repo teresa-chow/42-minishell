@@ -23,13 +23,13 @@ int	creat_copy(t_env_node **copy, t_env_node *env)
 	{
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-			return (free_env_list(*copy, 1));
-		tmp->key = ft_strdup(env->key);
-		tmp->val = ft_strdup(env->val);
-		if (!tmp->key || !tmp->val)
-			return (free_env_list(*copy, 1));
+			return (free_env_list(copy, 1));
 		if (!*copy)
 			*copy = tmp;
+		tmp->key = ft_strdup(env->key);
+		tmp->val = ft_strdup(env->val);
+		if (!tmp->key || (!tmp->val && env->val))
+			return(free_env_list(copy, 1));
 		tmp->prev = last;
 		if (tmp->prev)
 			tmp->prev->next = tmp;
@@ -73,15 +73,13 @@ void sort_env(t_env_node *env_lst)
 		}
 	}
 	print_export(copy);
-	free_env_list(copy, 0);
+	free_env_list(&copy, 0);
 }
 
 static	void	print_var_val(char *s)
 {
-	if (*s == '=')
-	write (1, "=", 1);
 	ft_putchar_fd('"', 1);
-	ft_putstr_fd(s + 1, 1);
+	ft_putstr_fd(s, 1);
 	ft_putchar_fd('"', 1);
 }
 
@@ -91,8 +89,11 @@ void	print_export(t_env_node *env_lst)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(env_lst->key, 1);
-		if (*(env_lst)->val)
+		if (env_lst->val)
+		{
+			write (1, "=", 1);
 			print_var_val(env_lst->val);
+		}
 		write(1, "\n", 1);
 		env_lst = env_lst->next;
 	}

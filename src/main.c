@@ -29,6 +29,9 @@ int	main(int argc, char **argv, char **envp)
 	t_data		data; /// Add t_word_lst and t_env_node
 	t_word_lst	word_lst;
 	t_env_node	*env_lst;
+
+
+	envp = NULL;
 	
 	(void)argc;
 	(void)argv;
@@ -39,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		read_input(&data, &word_lst);
-		    print_word_lst(&data, &word_lst); //tmp
+		//     print_word_lst(&data, &word_lst); //tmp
 		if (word_lst.word != NULL)
 			test_builtins(&word_lst, &env_lst, &data);
 		// free_word_lst(&word_lst); // this will try free a static structure like word_lst and

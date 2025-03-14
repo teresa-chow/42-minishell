@@ -11,7 +11,12 @@ static int	update_env(t_env_node **env, t_env_node *tmp)
 			tmp->next->prev = tmp->prev;
 	}
 	else
+	{
 		*env = tmp->next;
+		(*env)->prev = NULL;
+	}
+	free(tmp->key);
+	free(tmp->val);
 	free(tmp);
 	return (0);
 }

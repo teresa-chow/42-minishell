@@ -30,18 +30,19 @@ void	free_strarray(char **array)
 	free(array);
 }
 
-int	free_env_list(t_env_node *lst, int i)
+int	free_env_list(t_env_node **lst, int i)
 {
 	t_env_node *tmp;
 
-	while (lst)
+	while (*lst)
 	{
-		tmp = lst->next;
-		free(lst->key);
-		free(lst->val);
-		free(lst);
-		lst = tmp;
+		tmp = (*lst)->next;
+		free((*lst)->key);
+		free((*lst)->val);
+		free((*lst));
+		(*lst) = tmp;
   	}
+	*lst = NULL;
 	if (i)
 		return(error_allocation());
 	return (0);

@@ -31,6 +31,6 @@ typedef	struct s_ipt_inf
 void	free_strarray(char **array);
 void	free_word_lst(t_word_lst *word_lst);
 void	free_words(t_word **word);
-int	free_env_list(t_env_node *lst, int i);
+int	free_env_list(t_env_node **lst, int i);
 
 #endif
