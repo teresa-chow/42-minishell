@@ -91,15 +91,16 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 	}
 	return (0); 
 }
-
 /// this builtin can't have (export ARG++23), the sintax is not correct, so we have
 // to handle with this, maybe in expand part??
 // --> same to (export ZA,ZB)
 
-void	export(t_word *word_lst, t_data *data)
+void	export(t_data *data)
 {
 	t_ipt_inf	inf_arg;
+	t_word	*word_lst;
 
+	word_lst = data->word_lst.word;
 	if (!word_lst->next)
 		sort_env(data->env);
 	else

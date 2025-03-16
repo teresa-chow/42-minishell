@@ -22,7 +22,7 @@ void	reset_inf(t_ipt_inf *inf)
 	inf->val_strt = 0;
 }
 
-int	creat_copy(t_env_node **copy, t_env_node *env)
+static int	creat_copy(t_env_node **copy, t_env_node *env)
 {
 	t_env_node	*tmp;
 	t_env_node	*last;
@@ -48,43 +48,6 @@ int	creat_copy(t_env_node **copy, t_env_node *env)
 	return (0);
 }
 
-void sort_env(t_env_node *env_lst)
-{
-	int	check;
-	char	*box;
-	t_env_node	*tmp;
-	t_env_node	*copy;
-
-	if (!env_lst)
-		return ;
-	copy = NULL;
-	if (creat_copy(&copy, env_lst) == -1)
-		return ;
-	check = 1;
-	while (check)
-	{
-		check = 0;
-		tmp = copy;
-		while (tmp && tmp->next)
-		{
-			if (ft_strcmp(tmp->key, tmp->next->key) > 0)
-			{
-				check = 1;
-				box = tmp->next->key;
-				tmp->next->key = tmp->key;
-				tmp->key = box;
-				box = tmp->next->val;
-				tmp->next->val = tmp->val;
-				tmp->val = box;
-			}
-			else
-				tmp = tmp->next;
-		}
-	}
-	print_export(copy);
-	free_env_list(&copy, 0);
-}
-
 static	void	print_var_val(char *s)
 {
 	ft_putchar_fd('"', 1);
@@ -92,7 +55,7 @@ static	void	print_var_val(char *s)
 	ft_putchar_fd('"', 1);
 }
 
-void	print_export(t_env_node *env_lst)
+static void	print_export(t_env_node *env_lst)
 {
 	while (env_lst)
 	{
@@ -106,4 +69,17 @@ void	print_export(t_env_node *env_lst)
 		write(1, "\n", 1);
 		env_lst = env_lst->next;
 	}
+}
+void sort_env(t_env_node *env_lst)
+{
+	t_env_node	*copy;
+
+	if (!env_lst)
+		return ;
+	copy = NULL;
+	if (creat_copy(&copy, env_lst) == -1)
+		return ;
+	copy = sort_halfs(copy);
+	print_export(copy);
+	free_env_list(&copy, 0);
 }

@@ -37,7 +37,7 @@ enum	e_flags
 };
 
 /* =========================== INPUT PROCESSING ============================= */
-void	read_input(t_data *data, t_word_lst *word_lst);
+void	read_input(t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char	**tokenize_op(char *input);
@@ -49,15 +49,14 @@ int		is_quote(int c);
 int		is_equal_next(const char *str, int i);
 int		is_special(int c);
 int		is_unhandled(int c);
-unsigned int	group_len(const char *str, unsigned int start);
-int 	handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
-			t_word **word);
+int 	handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
 int		handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
 int		init_word(t_word_lst *word_lst, t_word **word);
 int		handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
-unsigned int	next_quote(const char *str, unsigned int start, int	code);
 int		add_word(t_word **word_desc);
 int		add_word_lst(t_word_lst **word_lst);
+unsigned int	next_quote(const char *str, unsigned int start, int	code);
+unsigned int	group_len(const char *str, unsigned int start);
 
 #endif
 

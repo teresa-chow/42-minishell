@@ -30,14 +30,13 @@ void	cd(t_word *input);
 /* ================================== PWD =================================== */
 void	pwd(void);
 /* ================================= EXPORT================================= */
-void	export(t_word *word_lst, t_data *data);
+void	export(t_data *data);
 void	reset_inf(t_ipt_inf *inf);
-/* ================================= UNSET ================================== */
-void	unset(t_data * data, t_word *word_lst);
-/* ================================== ENV =================================== */
 void	sort_env(t_env_node *env_lst);
-void	print_export(t_env_node *env_lst);
-int	init_env_lst(char **envp, t_data *data);
+t_env_node	*sort_halfs(t_env_node *head);
+/* ================================= UNSET ================================== */
+void	unset(t_data * data);
+/* ================================== ENV =================================== */
 void	env_cmd(t_env_node *env);
 /* ================================== EXIT ================================== */
 

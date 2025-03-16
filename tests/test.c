@@ -3,22 +3,24 @@
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
-void	test_builtins(t_word_lst *word_lst, t_data *data)
+void	test_builtins(t_data *data)
 {
-	if (ft_strcmp(word_lst->word->word, "echo") == 0)
-		echo(word_lst->word);
-	else if (ft_strcmp(word_lst->word->word, "cd") == 0)
-		cd(word_lst->word);
-	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
+	if (ft_strcmp(data->word_lst.word->word, "echo") == 0)
+		echo(data->word_lst.word);
+
+
+	else if (ft_strcmp(data->word_lst.word->word, "cd") == 0)
+		cd(data->word_lst.word);
+	else if (ft_strcmp(data->word_lst.word->word, "pwd") == 0)
 		pwd();	
-	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
-		export(word_lst->word, data);
-	else if (ft_strcmp(word_lst->word->word ,"unset") == 0)
-		unset(data, word_lst->word->next);
-	else if (ft_strcmp(word_lst->word->word ,"env") == 0)
+	else if (ft_strcmp(data->word_lst.word->word ,"export") == 0)
+		export(data);
+	else if (ft_strcmp(data->word_lst.word->word,"unset") == 0)
+		unset(data);
+	else if (ft_strcmp(data->word_lst.word->word,"env") == 0)
 		env_cmd(data->env);
 	else
-		exec(data->env, word_lst->word, data);
+		exec(data->env, data->word_lst.word, data);
 }
 
 /*****************************************************************************\
