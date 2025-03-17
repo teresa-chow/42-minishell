@@ -19,23 +19,24 @@
 
 #include "../tests/test.h" //tmp
 
-static void	data_init(t_data *data, char **envp);
+//static void	data_init(t_data *data, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data;
+	//t_data		data;
 	t_word_lst	*word_lst;
 
 	(void)argc;
 	(void)argv;
-	data_init(&data, envp);
+	(void)envp;
+	//data_init(&data, envp);
 	while (1)
 	{
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!word_lst)
 			break ;
 		read_input(&word_lst);
-		print_word_lst(&word_lst); //tmp
+		//print_word_lst(&word_lst); //tmp
 		//if (word_lst->word != NULL)
 		//	test_builtins(&data); //TODO: review - word_lst should not be part of t_data struct
 		free_word_lst(&word_lst);
@@ -44,11 +45,11 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-static void	data_init(t_data *data, char **envp)
+/*static void	data_init(t_data *data, char **envp)
 {
 	ft_bzero(data, sizeof(t_data));
 	// ft_bzero(, sizeof(t_word_lst));
 	if (init_env_lst(envp, data) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);	
 	data->env_path = ft_split(ft_strchr(get_path(data->env), '/'), ':');
-}
+}*/
