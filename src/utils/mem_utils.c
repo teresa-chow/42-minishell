@@ -13,7 +13,7 @@
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 #include "../../include/parse.h"
-#include "../../include/errors.h"
+#include "../../include/error.h"
 
 void	free_strarray(char **array)
 {

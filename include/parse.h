@@ -24,17 +24,17 @@
 # include "../lib/libft/ft_printf/ft_printf.h"
 # include "struct.h"
 
-enum	e_flags
-{
-	NONE = 0,
-	VAR = 1,
-	OPT = 2,
-	LIT = 3,
-	EXP = 4,
-	EOF_FLAG = 5,
-	ERR = 6,
-	SPECIAL = 7 // commands fall in this cat
-};
+// enum	e_flags
+// {
+// 	NONE = 0,
+// 	VAR = 1,
+// 	OPT = 2,
+// 	LIT = 3,
+// 	EXP = 4,
+// 	EOF_FLAG = 5,
+// 	ERR = 6,
+// 	SPECIAL = 7 // commands fall in this cat
+// };
 
 /* =========================== INPUT PROCESSING ============================= */
 void	read_input(t_data *data);

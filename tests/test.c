@@ -20,7 +20,7 @@ void	test_builtins(t_data *data)
 	else if (ft_strcmp(data->word_lst.word->word,"env") == 0)
 		env_cmd(data->env);
 	else
-		exec(data->env, data->word_lst.word, data);
+		exec(data);
 }
 
 /*****************************************************************************\

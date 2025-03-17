@@ -12,7 +12,7 @@
 
 #include "../../include/utils.h"
 #include "../../include/parse.h"
-#include "../../include/errors.h"
+#include "../../include/error.h"
 
 static int	update_env(t_env_node **env, t_env_node *tmp)
 {

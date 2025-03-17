@@ -12,7 +12,7 @@
 
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
-#include "../../include/errors.h"
+#include "../../include/error.h"
 
 static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 {

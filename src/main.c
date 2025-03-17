@@ -11,27 +11,27 @@
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../include/error.h"
+#include "../include/utils.h"
 
 //if we press enter when wait an input, we have seg fault  <<<<---------------------------------
 #include "../tests/test.h" //tmp
+
+// we create a env_path copy but if we unset PATH what should happen??? ---------------------------------------------
 
 void	data_init(t_data *data, char **envp)
 {
 	ft_bzero(data, sizeof(t_data));
 	// ft_bzero(, sizeof(t_word_lst));
 	if (init_env_lst(envp, data) == -1)
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);	
-	data->env_path = ft_split(ft_strchr(get_path(data->env), '/'), ':');
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 }
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		data;
-	// t_word_lst	word_lst;
 
 	(void)argc;
 	(void)argv;
-	// data_init(&data, &word_lst, envp);
 	data_init(&data, envp);
 	while (1)
 	{

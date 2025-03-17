@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
-#include "../../include/errors.h"
+#include "../../include/error.h"
 
 t_env_node	*last_node(t_env_node *env_lst)
 {

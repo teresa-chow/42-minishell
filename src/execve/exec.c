@@ -12,8 +12,7 @@
 
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
-#include "../../include/errors.h"
-
+#include "../../include/error.h"
 /*
 [ ]   /absolute/path/
 [ ]  ../../relative/path/
@@ -34,30 +33,38 @@ int	find_slash(char *word)
 	return (0);
 }
 //WIFEXITED(status)
-int	handle_sys_exec(char **wrd_arr, char **env_arr, t_word *word, t_data *data)
+int	handle_sys_exec(char **wrd_arr, char **env_arr, t_data *data)
 {
+	int	i;
+	char	*tmp;
 
 	(void)wrd_arr;
 	(void)env_arr;
-	(void)word;
-	(void)data;
-	
-
+	(void)tmp;
+	i = -1;
+	set_path(data);
+	if (!data->env_path)
+		return (command_not_found(data->word_lst.word->word));	
+	while (data->env_path[++i])
+	{
+		tmp = ft_strjoin(data->env_path[i], "/");
+		// if (access())
+	}
+	// free_arrays(wrd_arr, env_arr, 0); ???????
 	return (0);
 }
 
-int	exec(t_env_node *env, t_word *word, t_data *data)
+int	exec(t_data *data)
 {
 	char	**wrd_arr;
 	char	**env_arr;
 
-
-	wrd_arr = creat_wrd_arr(word);
-	env_arr = creat_env_arr(env);
+	wrd_arr = creat_wrd_arr(data->word_lst.word);
+	env_arr = creat_env_arr(data->env);
 	if (!wrd_arr || !env_arr)
 		return (free_arrays(wrd_arr, env_arr, 1));
-	if (!find_slash(word->word))
-		handle_sys_exec(wrd_arr, env_arr, word, data);
+	if (!find_slash(data->word_lst.word->word))
+		handle_sys_exec(wrd_arr, env_arr, data);
 	free_arrays(wrd_arr, env_arr, 0);
 	return (0);
 }

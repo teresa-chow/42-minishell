@@ -12,7 +12,7 @@
 
 #include "../../include/builtins.h"
 #include "../../include/utils.h"
-#include "../../include/errors.h"
+#include "../../include/error.h"
 
 int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 {

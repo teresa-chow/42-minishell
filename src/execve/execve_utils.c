@@ -12,7 +12,7 @@
 
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
-#include "../../include/errors.h"
+#include "../../include/error.h"
 
 char	*get_path(t_env_node *env)
 {

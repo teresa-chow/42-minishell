@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// TO DO: handle memory alloc errors (returns -1)
+// TO DO: handle memory alloc error (returns -1)
 
 #include "../../include/parse.h"
 
