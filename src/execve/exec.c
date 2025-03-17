@@ -32,39 +32,60 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
-//WIFEXITED(status) --------------------------------------------------------
-int	handle_sys_exec(char **wrd_arr, char **env_arr, t_data *data)
+
+void	check_cmd(char **env_path, t_data *data, char **tmp)
 {
 	int	i;
-	char	*tmp;
-	char	**env_path;
-	pid_t	pid;
+	char	*tmp1;
 
-	env_path = set_path(data);
-	if (!env_path)
-	return (command_not_found(data->word_lst.word->word));	
+	tmp1 = NULL;
 	i = -1;
 	while (env_path[++i])
 	{
-		tmp = ft_strjoin(env_path[i], data->word_lst.word->word);
-		if (!tmp)
+		tmp1 = ft_strjoin(env_path[i], data->word_lst.word->word);
+		if (!tmp1)
 		{
 			error_allocation();
-			break;
+			return ;
 		}
-		if (access(tmp, F_OK) == 0)
+		if (access(tmp1, F_OK) == 0 && access(tmp1, X_OK) == 0)
 		{
-			pid = fork();
-			if (pid == 0)
-				execve(tmp, wrd_arr, env_arr);
-			else
-			{
-				wait (NULL);
-				break;
-			}
+			*tmp = tmp1;
+			return ;
+		}
+		else
+			free(tmp1);
+	}
+}
+//WIFEXITED(status) --------------------------------------------------------
+int	handle_sys_exec(char **wrd_arr, char **env_arr, t_data *data)
+{
+	char	*tmp;
+	pid_t	pid;
+	char	**env_path;
+
+	env_path = set_path(data);
+	if (!env_path)
+		return (command_not_found(data->word_lst.word->word));
+	tmp = NULL;
+	check_cmd(env_path, data, &tmp);
+	if (tmp)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			execve(tmp, wrd_arr, env_arr);
+			perror("exeve failed!");
+			exit(ERR_X);
+		}
+		else
+		{
+			wait(NULL);
+			free(tmp);
 		}
 	}
-	printf("%d\n", errno);
+	else
+		command_not_found(data->word_lst.word->word);
 	free_arrays(wrd_arr, env_arr, 0);
 	return (0);
 }

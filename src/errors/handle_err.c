@@ -28,7 +28,7 @@ int	error_allocation(void)
 
 int	command_not_found(char *token)
 {
-	print_fd(2, "minishell: %s: No such file or directory", token);
+	print_fd(2, "minishell: %s: No such file or directory\n", token);
 	return (ERR_F);
 }
 
