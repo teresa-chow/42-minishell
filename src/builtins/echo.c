@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
-#include "../../../include/parse.h"
+#include "../../include/parse.h"
+#include "../../include/builtins.h"
 
-/* TODO: fix echo with no arguments */
+/* TODO: check here if there is -n or -nnnn, etc*/
 void	echo(t_word *input)
 {
 	//int	flag;
@@ -24,8 +24,8 @@ void	echo(t_word *input)
 		flag = input->next->flags;
 	if (flag == 2)
 		start = input->next->next;
-	else*/
-	start = input->next;
+	else*/ //TODO: review, flags don't exist in t_word struc
+		start = input->next;
 	while (start)
 	{
 		ft_putstr_fd(start->word, 1);
@@ -34,39 +34,5 @@ void	echo(t_word *input)
 		start = start->next;
 	}
 	//if (flag != 2)
-	write (1, "\n", 1);
+		write (1, "\n", 1);
 }
-
-// int	main(void)
-// {
-// 	// Criando nós para testar a função echo
-// 	t_word_desc *word1 = malloc(sizeof(t_word_desc));
-// 	t_word_desc *word2 = malloc(sizeof(t_word_desc));
-// 	t_word_desc *word3 = malloc(sizeof(t_word_desc));
-
-// 	word1->word = "echo";
-// 	word1->flags = 0;
-// 	word1->next = word2;
-
-// 	word2->word = "-n";  // Simulando uma flag
-// 	word2->flags = 2;
-// 	word2->next = word3;
-
-// 	word3->word = "Hello, World!";
-// 	word3->flags = 0;
-// 	word3->next = NULL;
-
-// 	t_world_list input;
-// 	input.word = word1;
-// 	input.next = NULL;
-
-// 	// Chamando a função echo
-// 	echo(&input);
-
-// 	// Liberando memória
-// 	free(word1);
-// 	free(word2);
-// 	free(word3);
-
-// 	return (0);
-// }

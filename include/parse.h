@@ -24,11 +24,6 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
-typedef struct	s_data
-{
-	char	**envp; //TODO: our own env_node, word_lst(?) 1st node, errcode(?)
-}	t_data;
-
 typedef struct s_word
 {
 	struct s_word	*next;

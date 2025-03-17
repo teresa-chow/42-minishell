@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/parse.h"
 #include "../../../include/builtins.h"
 #include "../../../include/utils.h"
 #include "../../../include/errors.h"

@@ -15,22 +15,20 @@
 #include "../include/execve.h"
 #include "../include/errors.h"
 #include "../include/utils.h"
+#include "../include/struct.h"
 
 #include "../tests/test.h" //tmp
 
+static void	data_init(t_data *data, char **envp);
+
 int	main(int argc, char **argv, char **envp)
 {
-	//t_data		data; //TODO: review struct elements
+	t_data		data;
 	t_word_lst	*word_lst;
-	//t_env_node	*env_lst;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
-	//ft_bzero(&data, sizeof(t_data)); //ft_bzero(&env_lst, sizeof(t_env_node));
-	//env_lst = NULL;
-	//if (!init_env_lst(envp, &env_lst)) //TODO: handle with empty env like bash
-	//	ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
+	data_init(&data, envp);
 	while (1)
 	{
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
@@ -39,9 +37,18 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&word_lst);
 		print_word_lst(&word_lst); //tmp
 		//if (word_lst->word != NULL)
-		//	test_builtins(&word_lst, &env_lst);
+		//	test_builtins(&data); //TODO: review - word_lst should not be part of t_data struct
 		free_word_lst(&word_lst);
 	}
 	//rl_clear_history();
 	return (0);
+}
+
+static void	data_init(t_data *data, char **envp)
+{
+	ft_bzero(data, sizeof(t_data));
+	// ft_bzero(, sizeof(t_word_lst));
+	if (init_env_lst(envp, data) == -1)
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);	
+	data->env_path = ft_split(ft_strchr(get_path(data->env), '/'), ':');
 }
