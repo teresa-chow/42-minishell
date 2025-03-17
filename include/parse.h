@@ -76,6 +76,7 @@ int		syntax_analysis(t_word_lst *word_lst);
 int		check_logical_op(t_word *word);
 int		check_op_syntax(char *word);
 int		check_redir_seq(t_word_lst *word_lst, t_word *word);
+int		is_valid_redir(t_word *word);
 
 #endif
 

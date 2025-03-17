@@ -86,3 +86,19 @@ int	check_redir_seq(t_word_lst *word_lst, t_word *word)
 	}
 	return (0);
 }
+
+int	is_valid_redir(t_word *word)
+{
+	int	len;
+
+	len = ft_strlen(word->word);
+	if (len == 2 && is_redirection(word->word[0]))
+	{
+		if (!ft_strcmp(word->word, ">>") || !ft_strcmp(word->word, "<<")
+			|| !ft_strcmp(word->word, ">|"))
+			return (1);
+		else
+			err_syntax(word->word[0]);
+	}
+	return (0);
+}
