@@ -10,13 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/builtins.h"
+#include "../../include/parse.h"
+#include "../../include/builtins.h"
 
-static	void handle_error(char *path)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	perror(path);
-}
+static	void handle_error(char *path);
+
 void	cd(t_word *input)
 {
 	char	*path;
@@ -27,4 +25,10 @@ void	cd(t_word *input)
 	if (chdir(path) == -1)
 		handle_error(path);
 	/*TODO: we have to update PWD and OLDPWD when cd is working*/
+}
+
+static	void handle_error(char *path)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	perror(path);
 }

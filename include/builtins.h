@@ -15,6 +15,7 @@
 
 # include <errno.h>
 
+# include "parse.h"
 # include "struct.h"
 
 # include "../lib/libft/libft/libft.h"

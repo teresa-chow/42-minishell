@@ -58,7 +58,6 @@ typedef struct	s_data
 	// char	**envp;
 	t_env_node *env;
 	//t_word_lst word_lst; //should not be included -- this is a tmp struct
-	char	**cmd_lst;
 	char	**env_path;
 	// int	error_code
 }	t_data;

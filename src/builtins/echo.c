@@ -6,14 +6,13 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:57:47 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/02/27 14:06:00 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:33:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/builtins.h"
 
-/* TODO: check here if there is -n or -nnnn, etc*/
 void	echo(t_word *input)
 {
 	//int	flag;
@@ -24,7 +23,7 @@ void	echo(t_word *input)
 		flag = input->next->flags;
 	if (flag == 2)
 		start = input->next->next;
-	else*/ //TODO: review, flags don't exist in t_word struc
+	else*/
 		start = input->next;
 	while (start)
 	{
@@ -34,5 +33,11 @@ void	echo(t_word *input)
 		start = start->next;
 	}
 	//if (flag != 2)
-		write (1, "\n", 1);
+	write (1, "\n", 1);
 }
+
+/*
+TODO:
+- check here if there is -n or -nnnn, etc
+- flags ceased to exist in t_word struct
+*/

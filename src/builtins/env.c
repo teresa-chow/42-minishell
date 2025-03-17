@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-04 22:28:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-04 22:28:24 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/12 11:32:22 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/12 11:36:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-void	pwd(void)
+void	env_cmd(t_env_node *env)
 {
-	char	*path;
-
-	path = getcwd(NULL, 0);
-	if (!path)
-		perror("minishell");
-	else
+	while (env)
 	{
-		ft_printf ("%s\n", path);
-		free(path);
+		if (env->val)
+		{
+			ft_putstr_fd(env->key, 1);
+			write (1, "=", 1);
+			ft_putendl_fd(env->val, 1);
+		}
+		env = env->next;
 	}
 }
