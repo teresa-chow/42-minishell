@@ -32,28 +32,42 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
-//WIFEXITED(status)
+//WIFEXITED(status) --------------------------------------------------------
 int	handle_sys_exec(char **wrd_arr, char **env_arr, t_data *data)
 {
 	int	i;
 	char	*tmp;
+	char	**env_path;
+	pid_t	pid;
 
-	(void)wrd_arr;
-	(void)env_arr;
-	(void)tmp;
+	env_path = set_path(data);
+	if (!env_path)
+	return (command_not_found(data->word_lst.word->word));	
 	i = -1;
-	set_path(data);
-	if (!data->env_path)
-		return (command_not_found(data->word_lst.word->word));	
-	while (data->env_path[++i])
+	while (env_path[++i])
 	{
-		tmp = ft_strjoin(data->env_path[i], "/");
-		// if (access())
+		tmp = ft_strjoin(env_path[i], data->word_lst.word->word);
+		if (!tmp)
+		{
+			error_allocation();
+			break;
+		}
+		if (access(tmp, F_OK) == 0)
+		{
+			pid = fork();
+			if (pid == 0)
+				execve(tmp, wrd_arr, env_arr);
+			else
+			{
+				wait (NULL);
+				break;
+			}
+		}
 	}
-	// free_arrays(wrd_arr, env_arr, 0); ???????
+	printf("%d\n", errno);
+	free_arrays(wrd_arr, env_arr, 0);
 	return (0);
 }
-
 int	exec(t_data *data)
 {
 	char	**wrd_arr;
@@ -64,7 +78,11 @@ int	exec(t_data *data)
 	if (!wrd_arr || !env_arr)
 		return (free_arrays(wrd_arr, env_arr, 1));
 	if (!find_slash(data->word_lst.word->word))
+	{
 		handle_sys_exec(wrd_arr, env_arr, data);
-	free_arrays(wrd_arr, env_arr, 0);
+
+	}
+	else
+		free_arrays(wrd_arr, env_arr, 0);
 	return (0);
 }

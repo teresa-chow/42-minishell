@@ -58,7 +58,6 @@ typedef struct	s_data
 	t_env_node *env;
 	t_word_lst word_lst;
 	char	**cmd_lst;
-	char	**env_path;
 	// int	error_code
 }	t_data;
 #endif

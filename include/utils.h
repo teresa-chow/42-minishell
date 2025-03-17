@@ -30,6 +30,6 @@ int	free_env_list(t_env_node **lst, int i);
 /* =========================== ENV INIT =========================== */
 int	init_env_lst(char **envp, t_data *data);
 /* =========================== SET PATH =========================== */
-void	set_path(t_data *data);
+char	**set_path(t_data *data);
 
 #endif
