@@ -21,7 +21,10 @@ int	check_logical_op(t_word *word)
 	if (is_operator(word->word[0]))
 	{
 		if (ft_strlen(word->word) == 1)
-			return (err_syntax(&word->word[0]));
+		{
+			if (word->word[0] == '|')
+				return (err_syntax("|"));
+		}
 		else
 		{
 			token[0] = word->word[0];
@@ -38,15 +41,9 @@ int	check_op_syntax(char *word)
 	int	len;
 
 	len = ft_strlen(word);
-	if (len == 1 && word[0] == '&') //review
-		return (err_syntax("&"));
 	if (len == 3)
-	{
 		if (word[2] == '|')
 			return (err_syntax("|"));
-		else if (word[2] == '&')
-			return (err_syntax("&"));
-	}
 	if (len > 2)
 	{
 		if (word[0] == '<')
