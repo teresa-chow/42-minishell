@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/06 15:46:35 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:18:14 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
-
-# include <unistd.h>
-# include <stdlib.h>
 
 # include "parse.h"
 # include "builtins.h"
@@ -36,6 +33,6 @@ int		free_env_list(t_env_node **lst, int i);
 int		init_env_lst(char **envp, t_data *data);
 
 /* =========================== SET PATH =========================== */
-void	set_path(t_data *data);
+char	**set_path(t_data *data);
 
 #endif
