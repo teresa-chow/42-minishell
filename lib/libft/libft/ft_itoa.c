@@ -3,55 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 12:59:08 by tchow-so          #+#    #+#             */
-/*   Updated: 2024/03/28 14:51:13 by tchow-so         ###   ########.fr       */
+/*   Created: 2024/10/26 08:40:35 by carlaugu          #+#    #+#             */
+/*   Updated: 2024/10/29 10:33:40 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t	ft_intlen(long n)
+static	long	ft_len_num(long n)
 {
-	size_t	len;
+	long	i;
 
-	len = 1;
-	if (n < 0)
+	i = 0;
+	if (n >= 0 && n <= 9)
+		return (1);
+	while (n > 0)
 	{
-		len++;
-		n = -n;
-	}
-	while (n > 9)
-	{
+		i++;
 		n /= 10;
-		len++;
 	}
-	return (len);
+	return (i);
+}
+
+static	void	ft_char(char *str, long n, int len)
+{
+	if (n == 0)
+		str[len] = '0';
+	while (n > 0)
+	{
+		str[len--] = (n % 10) + '0';
+		n /= 10;
+	}
 }
 
 char	*ft_itoa(int n)
 {
-	char			*str;
-	size_t			i;
-	unsigned int	nb;
+	char		*str;
+	long long	num;
+	int			len;
+	int			is_neg;
 
-	str = malloc((ft_intlen(n) + 1) * sizeof(char));
+	num = n;
+	is_neg = (num < 0);
+	if (is_neg)
+		num = -num;
+	len = ft_len_num(num) + is_neg;
+	str = malloc ((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	i = ft_intlen(n);
-	str[i] = '\0';
-	if (n < 0)
-	{
+	str[len] = '\0';
+	if (is_neg)
 		str[0] = '-';
-		nb = -n;
-	}
-	else
-		nb = n;
-	while (i-- && str[i] != '-')
-	{
-		str[i] = (nb % 10) + '0';
-		nb /= 10;
-	}
+	ft_char(str, num, len - 1);
 	return (str);
 }
