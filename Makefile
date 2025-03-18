@@ -16,23 +16,23 @@ NAME		= minishell
 # FILES                                                                        #
 # ============================================================================ #
 
-SRC				= $(addprefix $(SRC_DIR)/, main.c init_env.c)
+SRC				= $(addprefix $(SRC_DIR)/, main.c)
 SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
-	tokenize_div_quotes.c tokenize_div_utils.c tokenize_utils.c lexer.c)
-SRC_BUILTINS	= $(addprefix $(ECHO_DIR)/, echo.c) \
-	$(addprefix $(CD_DIR)/, cd.c) $(addprefix $(PWD_DIR)/, pwd.c) \
-	$(addprefix $(EXPORT_DIR)/, export.c export_print.c) \
-	$(addprefix $(UNSET_DIR)/, unset.c)
-SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, get_path.c check_command.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c)
-SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, errors.c)
+	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
+	tokenize_utils.c syntax_analysis.c syntax_analysis_utils.c)
+SRC_BUILTINS	= #$(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c export.c \
+	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
+SRC_EXECVE		= #$(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, print_fd.c mem_utils.c) \
+	#init_env.c set_path.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
-OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
-OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
+OBJS_BUILTINS	= #$(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
+OBJS_EXECVE		= #$(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
 OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
@@ -54,11 +54,6 @@ LIB_DIR			= lib
 PARSER_DIR		= $(SRC_DIR)/parser
 
 BUILTINS_DIR	= $(SRC_DIR)/builtins
-ECHO_DIR		= $(BUILTINS_DIR)/echo
-CD_DIR		= $(BUILTINS_DIR)/cd
-PWD_DIR		= $(BUILTINS_DIR)/pwd
-EXPORT_DIR	= $(BUILTINS_DIR)/exp
-UNSET_DIR	= $(BUILTINS_DIR)/unset
 
 EXECVE_DIR	= $(SRC_DIR)/execve
 
@@ -114,19 +109,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 $(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(ECHO_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(BUILD_DIR)/%.o: $(CD_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	
-$(BUILD_DIR)/%.o: $(PWD_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(BUILD_DIR)/%.o: $(EXPORT_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(BUILD_DIR)/%.o: $(UNSET_DIR)/%.c
+$(BUILD_DIR)/%.o: $(BUILTINS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c

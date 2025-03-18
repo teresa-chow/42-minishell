@@ -12,36 +12,44 @@
 
 #include "../include/parse.h"
 #include "../include/builtins.h"
-#include "../include/utils.h"
 #include "../include/execve.h"
+#include "../include/errors.h"
+#include "../include/utils.h"
+#include "../include/struct.h"
 
 #include "../tests/test.h" //tmp
 
+//static void	data_init(t_data *data, char **envp);
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data; //TODO: review struct elements
-	t_word_lst	word_lst;
-	t_env_node	*env_lst;
+	//t_data		data;
+	t_word_lst	*word_lst;
 
 	(void)argc;
 	(void)argv;
-	ft_bzero(&data, sizeof(t_data));
-	ft_bzero(&word_lst, sizeof(t_word_lst));
-	ft_bzero(&env_lst, sizeof(t_env_node));
-
-	env_lst = NULL;
-	data.envp = envp;
-	if (!init_env_lst(data.envp, &env_lst)) //TODO: handle with empty env like bash
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
+	(void)envp;
+	//data_init(&data, envp);
 	while (1)
 	{
-		read_input(&data, &word_lst);
-		print_word_lst(&data, &word_lst); //tmp
-		if (word_lst.word != NULL)
-			test_builtins(&word_lst, &env_lst);
-		// free_word_lst(&word_lst); // this will try free a static structure like word_lst and
-					//   will fail. We have to create a pointer to struct
+		word_lst = ft_calloc(1, sizeof(t_word_lst));
+		if (!word_lst)
+			break ;
+		read_input(&word_lst);
+		//print_word_lst(&word_lst); //tmp
+		//if (word_lst->word != NULL)
+		//	test_builtins(&data); //TODO: review - word_lst should not be part of t_data struct
+		free_word_lst(&word_lst);
 	}
 	//rl_clear_history();
 	return (0);
 }
+
+/*static void	data_init(t_data *data, char **envp)
+{
+	ft_bzero(data, sizeof(t_data));
+	// ft_bzero(, sizeof(t_word_lst));
+	if (init_env_lst(envp, data) == -1)
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);	
+	data->env_path = ft_split(ft_strchr(get_path(data->env), '/'), ':');
+}*/

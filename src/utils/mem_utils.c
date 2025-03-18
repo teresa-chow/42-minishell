@@ -13,12 +13,15 @@
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 #include "../../include/parse.h"
+#include "../../include/errors.h"
 
 void	free_strarray(char **array)
 {
 	int	i;
 
 	i = 0;
+	if (!array)
+		return ;
 	while (array[i])
 	{
 		free(array[i]);
@@ -27,16 +30,22 @@ void	free_strarray(char **array)
 	free(array);
 }
 
-void	free_env_list(t_env_node *lst)
+int	free_env_list(t_env_node **lst, int i)
 {
 	t_env_node *tmp;
 
-	while (lst)
+	while (*lst)
 	{
-		tmp = lst->next;
-		free(lst->var);
-		lst = tmp;
-  }
+		tmp = (*lst)->next;
+		free((*lst)->key);
+		free((*lst)->val);
+		free((*lst));
+		(*lst) = tmp;
+  	}
+	*lst = NULL;
+	if (i)
+		return(error_allocation());
+	return (0);
 }
 
 void	free_words(t_word **word)
@@ -52,15 +61,15 @@ void	free_words(t_word **word)
 	}
 }
 
-void	free_word_lst(t_word_lst *word_lst)
+void	free_word_lst(t_word_lst **word_lst)
 {
 	t_word_lst	*tmp;
 
-	while (word_lst != NULL)
+	while (*word_lst)
 	{
-		free_words(&word_lst->word);
-		tmp = word_lst;
-		word_lst = word_lst->next;
+		free_words(&(*word_lst)->word);
+		tmp = *word_lst;
+		*word_lst = (*word_lst)->next;
 		free(tmp);
-  }
+	}
 }

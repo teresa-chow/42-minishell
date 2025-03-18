@@ -13,24 +13,29 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+# include <unistd.h>
 # include <stdlib.h>
+
+# include "parse.h"
+# include "builtins.h"
+# include "struct.h"
+
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
-# include "builtins.h"
-# include "parse.h"
 
-typedef	struct s_ipt_inf
-{
-	char	*key;
-	char	*val;
-	char	sep;
-	int	val_strt;
-}	t_ipt_inf;
+/* =============================== PRINT TO FD ============================== */
+void	print_fd(int fd, const char *msg, char *token);
 
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);
-void	free_word_lst(t_word_lst *word_lst);
+void	free_word_lst(t_word_lst **word_lst);
 void	free_words(t_word **word);
-void	free_env_list(t_env_node *lst);
+int		free_env_list(t_env_node **lst, int i);
+
+/* =========================== ENV INIT =========================== */
+int		init_env_lst(char **envp, t_data *data);
+
+/* =========================== SET PATH =========================== */
+void	set_path(t_data *data);
 
 #endif

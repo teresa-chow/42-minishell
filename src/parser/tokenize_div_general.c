@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_div_utils.c                               :+:      :+:    :+:   */
+/*   tokenize_div_general.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,7 @@ static unsigned int	substr_len(const char *str, unsigned int start);
 int	handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
 	if (cmd[*j] && !is_delimiter(cmd[*j]) && !is_quote(cmd[*j])
-		&& cmd[*j] != '(')
+		&& !is_redirection(cmd[*j]) && cmd[*j] != '(')
 	{
 		init_word(*word_lst, word);
 		(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
@@ -81,7 +81,8 @@ static unsigned int	substr_len(const char *str, unsigned int start)
 	unsigned int	len;
 
 	end = start;
-	while (str[end] && !is_delimiter(str[end]) && str[end] != '(')
+	while (str[end] && !is_delimiter(str[end])
+		&& !is_redirection(str[end]) && str[end] != '(')
 		end++;
 	len = end - start;
 	return (len);
