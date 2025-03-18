@@ -8,7 +8,7 @@ cd ~
 pwd
 
 
-#Possible errors:
+#Possible error:
 # - try to access a folder with permission denied
 # - try to access a file instead a folder
 # - try to access a folder that doesn't exist

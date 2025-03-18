@@ -57,7 +57,6 @@ typedef struct	s_data
 {
 	// char	**envp;
 	t_env_node *env;
-	char	**env_path;
 	// int	error_code
 }	t_data;
 #endif
