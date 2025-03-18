@@ -14,7 +14,7 @@
 
 int	is_operator(int c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&');
+	return (c == '|' || c == '&');
 }
 
 int	is_delimiter(int c)
@@ -32,22 +32,27 @@ int	is_quote(int c)
 	return (0);
 }
 
+int	is_redirection(int c)
+{
+	return (c == '>' || c == '<');
+}
+
 int	is_equal_next(const char *str, int i)
 {
 	if (!str[i + 1])
 		return (0);
 	if (str[i] == str[i + 1])
 		return (1);
-	return (0);
+	return (0); 
 }
 
-int	is_special(int c)
+int	is_special(int c) //unused
 {
 	return (c == '$' || c == '|' || c == '<' || c == '>' || c == '&'
 		|| c == '~' || c == '*');
 }
 
-int	is_unhandled(int c)
+int	is_unhandled(int c) //unused
 {
 	return (c == '`' || c == '#' || c == '\\' || c == '['
 		|| c == ']' || c == '{' || c == '}' || c == ';' || c == '!');

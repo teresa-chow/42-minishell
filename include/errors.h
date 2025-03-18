@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 11:13:15 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:15:21 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,13 @@ by SIGINT; 255-exit status out of range */
 # define ERR_INT 130
 # define ERR_OOR 255
 
-# include <unistd.h>
-
 # include "parse.h"
 # include "builtins.h"
 
 /* -------------------------------------------------------------------------- */
 /*                                      Errors                                */
 /* -------------------------------------------------------------------------- */
-// int err_syntax(char *token);
+int err_syntax(char *token);
 int	error_allocation(void);
 int	command_not_found(char *token);
 int	no_file_or_directory(char *token);

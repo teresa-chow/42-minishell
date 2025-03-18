@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// TO DO: handle memory alloc error (returns -1)
+// TODO: handle memory alloc errors (returns -1)
 
 #include "../../include/parse.h"
+#include "../../include/utils.h"
 
 /* Tokenization (2): split words (divide by whitespaces) */
 int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
@@ -29,6 +30,7 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 		while (cmd_lst[i][j] != '\0')
 		{
 			handle_parentheses(cmd_lst[i], &j, &word_lst, &word_tmp);
+			handle_redirection(cmd_lst[i], &j, &word_lst, &word_tmp);
 			handle_other(cmd_lst[i], &j, &word_lst, &word_tmp);
 			handle_quote(cmd_lst[i], &j, &word_lst, &word_tmp);
 			while (is_delimiter(cmd_lst[i][j]))
