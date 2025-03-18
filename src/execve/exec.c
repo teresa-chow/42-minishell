@@ -32,6 +32,7 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
+
 void	without_slash(t_data *data, t_word *word, char **tmp)
 {
 	char	**env_path;

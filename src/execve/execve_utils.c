@@ -24,6 +24,7 @@ char	*get_path(t_env_node *env)
 	}
 	return (NULL);
 }
+
 int	free_arrays(char **wrd_arr, char **env_arr, int i)
 {
 	free_strarray(wrd_arr);
@@ -34,6 +35,7 @@ int	free_arrays(char **wrd_arr, char **env_arr, int i)
 		return(error_allocation());
 	return (0);
 }
+
 static int	count_words(t_env_node *env, t_word *word)
 {
 	int	count;
@@ -57,6 +59,7 @@ static int	count_words(t_env_node *env, t_word *word)
 	}
 	return (count);
 }
+
 char	**creat_wrd_arr(t_word *word)
 {
 	int	i;
@@ -76,6 +79,7 @@ char	**creat_wrd_arr(t_word *word)
 	}
 	return (arr);
 }
+
 char	**creat_env_arr(t_env_node *env)
 {
 	int	i;

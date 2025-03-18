@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <unistd.h>
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
@@ -37,45 +38,45 @@ typedef struct s_word_lst
 
 typedef struct s_tree_node
 {
-    int			val;
-    char                *str;
-    struct s_tree_node  *left;
-    struct s_tree_node  *right;
-}   t_tree_node;
+	int					val;
+	char				*str;
+	struct s_tree_node	*left;
+	struct s_tree_node	*right;
+}	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void    read_input(t_word_lst **word_lst);
+void	read_input(t_word_lst **word_lst);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
-char    **tokenize_op(char *input);
-int     tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
+char	**tokenize_op(char *input);
+int		tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
 // Tokenize utils
-unsigned int    group_len(const char *str, unsigned int start);
-int     handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
-            t_word **word);
-int     handle_redirection(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
-int     handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
-int     handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
-unsigned int    next_quote(const char *str, unsigned int start, int code);
-int     init_word(t_word_lst *word_lst, t_word **word);
-int     add_word(t_word **word_desc);
-int     add_word_lst(t_word_lst **word_lst);
+unsigned int	group_len(const char *str, unsigned int start);
+int 	handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
+			t_word **word);
+int		handle_redirection(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
+int		handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
+int		handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
+unsigned int	next_quote(const char *str, unsigned int start, int	code);
+int		init_word(t_word_lst *word_lst, t_word **word);
+int		add_word(t_word **word_desc);
+int		add_word_lst(t_word_lst **word_lst);
 // Syntax utils
-int     is_operator(int c);
-int     is_delimiter(int c);
-int     is_quote(int c);
-int     is_redirection(int c);
-int     is_special(int c);
-int     is_unhandled(int c);
-int     is_equal_next(const char *str, int i);
+int		is_operator(int c);
+int		is_delimiter(int c);
+int		is_quote(int c);
+int		is_redirection(int c);
+int		is_special(int c);
+int		is_unhandled(int c);
+int		is_equal_next(const char *str, int i);
 
 /* ============================ SYNTAX ANALYSIS ============================ */
-int     syntax_analysis(t_word_lst *word_lst);
+int		syntax_analysis(t_word_lst *word_lst);
 // Syntax analysis utils
-int     check_logical_op(t_word *word);
-int     check_op_syntax(char *word);
-int     check_redir_seq(t_word_lst *word_lst, t_word *word);
-int     is_valid_redir(t_word *word);
+int		check_logical_op(t_word *word);
+int		check_op_syntax(char *word);
+int		check_redir_seq(t_word_lst *word_lst, t_word *word);
+int		is_valid_redir(t_word *word);
 
 #endif
 

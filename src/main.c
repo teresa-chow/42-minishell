@@ -15,6 +15,7 @@
 #include "../include/utils.h"
 
 #include "../tests/test.h" //tmp
+
 static void	data_init(t_data *data, char **envp);
 
 int	main(int argc, char **argv, char **envp)
@@ -29,9 +30,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!word_lst)
-			break;
+			break ;
 		read_input(&word_lst);
-		// print_word_lst(&word_lst); //tmp
+		//print_word_lst(&word_lst); //tmp
 		if (word_lst->word != NULL)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);

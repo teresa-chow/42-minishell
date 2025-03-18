@@ -27,18 +27,19 @@ typedef struct s_env_node
 /* -------------------------------------------------------------------------- */
 /*                            Parser Structs                                  */
 /* -------------------------------------------------------------------------- */
-// typedef struct s_word
-// {
-// 	struct s_word	*next;
-// 	char	*word;
-// 	int		flags;
-// }	t_word;
+/*typedef struct s_word
+{
+	struct s_word	*next;
+	char	*word;
+	int		flags;
+}	t_word;
 
-// typedef struct s_word_lst
-// {
-// 	struct s_word_lst	*next;
-// 	struct s_word		*word;
-// }	t_word_lst;
+typedef struct s_word_lst
+{
+	struct s_word_lst	*next;
+	struct s_word		*word;
+}	t_word_lst;*/ //TODO: needs review
+
 /* -------------------------------------------------------------------------- */
 /*                           Export and env init                              */
 /* -------------------------------------------------------------------------- */

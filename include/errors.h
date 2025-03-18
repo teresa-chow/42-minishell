@@ -24,6 +24,8 @@ by SIGINT; 255-exit status out of range */
 # define ERR_INT 130
 # define ERR_OOR 255
 
+# include <unistd.h>
+
 # include "parse.h"
 # include "builtins.h"
 

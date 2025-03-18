@@ -15,30 +15,39 @@
 
 # include <errno.h>
 
+# include "parse.h"
+# include "struct.h"
+
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
-# include "struct.h"
-# include "parse.h"
 
-/* ======================== Builtins Utils ================================== */
-t_env_node	*last_node(t_env_node *env_lst);
-int	set_inf(char *word, t_ipt_inf *inf_arg);
-char	find_sep(char *s);
 /* ================================== ECHO ================================== */
 void	echo(t_word *input);
+
 /* =================================== CD =================================== */
 void	cd(t_word *input);
+
 /* ================================== PWD =================================== */
 void	pwd(void);
+
 /* ================================= EXPORT================================= */
 void	export(t_data *data, t_word_lst *word_lst);
 void	reset_inf(t_ipt_inf *inf);
 void	sort_env(t_env_node *env_lst);
-t_env_node	*sort_halfs(t_env_node *head);
+t_env_node	*sort_halfs(t_env_node *head); //TODO: typo "halves"
+
 /* ================================= UNSET ================================== */
-void	unset(t_data * data, t_word_lst *word_lst);
+void	unset(t_data *data, t_word_lst *word_lst);
+
 /* ================================== ENV =================================== */
 void	env_cmd(t_env_node *env);
+
 /* ================================== EXIT ================================== */
+
+
+/* ============================== GENERAL UTILS ============================= */
+t_env_node	*last_node(t_env_node *env_lst);
+int		set_inf(char *word, t_ipt_inf *inf_arg);
+char	find_sep(char *s);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:00:39 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	command_not_found(char *token)
 	print_fd(2, "%s: command not found\n", token);
 	return (ERR_F);
 }
-
 
 int	no_file_or_directory(char *token)
 {

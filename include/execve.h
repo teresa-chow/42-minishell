@@ -16,12 +16,13 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 
-# include "../lib/libft/libft/libft.h"
 # include "utils.h"
 
+# include "../lib/libft/libft/libft.h"
 
 char	*get_path(t_env_node *env);
 int	exec(t_data *data, t_word *word);
+
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */
 /* -------------------------------------------------------------------------- */

@@ -29,5 +29,12 @@ void	echo(t_word *input)
 			write (1, " ", 1);
 		start = start->next;
 	}
+	//if (flag != 2)
 	write (1, "\n", 1);
 }
+
+/*
+TODO:
+- check here if there is -n or -nnnn, etc
+- flags ceased to exist in t_word struct
+*/

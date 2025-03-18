@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:12:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 12:19:27 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:12:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	is_valid_redir(t_word *word)
 			|| !ft_strcmp(word->word, ">|"))
 			return (1);
 		else
-			return(err_syntax(&word->word[1]));
+			return (err_syntax(&word->word[1]));
 	}
 	return (0);
 }
