@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/03/06 11:39:54 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/03/18 12:14:46 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_utils.c)
-SRC_BUILTINS	= #$(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c export.c \
+SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c export.c \
 	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
-SRC_EXECVE		= #$(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, print_fd.c mem_utils.c) \
-	#init_env.c set_path.c)
-SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c)
+SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
+SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
+	set_path.c print_fd.c)
+SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -58,13 +58,13 @@ BUILTINS_DIR	= $(SRC_DIR)/builtins
 EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
+
 ERRORS_DIR	= $(SRC_DIR)/errors
 
 TEST_DIR	= tests
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
-
 
 # ============================================================================ #
 # COMPILER, FLAGS & COMMANDS                                                   #
@@ -80,7 +80,6 @@ MAKE	= make -C
 RM	= rm -rf
 AR	= ar rcs
 MKDIR	= mkdir -p
-
 
 # ============================================================================ #
 # RULES                                                                        #

@@ -13,9 +13,6 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-# include <unistd.h>
-# include <stdlib.h>
-
 # include "parse.h"
 # include "builtins.h"
 # include "struct.h"

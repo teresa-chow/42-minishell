@@ -11,11 +11,8 @@
 /* ************************************************************************** */
 
 #include "../include/parse.h"
-#include "../include/builtins.h"
-#include "../include/execve.h"
 #include "../include/errors.h"
 #include "../include/utils.h"
-#include "../include/struct.h"
 
 #include "../tests/test.h" //tmp
 
@@ -49,6 +46,5 @@ static void	data_init(t_data *data, char **envp)
 	ft_bzero(data, sizeof(t_data));
 	// ft_bzero(, sizeof(t_word_lst));
 	if (init_env_lst(envp, data) == -1)
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);	
-	data->env_path = ft_split(ft_strchr(get_path(data->env), '/'), ':');
+		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 }

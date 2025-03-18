@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
-#include "../../include/error.h"
 #include "../../include/errors.h"
 
 static char	*get_path(t_env_node *env)
