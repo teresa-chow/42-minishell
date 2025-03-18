@@ -55,7 +55,6 @@ static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word)
 	}
 	return (0);
 }
-
 /*
 >&& token & ; >&&& token && ; >|| token | ; >||| token ||
 
