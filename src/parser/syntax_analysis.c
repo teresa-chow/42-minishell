@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/12 16:19:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:23:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word)
 		tmp_word = tmp_lst->word;
 		while (tmp_word)
 		{
-			if (is_operator(tmp_word->word[0]) || is_redirection(tmp_word->word[0]))
+			if (is_operator(tmp_word->word[0])
+				|| is_redirection(tmp_word->word[0]))
 			{
 				if (check_op_syntax(tmp_word->word) != 0)
 					return (ERR_BI);
@@ -64,5 +65,6 @@ review:
 <| -- token: |
 >< -- token: <
 
-& -- single ampersand should be taken as literal (here is in a different word_lst)
+& -- single ampersand should be taken as literal
+     (here is in a different word_lst)
 */
