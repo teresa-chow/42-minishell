@@ -98,7 +98,7 @@ int	is_valid_redir(t_word *word)
 			|| !ft_strcmp(word->word, ">|"))
 			return (1);
 		else
-			err_syntax(word->word[0]);
+			return (err_syntax(&word->word[1]));
 	}
 	return (0);
 }

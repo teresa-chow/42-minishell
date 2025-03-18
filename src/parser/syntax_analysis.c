@@ -41,6 +41,8 @@ static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word)
 			{
 				if (check_op_syntax(tmp_word->word) != 0)
 					return (ERR_BI);
+				if (is_valid_redir(tmp_word) > 1)
+					return (ERR_BI);
 				if (check_redir_seq(tmp_lst, tmp_word) != 0)
 					return (ERR_BI);
 			}
@@ -53,6 +55,7 @@ static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word)
 	}
 	return (0);
 }
+
 /*
 >&& token & ; >&&& token && ; >|| token | ; >||| token ||
 
