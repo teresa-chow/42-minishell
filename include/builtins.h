@@ -6,40 +6,39 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/06 13:38:26 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:22:58 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "../lib/libft/libft/libft.h"
-# include "../lib/libft/ft_printf/ft_printf.h"
-# include "parse.h"
 # include <errno.h>
 
-typedef struct s_env_node
-{
-	char	*var;
-	struct s_env_node *next;
-	struct s_env_node *prev;
-}	t_env_node;
+# include "../lib/libft/libft/libft.h"
+# include "../lib/libft/ft_printf/ft_printf.h"
+# include "struct.h"
+# include "parse.h"
 
+/* ======================== Builtins Utils ================================== */
+t_env_node	*last_node(t_env_node *env_lst);
+int	set_inf(char *word, t_ipt_inf *inf_arg);
+char	find_sep(char *s);
 /* ================================== ECHO ================================== */
 void	echo(t_word *input);
 /* =================================== CD =================================== */
 void	cd(t_word *input);
 /* ================================== PWD =================================== */
 void	pwd(void);
-/* ================================= EXPORT ================================= */
-void	export(t_word *word_lst, t_env_node **env_lst);
-t_env_node	*get_last(t_env_node *env_lst);  ///used to creat env when empty too
-/* ================================= UNSET ================================== */
-void	unset(t_env_node **env_lst, t_word *word_lst);
-/* ================================== ENV =================================== */
+/* ================================= EXPORT================================= */
+void	export(t_data *data, t_word_lst *word_lst);
+void	reset_inf(t_ipt_inf *inf);
 void	sort_env(t_env_node *env_lst);
-void	print_export(t_env_node *env_lst);
-int	init_env_lst(char **envp, t_env_node **env_lst);
+t_env_node	*sort_halfs(t_env_node *head);
+/* ================================= UNSET ================================== */
+void	unset(t_data * data, t_word_lst *word_lst);
+/* ================================== ENV =================================== */
+void	env_cmd(t_env_node *env);
 /* ================================== EXIT ================================== */
 
 #endif

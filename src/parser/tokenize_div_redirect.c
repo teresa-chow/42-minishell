@@ -1,49 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_div_parentheses.c                         :+:      :+:    :+:   */
+/*   tokenize_div_redirect.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/05 11:13:19 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/03/13 10:26:29 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/03/13 10:26:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
-{
-	unsigned int	len;
+static unsigned int	substr_len(const char *str, unsigned int start);
 
-	len = 0;
-	if (cmd[*j] == '(')
+int	handle_redirection(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
+{
+	if (is_redirection(cmd[*j]))
 	{
 		init_word(*word_lst, word);
-		len = group_len(cmd, *j);
-		(*word)->word = ft_substr(cmd, *j, len);
+		(*word)->word = ft_substr(cmd, *j, substr_len(cmd, *j));
 		if (!(*word)->word)
 			return (-1);
-		*j += len;
+		*j += substr_len(cmd, *j);
 	}
 	return (0);
 }
 
-unsigned int	group_len(const char *str, unsigned int start)
+static unsigned int	substr_len(const char *str, unsigned int start)
 {
 	unsigned int	end;
 	unsigned int	len;
 
 	end = start;
-	while (str[end] && str[end] != ')')
-	{
-		end++;
-		if (is_quote(str[end]))
-			end += next_quote(str, end, is_quote(str[end]));
-		while (str[end] == '(')
-			end += group_len(str, end);
-	}
-	if (str[end] == ')')
+	while (is_redirection(str[end]) || str[end] == '|')
 		end++;
 	len = end - start;
 	return (len);

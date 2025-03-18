@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/11 11:00:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:15:21 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ by SIGINT; 255-exit status out of range */
 /* -------------------------------------------------------------------------- */
 /*                                      Errors                                */
 /* -------------------------------------------------------------------------- */
+int err_syntax(char *token);
 int	error_allocation(void);
+int	command_not_found(char *token);
+int	no_file_or_directory(char *token);
 // int	wrong_export_sintax(char *inpt);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/06 15:46:39 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:55:56 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,10 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
-# define BUILTIN
-# define EXT_CMD
-
-/* enum	e_flags
-{
-	NONE = 0,
-	VAR = 1,
-	OPT = 2,
-	LIT = 3,
-	EXP = 4,
-	EOF_FLAG = 5,
-	ERR = 6,
-	SPECIAL = 7
-}; */
-
-typedef struct	s_data
-{
-	char	**envp; //TODO: our own env_node, word_lst(?) 1st node, errcode(?)
-	char	**cmd_lst;
-}	t_data;
-
-
 typedef struct s_word
 {
 	struct s_word	*next;
 	char	*word;
-	int		flags;
 }	t_word;
 
 typedef struct s_word_lst
@@ -58,28 +35,47 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;
 
+typedef struct s_tree_node
+{
+    int			val;
+    char                *str;
+    struct s_tree_node  *left;
+    struct s_tree_node  *right;
+}   t_tree_node;
+
 /* =========================== INPUT PROCESSING ============================= */
-void	read_input(t_data *data, t_word_lst *word_lst);
+void    read_input(t_word_lst **word_lst);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
-char	**tokenize_op(char *input);
-int		tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
-// Utils
-int		is_operator(int c);
-int		is_delimiter(int c);
-int		is_quote(int c);
-int		is_equal_next(const char *str, int i);
-int		is_special(int c);
-int		is_unhandled(int c);
-unsigned int	group_len(const char *str, unsigned int start);
-int 	handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
-			t_word **word);
-int		handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
-int		init_word(t_word_lst *word_lst, t_word **word);
-int		handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
-unsigned int	next_quote(const char *str, unsigned int start, int	code);
-int		add_word(t_word **word_desc);
-int		add_word_lst(t_word_lst **word_lst);
+char    **tokenize_op(char *input);
+int     tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
+// Tokenize utils
+unsigned int    group_len(const char *str, unsigned int start);
+int     handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
+            t_word **word);
+int     handle_redirection(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
+int     handle_other(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
+int     handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word);
+unsigned int    next_quote(const char *str, unsigned int start, int code);
+int     init_word(t_word_lst *word_lst, t_word **word);
+int     add_word(t_word **word_desc);
+int     add_word_lst(t_word_lst **word_lst);
+// Syntax utils
+int     is_operator(int c);
+int     is_delimiter(int c);
+int     is_quote(int c);
+int     is_redirection(int c);
+int     is_special(int c);
+int     is_unhandled(int c);
+int     is_equal_next(const char *str, int i);
+
+/* ============================ SYNTAX ANALYSIS ============================ */
+int     syntax_analysis(t_word_lst *word_lst);
+// Syntax analysis utils
+int     check_logical_op(t_word *word);
+int     check_op_syntax(char *word);
+int     check_redir_seq(t_word_lst *word_lst, t_word *word);
+int     is_valid_redir(t_word *word);
 
 #endif
 

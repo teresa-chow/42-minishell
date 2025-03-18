@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 10:33:24 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 11:44:40 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/12 11:32:22 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/12 11:36:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#include "../../include/builtins.h"
 
-# include "../include/builtins.h"
-# include "../include/execve.h"
-# include "../include/parse.h"
-# include "../include/utils.h"
-
-void	test_builtins(t_data *data, t_word_lst *word_lst);
-void	print_word_lst(t_word_lst **word_lst);
-
-#endif
+void	env_cmd(t_env_node *env)
+{
+	while (env)
+	{
+		if (env->val)
+		{
+			ft_putstr_fd(env->key, 1);
+			write (1, "=", 1);
+			ft_putendl_fd(env->val, 1);
+		}
+		env = env->next;
+	}
+}
