@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   set_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-17 09:41:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-17 09:41:12 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/17 09:41:12 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/18 11:23:56 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/error.h"
+#include "../../include/errors.h"
 
 static char	*get_path(t_env_node *env)
 {
@@ -24,26 +25,28 @@ static char	*get_path(t_env_node *env)
 	return (NULL);
 }
 
-void	set_path(t_data *data)
+char	**set_path(t_data *data)
 {
 	int	i;
 	char	*tmp;
+	char	**arr;
 
-	data->env_path = ft_split(ft_strchr(get_path(data->env), '/'), ':');
-	if (!data->env_path)
-		return ;
+	arr = ft_split(ft_strchr(get_path(data->env), '/'), ':');
+	if (!arr)
+		return (NULL);
 	i = -1;	
-	while (data->env_path[++i])
+	while (arr[++i])
 	{
-		tmp = ft_strjoin(data->env_path[i], "/");
+		tmp = ft_strjoin(arr[i], "/");
 		if (!tmp)
 		{
-			free_strarray(data->env_path);
-			data->env_path = NULL;
+			free_strarray(arr);
+			arr = NULL;
 			error_allocation();
-			return ;
+			return (NULL);
 		}
-		free (data->env_path[i]);
-		data->env_path[i] = tmp;
+		free (arr[i]);
+		arr[i] = tmp;
 	}
+	return (arr);
 }

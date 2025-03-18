@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/06 13:38:26 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 14:16:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	cd(t_word *input);
 void	pwd(void);
 
 /* ================================= EXPORT================================= */
-void	export(t_data *data);
+void	export(t_data *data, t_word_lst *word_lst);
 void	reset_inf(t_ipt_inf *inf);
 void	sort_env(t_env_node *env_lst);
 t_env_node	*sort_halfs(t_env_node *head); //TODO: typo "halves"
 
 /* ================================= UNSET ================================== */
-void	unset(t_data * data);
+void	unset(t_data *data, t_word_lst *word_lst);
 
 /* ================================== ENV =================================== */
 void	env_cmd(t_env_node *env);

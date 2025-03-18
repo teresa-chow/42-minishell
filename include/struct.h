@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcuts.h                                          :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-14 15:59:24 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/18 11:56:43 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct	s_data
 {
 	// char	**envp;
 	t_env_node *env;
-	//t_word_lst word_lst; //should not be included -- this is a tmp struct
 	char	**env_path;
 	// int	error_code
 }	t_data;
