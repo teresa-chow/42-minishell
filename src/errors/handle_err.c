@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   handle_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/11 11:00:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/error.h"
+#include "../../include/errors.h"
 #include "../../include/utils.h"
 
 int err_syntax(char *token)
@@ -28,10 +28,17 @@ int	error_allocation(void)
 
 int	command_not_found(char *token)
 {
-	print_fd(2, "minishell: %s: No such file or directory\n", token);
+	print_fd(2, "%s: command not found\n", token);
 	return (ERR_F);
 }
 
+
+int	no_file_or_directory(char *token)
+{
+	print_fd(2, "minishell: %s: No such file or directory\n", token);
+	return (ERR_F);
+
+}
 /*
 int	wrong_export_sintax(char *inpt)
  {

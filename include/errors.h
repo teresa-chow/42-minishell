@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/11 11:00:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:13:15 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
 /* Bash error codes: 1-catch all error code; 2-builtin misuse; 126-cmd cannot
 execute; 127-cmd not found; 128-invalid argument to exit; 130-script terminated
@@ -35,6 +35,7 @@ by SIGINT; 255-exit status out of range */
 // int err_syntax(char *token);
 int	error_allocation(void);
 int	command_not_found(char *token);
+int	no_file_or_directory(char *token);
 // int	wrong_export_sintax(char *inpt);
 
 #endif

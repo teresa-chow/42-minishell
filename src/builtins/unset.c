@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-14 21:43:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-14 21:43:24 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/14 21:43:24 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/parse.h"
-#include "../../include/error.h"
+#include "../../include/errors.h"
 
 static int	update_env(t_env_node **env, t_env_node *tmp)
 {

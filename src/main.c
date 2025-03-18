@@ -6,12 +6,12 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/12 11:18:20 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
-#include "../include/error.h"
+#include "../include/errors.h"
 #include "../include/utils.h"
 
 //if we press enter when wait an input, we have seg fault  <<<<---------------------------------

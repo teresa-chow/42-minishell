@@ -6,14 +6,14 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/11 12:15:48 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 #include "../../include/parse.h"
-#include "../../include/error.h"
+#include "../../include/errors.h"
 
 void	free_strarray(char **array)
 {

@@ -6,13 +6,13 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/12 12:07:03 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 #include "../../include/utils.h"
-#include "../../include/error.h"
+#include "../../include/errors.h"
 
 int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
 {

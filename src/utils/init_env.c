@@ -6,13 +6,13 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:12:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/11 14:21:58 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
-#include "../../include/error.h"
+#include "../../include/errors.h"
 
 static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 {
