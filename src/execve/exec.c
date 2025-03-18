@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:36:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 11:17:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 11:27:18 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,23 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
-// void	without_slash()
+// void	without_slash(t_data *data)
 // {
+// 	char	**env_path;
+// 	int	i;
+
+// 	env_path = set_path(data);
+// 	if (!env_path)
+// 	{
+// 		no_file_or_directory(data->word_lst.word->word);
+// 		return ;
+// 	}
+// 	i = -1;
+// 	while (env_path[++i])
+// 	{
+// 		tmp = ft_strjoin();
+		
+// 	}
 	
 // }
 
@@ -47,7 +62,7 @@ int	exec(t_data *data)
 	if (!wrd_arr || !env_arr)
 		return (free_arrays(wrd_arr, env_arr, 1));
 	if (!find_slash(data->word_lst.word->word))
-		without_slash();
+		without_slash(data);
 	else
 		free_arrays(wrd_arr, env_arr, 0);
 	return (0);
