@@ -6,11 +6,10 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/12 12:07:03 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:09:00 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
 #include "../../include/builtins.h"
 #include "../../include/utils.h"
 #include "../../include/errors.h"
@@ -96,28 +95,28 @@ int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
 // to handle with this, maybe in expand part??
 // --> same to (export ZA,ZB)
 
-void	export(t_data *data)
+void	export(t_data *data, t_word_lst *word_lst)
 {
 	t_ipt_inf	inf_arg;
-	t_word	*word_lst;
+	t_word	*word;
 
-	word_lst = data->word_lst.word; //TODO: review
-	if (!word_lst->next)
+	word = word_lst->word;
+	if (!word->next)
 		sort_env(data->env);
 	else
 	{
 		ft_bzero(&inf_arg, sizeof(t_ipt_inf));
-		word_lst = word_lst->next;
-		while (word_lst)
+		word = word->next;
+		while (word)
 		{
-			if (set_inf(word_lst->word, &inf_arg) == -1)
+			if (set_inf(word->word, &inf_arg) == -1)
 			{
 				error_allocation();
 				return ;
 			}
 			if (add_var(&data->env, &inf_arg) == -1)
 				return ;
-			word_lst = word_lst->next;
+			word = word->next;
 		}
 	}
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-14 21:43:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-14 21:43:24 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/14 21:43:24 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/18 12:10:32 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/parse.h"
-#include "../../include/error.h"
+#include "../../include/errors.h"
 
 static int	update_env(t_env_node **env, t_env_node *tmp)
 {
@@ -48,15 +48,15 @@ static int	clean_env(t_env_node **env, char *word)
 	return (0);
 }
 
-void	unset(t_data *data)
+void	unset(t_data *data, t_word_lst *word_lst)
 {
-	t_word *word_lst;
+	t_word *word;
 
-	word_lst = data->word_lst.word->next;
-	while (word_lst)
+	word = word_lst->word->next;
+	while (word)
 	{
-		if (clean_env(&data->env, word_lst->word) == -1)
+		if (clean_env(&data->env, word->word) == -1)
 			return ;
-		word_lst = word_lst->next;
+		word = word->next;
 	}
 }
