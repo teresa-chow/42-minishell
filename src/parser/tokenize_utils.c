@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:35:45 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/03 11:35:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:25:15 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ int	is_equal_next(const char *str, int i)
 		return (0);
 	if (str[i] == str[i + 1])
 		return (1);
-	return (0); 
+	return (0);
 }
 
-int	is_special(int c) //unused
+/*int	is_special(int c)
 {
 	return (c == '$' || c == '|' || c == '<' || c == '>' || c == '&'
 		|| c == '~' || c == '*');
 }
 
-int	is_unhandled(int c) //unused
+int	is_unhandled(int c)
 {
 	return (c == '`' || c == '#' || c == '\\' || c == '['
 		|| c == ']' || c == '{' || c == '}' || c == ';' || c == '!');
-}
+}*/

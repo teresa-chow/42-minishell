@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_op.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:13:04 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/03 15:13:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:25:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**tokenize_op(char *input)
 		{
 			free_strarray(cmd_lst);
 			return (NULL);
-		}	
+		}
 		j++;
 		i += substr_len(&input[i]);
 	}
