@@ -95,7 +95,7 @@ void	execute(char *tmp, char **wrd_arr, char **env_arr)
 	else
 		wait(NULL);
 }
-
+/* TODO:Check env with "." ". ./"  "//" , etc.....*/
 int	exec(t_data *data, t_word *word)
 {
 	char	**wrd_arr;
