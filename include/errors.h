@@ -34,9 +34,11 @@
 /*                                      Errors                                */
 /* -------------------------------------------------------------------------- */
 int err_syntax(char *token);
-int	error_allocation(void);
-int	command_not_found(char *token);
-int	no_file_or_directory(char *token);
+int	error_allocation(t_data *data);
+int	command_not_found(char *token, t_data *data);
+int	no_file_or_directory(char *token, t_data *data);
+int	is_a_directory(char *token, t_data *data);
+int	access_error(char *token, t_data *data);
 // int	wrong_export_sintax(char *inpt);
 
 #endif

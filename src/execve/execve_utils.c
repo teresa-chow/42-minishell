@@ -24,15 +24,12 @@ char	*get_path(t_env_node *env)
 	}
 	return (NULL);
 }
-
-int	free_arrays(char **wrd_arr, char **env_arr, int i)
+int	free_arrays(t_data *data, int i)
 {
-	free_strarray(wrd_arr);
-	wrd_arr = NULL;
-	free_strarray(env_arr);
-	env_arr = NULL;
+	free_strarray(data->wrd_arr);
+	free_strarray(data->env_arr);
 	if (i)
-		return(error_allocation());
+		return(error_allocation(data));
 	return (0);
 }
 
@@ -98,7 +95,8 @@ char	**creat_env_arr(t_env_node *env)
 		tmp = ft_strjoin(arr[i], env->val);
 		if (!tmp)
 			return (NULL);
-		free(arr[i]);
+		if (arr[i] != tmp)
+			free(arr[i]);
 		arr[i] = tmp;
 		env = env->next; 
 	}

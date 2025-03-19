@@ -41,7 +41,7 @@ char	**set_path(t_data *data)
 		{
 			free_strarray(arr);
 			arr = NULL;
-			error_allocation();
+			error_allocation(data);
 			return (NULL);
 		}
 		free (arr[i]);

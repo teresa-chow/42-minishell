@@ -29,7 +29,7 @@ void	free_strarray(char **array)
 	}
 	free(array);
 }
-int	free_env_list(t_env_node **lst, int i)
+int	free_env_list(t_data *data, int i, t_env_node **lst)
 {
 	t_env_node *tmp;
 
@@ -43,7 +43,7 @@ int	free_env_list(t_env_node **lst, int i)
   	}
 	*lst = NULL;
 	if (i)
-		return(error_allocation());
+		return (error_allocation(data));
 	return (0);
 }
 void	free_words(t_word **word)

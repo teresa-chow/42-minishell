@@ -27,7 +27,7 @@ int	exec(t_data *data, t_word *word);
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */
 /* -------------------------------------------------------------------------- */
-int	free_arrays(char **wrd_arr, char **env_arr, int i);
+int	free_arrays(t_data *data, int i);
 char	**creat_wrd_arr(t_word *word);
 char	**creat_env_arr(t_env_node *env);
 

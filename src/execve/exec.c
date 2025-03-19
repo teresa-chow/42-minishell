@@ -14,7 +14,23 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
+void	execute(char *input, t_data *data)
+{
+	pid_t	pid;
 
+	pid = fork();
+	// if (pid < 0)
+	if (pid == 0)
+	{
+		if (execve(input , data->wrd_arr, data->env_arr) < 0)
+		{
+			perror("minishell");
+			exit(1); //------>> with our exit and check error code to return
+		}
+	}
+	else
+		wait(NULL);
+}
 int	find_slash(char *word)
 {
 	while (*word)
@@ -25,8 +41,10 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
-int	is_valid(char *input, char **tmp, t_word *word)
+int	is_valid(char *input, t_word *word, t_data *data)
 {
+	(void)data;
+
 	struct stat info;
 
 	ft_bzero(&info, sizeof(info));
@@ -34,94 +52,68 @@ int	is_valid(char *input, char **tmp, t_word *word)
 	{
 		stat(input, &info);
 		if (S_ISDIR(info.st_mode))
-			print_fd(2, "minishell: %s: Is a directory\n", word->word);
-		else if (!access(tmp, X_OK))
-			*tmp = input; ////----- acabar aqui
+			return (is_a_directory(word->word, data));
+		else if (!access(input, X_OK))
+			return (1);
+		else
+			return(access_error(word->word, data));
 	}
 	return (0);
 }
-
 int	cmd_exist_in_path(t_data *data, t_word *word, char **tmp)
 {
 	char	**env_path;
 	char	*tmp1;
+	int	check;
 	int	i;
-
+	
 	env_path = set_path(data);
 	if (!env_path)
-		return (no_file_or_directory(word->word));
+		return (no_file_or_directory(word->word, data));
 	i = -1;
 	while (env_path[++i])
 	{
 		tmp1 = ft_strjoin(env_path[i], word->word );
 		if (!tmp1)
-			return (error_allocation());
-		is_valid(tmp1, tmp, word);		
+			return (error_allocation(data));
+		check = is_valid(tmp1, word, data);
+		if (check == 1)
+		{
+			*tmp = tmp1;
+			return (1);
+		}
+		else if (check < 0)
+			return (0);
 		free(tmp1);
 	}
-	return (command_not_found(word->word));
-}
-int	is_valid_path(t_word *word, char **tmp)
-{
-
-	if (!access(word->word, F_OK))
-	{
-		stat(word->word, &info);
-		if (S_ISDIR(info.st_mode))
-		{
-			// update error variable after print message
-			// if (closedir(dir) < 0)
-				// printf("ola\n");
-		}
-		else if (!access(word->word, X_OK))
-			*tmp = word->word;
-		else
-		{
-			//TODO: see how to handle with this
-			print_fd(2, "minishell: %s: ", word->word);
-			perror(NULL);
-			// print_fd(2, "minishell: %s: %s", word->word, strerror(errno));
-		}
-	}
-	else
-		no_file_or_directory(word->word);
-	return (0);
-}
-void	execute(char *tmp, char **wrd_arr, char **env_arr)
-{
-	pid_t	pid;
-
-	pid = fork();
-	// if (pid < 0)
-	if (pid == 0)
-	{
-		if (execve(tmp , wrd_arr, env_arr) < 0)
-		{
-			perror("minishell");
-			exit(1); //------>> with our exit and check error code to return
-		}
-	}
-	else
-		wait(NULL);
+	return (command_not_found(word->word, data));
 }
 /* TODO:Check env with "." ". ./"  "//" , etc.....*/
 int	exec(t_data *data, t_word *word)
 {
-	char	**wrd_arr;
-	char	**env_arr;
 	char	*tmp;
+	int	check;
 
-	wrd_arr = creat_wrd_arr(word);
-	env_arr = creat_env_arr(data->env);
-	if (!wrd_arr || !env_arr)
-		return (free_arrays(wrd_arr, env_arr, 1));
-	tmp = NULL;
+	tmp =NULL;
+	data->wrd_arr = creat_wrd_arr(word);
+	data->env_arr = creat_env_arr(data->env);
+	if (!data->wrd_arr || !data->env_arr)
+		return (free_arrays(data, 1));
 	if (!find_slash(word->word))
-		cmd_exist_in_path(data, word, &tmp); // this return an error code
+	{
+		if (cmd_exist_in_path(data, word, &tmp) == 1)
+			execute(tmp, data);
+		if (tmp)
+			free(tmp);
+	}
 	else
-		is_valid_path(word, &tmp);
-	if (tmp)
-		execute(tmp, wrd_arr, env_arr);
-	free_arrays(wrd_arr, env_arr, 0);
+	{
+		check = is_valid(word->word, word, data);
+		if (check == 1)
+			execute(word->word, data);
+		else if (!check)
+			no_file_or_directory(word->word, data);
+	}
+	free_arrays(data, 0);
 	return (0);
 }

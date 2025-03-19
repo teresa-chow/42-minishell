@@ -36,6 +36,8 @@ int	main(int argc, char **argv, char **envp)
 		if (word_lst->word != NULL)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);
+		printf("\n\nError code of this cmd: %d\n", data.error_code);
+		data.error_code = 0;
 	}
 	//rl_clear_history();
 	return (0);
@@ -44,7 +46,6 @@ int	main(int argc, char **argv, char **envp)
 static void	data_init(t_data *data, char **envp)
 {
 	ft_bzero(data, sizeof(t_data));
-	// ft_bzero(, sizeof(t_word_lst));
 	if (init_env_lst(envp, data) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 }
