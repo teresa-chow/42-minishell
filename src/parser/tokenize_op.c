@@ -94,7 +94,7 @@ static unsigned int	substr_count_no_op(const char *input, unsigned int i)
 			i += group_len(input, i);
 		else if (is_quote((int)input[i]))
 			i += next_quote(input, i, is_quote((int)input[i]));
-		else
+		else if (input[i])
 			i++;
 	}
 	return (i);
@@ -140,7 +140,7 @@ static unsigned int	substr_len_no_op(const char *str, unsigned int i)
 			i += group_len(str, i);
 		else if (is_quote((int)str[i]))
 			i += next_quote(str, i, is_quote((int)str[i]));
-		else
+		else if (str[i])
 			i++;
 	}
 	return (i);
