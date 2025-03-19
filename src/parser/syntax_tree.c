@@ -6,25 +6,15 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 09:49:44 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:27:31 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
-static t_tree_node	*new_node(int val, char *str);
+//t_tree_node	*create_tree()
 
-static t_tree_node	*new_node(int val, char *str)
-{
-	t_tree_node	*new;
-	new = ft_calloc(1, sizeof(t_tree_node));
-	if (!new)
-		return (NULL);
-	//new->val = val;
-	//new->str = ft_strdup(str);
-	return(new);
-}
 /*
 sample tree
 
@@ -36,14 +26,15 @@ sample tree
 
 /*
 Sample : depth-first search (DFS) 0 1 3 4 2 5 6 -- stack data structure
-traverses from root and proceeds through the nodes as far as possible until we reach the node with no unvisited nodes nearby
+traverses from root and proceeds through the nodes as far as possible until
+we reach the node with no unvisited nodes nearby
 >> builds the tree sub-tree by sub-tree
 LIFO
 - inorder traversal : left-root-right
 - preorder traversal : root-left-right
 - postorder traversal : left-right-root
 */
-static void print_depth_first(t_tree_node *root) //tmp function
+/*static void print_depth_first(t_tree_node *root) //tmp function
 {
 	t_tree_node	*process_stack[100];
 	size_t		process_stack_num = 0;
@@ -73,21 +64,21 @@ static void print_depth_first(t_tree_node *root) //tmp function
 			process_stack_num++;
 		}
 	}
-}
+}*/
 
 /*
 recursive -- less efficient: more call stacks
 to exit: int found 0 or 1 (if 1 return),
 return after condition wouldn't suffice
 */
-static void print_depth_first_rec(t_tree_node *node) //tmp function
+/*static void print_depth_first_rec(t_tree_node *node) //tmp function
 {
 	printf("%d ", node->val); //any action needed instead of printing
 	if (node->left != NULL)
 		print_depth_first_rec(node->left);
 	if (node->right != NULL)
 		print_depth_first_rec(node->right);
-}
+}*/
 
 /*
 Sample : breadth-first search (BFS) 0 1 2 3 4 5 6 -- queue data structure

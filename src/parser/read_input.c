@@ -6,12 +6,14 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 10:19:48 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:26:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
+
+#include "../../tests/test.h" //delete
 
 void	read_input(t_word_lst **word_lst, t_data *data)
 {
@@ -26,6 +28,7 @@ void	read_input(t_word_lst **word_lst, t_data *data)
 		if (cmd_lst)
 		{
 			tokenize_w_lst(cmd_lst, *word_lst);
+			//print_word_lst(cmd_lst, word_lst); //delete
 			free_strarray(cmd_lst);
 			data->err_code = syntax_analysis(*word_lst);
 		}

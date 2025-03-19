@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 10:36:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:25:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	data_init(t_data *data, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data; //TODO: review struct elements
+	t_data		data;
 	t_word_lst	*word_lst;
 
 	(void)argc;
@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!word_lst)
 			break ;
 		read_input(&word_lst, &data);
-		//print_word_lst(&word_lst); //tmp
 		if (word_lst->word != NULL && !data.err_code)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 12:25:11 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:11:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ void	test_builtins(t_data *data, t_word_lst *word_lst)
 /*****************************************************************************\
 |                             PARSER TEST FUNCTIONS                           |
 \*****************************************************************************/
-void	print_word_lst(t_word_lst **word_lst)
+void	print_word_lst(char **cmd_lst, t_word_lst **word_lst)
 {
-	//int			i = 0;
+	int			i = 0;
 	int			cmd_n = 0;
 	t_word		*word_ptr;
 	t_word_lst	*lst_ptr;
 
 	lst_ptr = *word_lst;
 	word_ptr = (*word_lst)->word;
-	/*if (data->cmd_lst == NULL)
+	if (cmd_lst == NULL)
 		return ;
 	ft_printf("--------------------------------------\n");
-	while (data->cmd_lst[i])
+	while (cmd_lst[i])
 	{
-		ft_printf("cmd: %s\n", data->cmd_lst[i]);
+		ft_printf("cmd: %s\n", cmd_lst[i]);
 		i++;
-	}*/
+	}
 	ft_printf("--------------------------------------\n");
 	while (lst_ptr)
 	{

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:13:04 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 16:25:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:47:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include "../../include/utils.h"
 
 static unsigned int	substr_count(char const *s);
+static unsigned int	substr_count_no_op(const char *input, unsigned int i);
 static unsigned int	substr_len(const char *str);
+static unsigned int	substr_len_no_op(const char *str, unsigned int i);
 
 /* Tokenization (1): divide cmd and operators */
 char	**tokenize_op(char *input)
@@ -28,7 +30,7 @@ char	**tokenize_op(char *input)
 	cmd_lst = ft_calloc(1, ((substr_count(input) + 1) * sizeof(char *)));
 	if (!input || !cmd_lst)
 		return (NULL);
-	while (input[i] != '\0')
+	while (input[i])
 	{
 		cmd_lst[j] = ft_substr(input, i, substr_len(&input[i]));
 		if (!cmd_lst[j])
@@ -43,7 +45,7 @@ char	**tokenize_op(char *input)
 	return (cmd_lst);
 }
 
-static unsigned int	substr_count(char const *input) //TODO: refactor
+static unsigned int	substr_count(char const *input)
 {
 	unsigned int	i;
 	unsigned int	count;
@@ -55,29 +57,7 @@ static unsigned int	substr_count(char const *input) //TODO: refactor
 		if (input[i] && !is_operator(input[i]))
 		{
 			count++;
-			while (input[i])
-			{
-				if (is_redirection(input[i]))
-				{
-					while (is_redirection(input[i]))
-						i++;
-					while (input[i] == '|')
-						i++;
-				}
-				if (is_operator(input[i]))
-				{
-					if (input[i] == '&' && !is_equal_next(input, i))
-						i++;
-					else
-						break ;
-				}
-				if ((int)input[i] == '(')
-					i += group_len(input, i);
-				else if (is_quote((int)input[i]))
-					i += next_quote(input, i, is_quote((int)input[i]));
-				else
-					i++;
-			}
+			i = substr_count_no_op(input, i);
 		}
 		else
 		{
@@ -85,9 +65,39 @@ static unsigned int	substr_count(char const *input) //TODO: refactor
 			while (input[i] && is_equal_next(input, i))
 				i++;
 			i++;
+			while (input[i] && is_delimiter(input[i]))
+				i++;
 		}
 	}
 	return (count);
+}
+
+static unsigned int	substr_count_no_op(const char *input, unsigned int i)
+{
+	while (input[i])
+	{
+		if (is_redirection(input[i]))
+		{
+			while (is_redirection(input[i]))
+				i++;
+			while (input[i] == '|')
+				i++;
+		}
+		if (is_operator(input[i]))
+		{
+			if (input[i] == '&' && !is_equal_next(input, i))
+				i++;
+			else
+				break ;
+		}
+		if ((int)input[i] == '(')
+			i += group_len(input, i);
+		else if (is_quote((int)input[i]))
+			i += next_quote(input, i, is_quote((int)input[i]));
+		else
+			i++;
+	}
+	return (i);
 }
 
 static unsigned int	substr_len(const char *str)
@@ -96,36 +106,42 @@ static unsigned int	substr_len(const char *str)
 
 	i = 0;
 	if (!is_operator(str[i]))
-	{
-		while (str[i])
-		{
-			if (is_redirection(str[i]))
-			{
-				while (is_redirection(str[i]))
-					i++;
-				while (str[i] == '|')
-					i++;
-			}
-			if (is_operator(str[i]))
-			{
-				if (str[i] == '&' && !is_equal_next(str, i))
-					i++;
-				else
-					break ;
-			}
-			if ((int)str[i] == '(')
-				i += group_len(str, i);
-			else if (is_quote((int)str[i]))
-				i += next_quote(str, i, is_quote((int)str[i]));
-			else
-				i++;
-		}
-	}
-	else
+		i = substr_len_no_op(str, i);
+	else if (is_operator(str[i]))
 	{
 		while (str[i] && is_equal_next(str, i))
 			i++;
 		i++;
+		while (is_delimiter(str[i]))
+			i++;
+	}
+	return (i);
+}
+
+static unsigned int	substr_len_no_op(const char *str, unsigned int i)
+{
+	while (str[i])
+	{
+		if (is_redirection(str[i]))
+		{
+			while (is_redirection(str[i]))
+				i++;
+			while (str[i] == '|')
+				i++;
+		}
+		if (is_operator(str[i]))
+		{
+			if (str[i] == '&' && !is_equal_next(str, i))
+				i++;
+			else
+				break ;
+		}
+		if ((int)str[i] == '(')
+			i += group_len(str, i);
+		else if (is_quote((int)str[i]))
+			i += next_quote(str, i, is_quote((int)str[i]));
+		else
+			i++;
 	}
 	return (i);
 }
