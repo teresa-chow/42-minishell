@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 12:13:24 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:09:17 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include <stdlib.h>
 # include <sys/wait.h>
-#include <dirent.h>
+#include <sys/stat.h>
+
 
 # include "utils.h"
-
 # include "../lib/libft/libft/libft.h"
 
 char	*get_path(t_env_node *env);
