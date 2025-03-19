@@ -23,7 +23,7 @@ int err_syntax(char *token)
 int	error_allocation(void)
 {
 	ft_putendl_fd("minishell: Cannot allocate memory", 2);
-	return (-1);
+	return (ERR_MEM);
 }
 
 int	command_not_found(char *token)

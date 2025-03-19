@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <sys/wait.h>
+#include <dirent.h>
 
 # include "utils.h"
 
