@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/14 18:20:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/19 09:49:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,20 @@ static void print_depth_first(t_tree_node *root) //tmp function
 			process_stack_num++;
 		}
 	}
+}
+
+/*
+recursive -- less efficient: more call stacks
+to exit: int found 0 or 1 (if 1 return),
+return after condition wouldn't suffice
+*/
+static void print_depth_first_rec(t_tree_node *node) //tmp function
+{
+	printf("%d ", node->val); //any action needed instead of printing
+	if (node->left != NULL)
+		print_depth_first_rec(node->left);
+	if (node->right != NULL)
+		print_depth_first_rec(node->right);
 }
 
 /*

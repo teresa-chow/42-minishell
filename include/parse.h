@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 11:55:56 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/19 10:19:52 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdbool.h>
 # include <errno.h>
 # include <unistd.h>
+
+# include "struct.h"
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
@@ -45,7 +47,7 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void	read_input(t_word_lst **word_lst);
+void	read_input(t_word_lst **word_lst, t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char	**tokenize_op(char *input);
@@ -66,8 +68,8 @@ int		is_operator(int c);
 int		is_delimiter(int c);
 int		is_quote(int c);
 int		is_redirection(int c);
-int		is_special(int c);
-int		is_unhandled(int c);
+//int		is_special(int c);
+//int		is_unhandled(int c);
 int		is_equal_next(const char *str, int i);
 
 /* ============================ SYNTAX ANALYSIS ============================ */

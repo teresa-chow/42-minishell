@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 11:56:43 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/19 10:17:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ typedef struct	s_data
 {
 	// char	**envp;
 	t_env_node *env;
-	// int	error_code
+	int	err_code;
 }	t_data;
 #endif
