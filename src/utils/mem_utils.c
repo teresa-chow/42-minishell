@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 11:59:34 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:35:02 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void	free_strarray(char **array)
 	}
 	free(array);
 }
-
-int	free_env_list(t_env_node **lst, int i)
+int	free_env_list(t_data *data, int i, t_env_node **lst)
 {
 	t_env_node *tmp;
 
@@ -44,10 +43,9 @@ int	free_env_list(t_env_node **lst, int i)
   	}
 	*lst = NULL;
 	if (i)
-		return(error_allocation());
+		return (error_allocation(data));
 	return (0);
 }
-
 void	free_words(t_word **word)
 {
 	t_word	*tmp;
@@ -60,7 +58,6 @@ void	free_words(t_word **word)
 		free(tmp);
 	}
 }
-
 void	free_word_lst(t_word_lst **word_lst)
 {
 	t_word_lst	*tmp;
