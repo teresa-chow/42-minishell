@@ -24,7 +24,7 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	syntax_tree_utils.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c export.c \
 	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
-SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec1.c execve_utils.c)
+SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
 	set_path.c print_fd.c)
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c)

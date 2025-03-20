@@ -55,8 +55,6 @@ typedef	struct s_ipt_inf
 /* -------------------------------------------------------------------------- */
 typedef struct	s_data
 {
-	char	**env_arr;
-	char	**wrd_arr;
 	t_env_node *env;
 	int	exit_status;
 }	t_data;

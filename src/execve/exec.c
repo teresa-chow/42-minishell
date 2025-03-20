@@ -1,38 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 13:36:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/20 17:10:13 by carlaugu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-void	execute(char *input, t_data *data)
+int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 {
-	pid_t	pid;
-	int	status;
-
-	pid = fork();
-	if (pid < 0)
+	ft_bzero(inf, sizeof(t_exec_data));
+	if (!ft_strcmp(word->word, "."))
 	{
-		perror("minishell");
-		return ;
+		data->exit_status = 2;
+		return (1);	
 	}
-	else if (pid == 0)
-		execve(input , data->wrd_arr, data->env_arr);
-	else
-		waitpid(pid, &status, 0);
-	if (!status)
-		data->exit_status = 0;
-	else
-		data->exit_status = WIFEXITED(status); 
+	inf->wrd_arr = creat_wrd_arr(word);
+	inf->env_arr = creat_env_arr(data->env);
+	if (!inf->wrd_arr || !inf->env_arr)
+		return (free_arrays(inf, data, 1));
+	inf->env_path = set_path(data);
+	if (!inf->env_path)
+		return (free_arrays(inf, data, 1));
+	inf->input = word->word;
+	return (0);
 }
 int	find_slash(char *word)
 {
@@ -44,85 +30,85 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
-int	is_valid(char *input, t_word *word, t_data *data)
+int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 {
-	struct stat info;
+	int	i;
 
-	ft_bzero(&info, sizeof(info));
-	if (!access(input, F_OK))
+	i = -1;
+	while (inf->env_path[++i])
 	{
-		stat(input, &info);
-		if (S_ISDIR(info.st_mode))
-			return (is_a_directory(word->word, data));
-		else if (!access(input, X_OK))
+		inf->tmp = ft_strjoin(inf->env_path[i], inf->input);	
+		if (!inf->tmp)
+		{
+			error_allocation(data);
+			return (0);
+		}
+		if (!access(inf->tmp, F_OK))
 			return (1);
-		else
-			return(access_error(word->word, data));
+		free(inf->tmp);
+		inf->tmp = NULL;
 	}
+	command_not_found(inf->input, data);
 	return (0);
 }
-int	cmd_exist_in_path(t_data *data, t_word *word, char **tmp, char **env_path)
+
+void	execute(t_data *data, t_exec_data *inf)
 {
-	int	check;
-	int	i;
-	
-	i = -1;
-	while (env_path[++i])
+	pid_t	pid;
+	int	status;
+
+	pid = fork();
+	if (pid < 0)
 	{
-		*tmp = ft_strjoin(env_path[i], word->word );
-		if (!*tmp)
-			return (error_allocation(data));
-		check = is_valid(*tmp, word, data);
-		if (check == 1)
-			return (1);
-		else if (check < 0)
-			return (0);
-		free(*tmp);
-		*tmp = NULL;
-	}
-	return (command_not_found(word->word, data));
-}
-void	is_in_env_path(t_data *data, t_word *word)
-{
-	char	*tmp;
-	char	**env_path;
-	
-	tmp = NULL;
-	env_path = set_path(data);
-	if (!env_path)
-	{
-		free_arrays(data, 1);
-		no_file_or_directory(word->word, data);
+		perror("minishell");
 		return ;
 	}
-	if (cmd_exist_in_path(data, word, &tmp, env_path) == 1)
-		execute(tmp, data);
-	free_strarray(env_path);
-	if (tmp)
-		free(tmp);
+	else if (pid == 0)
+		execve(inf->tmp , inf->wrd_arr, inf->env_arr);
+	else
+		waitpid(pid, &status, 0);
+	free(inf->tmp);
+	inf->tmp = NULL;	
+	if (!status)
+		data->exit_status = 0;
+	else
+		data->exit_status = WIFEXITED(status);
 }
+void	check_cmd(t_exec_data *inf, t_data *data)
+{
+	struct	stat	i_stat;
 
-
+	ft_bzero(&i_stat, sizeof(i_stat));
+	if (stat(inf->tmp, &i_stat) == -1)
+	{
+		perror("minishell: stat");
+		data->exit_status = 1;
+	}
+	if (S_ISDIR(i_stat.st_mode))
+		is_a_directory(inf->tmp, data);
+	else if (!access(inf->tmp, X_OK))
+		execute(data, inf);
+	else
+		access_error(inf->input, data);
+}
 void	exec(t_data *data, t_word *word)
 {
-	int	check;
+	t_exec_data	inf;
 
-	data->wrd_arr = creat_wrd_arr(word);
-	data->env_arr = creat_env_arr(data->env);
-	if (!data->wrd_arr || !data->env_arr)
+	if (set_exec_inf(&inf, data, word))
+		return ;
+	if (!find_slash(inf.input))
 	{
-		free_arrays(data, 1);
-		return ;	
+		if (cmd_in_env_path(&inf, data))
+			check_cmd(&inf, data);
 	}
-	if (!find_slash(word->word))
-		is_in_env_path(data, word);
 	else
 	{
-		check = is_valid(word->word, word, data);
-		if (check == 1)
-			execute(word->word, data);
-		else if (!check)
-			no_file_or_directory(word->word, data);
+		inf.tmp = inf.input;
+		if (!access(inf.input, F_OK))
+			check_cmd(&inf, data);
+		else
+			no_file_or_directory(inf.input, data);
 	}
-	free_arrays(data, 0);
+	free_arrays(&inf, data, 0);
 }

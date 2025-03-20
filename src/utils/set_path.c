@@ -32,10 +32,7 @@ char	**set_path(t_data *data)
 
 	arr = ft_split(ft_strchr(get_path(data->env), '/'), ':');
 	if (!arr)
-	{
-		error_allocation(data);
 		return (NULL);
-	}
 	i = -1;	
 	while (arr[++i])
 	{
@@ -43,8 +40,6 @@ char	**set_path(t_data *data)
 		if (!tmp)
 		{
 			free_strarray(arr);
-			arr = NULL;
-			error_allocation(data);
 			return (NULL);
 		}
 		free (arr[i]);

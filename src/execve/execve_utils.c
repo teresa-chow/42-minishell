@@ -24,12 +24,17 @@ char	*get_path(t_env_node *env)
 	}
 	return (NULL);
 }
-int	free_arrays(t_data *data, int i)
+int	free_arrays(t_exec_data *inf, t_data *data, int i)
 {
-	free_strarray(data->wrd_arr);
-	free_strarray(data->env_arr);
-	data->wrd_arr = NULL;
-	data->env_arr = NULL;
+	free_strarray(inf->wrd_arr);
+	free_strarray(inf->env_arr);
+	if (inf->env_path)
+	{
+		free_strarray(inf->env_path);
+		inf->env_path = NULL;
+	}
+	inf->wrd_arr = NULL;
+	inf->env_arr = NULL;
 	if (i)
 		return(error_allocation(data));
 	return (0);
