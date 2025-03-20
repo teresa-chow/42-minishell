@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 16:04:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/20 09:17:18 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word)
 			if (check_logical_op(tmp_lst->word) != 0)
 				return (ERR_BI);
 		}
+		else if (tmp_lst && tmp_lst->next)
+		{
+			if (is_operator(tmp_lst->word->word[0])
+				&& check_op_syntax(tmp_lst->word->word) == 0)
+				{
+					if (check_logical_op(tmp_lst->next->word) != 0)
+						return (ERR_BI);
+				}
+		}
 	}
 	return (0);
 }
@@ -68,10 +77,13 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 }
 
 /*
-else if (tmp_lst && tmp_lst->next) //check operator following operator (review order)
+else if (tmp_lst && tmp_lst->next) //check op following op (review order)
 {
-	if (is_operator(tmp_lst->word->word[0]) && is_operator(tmp_lst->word->word[1]))
+	if (is_operator(tmp_lst->word->word[0])
+		&& !check_op_syntax(tmp_lst->word->word))
+	{
 		if (check_logical_op(tmp_lst->next->word) != 0)
-	return (ERR_BI);
+			return (ERR_BI);
+	}
 }
 */
