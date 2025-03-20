@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 10:35:41 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:16:25 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	data_init(t_data *data, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data		data; //TODO: review struct elements
+	t_data		data;
 	t_word_lst	*word_lst;
 
 	(void)argc;
@@ -31,9 +31,8 @@ int	main(int argc, char **argv, char **envp)
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!word_lst)
 			break ;
-		read_input(&word_lst);
-		//print_word_lst(&word_lst); //tmp
-		if (word_lst->word != NULL)
+		read_input(&word_lst, &data);
+		if (word_lst->word != NULL && !data.error_code)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);
 		printf("\n\nError code of this cmd: %d\n", data.error_code);
