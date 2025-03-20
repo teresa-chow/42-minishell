@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 11:08:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:07:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	main(int argc, char **argv, char **envp)
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!word_lst)
 			break ;
-		read_input(&word_lst, &data);
+		read_input(&word_lst, &data); //error code cannot reset
 		if (word_lst->word != NULL && !data.error_code)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);
-		printf("\n\nError code of this cmd: %d\n", data.error_code);
-		data.error_code = 0;
+		//printf("\n\nError code of this cmd: %d\n", data.error_code);
+		//data.error_code = 0; //tmp
 	}
 	//rl_clear_history();
 	return (0);
