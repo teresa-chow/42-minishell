@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 16:59:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:08:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!word_lst)
 			break ;
 		read_input(&word_lst, &data);
-		if (word_lst->word != NULL && !data.err_code)
+		if (word_lst->word != NULL && !data.error_code)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);
 		printf("\n\nError code of this cmd: %d\n", data.error_code);
