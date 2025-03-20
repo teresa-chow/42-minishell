@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_div_parentheses.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/05 11:13:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:21:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
+int	handle_parentheses(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
 	unsigned int	len;
 

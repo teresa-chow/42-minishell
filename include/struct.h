@@ -55,8 +55,9 @@ typedef	struct s_ipt_inf
 /* -------------------------------------------------------------------------- */
 typedef struct	s_data
 {
-	// char	**envp;
+	char	**env_arr;
+	char	**wrd_arr;
 	t_env_node *env;
-	// int	error_code
+	int	error_code;
 }	t_data;
 #endif

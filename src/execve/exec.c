@@ -6,22 +6,31 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 13:36:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 14:24:49 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:28:29 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
-/*
-[ ]   /absolute/path/
-[ ]  ../../relative/path/
-[ ]  exec_name
-[ ] ./user_exec
-[ ] ./path/to/user_exec
-[ ] $? 127 if cmd not found
-*/
 
+void	execute(char *input, t_data *data)
+{
+	pid_t	pid;
+
+	pid = fork();
+	// if (pid < 0)
+	if (pid == 0)
+	{
+		if (execve(input , data->wrd_arr, data->env_arr) < 0)
+		{
+			perror("minishell");
+			exit(1); //------>> with our exit and check error code to return
+		}
+	}
+	else
+		wait(NULL);
+}
 int	find_slash(char *word)
 {
 	while (*word)
@@ -32,58 +41,79 @@ int	find_slash(char *word)
 	}
 	return (0);
 }
+int	is_valid(char *input, t_word *word, t_data *data)
+{
+	(void)data;
 
-void	without_slash(t_data *data, t_word *word, char **tmp)
+	struct stat info;
+
+	ft_bzero(&info, sizeof(info));
+	if (!access(input, F_OK))
+	{
+		stat(input, &info);
+		if (S_ISDIR(info.st_mode))
+			return (is_a_directory(word->word, data));
+		else if (!access(input, X_OK))
+			return (1);
+		else
+			return(access_error(word->word, data));
+	}
+	return (0);
+}
+int	cmd_exist_in_path(t_data *data, t_word *word, char **tmp)
 {
 	char	**env_path;
-	int	i;
 	char	*tmp1;
-
+	int	check;
+	int	i;
+	
 	env_path = set_path(data);
 	if (!env_path)
-	{
-		no_file_or_directory(word->word);
-		return ;
-	}
+		return (no_file_or_directory(word->word, data));
 	i = -1;
 	while (env_path[++i])
 	{
 		tmp1 = ft_strjoin(env_path[i], word->word );
 		if (!tmp1)
-		{
-			error_allocation();
-			return ;
-		}
-		if (!access(tmp1, F_OK) && !access(tmp1, X_OK))
+			return (error_allocation(data));
+		check = is_valid(tmp1, word, data);
+		if (check == 1)
 		{
 			*tmp = tmp1;
-			return ;
+			return (1);
 		}
+		else if (check < 0)
+			return (0);
 		free(tmp1);
 	}
+	return (command_not_found(word->word, data));
 }
-
+/* TODO:Check env with "." ". ./"  "//" , etc.....*/
 int	exec(t_data *data, t_word *word)
 {
-	char	**wrd_arr;
-	char	**env_arr;
 	char	*tmp;
+	int	check;
 
-	wrd_arr = creat_wrd_arr(word);
-	env_arr = creat_env_arr(data->env);
-	if (!wrd_arr || !env_arr)
-		return (free_arrays(wrd_arr, env_arr, 1));
-	tmp = NULL;
+	tmp =NULL;
+	data->wrd_arr = creat_wrd_arr(word);
+	data->env_arr = creat_env_arr(data->env);
+	if (!data->wrd_arr || !data->env_arr)
+		return (free_arrays(data, 1));
 	if (!find_slash(word->word))
-		without_slash(data, word, &tmp);
-	if (tmp)
 	{
-		if (execve(tmp , wrd_arr, env_arr) < 0)
-		{
-			perror("execve failed");
-			exit(127); // code to return ???
-		}
+		if (cmd_exist_in_path(data, word, &tmp) == 1)
+			execute(tmp, data);
+		if (tmp)
+			free(tmp);
 	}
-	free_arrays(wrd_arr, env_arr, 0);
+	else
+	{
+		check = is_valid(word->word, word, data);
+		if (check == 1)
+			execute(word->word, data);
+		else if (!check)
+			no_file_or_directory(word->word, data);
+	}
+	free_arrays(data, 0);
 	return (0);
 }

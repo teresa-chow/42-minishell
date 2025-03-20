@@ -20,23 +20,41 @@ int err_syntax(char *token)
 	return (ERR_BI);
 }
 
-int	error_allocation(void)
+int	error_allocation(t_data *data)
 {
 	ft_putendl_fd("minishell: Cannot allocate memory", 2);
+	data->error_code = ERR_MEM;
+	return (ERR_MEM);
+}
+
+int	command_not_found(char *token, t_data *data)
+{
+	print_fd(2, "%s: command not found\n", token);
+	data->error_code = ERR_F;
+	return (ERR_F);
+}
+
+int	no_file_or_directory(char *token, t_data *data)
+{
+	print_fd(2, "minishell: %s: No such file or directory\n", token);
+	data->error_code = ERR_F;
+	return (ERR_F);
+
+}
+
+int	is_a_directory(char *token, t_data *data)
+{
+	print_fd(2, "minishell: %s: Is a directory\n", token);
+	data->error_code = ERR_X;
 	return (-1);
 }
 
-int	command_not_found(char *token)
+int	access_error(char *token, t_data *data) 
 {
-	print_fd(2, "%s: command not found\n", token);
-	return (ERR_F);
-}
-
-int	no_file_or_directory(char *token)
-{
-	print_fd(2, "minishell: %s: No such file or directory\n", token);
-	return (ERR_F);
-
+	print_fd(2, "minishell: %s: ", token);
+	perror(NULL);
+	data->error_code = ERR_X; // confirm if is the corret code
+	return (-1);
 }
 /*
 int	wrong_export_sintax(char *inpt)
