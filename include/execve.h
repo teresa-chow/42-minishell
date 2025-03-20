@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/19 13:09:17 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:30:08 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../lib/libft/libft/libft.h"
 
 char	*get_path(t_env_node *env);
-int	exec(t_data *data, t_word *word);
+void	exec(t_data *data, t_word *word);
 
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:43:59 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/20 11:17:56 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:57:24 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	free_arrays(t_data *data, int i)
 {
 	free_strarray(data->wrd_arr);
 	free_strarray(data->env_arr);
+	data->wrd_arr = NULL;
+	data->env_arr = NULL;
 	if (i)
 		return(error_allocation(data));
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 11:08:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:33:04 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "../../tests/test.h" //delete
 
-void	read_input(t_word_lst **word_lst, t_data *data)
+void	read_input(t_word_lst **word_lst) //t_data *data)
 {
 	char	*input;
 	char	**cmd_lst;
@@ -30,7 +30,7 @@ void	read_input(t_word_lst **word_lst, t_data *data)
 			tokenize_w_lst(cmd_lst, *word_lst);
 			//print_word_lst(cmd_lst, word_lst); //delete
 			free_strarray(cmd_lst);
-			data->error_code = syntax_analysis(*word_lst);
+			// data->exit_status = syntax_analysis(*word_lst);
 		}
 	}
 	if (input)

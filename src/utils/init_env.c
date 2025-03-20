@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:12:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 11:14:09 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:09:11 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static void	check_shlvl(t_env_node *tmp)
 	if (!ft_strcmp(tmp->key, "SHLVL"))
 	{
 		n = ft_atoi(tmp->val) + 1;
-		box = tmp->val;
-		tmp->val = ft_itoa(n);
-		if (!tmp->val)
+		box = ft_itoa(n);
+		if (box)
+		{
+			free(tmp->val);
 			tmp->val = box;
-		else
-			free(box);
+		}
 	}
 }
 int	init_env_lst(char **envp, t_data *data)

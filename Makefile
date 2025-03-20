@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/03/19 17:00:10 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/03/20 17:26:44 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	syntax_tree_utils.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c export.c \
 	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
-SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
+SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec1.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
 	set_path.c print_fd.c)
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c)

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:41:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 11:23:56 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:45:11 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ char	**set_path(t_data *data)
 
 	arr = ft_split(ft_strchr(get_path(data->env), '/'), ':');
 	if (!arr)
+	{
+		error_allocation(data);
 		return (NULL);
+	}
 	i = -1;	
 	while (arr[++i])
 	{
