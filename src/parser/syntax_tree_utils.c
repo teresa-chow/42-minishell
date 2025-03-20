@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   syntax_tree_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 10:33:24 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 13:31:44 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/03/19 12:56:56 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/03/19 13:34:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+/*#include "../../include/parse.h"
+#include "../../include/utils.h"
 
-# include "../include/builtins.h"
-# include "../include/execve.h"
-# include "../include/parse.h"
-# include "../include/utils.h"
-
-void	test_builtins(t_data *data, t_word_lst *word_lst);
-void	print_word_lst(char ** cmd_lst, t_word_lst **word_lst);
-
-#endif
+t_tree_node	*add_node(int index, t_word *word)
+{
+	t_tree_node	*new;
+	new = ft_calloc(1, sizeof(t_tree_node));
+	if (!new)
+		return (NULL);
+	new->index = index;
+	new->word = word;
+	return(new);
+}*/
