@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:43:59 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 14:24:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:14:55 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	**creat_wrd_arr(t_word *word)
 	arr = ft_calloc ((count_words(NULL, word) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
-	word = word;
 	i = -1;
 	while (word)
 	{
