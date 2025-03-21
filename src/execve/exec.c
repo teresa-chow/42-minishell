@@ -64,15 +64,19 @@ void	execute(t_data *data, t_exec_data *inf)
 		return ;
 	}
 	else if (pid == 0)
-		execve(inf->tmp , inf->wrd_arr, inf->env_arr);
+	{
+		if (execve(inf->tmp , inf->wrd_arr, inf->env_arr) < 0)
+		{
+			perror("error");
+			exit(1);
+		}
+	}
 	else
 		waitpid(pid, &status, 0);
-	free(inf->tmp);
+	if (inf->tmp != inf->input)
+		free(inf->tmp);
 	inf->tmp = NULL;	
-	if (!status)
-		data->exit_status = 0;
-	else
-		data->exit_status = WIFEXITED(status);
+	data->exit_status = WEXITSTATUS(status);
 }
 void	check_cmd(t_exec_data *inf, t_data *data)
 {
