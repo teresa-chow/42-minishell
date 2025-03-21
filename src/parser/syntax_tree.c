@@ -6,14 +6,22 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 15:27:31 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:40:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
-//t_tree_node	*create_tree()
+void	create_syntax_tree(t_word_lst *word_lst, t_tree_node **root)
+{
+	(void)word_lst;
+	(void)root;
+
+	//find lower precedence op
+	//if no op -- single cmd -- single node
+	//check if parentheses
+}
 
 /*
 sample tree
