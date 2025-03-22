@@ -12,16 +12,40 @@
 
 #include "../../include/builtins.h"
 
-/* TODO: check here if there is -n or -nnnn, etc*/
+int	check_flag(char *word, int *has_flag)
+{
+	if (*word != '-' || ((*word == '-') && !*(word + 1)))
+		return (0);
+	else
+		word = word + 1;
+	while (*word)
+	{
+		if (*word != 'n')
+			return (0);
+		word++;
+	}
+	if (!*has_flag)
+		*has_flag = 1;
+	return (1);
+}
+
+t_word	*found_start(t_word *input, int *has_flag)
+{
+	while (input)
+	{
+		if (!check_flag(input->word, has_flag))
+			return (input);
+		input = input->next;
+	}
+	return (input);
+}
 void	echo(t_word *input)
 {
 	t_word	*start;
+	int	has_flag;
 
-	// if (input->next != NULL)
-	// 	flag = input->next->flags;
-	// if (flag == 2)
-	// 	start = input->next->next;
-	start = input->next;
+	has_flag = 0;
+	start = found_start(input->next, &has_flag);
 	while (start)
 	{
 		ft_putstr_fd(start->word, 1);
@@ -29,12 +53,6 @@ void	echo(t_word *input)
 			write (1, " ", 1);
 		start = start->next;
 	}
-	//if (flag != 2)
-	write (1, "\n", 1);
+	if (!has_flag)
+		write (1, "\n", 1);
 }
-
-/*
-TODO:
-- check here if there is -n or -nnnn, etc
-- flags ceased to exist in t_word struct
-*/
