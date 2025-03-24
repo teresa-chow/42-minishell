@@ -20,7 +20,7 @@ void	test_builtins(t_data *data, t_word_lst *word_lst)
 	if (ft_strcmp(word_lst->word->word, "echo") == 0)
 		echo(word_lst->word);
 	else if (ft_strcmp(word_lst->word->word, "cd") == 0)
-		cd(word_lst->word);
+		cd(word_lst->word, data);
 	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
 		pwd();	
 	else if (ft_strcmp(word_lst->word->word ,"export") == 0)

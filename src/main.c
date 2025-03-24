@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);
 		// printf("\n\nError code of this cmd: %d\n", data.exit_status);
+		// free_env_list(&data, 0, &data.env);
 	}
 	//rl_clear_history();
 	return (0);

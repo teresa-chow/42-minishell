@@ -15,7 +15,34 @@
 
 static	void handle_error(char *path);
 
-void	cd(t_word *input)
+// void	update_pwd_and_oldpwd(t_data *data)
+// {
+// 	t_env_node	*tmp;
+// 	t_env_node	*old;
+// 	t_env_node	*pwd;
+
+// 	(void)old;
+// 	old = get_var(data->env, "OLDPWD");
+// 	pwd = get_var(data->env, "PWD");
+// 	tmp = data->env;
+// 	while (tmp)
+// 	{
+// 		if (!ft_strcmp(tmp->key, "OLDPWD"))
+// 		{
+// 			if (tmp->val)
+// 				free(tmp->val);
+// 			tmp->val = pwd->val;	
+// 		}
+// 		if (!ft_strcmp(tmp->key, "PWD"))
+// 		{
+// 			if (tmp->val)
+// 				free(tmp->val);
+// 			tmp->val = getcwd(NULL, 0);	
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
+void	cd(t_word *input, t_data *data)
 {
 	char	*path;
 
@@ -24,7 +51,8 @@ void	cd(t_word *input)
 	/*TODO: if there is not word->next, means that we only have cd command, so we have to get $HOME path*/
 	if (chdir(path) == -1)
 		handle_error(path);
-	/*TODO: we have to update PWD and OLDPWD when cd is working*/
+	update_pwd_and_oldpwd(data);
+	
 }
 
 static	void handle_error(char *path)

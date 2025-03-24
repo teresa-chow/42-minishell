@@ -55,7 +55,7 @@ int	set_inf(char *word, t_ipt_inf *inf_arg, t_data *data)
 	inf_arg->sep = find_sep(word);
 	inf_arg->key = ft_substr(word, 0, len_wrd - ft_strlen(ft_strchr(word, inf_arg->sep)));
 	if (!inf_arg->key)
-	return (-1);
+		return (-1);
 	if (inf_arg->sep)
 	{
 		equal = ft_strchr(word, '=');
@@ -67,5 +67,17 @@ int	set_inf(char *word, t_ipt_inf *inf_arg, t_data *data)
 			return (error_allocation(data));
 		}
 	}
+	else
+		inf_arg->val = NULL;
 	return (0);
+}
+t_env_node *get_var(t_env_node *tmp, char *key)
+{
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }

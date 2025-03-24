@@ -48,11 +48,11 @@ void	echo(t_word *input)
 	start = found_start(input->next, &has_flag);
 	while (start)
 	{
-		ft_putstr_fd(start->word, 1);
+		ft_putstr_fd(start->word, STDOUT_FILENO);
 		if (start->next)
-			write (1, " ", 1);
+			write (STDOUT_FILENO, " ", 1);
 		start = start->next;
 	}
 	if (!has_flag)
-		write (1, "\n", 1);
+		write (STDOUT_FILENO, "\n", 1);
 }

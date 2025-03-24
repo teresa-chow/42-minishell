@@ -57,17 +57,13 @@ t_env_node	*sort_halfs(t_env_node *head)
 	t_env_node	*left_sort;
 	t_env_node	*right_sort;
 
-
 	if (!head || !head->next)
 		return (head);
 	mid = get_mid(head);
 	right = mid->next;
 	right->prev = NULL;
 	mid->next = NULL;
-
 	left_sort = sort_halfs(head);
 	right_sort = sort_halfs(right);
-
 	return (merge_list(left_sort, right_sort));
-
 }

@@ -21,7 +21,7 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 		last->next = tmp;
 		tmp->prev = last;
 	}
-}	
+}
 static int	creat_env(t_data *data)
 {
 	char	*keys[] = {"OLDPWD", "PWD", "SHLVL", 0};
@@ -71,6 +71,7 @@ static void	check_shlvl(t_env_node *tmp)
 int	init_env_lst(char **envp, t_data *data)
 {
 	int	i;
+	// char	*oldpwd;
 	t_env_node	*tmp;
 	t_env_node	*last;
 	t_ipt_inf	inf;
@@ -78,7 +79,7 @@ int	init_env_lst(char **envp, t_data *data)
 	i = -1;
 	last = NULL;
 	if (!envp || !*envp)
-		return(creat_env(data));	
+		return(creat_env(data));
 	while (envp && envp[++i])
 	{
 		if(set_inf(envp[i], &inf, data) == -1)
@@ -96,5 +97,7 @@ int	init_env_lst(char **envp, t_data *data)
 			data->env = tmp;
 		last = tmp;
 	}
+	// oldpwd = get_var(data->env, ""); ///////Acabar........
+	// if (!oldpwd)
 	return (0);
 }
