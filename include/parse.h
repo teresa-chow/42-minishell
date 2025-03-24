@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/21 18:20:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:45:56 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;
 
-typedef enum	e_type
+typedef enum
 {
 	CMD,
 	GROUP, //will always execute in a subprocess: changes in directory will not affect current shell
@@ -47,12 +47,12 @@ typedef enum	e_type
 	PIPE,
 	AND,
 	OR
-};
+}	e_type;
 
 typedef struct s_tree_node
 {
 	int					index;
-	enum e_type			type;
+	e_type				type;
 	t_word				*word;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;

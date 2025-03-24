@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:13:04 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 17:12:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/24 10:37:57 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static unsigned int	substr_count_no_op(const char *input, unsigned int i)
 		}
 		if (is_operator(input[i]))
 		{
-			if (input[i] == '&' && !is_equal_next(input, i))
+			if (input[i] == '&' && !is_operator(input[i + 1]))
 				i++;
 			else
 				break ;
@@ -131,7 +131,7 @@ static unsigned int	substr_len_no_op(const char *str, unsigned int i)
 		}
 		if (is_operator(str[i]))
 		{
-			if (str[i] == '&' && !is_equal_next(str, i))
+			if (str[i] == '&' && !is_operator(str[i + 1]))
 				i++;
 			else
 				break ;
