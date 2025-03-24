@@ -12,7 +12,28 @@
 
 #include "../../include/builtins.h"
 
-int	check_flag(char *word, int *has_flag)
+static t_word	*found_start(t_word *input, int *has_flag);
+static int		check_flag(char *word, int *has_flag);
+
+void	echo(t_word *input)
+{
+	t_word	*start;
+	int		has_flag;
+
+	has_flag = 0;
+	start = found_start(input->next, &has_flag);
+	while (start)
+	{
+		ft_putstr_fd(start->word, STDOUT_FILENO);
+		if (start->next)
+			write (STDOUT_FILENO, " ", 1);
+		start = start->next;
+	}
+	if (!has_flag)
+		write (STDOUT_FILENO, "\n", 1);
+}
+
+static int	check_flag(char *word, int *has_flag)
 {
 	if (*word != '-' || ((*word == '-') && !*(word + 1)))
 		return (0);
@@ -29,7 +50,7 @@ int	check_flag(char *word, int *has_flag)
 	return (1);
 }
 
-t_word	*found_start(t_word *input, int *has_flag)
+static t_word	*found_start(t_word *input, int *has_flag)
 {
 	while (input)
 	{
@@ -38,21 +59,4 @@ t_word	*found_start(t_word *input, int *has_flag)
 		input = input->next;
 	}
 	return (input);
-}
-void	echo(t_word *input)
-{
-	t_word	*start;
-	int	has_flag;
-
-	has_flag = 0;
-	start = found_start(input->next, &has_flag);
-	while (start)
-	{
-		ft_putstr_fd(start->word, STDOUT_FILENO);
-		if (start->next)
-			write (STDOUT_FILENO, " ", 1);
-		start = start->next;
-	}
-	if (!has_flag)
-		write (STDOUT_FILENO, "\n", 1);
 }

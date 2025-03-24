@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-char	*get_path(t_env_node *env)
+int	find_slash(char *word)
 {
-	while (env)
+	while (*word)
 	{
-		if (ft_strcmp(env->key, "PATH") == 0)
-			return (env->val);
-		env = env->next;
+		if (*word == '/')
+			return (1);
+		word++;
 	}
-	return (NULL);
+	return (0);
 }
+
 int	free_arrays(t_exec_data *inf, t_data *data, int i)
 {
 	free_strarray(inf->wrd_arr);
 	free_strarray(inf->env_arr);
-	if (inf->env_path)
+	if (inf->env_last_slash)
 	{
-		free_strarray(inf->env_path);
-		inf->env_path = NULL;
+		free_strarray(inf->env_last_slash);
+		inf->env_last_slash = NULL;
 	}
 	inf->wrd_arr = NULL;
 	inf->env_arr = NULL;
 	if (i)
-		return(error_allocation(data));
+		return (error_allocation(data));
 	return (0);
 }
 
@@ -66,7 +66,7 @@ static int	count_words(t_env_node *env, t_word *word)
 
 char	**creat_wrd_arr(t_word *word)
 {
-	int	i;
+	int		i;
 	char	**arr;
 
 	arr = ft_calloc ((count_words(NULL, word) + 1), sizeof(char *));
@@ -78,14 +78,14 @@ char	**creat_wrd_arr(t_word *word)
 		arr[++i] = ft_strdup(word->word);
 		if (!arr[i])
 			return (NULL);
-		word = word->next; 
+		word = word->next;
 	}
 	return (arr);
 }
 
 char	**creat_env_arr(t_env_node *env)
 {
-	int	i;
+	int		i;
 	char	**arr;
 	char	*tmp;
 
@@ -104,7 +104,7 @@ char	**creat_env_arr(t_env_node *env)
 		if (arr[i] != tmp)
 			free(arr[i]);
 		arr[i] = tmp;
-		env = env->next; 
+		env = env->next;
 	}
 	return (arr);
 }

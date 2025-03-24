@@ -25,16 +25,12 @@ void	cd(t_word *input, t_data *data)
 		path = input->next->word;
 	// else
 	// 	expan()
-	printf("PWD befor: %s\n", get_var(data->env, "PWD")->val);
-	printf("OLD before: %s\n", get_var(data->env, "OLDPWD")->val);
 	if (chdir(path) == -1)
 	{
 		cd_error(path, data);
 		return ;
 	}
 	update_pwd_and_oldpwd(data);
-	printf("\nPWD after: %s\n", get_var(data->env, "PWD")->val);
-	printf("OLD after: %s\n\n", get_var(data->env, "OLDPWD")->val);
 }
 
 static void	update_pwd_and_oldpwd(t_data *data)
@@ -44,13 +40,24 @@ static void	update_pwd_and_oldpwd(t_data *data)
 
 	old = get_var(data->env, "OLDPWD");
 	pwd = get_var(data->env, "PWD");
-	if (old->val)
-		free(old->val);
-	old->val = pwd->val;
-	pwd->val = getcwd(NULL, 0);
-	if (!pwd->val)
+	if (old)
 	{
-		perror("minishell");
-		data->exit_status = 1;
+		if (old->val)
+			free(old->val);
+		old->val = NULL;
+		if (pwd && pwd->val)
+			old->val = pwd->val;
+	}
+	if (pwd)
+	{
+		if (!old || !old->val)
+			free(pwd->val);
+		pwd->val = getcwd(NULL, 0);
+		if (!pwd->val)
+		{
+			perror("minishell: ");
+			data->exit_status = 1;
+			pwd->val = NULL;
+		}
 	}
 }

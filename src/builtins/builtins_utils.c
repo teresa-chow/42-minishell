@@ -13,18 +13,59 @@
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
 
+static char	find_sep(char *s);
+
 t_env_node	*last_node(t_env_node *env_lst)
 {
 	while (env_lst)
 	{
 		if (!env_lst->next)
-			break;
+			break ;
 		env_lst = env_lst->next;
 	}
 	return (env_lst);
 }
 
-char	find_sep(char *s)
+int	set_inf(char *word, t_input_inf *inf_arg, t_data *data)
+{
+	int		len_wrd;
+	char	*equal;
+
+	equal = NULL;
+	len_wrd = ft_strlen(word);
+	inf_arg->sep = find_sep(word);
+	inf_arg->key = ft_substr(word, 0, len_wrd - \
+				ft_strlen(ft_strchr(word, inf_arg->sep)));
+	if (!inf_arg->key)
+		return (-1);
+	if (inf_arg->sep)
+	{
+		equal = ft_strchr(word, '=');
+		inf_arg->val_strt = len_wrd - ft_strlen(equal + 1);
+		inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(equal + 1));
+		if (!inf_arg->val)
+		{
+			free(inf_arg->key);
+			return (error_allocation(data));
+		}
+	}
+	else
+		inf_arg->val = NULL;
+	return (0);
+}
+
+t_env_node	*get_var(t_env_node *tmp, char *key)
+{
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+static char	find_sep(char *s)
 {
 	char	*tmp;
 
@@ -43,41 +84,4 @@ char	find_sep(char *s)
 		tmp++;
 	}
 	return (0);
-}
-
-int	set_inf(char *word, t_input_inf *inf_arg, t_data *data)
-{
-	int	len_wrd;
-	char	*equal;
-
-	equal = NULL;
-	len_wrd = ft_strlen(word);
-	inf_arg->sep = find_sep(word);
-	inf_arg->key = ft_substr(word, 0, len_wrd - ft_strlen(ft_strchr(word, inf_arg->sep)));
-	if (!inf_arg->key)
-		return (-1);
-	if (inf_arg->sep)
-	{
-		equal = ft_strchr(word, '=');
-		inf_arg->val_strt = len_wrd - ft_strlen(equal + 1);
-		inf_arg->val = ft_substr(word, inf_arg->val_strt, ft_strlen(equal + 1));
-		if (!inf_arg->val)
-		{
-			free(inf_arg->key);
-			return (error_allocation(data));
-		}
-	}
-	else
-		inf_arg->val = NULL;
-	return (0);
-}
-t_env_node *get_var(t_env_node *tmp, char *key)
-{
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }

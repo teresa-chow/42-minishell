@@ -11,29 +11,19 @@
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
+#include "../../include/builtins.h"
 #include "../../include/errors.h"
-
-static char	*get_path(t_env_node *env)
-{
-	while (env)
-	{
-		if (ft_strcmp(env->key, "PATH") == 0)
-			return (env->val);
-		env = env->next;
-	}
-	return (NULL);
-}
 
 char	**set_path(t_data *data)
 {
-	int	i;
+	int		i;
 	char	*tmp;
 	char	**arr;
 
-	arr = ft_split(ft_strchr(get_path(data->env), '/'), ':');
+	arr = ft_split(ft_strchr(get_var(data->env, "PATH")->val, '/'), ':');
 	if (!arr)
 		return (NULL);
-	i = -1;	
+	i = -1;
 	while (arr[++i])
 	{
 		tmp = ft_strjoin(arr[i], "/");

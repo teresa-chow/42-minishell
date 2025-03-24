@@ -29,7 +29,7 @@
 typedef struct s_word
 {
 	struct s_word	*next;
-	char	*word;
+	char			*word;
 }	t_word;
 
 typedef struct s_word_lst
@@ -53,8 +53,8 @@ void		read_input(t_word_lst **word_lst);
 char		**tokenize_op(char *input);
 int			tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
 // Tokenize utils
-unsigned int	group_len(const char *str, unsigned int start);
-int 		handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
+unsigned int		group_len(const char *str, unsigned int start);
+int			handle_parentheses(char *cmd, int *j, t_word_lst **word_lst,
 			t_word **word);
 int			handle_redirection(char *cmd, int *j, t_word_lst **word_lst,
 			t_word **word);

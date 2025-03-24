@@ -22,33 +22,30 @@
 # include "../lib/libft/ft_printf/ft_printf.h"
 
 /* ================================== ECHO ================================== */
-void	echo(t_word *input);
+void		echo(t_word *input);
 
 /* =================================== CD =================================== */
-void	cd(t_word *input, t_data *data);
+void		cd(t_word *input, t_data *data);
 
 /* ================================== PWD =================================== */
-void	pwd(void);
+void		pwd(void);
 
 /* ================================= EXPORT================================= */
-void	export(t_data *data, t_word_lst *word_lst);
-void	reset_inf(t_input_inf *inf);
-void sort_env(t_data *data);
+void		export(t_data *data, t_word_lst *word_lst);
+void		reset_inf(t_input_inf *inf);
+void		sort_env(t_data *data);
 t_env_node	*sort_halfs(t_env_node *head);
-
 /* ================================= UNSET ================================== */
-void	unset(t_data *data, t_word_lst *word_lst);
+void		unset(t_data *data, t_word_lst *word_lst);
 
 /* ================================== ENV =================================== */
-void	env_cmd(t_env_node *env);
+void		env_cmd(t_env_node *env);
 
 /* ================================== EXIT ================================== */
 
-
 /* ============================== GENERAL UTILS ============================= */
+int			set_inf(char *word, t_input_inf *inf_arg, t_data *data);
 t_env_node	*last_node(t_env_node *env_lst);
-int		set_inf(char *word, t_input_inf *inf_arg, t_data *data);
-char	find_sep(char *s);
-t_env_node *get_var(t_env_node *tmp, char *key);
+t_env_node	*get_var(t_env_node *tmp, char *key);
 
 #endif

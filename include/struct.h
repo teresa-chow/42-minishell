@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef STRUCT_H
+# define STRUCT_H
 
 /* -------------------------------------------------------------------------- */
 /*                           Export and env init                              */
 /* -------------------------------------------------------------------------- */
-typedef	struct s_input_inf
+typedef struct s_input_inf
 {
+	int		val_strt;
 	char	*key;
 	char	*val;
 	char	sep;
-	int	val_strt;
 }	t_input_inf;
 
 /* -------------------------------------------------------------------------- */
@@ -29,12 +29,11 @@ typedef	struct s_input_inf
 /* -------------------------------------------------------------------------- */
 typedef struct s_env_node
 {
-	char	*key;
-	char	*val;
-	struct s_env_node *next;
-	struct s_env_node *prev;
+	char				*key;
+	char				*val;
+	struct s_env_node	*next;
+	struct s_env_node	*prev;
 }	t_env_node;
-
 
 typedef struct s_env_init
 {
@@ -63,9 +62,10 @@ typedef struct s_word_lst
 /* -------------------------------------------------------------------------- */
 /*                                 General                                    */
 /* -------------------------------------------------------------------------- */
-typedef struct	s_data
+typedef struct s_data
 {
-	t_env_node *env;
-	int	exit_status;
+	t_env_node	*env;
+	int			exit_status;
 }	t_data;
+
 #endif

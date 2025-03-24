@@ -14,7 +14,38 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
+static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data);
+static int	exist_var(t_input_inf *inf_arg, t_data *data);
+static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env);
+static int	add_var(t_input_inf *inf_arg, t_data *data);
+
+void	export(t_data *data, t_word_lst *word_lst)
+{
+	t_input_inf	inf_arg;
+	t_word		*word;
+
+	word = word_lst->word;
+	if (!word->next)
+		sort_env(data);
+	else
+	{
+		ft_bzero(&inf_arg, sizeof(t_input_inf));
+		word = word->next;
+		while (word)
+		{
+			if (set_inf(word->word, &inf_arg, data) == -1)
+			{
+				error_allocation(data);
+				return ;
+			}
+			if (add_var(&inf_arg, data) == -1)
+				return ;
+			word = word->next;
+		}
+	}
+}
+
+static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 {
 	char	*new_val;
 
@@ -40,9 +71,10 @@ int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 		free(arg_inf->key);
 	return (1);
 }
-int	exist_var(t_input_inf *inf_arg, t_data *data)
+
+static int	exist_var(t_input_inf *inf_arg, t_data *data)
 {
-	t_env_node *env;
+	t_env_node	*env;
 
 	env = data->env;
 	while (env)
@@ -61,6 +93,7 @@ int	exist_var(t_input_inf *inf_arg, t_data *data)
 	}
 	return (0);
 }
+
 static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 {
 	if (last)
@@ -72,9 +105,9 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 		*env = tmp;
 }
 
-int	add_var(t_input_inf *inf_arg, t_data *data)
+static int	add_var(t_input_inf *inf_arg, t_data *data)
 {
-	int	check;
+	int			check;
 	t_env_node	*last;
 	t_env_node	*tmp;
 
@@ -91,30 +124,5 @@ int	add_var(t_input_inf *inf_arg, t_data *data)
 		tmp->val = inf_arg->val;
 		change_ptrs(last, tmp, &data->env);
 	}
-	return (0); 
-}
-void	export(t_data *data, t_word_lst *word_lst)
-{
-	t_input_inf	inf_arg;
-	t_word	*word;
-
-	word = word_lst->word;
-	if (!word->next)
-		sort_env(data);
-	else
-	{
-		ft_bzero(&inf_arg, sizeof(t_input_inf));
-		word = word->next;
-		while (word)
-		{
-			if (set_inf(word->word, &inf_arg, data) == -1)
-			{
-				error_allocation(data);
-				return ;
-			}
-			if (add_var(&inf_arg, data) == -1)
-				return ;
-			word = word->next;
-		}
-	}
+	return (0);
 }

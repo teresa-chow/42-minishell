@@ -15,16 +15,15 @@
 
 # include <stdlib.h>
 # include <sys/wait.h>
-#include <sys/stat.h>
-
+# include <sys/stat.h>
 
 # include "utils.h"
 # include "../lib/libft/libft/libft.h"
 # include "parse.h"
 
-typedef	struct s_exec_data
+typedef struct s_exec_data
 {
-	char	**env_path;
+	char	**env_last_slash;
 	char	**env_arr;
 	char	**wrd_arr;
 	char	*tmp;
@@ -37,7 +36,8 @@ void	exec(t_data *data, t_word *word);
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */
 /* -------------------------------------------------------------------------- */
-int	free_arrays(t_exec_data *inf, t_data *data, int i);
+int		free_arrays(t_exec_data *inf, t_data *data, int i);
+int		find_slash(char *word);
 char	**creat_wrd_arr(t_word *word);
 char	**creat_env_arr(t_env_node *env);
 

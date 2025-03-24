@@ -14,6 +14,38 @@
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
 
+static int	creat_env(t_data *data);
+static void	change_ptrs(t_env_node *last, t_env_node *tmp);
+static void	check_shlvl(t_env_node *tmp);
+static int	find_oldpwd(t_data *data, t_env_init *env_init);
+
+int	init_env_lst(char **envp, t_data *data)
+{
+	int			i;
+	t_env_init	env_init;
+
+	i = -1;
+	env_init.last = NULL;
+	if (!envp || !*envp)
+		return (creat_env(data));
+	while (envp && envp[++i])
+	{
+		if (set_inf(envp[i], &env_init.inf, data) == -1)
+			return (free_env_list(data, 1, &data->env));
+		env_init.tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
+		if (!env_init.tmp)
+			return (free_env_list(data, 1, &data->env));
+		if (!data->env)
+			data->env = env_init.tmp;
+		env_init.tmp->key = env_init.inf.key;
+		env_init.tmp->val = env_init.inf.val;
+		check_shlvl(env_init.tmp);
+		change_ptrs(env_init.last, env_init.tmp);
+		env_init.last = env_init.tmp;
+	}
+	return (find_oldpwd(data, &env_init));
+}
+
 static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 {
 	if (last)
@@ -22,13 +54,15 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 		tmp->prev = last;
 	}
 }
+
 static int	creat_env(t_data *data)
 {
-	char	*keys[] = {"OLDPWD", "PWD", "SHLVL", 0};
-	t_env_node *tmp;
-	t_env_node *last;
-	int	i;
-	
+	int			i;
+	char		**keys;
+	t_env_node	*tmp;
+	t_env_node	*last;
+
+	keys = (char *[]){"OLDPWD", "PWD", "SHLVL", NULL};
 	i = -1;
 	while (keys[++i])
 	{
@@ -53,7 +87,7 @@ static int	creat_env(t_data *data)
 static void	check_shlvl(t_env_node *tmp)
 {
 	char	*box;
-	int	n;
+	int		n;
 
 	box = NULL;
 	n = 0;
@@ -68,7 +102,8 @@ static void	check_shlvl(t_env_node *tmp)
 		}
 	}
 }
-int	find_oldpwd(t_data *data, t_env_init *env_init)
+
+static int	find_oldpwd(t_data *data, t_env_init *env_init)
 {
 	if (!get_var(data->env, "OLDPWD"))
 	{
@@ -81,31 +116,4 @@ int	find_oldpwd(t_data *data, t_env_init *env_init)
 		change_ptrs(env_init->last, env_init->oldpwd);
 	}
 	return (0);
-}
-
-int	init_env_lst(char **envp, t_data *data)
-{
-	int	i;
-	t_env_init	env_init;
-
-	i = -1;
-	env_init.last = NULL;
-	if (!envp || !*envp)
-		return(creat_env(data));
-	while (envp && envp[++i])
-	{
-		if(set_inf(envp[i], &env_init.inf, data) == -1)
-			return (free_env_list(data, 1, &data->env));
-		env_init.tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
-		if (!env_init.tmp)
-			return (free_env_list(data, 1, &data->env));	
-		if (!data->env)
-			data->env = env_init.tmp;
-		env_init.tmp->key = env_init.inf.key;
-		env_init.tmp->val = env_init.inf.val;
-		check_shlvl(env_init.tmp);
-		change_ptrs(env_init.last, env_init.tmp);
-		env_init.last = env_init.tmp;
-	}
-	return (find_oldpwd(data, &env_init));
 }
