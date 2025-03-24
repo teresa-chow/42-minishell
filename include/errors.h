@@ -38,6 +38,7 @@ int	command_not_found(char *token, t_data *data);
 int	no_file_or_directory(char *token, t_data *data);
 int	is_a_directory(char *token, t_data *data);
 int	access_error(char *token, t_data *data);
+int	cd_error(char *token, t_data *data);
 // int	wrong_export_sintax(char *inpt);
 
 #endif

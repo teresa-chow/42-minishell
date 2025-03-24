@@ -24,7 +24,7 @@ int	error_allocation(t_data *data)
 {
 	ft_putendl_fd("minishell: Cannot allocate memory", 2);
 	data->exit_status = ERR;
-	return (ERR);
+	return (-1);
 }
 
 int	command_not_found(char *token, t_data *data)
@@ -54,6 +54,14 @@ int	access_error(char *token, t_data *data)
 	print_fd(2, "minishell: %s: ", token);
 	perror(NULL);
 	data->exit_status = ERR_X; // confirm if is the corret code
+	return (-1);
+}
+
+int	cd_error(char *token, t_data *data)
+{
+	print_fd(2, "minishell: cd: %s: ", token);
+	perror(NULL);
+	data->exit_status = 1;
 	return (-1);
 }
 /*

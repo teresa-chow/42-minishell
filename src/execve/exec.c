@@ -8,7 +8,7 @@ int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 	if (!ft_strcmp(word->word, "."))
 	{
 		data->exit_status = 2;
-		return (1);	
+		return (-1);
 	}
 	inf->wrd_arr = creat_wrd_arr(word);
 	inf->env_arr = creat_env_arr(data->env);
@@ -39,10 +39,7 @@ int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	{
 		inf->tmp = ft_strjoin(inf->env_path[i], inf->input);	
 		if (!inf->tmp)
-		{
-			error_allocation(data);
-			return (0);
-		}
+			return(error_allocation(data));
 		if (!access(inf->tmp, F_OK))
 			return (1);
 		free(inf->tmp);
@@ -51,7 +48,6 @@ int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	command_not_found(inf->input, data);
 	return (0);
 }
-
 void	execute(t_data *data, t_exec_data *inf)
 {
 	pid_t	pid;
@@ -99,11 +95,11 @@ void	exec(t_data *data, t_word *word)
 {
 	t_exec_data	inf;
 
-	if (set_exec_inf(&inf, data, word))
+	if (set_exec_inf(&inf, data, word) == -1)
 		return ;
 	if (!find_slash(inf.input))
 	{
-		if (cmd_in_env_path(&inf, data))
+		if (cmd_in_env_path(&inf, data) == 1)
 			check_cmd(&inf, data);
 	}
 	else

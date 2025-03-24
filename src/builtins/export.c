@@ -14,7 +14,7 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-int	update_var(t_env_node *env, t_ipt_inf *arg_inf, t_data *data)
+int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 {
 	char	*new_val;
 
@@ -33,7 +33,6 @@ int	update_var(t_env_node *env, t_ipt_inf *arg_inf, t_data *data)
 		if (env->val)
 			free(env->val);
 		env->val = new_val;
-		
 	}
 	if (new_val != arg_inf->val)
 		reset_inf(arg_inf);
@@ -41,7 +40,7 @@ int	update_var(t_env_node *env, t_ipt_inf *arg_inf, t_data *data)
 		free(arg_inf->key);
 	return (1);
 }
-int	exist_var(t_ipt_inf *inf_arg, t_data *data)
+int	exist_var(t_input_inf *inf_arg, t_data *data)
 {
 	t_env_node *env;
 
@@ -73,7 +72,7 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 		*env = tmp;
 }
 
-int	add_var(t_ipt_inf *inf_arg, t_data *data)
+int	add_var(t_input_inf *inf_arg, t_data *data)
 {
 	int	check;
 	t_env_node	*last;
@@ -94,13 +93,9 @@ int	add_var(t_ipt_inf *inf_arg, t_data *data)
 	}
 	return (0); 
 }
-/// this builtin can't have (export ARG++23), the sintax is not correct, so we have
-// to handle with this, maybe in expand part??
-// --> same to (export ZA,ZB)
-
 void	export(t_data *data, t_word_lst *word_lst)
 {
-	t_ipt_inf	inf_arg;
+	t_input_inf	inf_arg;
 	t_word	*word;
 
 	word = word_lst->word;
@@ -108,7 +103,7 @@ void	export(t_data *data, t_word_lst *word_lst)
 		sort_env(data);
 	else
 	{
-		ft_bzero(&inf_arg, sizeof(t_ipt_inf));
+		ft_bzero(&inf_arg, sizeof(t_input_inf));
 		word = word->next;
 		while (word)
 		{

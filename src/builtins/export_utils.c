@@ -13,7 +13,7 @@
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 
-void	reset_inf(t_ipt_inf *inf)
+void	reset_inf(t_input_inf *inf)
 {
 	free(inf->key);
 	if (inf->val)

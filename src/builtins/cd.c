@@ -12,51 +12,45 @@
 
 #include "../../include/parse.h"
 #include "../../include/builtins.h"
+#include "../../include/errors.h"
 
-static	void handle_error(char *path);
+static	void	update_pwd_and_oldpwd(t_data *data);
 
-// void	update_pwd_and_oldpwd(t_data *data)
-// {
-// 	t_env_node	*tmp;
-// 	t_env_node	*old;
-// 	t_env_node	*pwd;
-
-// 	(void)old;
-// 	old = get_var(data->env, "OLDPWD");
-// 	pwd = get_var(data->env, "PWD");
-// 	tmp = data->env;
-// 	while (tmp)
-// 	{
-// 		if (!ft_strcmp(tmp->key, "OLDPWD"))
-// 		{
-// 			if (tmp->val)
-// 				free(tmp->val);
-// 			tmp->val = pwd->val;	
-// 		}
-// 		if (!ft_strcmp(tmp->key, "PWD"))
-// 		{
-// 			if (tmp->val)
-// 				free(tmp->val);
-// 			tmp->val = getcwd(NULL, 0);	
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
 void	cd(t_word *input, t_data *data)
 {
 	char	*path;
 
+	path = NULL;
 	if (input->next)
 		path = input->next->word;
-	/*TODO: if there is not word->next, means that we only have cd command, so we have to get $HOME path*/
+	// else
+	// 	expan()
+	printf("PWD befor: %s\n", get_var(data->env, "PWD")->val);
+	printf("OLD before: %s\n", get_var(data->env, "OLDPWD")->val);
 	if (chdir(path) == -1)
-		handle_error(path);
+	{
+		cd_error(path, data);
+		return ;
+	}
 	update_pwd_and_oldpwd(data);
-	
+	printf("\nPWD after: %s\n", get_var(data->env, "PWD")->val);
+	printf("OLD after: %s\n\n", get_var(data->env, "OLDPWD")->val);
 }
 
-static	void handle_error(char *path)
+static void	update_pwd_and_oldpwd(t_data *data)
 {
-	ft_putstr_fd("minishell: cd: ", 2);
-	perror(path);
+	t_env_node	*old;
+	t_env_node	*pwd;
+
+	old = get_var(data->env, "OLDPWD");
+	pwd = get_var(data->env, "PWD");
+	if (old->val)
+		free(old->val);
+	old->val = pwd->val;
+	pwd->val = getcwd(NULL, 0);
+	if (!pwd->val)
+	{
+		perror("minishell");
+		data->exit_status = 1;
+	}
 }

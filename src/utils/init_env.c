@@ -68,36 +68,44 @@ static void	check_shlvl(t_env_node *tmp)
 		}
 	}
 }
+int	find_oldpwd(t_data *data, t_env_init *env_init)
+{
+	if (!get_var(data->env, "OLDPWD"))
+	{
+		env_init->oldpwd = ft_calloc(sizeof(t_env_node), sizeof(char));
+		if (!env_init->oldpwd)
+			return (free_env_list(data, 1, &data->env));
+		env_init->oldpwd->key = ft_strdup("OLDPWD");
+		if (!env_init->oldpwd->key)
+			return (free_env_list(data, 1, &data->env));
+		change_ptrs(env_init->last, env_init->oldpwd);
+	}
+	return (0);
+}
+
 int	init_env_lst(char **envp, t_data *data)
 {
 	int	i;
-	// char	*oldpwd;
-	t_env_node	*tmp;
-	t_env_node	*last;
-	t_ipt_inf	inf;
+	t_env_init	env_init;
 
 	i = -1;
-	last = NULL;
+	env_init.last = NULL;
 	if (!envp || !*envp)
 		return(creat_env(data));
 	while (envp && envp[++i])
 	{
-		if(set_inf(envp[i], &inf, data) == -1)
+		if(set_inf(envp[i], &env_init.inf, data) == -1)
 			return (free_env_list(data, 1, &data->env));
-		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
-		if (!tmp)
-			return (free_env_list(data, 1, &data->env));
-		tmp->key = inf.key;
-		tmp->val = inf.val;
-		check_shlvl(tmp);
-		if (last)
-			last->next = tmp;
-		tmp->prev = last;
+		env_init.tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
+		if (!env_init.tmp)
+			return (free_env_list(data, 1, &data->env));	
 		if (!data->env)
-			data->env = tmp;
-		last = tmp;
+			data->env = env_init.tmp;
+		env_init.tmp->key = env_init.inf.key;
+		env_init.tmp->val = env_init.inf.val;
+		check_shlvl(env_init.tmp);
+		change_ptrs(env_init.last, env_init.tmp);
+		env_init.last = env_init.tmp;
 	}
-	// oldpwd = get_var(data->env, ""); ///////Acabar........
-	// if (!oldpwd)
-	return (0);
+	return (find_oldpwd(data, &env_init));
 }

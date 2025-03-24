@@ -14,6 +14,17 @@
 #define STRUCTS_H
 
 /* -------------------------------------------------------------------------- */
+/*                           Export and env init                              */
+/* -------------------------------------------------------------------------- */
+typedef	struct s_input_inf
+{
+	char	*key;
+	char	*val;
+	char	sep;
+	int	val_strt;
+}	t_input_inf;
+
+/* -------------------------------------------------------------------------- */
 /*                               Env Struct                                   */
 /* -------------------------------------------------------------------------- */
 typedef struct s_env_node
@@ -23,6 +34,15 @@ typedef struct s_env_node
 	struct s_env_node *next;
 	struct s_env_node *prev;
 }	t_env_node;
+
+
+typedef struct s_env_init
+{
+	t_env_node	*oldpwd;
+	t_env_node	*tmp;
+	t_env_node	*last;
+	t_input_inf	inf;
+}	t_env_init;
 
 /* -------------------------------------------------------------------------- */
 /*                            Parser Structs                                  */
@@ -40,16 +60,6 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;*/ //TODO: needs review
 
-/* -------------------------------------------------------------------------- */
-/*                           Export and env init                              */
-/* -------------------------------------------------------------------------- */
-typedef	struct s_ipt_inf
-{
-	char	*key;
-	char	*val;
-	char	sep;
-	int	val_strt;
-}	t_ipt_inf;
 /* -------------------------------------------------------------------------- */
 /*                                 General                                    */
 /* -------------------------------------------------------------------------- */

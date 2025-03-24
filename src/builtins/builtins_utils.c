@@ -45,7 +45,7 @@ char	find_sep(char *s)
 	return (0);
 }
 
-int	set_inf(char *word, t_ipt_inf *inf_arg, t_data *data)
+int	set_inf(char *word, t_input_inf *inf_arg, t_data *data)
 {
 	int	len_wrd;
 	char	*equal;

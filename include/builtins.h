@@ -32,7 +32,7 @@ void	pwd(void);
 
 /* ================================= EXPORT================================= */
 void	export(t_data *data, t_word_lst *word_lst);
-void	reset_inf(t_ipt_inf *inf);
+void	reset_inf(t_input_inf *inf);
 void sort_env(t_data *data);
 t_env_node	*sort_halfs(t_env_node *head);
 
@@ -47,7 +47,7 @@ void	env_cmd(t_env_node *env);
 
 /* ============================== GENERAL UTILS ============================= */
 t_env_node	*last_node(t_env_node *env_lst);
-int		set_inf(char *word, t_ipt_inf *inf_arg, t_data *data);
+int		set_inf(char *word, t_input_inf *inf_arg, t_data *data);
 char	find_sep(char *s);
 t_env_node *get_var(t_env_node *tmp, char *key);
 
