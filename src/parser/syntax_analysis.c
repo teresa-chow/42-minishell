@@ -77,7 +77,21 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 	return (0);
 }
 
-/*static int	check_group(t_word_lst *tmp_lst)
+/*static int	check_group(t_word *group)
 {
+	char 		**cmd_lst;
+	t_word		*tmp_group;
+	t_word_lst	*tmp_lst;
 
+	cmd_lst = tokenize_op(group->word);
+	if (cmd_lst)
+	{
+		tmp_lst = ft_calloc(1, sizeof(t_word_lst));
+		if (!tmp_lst)
+			return ;
+		tokenize_w_lst(cmd_lst, tmp_lst);
+		free_strarray(cmd_lst);
+		syntax_analysis(tmp_lst);
+		free_word_lst(&tmp_lst);
+	}
 }*/
