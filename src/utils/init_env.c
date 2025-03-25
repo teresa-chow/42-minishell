@@ -46,22 +46,13 @@ int	init_env_lst(char **envp, t_data *data)
 	return (find_oldpwd(data, &env_init));
 }
 
-static void	change_ptrs(t_env_node *last, t_env_node *tmp)
-{
-	if (last)
-	{
-		last->next = tmp;
-		tmp->prev = last;
-	}
-}
-
 static int	creat_env(t_data *data)
 {
 	int			i;
 	char		**keys;
 	t_env_node	*tmp;
 	t_env_node	*last;
-
+	
 	keys = (char *[]){"OLDPWD", "PWD", "SHLVL", NULL};
 	i = -1;
 	while (keys[++i])
@@ -84,6 +75,14 @@ static int	creat_env(t_data *data)
 	return (0);
 }
 
+static void	change_ptrs(t_env_node *last, t_env_node *tmp)
+{
+	if (last)
+	{
+		last->next = tmp;
+		tmp->prev = last;
+	}
+}
 static void	check_shlvl(t_env_node *tmp)
 {
 	char	*box;
