@@ -161,11 +161,11 @@ norm:	## Execute norminette
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
 
 valgrind: all	## Run valgrind (suppress readline() memory leaks)
-	printf "{\\nignore_libreadline_leaks\\nMemcheck:Leak\\n...\\n \
-    obj:*/libreadline.so.*\\n}" > rl.supp
+	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
-	--suppressions=rl.supp --track-fds=yes --trace-children=yes ./$(NAME)
+	--suppressions=rl.supp --track-fds=yes --trace-children=yes \
+	--log-file=memleaks.log ./$(NAME)
 
 
 ##@ TOOL INSTALLATION
@@ -191,6 +191,32 @@ help:	## Display this help info
 
 .PHONY: all clean fclean re norm valgrind install help
 
+# ============================================================================ #
+# UTILS: READLINE LEAKS SUPPRESSION FILE                                       #
+# ============================================================================ #
+
+define RL_SUPP
+{
+   name
+   Memcheck:Leak
+   fun:*alloc
+   ...
+   obj:*/libreadline.so.*
+   ...
+}
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+endef
 
 # ============================================================================ #
 # UTILS: SHELL FORMATTING                                                      #
