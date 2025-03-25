@@ -13,15 +13,47 @@
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
+static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root);
+
 void	create_syntax_tree(t_word_lst *word_lst, t_tree_node **root)
 {
 	(void)word_lst;
 	(void)root;
 
-	//find lower precedence op
-	//if no op -- single cmd -- single node
-	//check if parentheses
+	//check first if there's only one command inside parentheses
+	find_low_precedence(word_lst, root);
+	//start building subtree: mem alloc left and right nodes
+	ft_printf("root: %s, type: %d\n", (*root)->word->word, (*root)->type); //delete
 }
+
+static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root)
+{
+	t_word_lst	*tmp_lst;
+
+	tmp_lst = word_lst;
+	(*root)->word = tmp_lst->word;
+	(*root)->type = CMD;
+	while (tmp_lst)
+	{
+		if (!ft_strcmp(tmp_lst->word->word, "|"))
+		{
+			(*root)->word = tmp_lst->word;
+			(*root)->type = PIPE;
+		}
+		else if (!ft_strcmp(tmp_lst->word->word, "&&"))
+		{
+			(*root)->word = tmp_lst->word;
+			(*root)->type = AND;
+		}
+		else if (!ft_strcmp(tmp_lst->word->word, "||"))
+		{
+			(*root)->word = tmp_lst->word;
+			(*root)->type = OR;
+		}
+		tmp_lst = tmp_lst->next;
+	}
+}
+
 
 /*
 sample tree
@@ -87,9 +119,3 @@ return after condition wouldn't suffice
 	if (node->right != NULL)
 		print_depth_first_rec(node->right);
 }*/
-
-/*
-Sample : breadth-first search (BFS) 0 1 2 3 4 5 6 -- queue data structure
-traverses tree level by level
-FIFO
-*/

@@ -51,7 +51,7 @@ typedef enum
 
 typedef struct s_tree_node
 {
-	int					index;
+	int					index; //needed ?
 	e_type				type;
 	t_word				*word;
 	struct s_tree_node	*left;

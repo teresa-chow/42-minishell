@@ -17,7 +17,7 @@
 static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
 
-int	syntax_analysis(t_word_lst *word_lst)
+int	syntax_analysis(t_word_lst *word_lst) //TODO: parentheses (()) -> arithmetic use
 {
 	t_word_lst	*tmp_lst;
 	t_word		*tmp_word;
@@ -76,3 +76,8 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 	}
 	return (0);
 }
+
+/*static int	check_group(t_word_lst *tmp_lst)
+{
+
+}*/
