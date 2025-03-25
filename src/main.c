@@ -32,13 +32,13 @@ int	main(int argc, char **argv, char **envp)
 		if (!word_lst)
 			break ;
 		read_input(&word_lst);
+		if (!ft_strcmp(word_lst->word->word, "exit"))
+			return(exit_cmd(&data, &word_lst));
 		if (word_lst->word != NULL)
 			test_builtins(&data, word_lst);
 		free_word_lst(&word_lst);
-		printf("\n\nError code of this cmd: %d\n", data.exit_status);
-		// free_env_list(&data, 0, &data.env);
 	}
-	//rl_clear_history();
+	rl_clear_history();
 	return (0);
 }
 

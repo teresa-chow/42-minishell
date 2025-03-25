@@ -56,8 +56,8 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 	inf->env_arr = creat_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)
 		return (free_arrays(inf, data, 1));
-	inf->env_last_slash = set_path(data, &i);
-	if (!inf->env_last_slash && i != -1)
+	inf->path_splited = set_path(data, &i);
+	if (!inf->path_splited && i != -1)
 		return (free_arrays(inf, data, 1));
 	inf->input = word->word;
 	return (0);
@@ -67,15 +67,15 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 {
 	int	i;
 
-	if (!inf->env_last_slash)
+	if (!inf->path_splited)
 	{
 		no_file_or_directory(inf->input, data);
 		return (-1);
 	}
 	i = -1;
-	while (inf->env_last_slash[++i])
+	while (inf->path_splited[++i])
 	{
-		inf->tmp = ft_strjoin(inf->env_last_slash[i], inf->input);
+		inf->tmp = ft_strjoin(inf->path_splited[i], inf->input);
 		if (!inf->tmp)
 			return (error_allocation(data));
 		if (!access (inf->tmp, F_OK))

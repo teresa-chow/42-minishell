@@ -73,3 +73,9 @@ void	free_word_lst(t_word_lst **word_lst)
 		free(tmp);
 	}
 }
+
+void	free_to_exit(t_data *data, t_word_lst **word_lst)
+{
+	free_env_list(data, 0, &data->env);
+	free_word_lst(word_lst);
+}

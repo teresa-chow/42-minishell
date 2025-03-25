@@ -36,12 +36,11 @@ void		sort_env(t_data *data);
 t_env_node	*sort_halfs(t_env_node *head);
 /* ================================= UNSET ================================== */
 void		unset(t_data *data, t_word_lst *word_lst);
-
 /* ================================== ENV =================================== */
 void	env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
-
+int	exit_cmd(t_data *data, t_word_lst **word_lst);
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);
 t_env_node	*last_node(t_env_node *env_lst);

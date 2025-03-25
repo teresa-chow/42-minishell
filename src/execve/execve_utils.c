@@ -28,10 +28,10 @@ int	free_arrays(t_exec_data *inf, t_data *data, int i)
 {
 	free_strarray(inf->wrd_arr);
 	free_strarray(inf->env_arr);
-	if (inf->env_last_slash)
+	if (inf->path_splited)
 	{
-		free_strarray(inf->env_last_slash);
-		inf->env_last_slash = NULL;
+		free_strarray(inf->path_splited);
+		inf->path_splited = NULL;
 	}
 	inf->wrd_arr = NULL;
 	inf->env_arr = NULL;

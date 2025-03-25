@@ -23,7 +23,7 @@
 
 typedef struct s_exec_data
 {
-	char	**env_last_slash;
+	char	**path_splited;
 	char	**env_arr;
 	char	**wrd_arr;
 	char	*tmp;
