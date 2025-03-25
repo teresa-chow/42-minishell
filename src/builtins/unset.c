@@ -24,10 +24,10 @@ void	unset(t_data *data, t_word_lst *word_lst)
 	word = word_lst->word->next;
 	while (word)
 	{
-		if (clean_env(&data->env, word->word) == -1)
-			return ;
+		clean_env(&data->env, word->word);
 		word = word->next;
 	}
+	data->exit_status = 0;
 }
 
 static int	update_env(t_env_node **env, t_env_node *tmp)

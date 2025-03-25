@@ -26,7 +26,7 @@ t_env_node	*last_node(t_env_node *env_lst)
 	return (env_lst);
 }
 
-int	set_inf(char *word, t_input_inf *inf_arg, t_data *data)
+int	set_inf(char *word, t_input_inf *inf_arg)
 {
 	int		len_wrd;
 	char	*equal;
@@ -46,7 +46,8 @@ int	set_inf(char *word, t_input_inf *inf_arg, t_data *data)
 		if (!inf_arg->val)
 		{
 			free(inf_arg->key);
-			return (error_allocation(data));
+			inf_arg->key = NULL;
+			return (-1);
 		}
 	}
 	else

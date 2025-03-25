@@ -15,7 +15,7 @@
 static t_word	*found_start(t_word *input, int *has_flag);
 static int		check_flag(char *word, int *has_flag);
 
-void	echo(t_word *input)
+void	echo(t_word *input, t_data *data)
 {
 	t_word	*start;
 	int		has_flag;
@@ -31,6 +31,7 @@ void	echo(t_word *input)
 	}
 	if (!has_flag)
 		write (STDOUT_FILENO, "\n", 1);
+	data->exit_status = 0;
 }
 
 static int	check_flag(char *word, int *has_flag)

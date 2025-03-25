@@ -14,7 +14,7 @@
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
 
-static	void	update_pwd_and_oldpwd(t_data *data);
+static	int	update_pwd_and_oldpwd(t_data *data);
 
 void	cd(t_word *input, t_data *data)
 {
@@ -30,10 +30,13 @@ void	cd(t_word *input, t_data *data)
 		cd_error(path, data);
 		return ;
 	}
-	update_pwd_and_oldpwd(data);
+	if (!update_pwd_and_oldpwd(data))
+		data->exit_status = 0;
+	else
+		data->exit_status = 1;
 }
 
-static void	update_pwd_and_oldpwd(t_data *data)
+static int	update_pwd_and_oldpwd(t_data *data)
 {
 	t_env_node	*old;
 	t_env_node	*pwd;
@@ -55,9 +58,9 @@ static void	update_pwd_and_oldpwd(t_data *data)
 		pwd->val = getcwd(NULL, 0);
 		if (!pwd->val)
 		{
-			perror("minishell: ");
-			data->exit_status = 1;
-			pwd->val = NULL;
+			perror("minishell");
+			return (1);
 		}
 	}
+	return (0);
 }

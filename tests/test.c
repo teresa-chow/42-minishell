@@ -18,17 +18,17 @@
 void	test_builtins(t_data *data, t_word_lst *word_lst)
 {
 	if (ft_strcmp(word_lst->word->word, "echo") == 0)
-		echo(word_lst->word);
+		echo(word_lst->word, data);
 	else if (ft_strcmp(word_lst->word->word, "cd") == 0)
 		cd(word_lst->word, data);
 	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
-		pwd();	
+		pwd(data);	
 	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
 		export(data, word_lst);
 	else if (ft_strcmp(word_lst->word->word,"unset") == 0)
 		unset(data, word_lst);
 	else if (ft_strcmp(word_lst->word->word,"env") == 0)
-		env_cmd(data->env);
+		env_cmd(data->env, data);
 	else
 		exec(data, word_lst->word);
 }

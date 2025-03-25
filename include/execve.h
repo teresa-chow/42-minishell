@@ -30,7 +30,6 @@ typedef struct s_exec_data
 	char	*input;
 }	t_exec_data;
 
-char	*get_path(t_env_node *env);
 void	exec(t_data *data, t_word *word);
 
 /* -------------------------------------------------------------------------- */

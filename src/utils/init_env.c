@@ -30,7 +30,7 @@ int	init_env_lst(char **envp, t_data *data)
 		return (creat_env(data));
 	while (envp && envp[++i])
 	{
-		if (set_inf(envp[i], &env_init.inf, data) == -1)
+		if (set_inf(envp[i], &env_init.inf) == -1)
 			return (free_env_list(data, 1, &data->env));
 		env_init.tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!env_init.tmp)

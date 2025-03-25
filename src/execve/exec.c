@@ -43,6 +43,9 @@ void	exec(t_data *data, t_word *word)
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 {
+	int	i;
+
+	i = 0;
 	ft_bzero(inf, sizeof(t_exec_data));
 	if (!ft_strcmp(word->word, "."))
 	{
@@ -53,8 +56,8 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 	inf->env_arr = creat_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)
 		return (free_arrays(inf, data, 1));
-	inf->env_last_slash = set_path(data);
-	if (!inf->env_last_slash)
+	inf->env_last_slash = set_path(data, &i);
+	if (!inf->env_last_slash && i != -1)
 		return (free_arrays(inf, data, 1));
 	inf->input = word->word;
 	return (0);
@@ -64,6 +67,11 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 {
 	int	i;
 
+	if (!inf->env_last_slash)
+	{
+		no_file_or_directory(inf->input, data);
+		return (-1);
+	}
 	i = -1;
 	while (inf->env_last_slash[++i])
 	{
@@ -94,7 +102,7 @@ static void	execute(t_data *data, t_exec_data *inf)
 	{
 		if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 		{
-			perror("error");
+			perror("minishell : execve ");
 			exit(1);
 		}
 	}

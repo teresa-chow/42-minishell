@@ -38,6 +38,7 @@ void	sort_env(t_data *data)
 	copy = sort_halfs(copy);
 	print_export(copy);
 	free_env_list(data, 0, &copy);
+	data->exit_status = 0;
 }
 
 static int	creat_copy(t_env_node **copy, t_data *data)

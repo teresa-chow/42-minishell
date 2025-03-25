@@ -33,7 +33,7 @@ void	export(t_data *data, t_word_lst *word_lst)
 		word = word->next;
 		while (word)
 		{
-			if (set_inf(word->word, &inf_arg, data) == -1)
+			if (set_inf(word->word, &inf_arg) == -1)
 			{
 				error_allocation(data);
 				return ;
@@ -42,6 +42,7 @@ void	export(t_data *data, t_word_lst *word_lst)
 				return ;
 			word = word->next;
 		}
+		data->exit_status = 0;
 	}
 }
 
@@ -119,7 +120,7 @@ static int	add_var(t_input_inf *inf_arg, t_data *data)
 		last = last_node(data->env);
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-			return (-1);
+			return (error_allocation(data));
 		tmp->key = inf_arg->key;
 		tmp->val = inf_arg->val;
 		change_ptrs(last, tmp, &data->env);
