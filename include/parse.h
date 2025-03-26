@@ -47,7 +47,11 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void		read_input(t_word_lst **word_lst);//t_data *data);
+void		read_input(t_word_lst **word_lst, t_data *data);
+int	cmd_and_args_check(t_data *data, t_word_lst **word_lst);
+void	check_export_args(t_word *word, t_data *data);
+int	check_if_has_args(t_word_lst *last_cmd, t_word_lst **curr, t_word_lst **word_lst);
+
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char		**tokenize_op(char *input);

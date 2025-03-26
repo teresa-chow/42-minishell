@@ -22,6 +22,8 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_utils.c syntax_tree.c \
 	syntax_tree_utils.c)
+SRC_COMMAND_CHECK	=$(addprefix $(COMMAND_CHECK_DIR)/, check_command.c export_check_arg_syntax.c)
+
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c export.c \
 	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
@@ -32,6 +34,7 @@ TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
+OBJS_COMMAND_CHECK	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_COMMAND_CHECK:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
@@ -53,6 +56,8 @@ LIB_DIR			= lib
 
 # Sources
 PARSER_DIR		= $(SRC_DIR)/parser
+
+COMMAND_CHECK_DIR	= $(SRC_DIR)/command_check
 
 BUILTINS_DIR	= $(SRC_DIR)/builtins
 
@@ -90,11 +95,11 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
+$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_COMMAND_CHECK) $(OBJS_BUILTINS) \
 	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_COMMAND_CHECK) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
 	$(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
@@ -107,6 +112,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(COMMAND_CHECK_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(BUILTINS_DIR)/%.c

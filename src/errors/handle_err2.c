@@ -28,18 +28,12 @@ int	cd_error(char *token, t_data *data)
 	data->exit_status = 1;
 	return (-1);
 }
-// int	wrong_export_sintax(char *inpt)
-//  {
-//  	char	*tmp;
-//  	char	*tmp1;
 
-//  	tmp = ft_strjoin("minishell: export: `", inpt);
-//  	if (!tmp)
-//  		return(error_allocation());
-//  	tmp1 = ft_strjoin(tmp, "': not a valid identifier");
-//  	free(tmp);
-//  	if (!tmp1)
-//  		return (error_allocation());
-//  	ft_putendl_fd(tmp1, 2);
-//  	return (0);
-//  }
+int	error_export_syntax(char *inpt, t_data *data)
+ {
+
+	print_fd(2, "minishell: export: `%s': not a valid identifier\n", inpt);
+	data->exit_status = ERR;
+ 	return (0);
+ }
+ 
