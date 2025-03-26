@@ -64,7 +64,7 @@ static int	count_words(t_env_node *env, t_word *word)
 	return (count);
 }
 
-char	**creat_wrd_arr(t_word *word)
+char	**create_wrd_arr(t_word *word)
 {
 	int		i;
 	char	**arr;
@@ -83,7 +83,7 @@ char	**creat_wrd_arr(t_word *word)
 	return (arr);
 }
 
-char	**creat_env_arr(t_env_node *env)
+char	**create_env_arr(t_env_node *env)
 {
 	int		i;
 	char	**arr;

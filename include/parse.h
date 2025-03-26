@@ -47,7 +47,7 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void		read_input(t_word_lst **word_lst);
+void		read_input(t_word_lst **word_lst);//t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char		**tokenize_op(char *input);

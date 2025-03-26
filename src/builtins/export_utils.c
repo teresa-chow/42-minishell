@@ -13,7 +13,7 @@
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 
-static int	creat_copy(t_env_node **copy, t_data *data);
+static int	create_copy(t_env_node **copy, t_data *data);
 static	void	print_var_val(char *s);
 static void	print_export(t_env_node *env_lst);
 
@@ -33,7 +33,7 @@ void	sort_env(t_data *data)
 	if (!data->env)
 		return ;
 	copy = NULL;
-	if (creat_copy(&copy, data) == -1)
+	if (create_copy(&copy, data) == -1)
 		return ;
 	copy = sort_halfs(copy);
 	print_export(copy);
@@ -41,7 +41,7 @@ void	sort_env(t_data *data)
 	data->exit_status = 0;
 }
 
-static int	creat_copy(t_env_node **copy, t_data *data)
+static int	create_copy(t_env_node **copy, t_data *data)
 {
 	t_env_node	*tmp;
 	t_env_node	*env;

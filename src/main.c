@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!word_lst)
 			break ;
-		read_input(&word_lst);
+		read_input(&word_lst);//, &data);
 		if (!ft_strcmp(word_lst->word->word, "exit"))
 			return(exit_cmd(&data, &word_lst));
 		if (word_lst->word != NULL)

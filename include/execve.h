@@ -37,7 +37,7 @@ void	exec(t_data *data, t_word *word);
 /* -------------------------------------------------------------------------- */
 int		free_arrays(t_exec_data *inf, t_data *data, int i);
 int		find_slash(char *word);
-char	**creat_wrd_arr(t_word *word);
-char	**creat_env_arr(t_env_node *env);
+char	**create_wrd_arr(t_word *word);
+char	**create_env_arr(t_env_node *env);
 
 #endif

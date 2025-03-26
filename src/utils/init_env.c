@@ -14,7 +14,7 @@
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
 
-static int	creat_env(t_data *data);
+static int	create_env(t_data *data);
 static void	change_ptrs(t_env_node *last, t_env_node *tmp);
 static void	check_shlvl(t_env_node *tmp);
 static int	find_oldpwd(t_data *data, t_env_init *env_init);
@@ -27,7 +27,7 @@ int	init_env_lst(char **envp, t_data *data)
 	i = -1;
 	env_init.last = NULL;
 	if (!envp || !*envp)
-		return (creat_env(data));
+		return (create_env(data));
 	while (envp && envp[++i])
 	{
 		if (set_inf(envp[i], &env_init.inf) == -1)
@@ -46,7 +46,7 @@ int	init_env_lst(char **envp, t_data *data)
 	return (find_oldpwd(data, &env_init));
 }
 
-static int	creat_env(t_data *data)
+static int	create_env(t_data *data)
 {
 	int			i;
 	char		**keys;

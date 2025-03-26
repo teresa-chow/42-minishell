@@ -52,8 +52,8 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 		data->exit_status = 2;
 		return (-1);
 	}
-	inf->wrd_arr = creat_wrd_arr(word);
-	inf->env_arr = creat_env_arr(data->env);
+	inf->wrd_arr = create_wrd_arr(word);
+	inf->env_arr = create_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)
 		return (free_arrays(inf, data, 1));
 	inf->path_splited = set_path(data, &i);
