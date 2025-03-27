@@ -124,7 +124,9 @@ static int	check_parentheses(char *word)
 		else if (word[i] == ')')
 			closed++;
 	}
-	if (open != closed)
+	if (open > closed)
 		return (err_syntax("newline"));
+	else if (open < closed)
+		return (err_syntax(")"));
 	return (0);
 }
