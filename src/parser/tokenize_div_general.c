@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:58:16 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 09:12:20 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:54:15 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static unsigned int	substr_len(const char *str, unsigned int start)
 	unsigned int	len;
 
 	end = start;
-	while (str[end] && !is_delimiter(str[end])
+	while (str[end] && !is_delimiter(str[end]) && !is_quote(str[end])
 		&& !is_redirection(str[end]) && str[end] != '(')
 		end++;
 	len = end - start;

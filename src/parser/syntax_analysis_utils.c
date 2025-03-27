@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:12:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/24 14:24:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:55:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	is_valid_redir(t_word *word)
 	len = ft_strlen(word->word);
 	if (len == 2 && is_redirection(word->word[0]))
 	{
-		if (!ft_strcmp(word->word, ">>") || !ft_strcmp(word->word, "<<")) //|| !ft_strcmp(word->word, ">|"))
+		if (!ft_strcmp(word->word, ">>") || !ft_strcmp(word->word, "<<"))
 			return (1);
 		else
 			return (err_syntax(&word->word[1]));

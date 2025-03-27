@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/24 09:57:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:57:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	create_syntax_tree(t_word_lst *word_lst, t_tree_node **root)
 {
 	(void)word_lst;
 	(void)root;
-
 	//check first if there's only one command inside parentheses
 	find_low_precedence(word_lst, root);
 	//start building subtree: mem alloc left and right nodes
-	ft_printf("root: %s, type: %d\n", (*root)->word->word, (*root)->type); //delete
+	ft_printf("root: %s, type: %d\n",
+		(*root)->word->word, (*root)->type); //delete
 }
 
 static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root)
@@ -53,7 +53,6 @@ static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root)
 		tmp_lst = tmp_lst->next;
 	}
 }
-
 
 /*
 sample tree

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/27 11:05:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:57:41 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_quotes(char *word);
 
-int	syntax_analysis(t_word_lst *word_lst) //TODO: parentheses (()) -> arithmetic use
+int	syntax_analysis(t_word_lst *word_lst)
 {
 	t_word_lst	*tmp_lst;
 	t_word		*tmp_word;
@@ -87,7 +87,7 @@ static int	check_quotes(char *word)
 {
 	int		i;
 	int		code;
-	int 	count;
+	int		count;
 
 	i = -1;
 	code = 0;

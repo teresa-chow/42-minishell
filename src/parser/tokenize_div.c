@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:09:23 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/21 14:48:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:21:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 			handle_redirection(cmd_lst[i], &j, &word_lst, &word_tmp);
 			handle_other(cmd_lst[i], &j, &word_lst, &word_tmp);
 			handle_quote(cmd_lst[i], &j, &word_lst, &word_tmp);
+			ft_printf("j: %d\n", j);
 			while (is_delimiter(cmd_lst[i][j]))
 				j++;
 		}

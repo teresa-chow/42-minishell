@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:56:56 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/21 14:37:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:56:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 t_tree_node	*add_node(int index, t_word *word)
 {
 	t_tree_node	*new;
-	
+
 	new = ft_calloc(1, sizeof(t_tree_node));
 	if (!new)
 		return (NULL);
 	new->index = index;
 	new->word = word;
-	return(new);
+	return (new);
 }
 
 t_word_lst	*last_op(t_word_lst *word_lst)

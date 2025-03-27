@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/27 10:56:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:55:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	read_input(t_tree_node **root, t_data *data)
 			print_word_lst(cmd_lst, &word_lst); //tmp
 			free_strarray(cmd_lst);
 			syntax_check(word_lst, data);
-			create_syntax_tree(word_lst, root); //must only execute if no syntax errors
+			create_syntax_tree(word_lst, root); //if no syntax errors
 			free_word_lst(&word_lst);
 		}
 	}
