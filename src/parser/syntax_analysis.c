@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 13:32:56 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 11:05:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
+static int	check_quotes(char *word);
 
 int	syntax_analysis(t_word_lst *word_lst) //TODO: parentheses (()) -> arithmetic use
 {
@@ -72,8 +73,37 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 			if (check_redir_seq(tmp_lst, tmp_word) != 0)
 				return (ERR_BI);
 		}
+		else // check parentheses (new group, unless quoted)
+		{
+			if (check_quotes(tmp_word->word) != 0)
+				return (ERR_BI);
+		}
 		tmp_word = tmp_word->next;
 	}
+	return (0);
+}
+
+static int	check_quotes(char *word)
+{
+	int		i;
+	int		code;
+	int 	count;
+
+	i = -1;
+	code = 0;
+	count = 0;
+	while (word[++i])
+	{
+		if ((count % 2 == 0) && (is_quote(word[i])))
+		{
+			code = is_quote(word[i]);
+			count++;
+		}
+		else if ((count % 2 != 0) && (code == is_quote(word[i])))
+			count++;
+	}
+	if (count % 2 != 0)
+		return (err_syntax("newline"));
 	return (0);
 }
 
