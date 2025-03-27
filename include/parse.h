@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 15:04:14 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:09:08 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,7 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void		read_input(t_word_lst **word_lst, t_data *data);
-int	cmd_and_args_check(t_data *data, t_word_lst **word_lst);
-void	check_export_args(t_word *word, t_data *data);
-int	check_if_has_args(t_word_lst *last_cmd, t_word_lst **curr, t_word_lst **word_lst);
-
-
+void		read_input(t_word_lst **word_lst);//, t_data *data);
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char		**tokenize_op(char *input);
 int			tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);

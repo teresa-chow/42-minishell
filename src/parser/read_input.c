@@ -13,11 +13,9 @@
 #include "../../include/utils.h"
 #include "../../include/parse.h"
 
-int	cmd_and_args_check(t_data *data, t_word_lst **word_lst);
-
 #include "../../tests/test.h" //delete
 
-void	read_input(t_word_lst **word_lst, t_data *data)
+void	read_input(t_word_lst **word_lst)//, t_data *data)
 {
 	char	*input;
 	char	**cmd_lst;
@@ -33,8 +31,6 @@ void	read_input(t_word_lst **word_lst, t_data *data)
 			//print_word_lst(cmd_lst, word_lst); //delete
 			free_strarray(cmd_lst);
 			// syntax_check();
-			if (cmd_and_args_check(data, word_lst))
-				printf("\n");	// call createee_syntax_tree;
 			// data->exit_status = syntax_analysis(*word_lst);
 		}
 	}

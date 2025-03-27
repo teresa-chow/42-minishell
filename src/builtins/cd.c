@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-02-26 17:55:27 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/27 16:36:56 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	update_pwd_and_oldpwd(t_data *data)
 {
 	t_env_node	*old;
 	t_env_node	*pwd;
+	static char	*curr;
 
 	old = get_var(data->env, "OLDPWD");
 	pwd = get_var(data->env, "PWD");
@@ -50,6 +51,8 @@ static int	update_pwd_and_oldpwd(t_data *data)
 		old->val = NULL;
 		if (pwd && pwd->val)
 			old->val = pwd->val;
+		else
+			old->val = curr;
 	}
 	if (pwd)
 	{
@@ -62,5 +65,7 @@ static int	update_pwd_and_oldpwd(t_data *data)
 			return (1);
 		}
 	}
+	else
+		curr = getcwd(NULL, 0);
 	return (0);
 }
