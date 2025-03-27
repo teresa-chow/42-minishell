@@ -33,7 +33,6 @@ void	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 			handle_redirection(cmd_lst[i], &j, &word_lst, &word_tmp);
 			handle_other(cmd_lst[i], &j, &word_lst, &word_tmp);
 			handle_quote(cmd_lst[i], &j, &word_lst, &word_tmp);
-			ft_printf("j: %d\n", j);
 			while (is_delimiter(cmd_lst[i][j]))
 				j++;
 		}

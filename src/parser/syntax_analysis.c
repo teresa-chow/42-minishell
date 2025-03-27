@@ -16,7 +16,8 @@
 
 static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
-static int	check_quotes(char *word);
+static int	check_group(char *word);
+static int	check_parentheses(char *word);
 
 int	syntax_analysis(t_word_lst *word_lst)
 {
@@ -73,9 +74,11 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 			if (check_redir_seq(tmp_lst, tmp_word) != 0)
 				return (ERR_BI);
 		}
-		else // check parentheses (new group, unless quoted)
+		else
 		{
 			if (check_quotes(tmp_word->word) != 0)
+				return (ERR_BI);
+			if (check_group(tmp_word->word) != 0)
 				return (ERR_BI);
 		}
 		tmp_word = tmp_word->next;
@@ -83,45 +86,45 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 	return (0);
 }
 
-static int	check_quotes(char *word)
+static int	check_group(char *word)
 {
-	int		i;
-	int		code;
-	int		count;
+	//char 		**cmd_lst;
+	//t_word_lst	*tmp_lst;
 
-	i = -1;
-	code = 0;
-	count = 0;
-	while (word[++i])
-	{
-		if ((count % 2 == 0) && (is_quote(word[i])))
-		{
-			code = is_quote(word[i]);
-			count++;
-		}
-		else if ((count % 2 != 0) && (code == is_quote(word[i])))
-			count++;
-	}
-	if (count % 2 != 0)
-		return (err_syntax("newline"));
-	return (0);
-}
-
-/*static int	check_group(t_word *group)
-{
-	char 		**cmd_lst;
-	t_word		*tmp_group;
-	t_word_lst	*tmp_lst;
-
-	cmd_lst = tokenize_op(group->word);
+	if (check_parentheses(word) != 0)
+		return (ERR_BI);
+	/*cmd_lst = tokenize_op(word);
 	if (cmd_lst)
 	{
 		tmp_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!tmp_lst)
-			return ;
+			return (-1);
 		tokenize_w_lst(cmd_lst, tmp_lst);
 		free_strarray(cmd_lst);
-		syntax_analysis(tmp_lst);
+		if (syntax_analysis(tmp_lst) != 0)
+			return (ERR_BI);
 		free_word_lst(&tmp_lst);
+	}*/
+	return (0);
+}
+
+static int	check_parentheses(char *word)
+{
+	int			i;
+	int			open;
+	int			closed;
+
+	i = -1;
+	open = 0;
+	closed = 0;
+	while (word[++i])
+	{
+		if (word[i] == '(')
+			open++;
+		else if (word[i] == ')')
+			closed++;
 	}
-}*/
+	if (open != closed)
+		return (err_syntax("newline"));
+	return (0);
+}

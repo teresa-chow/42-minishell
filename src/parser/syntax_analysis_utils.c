@@ -101,3 +101,27 @@ int	is_valid_redir(t_word *word)
 	}
 	return (0);
 }
+
+int	check_quotes(char *word)
+{
+	int		i;
+	int		code;
+	int		count;
+
+	i = -1;
+	code = 0;
+	count = 0;
+	while (word[++i])
+	{
+		if ((count % 2 == 0) && (is_quote(word[i])))
+		{
+			code = is_quote(word[i]);
+			count++;
+		}
+		else if ((count % 2 != 0) && (code == is_quote(word[i])))
+			count++;
+	}
+	if (count % 2 != 0)
+		return (err_syntax("newline"));
+	return (0);
+}
