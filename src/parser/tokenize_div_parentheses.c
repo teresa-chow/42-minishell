@@ -37,14 +37,14 @@ unsigned int	group_len(const char *str, unsigned int start)
 	end = start;
 	while (str[end] && str[end] != ')')
 	{
-		end++;
+		++end;
 		if (is_quote(str[end]))
 			end += next_quote(str, end, is_quote(str[end]));
 		while (str[end] == '(')
 			end += group_len(str, end);
 	}
 	if (str[end] == ')')
-		end++;
+		++end;
 	len = end - start;
 	return (len);
 }

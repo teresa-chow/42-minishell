@@ -22,19 +22,21 @@ int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 		quote = ft_substr(cmd, *j, next_quote(cmd, *j, is_quote(cmd[*j])));
 		if (!quote)
 			return (-1);
+		*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 	}
 	if (is_quote(cmd[*j]) && is_delimiter(cmd[*j - 1]))
 	{
 		init_word(*word_lst, word);
 		(*word)->word = quote;
+		*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 	}
 	else if (is_quote(cmd[*j]))
 	{
 		(*word)->word = ft_strjoin((*word)->word, quote);
 		if (!(*word)->word)
 			return (-1);
+		*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 	}
-	*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 	return (0);
 }
 
