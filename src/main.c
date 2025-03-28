@@ -22,25 +22,29 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data		data;
 	t_word_lst	*word_lst;
+	int	i;
 
 	(void)argc;
 	(void)argv;
 	data_init(&data, envp);
-	while (1)
+	i = 1;
+	while (i)
 	{
 		word_lst = ft_calloc(1, sizeof(t_word_lst));
 		if (!word_lst)
-			break ;
+		{
+			free_env_list(&data, 1, &data.env);
+			break;
+		}
 		read_input(&word_lst);
-		if (!ft_strcmp(word_lst->word->word, "exit"))
-			return(exit_cmd(&data, &word_lst));
 		if (word_lst->word != NULL)
-			test_builtins(&data, word_lst);
-		free_word_lst(&word_lst);
+			test_builtins(&data, &word_lst, &i);
+		if (i)
+			free_word_lst(&word_lst);
 		printf("\n\nError code of this cmd: %d\n", data.exit_status);
 	}
 	rl_clear_history();
-	return (0);
+	return (data.exit_status);
 }
 
 static void	data_init(t_data *data, char **envp)

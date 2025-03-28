@@ -40,5 +40,7 @@ int	is_a_directory(char *token, t_data *data);
 int	access_error(char *token, t_data *data);
 int	cd_error(char *token, t_data *data);
 int	error_export_syntax(char *inpt, t_data *data);
+int	exit_error_many_args(t_data *data);
+int	exit_error_syntax(char *inpt, t_data *data);
 
 #endif

@@ -40,7 +40,8 @@ void		unset(t_data *data, t_word_lst *word_lst);
 void	env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
-int	exit_cmd(t_data *data, t_word_lst **word_lst);
+void	exit_cmd(t_data *data, t_word_lst **word_lst, int *i);
+void	check_exit_args(t_data *data, t_word_lst **word_lst, int *i);
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);
 t_env_node	*last_node(t_env_node *env_lst);

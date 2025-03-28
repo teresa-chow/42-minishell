@@ -18,38 +18,48 @@ static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data);
 static int	exist_var(t_input_inf *inf_arg, t_data *data);
 static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env);
 static int	add_var(t_input_inf *inf_arg, t_data *data);
-static int	check_syntax(char *s, t_data *data);
+static int	check_syntax(char *s, t_data *data, int *exit);
+static void	handle_with_args(t_word *word, t_data *data, int *exit);
 
 void	export(t_data *data, t_word_lst *word_lst)
 {
-	t_input_inf	inf_arg;
 	t_word		*word;
+	int	exit;
 
+	exit = -1;
 	word = word_lst->word;
 	if (!word->next)
 		sort_env(data);
 	else
+		handle_with_args(word->next, data, &exit);
+	if (exit == -1)
+		data->exit_status = 0;
+	else
+		data->exit_status = exit;
+}
+
+static void	handle_with_args(t_word *word, t_data *data, int *exit)
+{
+	t_input_inf	inf_arg;
+
+	ft_bzero(&inf_arg, sizeof(t_input_inf));
+	while (word)
 	{
-		ft_bzero(&inf_arg, sizeof(t_input_inf));
-		word = word->next;
-		while (word)
+		if (check_syntax(word->word, data, exit))
 		{
-			if (check_syntax(word->word, data))
+			if (set_inf(word->word, &inf_arg) == -1)
 			{
-				if (set_inf(word->word, &inf_arg) == -1)
-				{
-					error_allocation(data);
-					return ;
-				}
-				if (add_var(&inf_arg, data) == -1)
-					return ;
+				error_allocation(data);
+				return ;
 			}
-			word = word->next;
+			if (add_var(&inf_arg, data) == -1)
+				return ;
 		}
+		word = word->next;
 	}
 }
 
-static int	check_syntax(char *s, t_data *data)
+static int	check_syntax(char *s, t_data *data, int *exit)
 {
 	char	*tmp;
 
@@ -65,13 +75,14 @@ static int	check_syntax(char *s, t_data *data)
 			break ;
 		if (!ft_isalnum(*tmp) && *tmp != '_')
 		{
+			if (*exit == -1)
+				*exit = ERR;
 			error_export_syntax(s , data);
 			return (0);
 			
 		}
 		tmp++;
 	}
-	data->exit_status = 0;
 	return (1);
 }
 
