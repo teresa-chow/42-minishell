@@ -17,11 +17,8 @@
 static int	clean_env(t_env_node **env, char *word);
 static int	update_env(t_env_node **env, t_env_node *tmp);
 
-void	unset(t_data *data, t_word_lst *word_lst)
+void	unset(t_data *data, t_word *word)
 {
-	t_word		*word;
-
-	word = word_lst->word->next;
 	while (word)
 	{
 		clean_env(&data->env, word->word);

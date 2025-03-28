@@ -24,13 +24,14 @@ void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 	else if (ft_strcmp((*word_lst)->word->word, "pwd") == 0)
 		pwd(data);	
 	else if (ft_strcmp((*word_lst)->word->word ,"export") == 0)
-		export(data, *word_lst);
+		export(data, (*word_lst)->word);
 	else if (ft_strcmp((*word_lst)->word->word,"unset") == 0)
-		unset(data, *word_lst);
+		unset(data, (*word_lst)->word->next);
 	else if (ft_strcmp((*word_lst)->word->word,"env") == 0)
 		env_cmd(data->env, data);
 	else if (!ft_strcmp((*word_lst)->word->word, "exit"))
-		check_exit_args(data, word_lst, i);
+		check_exit_args(data, word_lst, i); /// in the future, the argument is the tree and then
+						    /// we have to free the tree
 	else
 		exec(data, (*word_lst)->word);
 }

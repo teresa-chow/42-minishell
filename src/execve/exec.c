@@ -49,6 +49,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 	ft_bzero(inf, sizeof(t_exec_data));
 	if (!ft_strcmp(word->word, "."))
 	{
+		print_fd(2, "minishell: `.': Not valid input\n", NULL);
 		data->exit_status = 2;
 		return (-1);
 	}

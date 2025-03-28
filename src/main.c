@@ -37,11 +37,13 @@ int	main(int argc, char **argv, char **envp)
 			break;
 		}
 		read_input(&word_lst);
+		char	*save = ft_strdup(word_lst->word->word); ////////////////////////////////
 		if (word_lst->word != NULL)
-			test_builtins(&data, &word_lst, &i);
+				test_builtins(&data, &word_lst, &i);
 		if (i)
 			free_word_lst(&word_lst);
-		printf("\n\nError code of this cmd: %d\n", data.exit_status);
+		printf("\n\nError code of '%s': %d\n", save ,data.exit_status);
+		free(save); ///////////////////////////////////////////////////////
 	}
 	rl_clear_history();
 	return (data.exit_status);

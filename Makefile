@@ -23,7 +23,7 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_utils.c syntax_tree.c \
 	syntax_tree_utils.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c export.c \
-	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
+	export_utils.c export_utils_2.c export_merge_sort.c pwd.c unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
 	set_path.c print_fd.c)

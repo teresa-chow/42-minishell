@@ -17,17 +17,12 @@
 static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data);
 static int	exist_var(t_input_inf *inf_arg, t_data *data);
 static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env);
-static int	add_var(t_input_inf *inf_arg, t_data *data);
-static int	check_syntax(char *s, t_data *data, int *exit);
-static void	handle_with_args(t_word *word, t_data *data, int *exit);
 
-void	export(t_data *data, t_word_lst *word_lst)
+void	export(t_data *data, t_word *word)
 {
-	t_word		*word;
 	int	exit;
 
 	exit = -1;
-	word = word_lst->word;
 	if (!word->next)
 		sort_env(data);
 	else
@@ -38,52 +33,48 @@ void	export(t_data *data, t_word_lst *word_lst)
 		data->exit_status = exit;
 }
 
-static void	handle_with_args(t_word *word, t_data *data, int *exit)
+int	add_var(t_input_inf *inf_arg, t_data *data)
 {
-	t_input_inf	inf_arg;
+	int			check;
+	t_env_node	*last;
+	t_env_node	*tmp;
 
-	ft_bzero(&inf_arg, sizeof(t_input_inf));
-	while (word)
+	check = exist_var(inf_arg, data);
+	if (check == -1 || check == 1)
+		return (check);
+	else
 	{
-		if (check_syntax(word->word, data, exit))
-		{
-			if (set_inf(word->word, &inf_arg) == -1)
-			{
-				error_allocation(data);
-				return ;
-			}
-			if (add_var(&inf_arg, data) == -1)
-				return ;
-		}
-		word = word->next;
+		last = last_node(data->env);
+		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
+		if (!tmp)
+			return (error_allocation(data));
+		tmp->key = inf_arg->key;
+		tmp->val = inf_arg->val;
+		change_ptrs(last, tmp, &data->env);
 	}
+	return (0);
 }
 
-static int	check_syntax(char *s, t_data *data, int *exit)
+static int	exist_var(t_input_inf *inf_arg, t_data *data)
 {
-	char	*tmp;
+	t_env_node	*env;
 
-	tmp = s;
-	if (s && ft_isdigit(*s))
+	env = data->env;
+	while (env)
 	{
-		error_export_syntax(s, data);
-		return (0);	
-	}
-	while (*tmp)
-	{
-		if ((*tmp == '+' && *(tmp + 1) == '=') || *tmp == '=')
-			break ;
-		if (!ft_isalnum(*tmp) && *tmp != '_')
+		if (!ft_strcmp(env->key, inf_arg->key))
 		{
-			if (*exit == -1)
-				*exit = ERR;
-			error_export_syntax(s , data);
-			return (0);
-			
+			if (inf_arg->val)
+				return (update_var(env, inf_arg, data));
+			else
+			{
+				reset_inf(inf_arg);
+				return (1);
+			}
 		}
-		tmp++;
+		env = env->next;
 	}
-	return (1);
+	return (0);
 }
 
 static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
@@ -113,28 +104,6 @@ static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 	return (1);
 }
 
-static int	exist_var(t_input_inf *inf_arg, t_data *data)
-{
-	t_env_node	*env;
-
-	env = data->env;
-	while (env)
-	{
-		if (!ft_strcmp(env->key, inf_arg->key))
-		{
-			if (inf_arg->val)
-				return (update_var(env, inf_arg, data));
-			else
-			{
-				reset_inf(inf_arg);
-				return (1);
-			}
-		}
-		env = env->next;
-	}
-	return (0);
-}
-
 static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 {
 	if (last)
@@ -144,26 +113,4 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 	}
 	if (!*env)
 		*env = tmp;
-}
-
-static int	add_var(t_input_inf *inf_arg, t_data *data)
-{
-	int			check;
-	t_env_node	*last;
-	t_env_node	*tmp;
-
-	check = exist_var(inf_arg, data);
-	if (check == -1 || check == 1)
-		return (check);
-	else
-	{
-		last = last_node(data->env);
-		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
-		if (!tmp)
-			return (error_allocation(data));
-		tmp->key = inf_arg->key;
-		tmp->val = inf_arg->val;
-		change_ptrs(last, tmp, &data->env);
-	}
-	return (0);
 }

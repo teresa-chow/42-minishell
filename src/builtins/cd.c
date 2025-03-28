@@ -36,14 +36,8 @@ void	cd(t_word *input, t_data *data)
 		data->exit_status = 1;
 }
 
-static int	update_pwd_and_oldpwd(t_data *data)
+void	handle_old(t_env_node *old, t_env_node *pwd, char *curr)
 {
-	t_env_node	*old;
-	t_env_node	*pwd;
-	static char	*curr;
-
-	old = get_var(data->env, "OLDPWD");
-	pwd = get_var(data->env, "PWD");
 	if (old)
 	{
 		if (old->val)
@@ -54,6 +48,17 @@ static int	update_pwd_and_oldpwd(t_data *data)
 		else
 			old->val = curr;
 	}
+}
+
+static int	update_pwd_and_oldpwd(t_data *data)
+{
+	t_env_node	*old;
+	t_env_node	*pwd;
+	static char	*curr;
+
+	old = get_var(data->env, "OLDPWD");
+	pwd = get_var(data->env, "PWD");
+	handle_old(old, pwd, curr);
 	if (pwd)
 	{
 		if (!old || !old->val)
