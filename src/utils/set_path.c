@@ -21,7 +21,7 @@ char	**set_path(t_data *data, int *i)
 	int		j;
 	char	*tmp;
 	char	**arr;
-	
+
 	tmp = NULL;
 	get_path(&tmp, data, i);
 	arr = ft_split(ft_strchr(tmp, '/'), ':');
@@ -45,7 +45,7 @@ char	**set_path(t_data *data, int *i)
 static void	get_path(char **tmp, t_data *data, int *i)
 {
 	t_env_node	*path_node;
-	
+
 	path_node = get_var(data->env, "PATH");
 	if (path_node)
 		*tmp = path_node->val;

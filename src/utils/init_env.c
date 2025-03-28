@@ -52,7 +52,7 @@ static int	create_env(t_data *data)
 	char		**keys;
 	t_env_node	*tmp;
 	t_env_node	*last;
-	
+
 	keys = (char *[]){"OLDPWD", "PWD", "SHLVL", NULL};
 	i = -1;
 	while (keys[++i])
@@ -83,6 +83,7 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp)
 		tmp->prev = last;
 	}
 }
+
 static void	check_shlvl(t_env_node *tmp)
 {
 	char	*box;
