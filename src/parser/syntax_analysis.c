@@ -6,13 +6,15 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/28 09:49:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/28 10:35:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 #include "../../include/errors.h"
+
+#include "../../tests/test.h"
 
 static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
@@ -86,25 +88,32 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 	return (0);
 }
 
-static int	check_group(char *word) // if not quoted
+static int	check_group(char *word) // memory alloc failure unhandled
 {
-	//char 		**cmd_lst;
-	//t_word_lst	*tmp_lst;
+	char		*tmp_group;
+	char 		**cmd_lst;
+	t_word_lst	*tmp_lst;
+	int			i;
 
+	i = 0;
 	if (check_parentheses(word) != 0)
 		return (ERR_BI);
-	/*cmd_lst = tokenize_op(word);
-	if (cmd_lst)
+	if (word[i] == '(')
 	{
-		tmp_lst = ft_calloc(1, sizeof(t_word_lst));
-		if (!tmp_lst)
-			return (-1);
-		tokenize_w_lst(cmd_lst, tmp_lst);
-		free_strarray(cmd_lst);
-		if (syntax_analysis(tmp_lst) != 0)
-			return (ERR_BI);
-		free_word_lst(&tmp_lst);
-	}*/
+		tmp_group = ft_substr(word, i + 1, group_len(word, i) - 2);
+		cmd_lst = tokenize_op(tmp_group);
+		if (cmd_lst)
+		{
+			tmp_lst = ft_calloc(1, sizeof(t_word_lst));
+			if (!tmp_lst)
+				return (-1);
+			tokenize_w_lst(cmd_lst, tmp_lst);
+			if (syntax_analysis(tmp_lst) != 0)
+				return (ERR_BI);
+			free_strarray(cmd_lst);
+			free_word_lst(&tmp_lst);
+		}
+	}
 	return (0);
 }
 
