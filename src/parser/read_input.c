@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/27 17:55:08 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:11:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "../../tests/test.h" //delete
 
 //static void	get_prompt();
-static void	syntax_check(t_word_lst *word_lst, t_data *data);
+static int	syntax_check(t_word_lst *word_lst, t_data *data);
 
 void	read_input(t_tree_node **root, t_data *data)
 {
@@ -38,8 +38,8 @@ void	read_input(t_tree_node **root, t_data *data)
 			tokenize_w_lst(cmd_lst, word_lst);
 			print_word_lst(cmd_lst, &word_lst); //tmp
 			free_strarray(cmd_lst);
-			syntax_check(word_lst, data);
-			create_syntax_tree(word_lst, root); //if no syntax errors
+			if (syntax_check(word_lst, data) == 0)
+				create_syntax_tree(word_lst, root); //if no syntax errors
 			free_word_lst(&word_lst);
 		}
 	}
@@ -49,7 +49,7 @@ void	read_input(t_tree_node **root, t_data *data)
 
 //static void	get_prompt()
 
-static void	syntax_check(t_word_lst *word_lst, t_data *data)
+static int	syntax_check(t_word_lst *word_lst, t_data *data)
 {
 	if (syntax_analysis(word_lst) != 0)
 		data->error_code = ERR_BI;
@@ -57,4 +57,5 @@ static void	syntax_check(t_word_lst *word_lst, t_data *data)
 	//	data->error_code = ERR_F;
 	//if (check_cmd_syntax != 0)
 	//	data->error_code = ERR;
+	return (data->error_code);
 }

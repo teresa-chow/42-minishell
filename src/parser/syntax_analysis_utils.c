@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:12:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/27 17:55:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:07:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	check_logical_op(t_word *word)
 {
 	char		token[3];
 
+	if (!word)
+		return (-1);
 	if (is_operator(word->word[0]))
 	{
 		if (ft_strlen(word->word) == 1)

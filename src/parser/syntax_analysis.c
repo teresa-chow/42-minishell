@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/27 17:57:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:49:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 	return (0);
 }
 
-static int	check_group(char *word)
+static int	check_group(char *word) // if not quoted
 {
 	//char 		**cmd_lst;
 	//t_word_lst	*tmp_lst;
@@ -119,6 +119,8 @@ static int	check_parentheses(char *word)
 	closed = 0;
 	while (word[++i])
 	{
+		if (is_quote(word[i]))
+			i += next_quote(word, i, is_quote(word[i]));
 		if (word[i] == '(')
 			open++;
 		else if (word[i] == ')')
