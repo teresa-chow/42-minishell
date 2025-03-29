@@ -15,6 +15,7 @@
 #include "../../include/errors.h"
 
 static	int	update_pwd_and_oldpwd(t_data *data);
+static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);
 
 void	cd(t_word *input, t_data *data)
 {
