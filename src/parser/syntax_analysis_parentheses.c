@@ -39,22 +39,25 @@ static int	rec_syntax_analysis(char *word)
 	char		**cmd_lst;
 	t_word_lst	*tmp_lst;
 
-	tmp_group = ft_substr(word, 1, group_len(word, 0) - 2);
-	cmd_lst = tokenize_op(tmp_group);
-	if (cmd_lst)
+	if (word[0] == '(')
 	{
-		free(tmp_group);
-		tmp_lst = ft_calloc(1, sizeof(t_word_lst));
-		if (!tmp_lst)
-			return (-1);
-		tokenize_w_lst(cmd_lst, tmp_lst);
-		free_strarray(cmd_lst);
-		if (tmp_lst->word && syntax_analysis(tmp_lst) != 0)
+		tmp_group = ft_substr(word, 1, group_len(word, 0) - 2);
+		cmd_lst = tokenize_op(tmp_group);
+		if (cmd_lst)
 		{
+			free(tmp_group);
+			tmp_lst = ft_calloc(1, sizeof(t_word_lst));
+			if (!tmp_lst)
+				return (-1);
+			tokenize_w_lst(cmd_lst, tmp_lst);
+			free_strarray(cmd_lst);
+			if (tmp_lst->word && syntax_analysis(tmp_lst) != 0)
+			{
+				free_word_lst(&tmp_lst);
+				return (ERR_BI);
+			}
 			free_word_lst(&tmp_lst);
-			return (ERR_BI);
 		}
-		free_word_lst(&tmp_lst);
 	}
 	return (0);
 }
