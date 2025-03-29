@@ -38,6 +38,17 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;
 
+typedef enum
+{
+	CMD,
+	GROUP, //will always execute in a subprocess: changes in directory will not affect current shell
+	EXP,
+	REDIR,
+	PIPE,
+	AND,
+	OR
+}	e_type;
+
 typedef struct s_tree_node
 {
 	int					index;

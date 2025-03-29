@@ -23,13 +23,13 @@ t_env_node	*last_node(t_env_node *env_lst)
 	return (env_lst);
 }
 
-t_env_node	*get_var(t_env_node *tmp, char *key)
+t_env_node	*get_var(t_env_node *env, char *key)
 {
-	while (tmp)
+	while (env)
 	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp);
-		tmp = tmp->next;
+		if (!ft_strcmp(env->key, key))
+			return (env);
+		env = env->next;
 	}
 	return (NULL);
 }
