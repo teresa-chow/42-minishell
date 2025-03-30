@@ -13,8 +13,10 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
+#include "parse.h"
+
 /* -------------------------------------------------------------------------- */
-/*                           Export and env init                              */
+/*                           EXPORT AND ENV INIT                              */
 /* -------------------------------------------------------------------------- */
 typedef struct s_input_inf
 {
@@ -25,7 +27,7 @@ typedef struct s_input_inf
 }	t_input_inf;
 
 /* -------------------------------------------------------------------------- */
-/*                               Env Struct                                   */
+/*                            ENV STRUCT                                      */
 /* -------------------------------------------------------------------------- */
 typedef struct s_env_node
 {
@@ -44,7 +46,7 @@ typedef struct s_env_init
 }	t_env_init;
 
 /* -------------------------------------------------------------------------- */
-/*                            Parser Structs                                  */
+/*                            PARSER                                */
 /* -------------------------------------------------------------------------- */
 /*typedef struct s_word
 {
@@ -60,11 +62,24 @@ typedef struct s_word_lst
 }	t_word_lst;*/ //TODO: needs review
 
 /* -------------------------------------------------------------------------- */
-/*                                 General                                    */
+/*                               SPECIAL CASES                                */
+/* -------------------------------------------------------------------------- */
+typedef struct s_expand
+{
+	int	has_quotes;
+	struct s_word	*prev_arg;
+	struct s_word	*next_arg;
+	struct s_word	*new;
+}	t_expand;
+
+/* -------------------------------------------------------------------------- */
+/*                                 GENERAL                                    */
 /* -------------------------------------------------------------------------- */
 typedef struct s_data
 {
 	t_env_node	*env;
+	t_expand	*exp_data;
+	struct s_word_lst	*word_lst;
 	int			exit_status;
 }	t_data;
 

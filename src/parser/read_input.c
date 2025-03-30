@@ -28,7 +28,7 @@ void	read_input(t_word_lst **word_lst)//, t_data *data)
 		if (cmd_lst)
 		{
 			tokenize_w_lst(cmd_lst, *word_lst);
-			print_word_lst(cmd_lst, word_lst); //delete
+			// print_word_lst(cmd_lst, word_lst); //delete
 			free_strarray(cmd_lst);
 			// syntax_check();
 			// data->exit_status = syntax_analysis(*word_lst);

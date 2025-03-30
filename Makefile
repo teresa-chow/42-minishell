@@ -27,6 +27,7 @@ SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c export.c \
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
 	set_path.c print_fd.c)
+SRC_SPECIAL_CASES	= $(addprefix $(SPECIAL_CASES_DIR)/, special_cases.c expand.c)
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
@@ -35,6 +36,7 @@ OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
+OBJS_SPECIAL_CASES		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_SPECIAL_CASES:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
 OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
@@ -59,6 +61,8 @@ BUILTINS_DIR	= $(SRC_DIR)/builtins
 EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
+
+SPECIAL_CASES_DIR = $(SRC_DIR)/special_cases
 
 ERRORS_DIR	= $(SRC_DIR)/errors
 
@@ -91,11 +95,11 @@ MKDIR	= mkdir -p
 all: $(NAME)	## Compile minishell
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST)
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_SPECIAL_CASES) $(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+	$(OBJS_UTILS) $(OBJS_SPECIAL_CASES) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 
@@ -116,6 +120,9 @@ $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(UTILS_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(SPECIAL_CASES_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(ERRORS_DIR)/%.c

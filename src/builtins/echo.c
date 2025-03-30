@@ -36,6 +36,8 @@ void	echo(t_word *input, t_data *data)
 
 static int	check_flag(char *word, int *has_flag)
 {
+	if (!word)
+		return (-1);
 	if (*word != '-' || ((*word == '-') && !*(word + 1)))
 		return (0);
 	else
