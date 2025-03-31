@@ -21,10 +21,15 @@ int	access_error(char *token, t_data *data)
 	return (-1);
 }
 
-int	cd_error(char *token, t_data *data)
+int	cd_error(char *token, t_data *data, int i)
 {
-	print_fd(2, "minishell: cd: %s: ", token);
-	perror(NULL);
+	if (i)
+	{
+		print_fd(2, "minishell: cd: %s: ", token);
+		perror(NULL);
+	}
+	else
+		print_fd(2, "minishell: cd: too many arguments\n", NULL);
 	data->exit_status = 1;
 	return (-1);
 }

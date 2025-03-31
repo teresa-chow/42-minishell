@@ -38,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		read_input(&word_lst);
 		char	*save = ft_strdup(word_lst->word->word); //////////////////////////////////
-		data.word_lst = word_lst;
 		if (word_lst->word != NULL)
 			test_builtins(&data, &word_lst, &i);
 		if (i)

@@ -12,6 +12,7 @@
 
 #include "test.h"
 #include "../include/special_cases.h"
+#include "../include/errors.h"
 
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
@@ -21,11 +22,19 @@ void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 {
    	if (ft_strcmp((*word_lst)->word->word, "echo") == 0)
 	{
-		if (check_special_cases(data, *word_lst))
-			echo((*word_lst)->word, data);
+		if (find_expand((*word_lst)->word, data) == -1)
+			return ;
+		echo((*word_lst)->word, data);
 	}
 	else if (ft_strcmp((*word_lst)->word->word, "cd") == 0)
+	{
+		if ((*word_lst)->word->next && (*word_lst)->word->next->next)
+		{
+				cd_error(NULL, data, 0);
+				return ;
+		}
 		cd((*word_lst)->word, data);
+	}
 	else if (ft_strcmp((*word_lst)->word->word, "pwd") == 0)
 		pwd(data);	
 	else if (ft_strcmp((*word_lst)->word->word ,"export") == 0)

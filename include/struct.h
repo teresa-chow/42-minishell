@@ -66,10 +66,12 @@ typedef struct s_word_lst
 /* -------------------------------------------------------------------------- */
 typedef struct s_expand
 {
-	int	has_quotes;
-	struct s_word	*prev_arg;
-	struct s_word	*next_arg;
-	struct s_word	*new;
+	int	n_exp;
+	int	total_len;
+	char	*before;
+	char	*var_val;
+	char	*after;
+	char	**tokens;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
@@ -79,7 +81,6 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp_data;
-	struct s_word_lst	*word_lst;
 	int			exit_status;
 }	t_data;
 
