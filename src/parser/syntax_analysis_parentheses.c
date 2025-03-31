@@ -6,15 +6,13 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/28 18:08:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:11:13 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 #include "../../include/errors.h"
-
-#include "../../tests/test.h"
 
 static int	rec_syntax_analysis(char *word);
 static int	check_parentheses(char *word);
@@ -30,35 +28,6 @@ int	check_group(char *word)
 		return (ERR_BI);
 	if (rec_syntax_analysis(word) != 0)
 		return (ERR_BI);
-	return (0);
-}
-
-static int	rec_syntax_analysis(char *word)
-{
-	char		*tmp_group;
-	char		**cmd_lst;
-	t_word_lst	*tmp_lst;
-
-	if (word[0] == '(')
-	{
-		tmp_group = ft_substr(word, 1, group_len(word, 0) - 2);
-		cmd_lst = tokenize_op(tmp_group);
-		if (cmd_lst)
-		{
-			free(tmp_group);
-			tmp_lst = ft_calloc(1, sizeof(t_word_lst));
-			if (!tmp_lst)
-				return (-1);
-			tokenize_w_lst(cmd_lst, tmp_lst);
-			free_strarray(cmd_lst);
-			if (tmp_lst->word && syntax_analysis(tmp_lst) != 0)
-			{
-				free_word_lst(&tmp_lst);
-				return (ERR_BI);
-			}
-			free_word_lst(&tmp_lst);
-		}
-	}
 	return (0);
 }
 
@@ -102,14 +71,13 @@ static int	check_nests(char *word)
 			lvl++;
 		else if (word[i] == ')')
 			lvl--;
-		if (word[i] && word[i] == '(' && lvl == depth)
+		if (word[i] && word[i] == '(')
 		{
-			if (word[i + 1] == ')')
-				return (err_syntax(")"));
-			while (word[i] && word[i] != ')')
-				i++;
-		}
-		i++;
+			if (check_nest_lvl(word, i, lvl, depth) != 0)
+				return (ERR_BI);
+		} 
+		if (word[i])
+			i++;
 	}
 	return (0);
 }
@@ -134,4 +102,33 @@ static int	group_depth(char *word)
 		i++;
 	}
 	return (depth);
+}
+
+static int	rec_syntax_analysis(char *word)
+{
+	char		*tmp_group;
+	char		**cmd_lst;
+	t_word_lst	*tmp_lst;
+
+	if (word[0] == '(')
+	{
+		tmp_group = ft_substr(word, 1, group_len(word, 0) - 2);
+		cmd_lst = tokenize_op(tmp_group);
+		if (cmd_lst)
+		{
+			free(tmp_group);
+			tmp_lst = ft_calloc(1, sizeof(t_word_lst));
+			if (!tmp_lst)
+				return (-1);
+			tokenize_w_lst(cmd_lst, tmp_lst);
+			free_strarray(cmd_lst);
+			if (tmp_lst->word && syntax_analysis(tmp_lst) != 0)
+			{
+				free_word_lst(&tmp_lst);
+				return (ERR_BI);
+			}
+			free_word_lst(&tmp_lst);
+		}
+	}
+	return (0);
 }

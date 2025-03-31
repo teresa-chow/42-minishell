@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/28 17:28:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:11:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int				is_equal_next(const char *str, int i);
 int				syntax_analysis(t_word_lst *word_lst);
 // Syntax analysis utils (parentheses)
 int				check_group(char *word);
+int				check_nest_lvl(char *word, int i, int lvl, int depth);
 // Syntax analysis utils
 int				check_logical_op(t_word *word);
 int				check_op_syntax(char *word);
