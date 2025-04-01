@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/01 11:01:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:38:45 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	read_input(t_tree_node **root, t_data *data)
 	char		**cmd_lst;
 	t_word_lst	*word_lst;
 
-	input = readline("minishell> ");
+	input = readline("\033[46;1;37m minishell \033[0m\033[45;1;37m ☻ user \033[0m\033[43;1;37m 🖿 cwd \033[0m ");
 	if (input && *input)
 	{
 		add_history(input);
