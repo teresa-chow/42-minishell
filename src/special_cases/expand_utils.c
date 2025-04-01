@@ -34,7 +34,7 @@ int	find_expand(t_word *word, t_data *data)
 	}
 	return (0);
 }
-char	*find_last_sign(char *arg)
+char	*get_last_exp(char *arg)
 {
 	char	*last;
 

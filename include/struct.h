@@ -67,8 +67,11 @@ typedef struct s_word_lst
 typedef struct s_expand
 {
 	char	*bfr;
+	char	*mid;
 	char	*aft;
-	char	*new;
+	char	buf[100];
+	char	extra[100];
+	char	no_alnum;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
