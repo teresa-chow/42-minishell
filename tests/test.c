@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 14:11:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/01 10:39:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 \*****************************************************************************/
 
 void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
-{
+{ /// has pelicas???????
    	if (ft_strcmp((*word_lst)->word->word, "echo") == 0)
 	{
 		if (find_expand((*word_lst)->word, data) == -1)

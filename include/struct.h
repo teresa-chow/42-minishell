@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/20 16:33:04 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:46:22 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,9 @@ typedef struct s_word_lst
 /* -------------------------------------------------------------------------- */
 typedef struct s_expand
 {
-	int	n_exp;
-	int	total_len;
-	char	*before;
-	char	*var_val;
-	char	*after;
-	char	**tokens;
+	char	*bfr;
+	char	*aft;
+	char	*new;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
@@ -80,7 +77,7 @@ typedef struct s_expand
 typedef struct s_data
 {
 	t_env_node	*env;
-	t_expand	*exp_data;
+	t_expand	*exp;
 	int			exit_status;
 }	t_data;
 
