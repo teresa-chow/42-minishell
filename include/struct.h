@@ -69,6 +69,7 @@ typedef struct s_expand
 	char	*bfr;
 	char	*mid;
 	char	*aft;
+	char	**arr;
 	char	buf[100];
 	char	extra[100];
 	char	no_alnum;

@@ -46,7 +46,7 @@ static void	get_path(char **tmp, t_data *data, int *i)
 {
 	t_env_node	*path_node;
 
-	path_node = get_var(data->env, "PATH");
+	path_node = ft_getenv(data->env, "PATH");
 	if (path_node)
 		*tmp = path_node->val;
 	else

@@ -23,7 +23,7 @@ t_env_node	*last_node(t_env_node *env_lst)
 	return (env_lst);
 }
 
-t_env_node	*get_var(t_env_node *env, char *key)
+t_env_node	*ft_getenv(t_env_node *env, char *key)
 {
 	while (env)
 	{

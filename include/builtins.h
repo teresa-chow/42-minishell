@@ -47,6 +47,6 @@ void		check_exit_args(t_data *data, t_word_lst **word_lst, int *i);
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);
 t_env_node	*last_node(t_env_node *env_lst);
-t_env_node	*get_var(t_env_node *env, char *key);
+t_env_node	*ft_getenv(t_env_node *env, char *key);
 
 #endif

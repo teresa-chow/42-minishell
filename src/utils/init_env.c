@@ -105,7 +105,7 @@ static void	check_shlvl(t_env_node *tmp)
 
 static int	find_oldpwd(t_data *data, t_env_init *env_init)
 {
-	if (!get_var(data->env, "OLDPWD"))
+	if (!ft_getenv(data->env, "OLDPWD"))
 	{
 		env_init->oldpwd = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!env_init->oldpwd)

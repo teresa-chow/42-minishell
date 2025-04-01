@@ -20,7 +20,8 @@ int	get_exp_vars(char *arg, t_data *data)
 	char	*start;
 	char	*end;
 
-	mid_len = ft_strlen(arg) - (ft_strlen(data->exp->bfr) + ft_strlen(data->exp->aft));
+	mid_len = ft_strlen(arg) - (ft_strlen(data->exp->bfr) 
+		+ ft_strlen(data->exp->aft) + ft_strlen(ft_strchr(arg, '"')));
 	data->exp->mid = ft_calloc(mid_len + 1, sizeof(char));
 	// if (!data->exp->mid)
 	// 	return (free_exp());
@@ -30,14 +31,31 @@ int	get_exp_vars(char *arg, t_data *data)
 	return (0);
 }
 
+char	fst_char(char *arg)
+{
+	while (*arg)
+	{
+		if (*arg != '"')
+			break;
+		arg++;
+	}
+	return (*arg);
+}
+
 int	check_bfr_aft_mid(char *arg, t_data *data)
 {
 	char	*lst_exp;
 	int	i;
+	char	c;
 	
 	if (*arg != '$')
 	{
-		data->exp->bfr = ft_substr(arg, 0, ft_strlen(arg) - ft_strlen(ft_strchr(arg, '$')));
+		if (*arg == '"')
+		{
+			c = fst_char(arg);
+			arg = ft_strchr(arg , c);
+		}
+		data->exp->bfr = ft_substr(arg , 0, ft_strlen(arg) - ft_strlen(ft_strchr(arg, '$')));
 		// if (!data->exp->bfr)
 		// 	return (free_exp());		
 	}
@@ -46,7 +64,8 @@ int	check_bfr_aft_mid(char *arg, t_data *data)
 	if (data->exp->no_alnum)
 	{
 		i = ft_strlen(lst_exp) - ft_strlen(ft_strchr(lst_exp, data->exp->no_alnum));
-		data->exp->aft = ft_substr(lst_exp, i, ft_strlen(ft_strchr(lst_exp, data->exp->no_alnum)));
+		data->exp->aft = ft_substr(lst_exp, i, ft_strlen(ft_strchr(lst_exp, data->exp->no_alnum)) 
+									- ft_strlen(ft_strchr(lst_exp, '"')));
 		// if (!data->exp->aft)
 		// 	return (free_exp());
 	}
@@ -78,21 +97,20 @@ char	*get_name(char *s, t_data *data)
 
 int	expand_vars(t_data *data)
 {
-	char	**arr;
 	char	*tmp;
 	t_env_node	*var;
 	int	i;
 
-	arr = ft_split(data->exp->mid, '$');
+	data->exp->arr = ft_split(data->exp->mid, '$');
 	// if (!data->exp->wrds)
 	// 	return (free_exp())
 	i = -1;
 	tmp = NULL;
 	free(data->exp->mid);
 	data->exp->mid = NULL;
-	while (arr[++i])
+	while (data->exp->arr[++i])
 	{
-		var = get_var(data->env, get_name(arr[i], data));
+		var = ft_getenv(data->env, get_name(data->exp->arr[i], data));
 		if (var && var->val)
 		{
 			tmp = ft_strdup(var->val);
@@ -136,6 +154,8 @@ int	count_quotes(char *s)
 }
 int	has_delimiter(char *arg)
 {
+	if (!arg)
+		return (0);
 	while (*arg)
 	{
 		if (is_delimiter(*arg))
@@ -151,6 +171,7 @@ int	has_delimiter(char *arg)
 int	handle_quotes(char *arg, t_data *data)
 {
 	int	n;
+	char	**words;
 
 	(void)data;
 	n = count_quotes(arg);
@@ -158,20 +179,29 @@ int	handle_quotes(char *arg, t_data *data)
 		return (0);
 	if (has_delimiter(data->exp->mid))
 	{
-
+		(void)words;
+		words = get_words(data->exp->mid);
+		///// aqui tenho de juntar agora as palavras na variavel data.exp.mid ----------------------->>>>>>>>>>>> hereeeeeeee
+		//com joine separado com espaço ---------------------------------------------------->>>>>>>>>>>		startttt here	
 	}
 	return (0);
 }
 
 int	expand(t_data *data, t_word *word)
 {
+/////////////////////////////////////////////////////////////////	
+		/////    TESTE    ///////
 	t_env_node	*var;
+	t_env_node	*var1;
 
-	var = get_var(data->env, "ZZ");
-	var->val = "Carlos Teixeira";
+	var = ft_getenv(data->env, "ZZ");
+	var->val = "Carlos		  Teixeira";
+	var1 = ft_getenv(data->env, "ZA");
+	var1->val = "Ana	Silva";
+	word->word = "\"$ZB\"";
+	// word->word = "\"\"ola..$ZZ..$ZA?\"\"";
 
-
-
+		/////    TESTE    ///////
 //////////////////////////////////////////////////////////////////
 	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
 	if (!data->exp)

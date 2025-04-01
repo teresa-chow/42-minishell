@@ -28,7 +28,7 @@ void	cd(t_word *input, t_data *data)
 		path = input->next->word;
 	else
 	{
-		home_var = get_var(data->env, "HOME");
+		home_var = ft_getenv(data->env, "HOME");
 		if (home_var)
 			path = home_var->val;
 	}
@@ -49,8 +49,8 @@ static int	update_pwd_and_oldpwd(t_data *data)
 	t_env_node	*pwd;
 	static char	*curr;
 
-	old = get_var(data->env, "OLDPWD");
-	pwd = get_var(data->env, "PWD");
+	old = ft_getenv(data->env, "OLDPWD");
+	pwd = ft_getenv(data->env, "PWD");
 	handle_old(old, pwd, curr);
 	if (pwd)
 	{
