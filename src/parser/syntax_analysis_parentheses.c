@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/31 16:11:13 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:16:42 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
+static int	check_nest_lvl(char *word, int i);
 static int	rec_syntax_analysis(char *word);
 static int	check_parentheses(char *word);
 static int	check_nests(char *word);
-static int	group_depth(char *word);
 
 //TODO: memory alloc failure unhandled + tmp_group == '\0'
 int	check_group(char *word)
@@ -59,21 +59,13 @@ static int	check_parentheses(char *word)
 static int	check_nests(char *word)
 {
 	int	i;
-	int	lvl;
-	int	depth;
 
 	i = 0;
-	lvl = 0;
-	depth = group_depth(word);
 	while (word[i])
 	{
-		if (word[i] == '(')
-			lvl++;
-		else if (word[i] == ')')
-			lvl--;
 		if (word[i] && word[i] == '(')
 		{
-			if (check_nest_lvl(word, i, lvl, depth) != 0)
+			if (check_nest_lvl(word, i) != 0)
 				return (ERR_BI);
 		} 
 		if (word[i])
@@ -82,26 +74,29 @@ static int	check_nests(char *word)
 	return (0);
 }
 
-static int	group_depth(char *word)
+static int	check_nest_lvl(char *word, int i)
 {
-	int	i;
-	int	open;
-	int	depth;
+	int	op;
 
-	i = 0;
-	open = 0;
-	depth = 0;
+	op = 0;
 	while (word[i])
 	{
 		if (word[i] == '(')
-			open++;
-		else if (word[i] == ')')
-			open--;
-		if (open > depth)
-			depth = open;
-		i++;
+		{
+			if (check_nest_lvl(word, ++i) != 0)
+				return (-1);
+		}
+		while (word[++i] && word[i] != '(' && word[i] != ')')
+		{
+			if (word[i] == '|')
+				op = 1;
+			else if ((word[i - 1] == '&') && (word[i] == '&'))
+				op = 1;
+		}
+		if (word[i] == ')' && !op)
+			return (err_syntax(")"));
 	}
-	return (depth);
+	return (0);
 }
 
 static int	rec_syntax_analysis(char *word)
