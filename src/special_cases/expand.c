@@ -31,7 +31,7 @@ int	get_exp_vars(char *arg, t_data *data)
 	return (0);
 }
 
-char	fst_char(char *arg)
+char	first_char(char *arg)
 {
 	while (*arg)
 	{
@@ -52,7 +52,7 @@ int	check_bfr_aft_mid(char *arg, t_data *data)
 	{
 		if (*arg == '"')
 		{
-			c = fst_char(arg);
+			c = first_char(arg);
 			arg = ft_strchr(arg , c);
 		}
 		data->exp->bfr = ft_substr(arg , 0, ft_strlen(arg) - ft_strlen(ft_strchr(arg, '$')));
@@ -77,20 +77,27 @@ int	check_bfr_aft_mid(char *arg, t_data *data)
 char	*get_name(char *s, t_data *data)
 {
 	char	c;
-	char	*end;
 	int	len;
 
-	ft_bzero(&data->exp->buf, sizeof(data->exp->buf));
-	ft_bzero(&data->exp->extra, sizeof(data->exp->extra));
+	if (data->exp->buf)
+		free(data->exp->buf);
+	if (data->exp->extra)
+		free(data->exp->extra);
+	data->exp->buf = NULL;
+	data->exp->extra = NULL;
 	c = find_no_alnum(s);
 	if (!c)
 		return (s);
 	if (c)
 	{
-		end = ft_strchr(s, c);
-		len = ft_strlen(s) - ft_strlen(end);
+		len = ft_strlen(s) - ft_strlen(ft_strchr(s, c));
+		data->exp->buf = ft_calloc(len + 1, sizeof(char));
+		// if (!data->exp->buf)
 		ft_strlcpy(data->exp->buf, s, len + 1);
-		ft_strlcpy(data->exp->extra, end, ft_strlen(end) + 1);
+		len = ft_strlen(ft_strchr(s, c));
+		data->exp->extra = ft_calloc(len + 1, sizeof(char));
+		// if (!data->exp->buf)
+		ft_strlcpy(data->exp->extra, ft_strchr(s, c), len + 1);
 	}
 	return (data->exp->buf);
 }
@@ -98,6 +105,7 @@ char	*get_name(char *s, t_data *data)
 int	expand_vars(t_data *data)
 {
 	char	*tmp;
+	char	*name;
 	t_env_node	*var;
 	int	i;
 
@@ -110,35 +118,38 @@ int	expand_vars(t_data *data)
 	data->exp->mid = NULL;
 	while (data->exp->arr[++i])
 	{
-		var = ft_getenv(data->env, get_name(data->exp->arr[i], data));
+		name = get_name(data->exp->arr[i], data);
+		// if (!name)
+		var = ft_getenv(data->env, name); //////////////////
 		if (var && var->val)
 		{
-			tmp = ft_strdup(var->val);
-			// if (!tmp)
-			// 	return (free_exp())
-			data->exp->mid = ft_strjoin(data->exp->mid, tmp);
-			// if (!data->exp->mid)
-			// 	return (freE_exp())
-			if (data->exp->extra[0])
+			if (data->exp->mid)
 			{
-				data->exp->mid = ft_strjoin(data->exp->mid, data->exp->extra);
-				// if (!data->exp->mid)
-			// 	return (freE_exp())
+				tmp = data->exp->mid;
+				data->exp->mid = ft_strjoin(data->exp->mid, var->val);
+				free(tmp);
 			}
-			if (tmp != data->exp->mid)
-				free(tmp); 
+			else
+				data->exp->mid = ft_strdup(var->val);
+			// if (!data->exp->mid)
+				// return (free_exp())
+		}
+		if (data->exp->extra)
+		{
+			if (data->exp->mid)
+			{
+				tmp = data->exp->mid;
+				data->exp->mid = ft_strjoin(data->exp->mid, data->exp->extra);
+				free(tmp);
+			}
+			else
+				data->exp->mid = ft_strdup(data->exp->extra);
+			// if (!data->exp->mid)
+				//return (freE_exp())
 		}
 	}
 	return (0);
 }
-
-// int	join_words(t_data *data, t_word *)
-// {
-// 	int	total_len;
-
-// 	total_len = ft_strlen(data->exp->bfr) +  ft_strlen(data->exp->mid) +  ft_strlen(data->exp->aft);
-
-// }
 
 int	count_quotes(char *s)
 {
@@ -168,41 +179,90 @@ int	has_delimiter(char *arg)
 	return (0);
 }
 
+char	*join_three(char *s1, char *s2, char *s3)
+{
+	size_t	len;
+	char	*dst;
+
+	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
+	dst = malloc((len + 1) * sizeof(char));
+	if (!dst)
+		return (NULL);
+	ft_strlcpy(dst, s1, ft_strlen(s1) + 1);
+	ft_strlcat(dst, s2, len + 1);
+	ft_strlcat(dst, s3, len + 1);
+	return (dst);
+}
 int	handle_quotes(char *arg, t_data *data)
 {
 	int	n;
-	char	**words;
+	int	i;
+	char	*to_free;
 
-	(void)data;
+	i = 0;
 	n = count_quotes(arg);
 	if (n & 1)
 		return (0);
 	if (has_delimiter(data->exp->mid))
 	{
-		(void)words;
-		words = get_words(data->exp->mid);
-		///// aqui tenho de juntar agora as palavras na variavel data.exp.mid ----------------------->>>>>>>>>>>> hereeeeeeee
-		//com joine separado com espaço ---------------------------------------------------->>>>>>>>>>>		startttt here	
+		to_free = data->exp->mid;
+		data->exp->words = get_words(data->exp->mid);
+		if (!data->exp->words)
+			return (-1);// 	return (free_exp());
+		data->exp->mid = data->exp->words[0];
+		while (data->exp->words[++i])
+		{
+			data->exp->mid = join_three(data->exp->mid, " ", data->exp->words[i]);
+			// if (!data->exp->mid)
+			// 	return (free_exp())
+			if (to_free)
+				free(to_free);
+			to_free = data->exp->mid;
+		}
 	}
+	return (0);
+}
+// bfr mid aft
+// bft mid
+// bfr aft
+
+// aft mid
+//
+//
+int	join_words(t_data *data, t_word *word)
+{
+	free(word->word);
+	if (data->exp->bfr && data->exp->aft && data->exp->mid)
+		word->word = join_three(data->exp->bfr, data->exp->mid, data->exp->aft);
+	else if (!data->exp->mid && (data->exp->bfr || data->exp->aft))
+		word->word = ft_strjoin(data->exp->bfr, data->exp->aft);
+	else if (data->exp->bfr && !data->exp->aft)
+		word->word = ft_strjoin(data->exp->bfr, data->exp->mid);
+	else if (data->exp->aft && !data->exp->bfr)
+		word->word = ft_strjoin(data->exp->mid, data->exp->aft);
+	else
+		word->word = ft_substr(data->exp->mid, 0, ft_strlen(data->exp->mid) + 1);
+	// if (!word->word)
+		// return (free_exp())
 	return (0);
 }
 
 int	expand(t_data *data, t_word *word)
 {
-/////////////////////////////////////////////////////////////////	
-		/////    TESTE    ///////
-	t_env_node	*var;
-	t_env_node	*var1;
+// /////////////////////////////////////////////////////////////////	
+// 		/////    TESTE    ///////
+// 	t_env_node	*var;
+// 	t_env_node	*var1;
 
-	var = ft_getenv(data->env, "ZZ");
-	var->val = "Carlos		  Teixeira";
-	var1 = ft_getenv(data->env, "ZA");
-	var1->val = "Ana	Silva";
-	word->word = "\"$ZB\"";
-	// word->word = "\"\"ola..$ZZ..$ZA?\"\"";
+// 	var = ft_getenv(data->env, "ZZ");
+// 	var->val = "Carlos		  Teixeira";
+// 	var1 = ft_getenv(data->env, "ZA");
+// 	var1->val = "Ana	Silva";
+// 	word->word = ft_strdup("ola..?$ZZ..??$ZA...");
+// 	// word->word = "\"\"ola..$ZZ..$ZA?\"\"";
 
-		/////    TESTE    ///////
-//////////////////////////////////////////////////////////////////
+// 		/////    TESTE    ///////
+// //////////////////////////////////////////////////////////////////
 	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
 	if (!data->exp)
 		return (error_allocation(data));
@@ -212,7 +272,7 @@ int	expand(t_data *data, t_word *word)
 		return (-1);
 	if (handle_quotes(word->word, data) == -1)
 		return (-1);
-	// if (join_words(data) == -1)
-	// 	return (-1);
+	if (join_words(data, word) == -1)
+		return (-1);
 	return (0);
 }

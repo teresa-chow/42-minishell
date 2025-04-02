@@ -24,6 +24,9 @@ int	main(int argc, char **argv, char **envp)
 	t_word_lst	*word_lst;
 	int	i;
 
+
+	envp = NULL;
+
 	(void)argc;
 	(void)argv;
 	data_init(&data, envp);
@@ -36,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(&data, 1, &data.env);
 			break;
 		}
-		read_input(&word_lst);
+		read_input(&word_lst, &data);
 		char	*save = ft_strdup(word_lst->word->word); //////////////////////////////////
 		if (word_lst->word != NULL)
 			test_builtins(&data, &word_lst, &i);

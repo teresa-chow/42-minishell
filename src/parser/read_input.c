@@ -15,12 +15,12 @@
 
 #include "../../tests/test.h" //delete
 
-void	read_input(t_word_lst **word_lst)//, t_data *data)
+void	read_input(t_word_lst **word_lst,  t_data *data)
 {
 	char	*input;
 	char	**cmd_lst;
 
-	input = readline("minishell> ");
+	input = readline(get_prompt(data));
 	if (input && *input)
 	{
 		add_history(input);

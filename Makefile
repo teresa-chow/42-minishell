@@ -17,7 +17,7 @@ NAME		= minishell
 # ============================================================================ #
 
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
-SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c \
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c\
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_utils.c syntax_tree.c \

@@ -26,6 +26,19 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
+
+# define BG_CYA "\033[46;1;37m "
+# define BG_MAG "\033[45;1;37m "
+# define BG_YEL "\033[43;1;37m "
+# define NC " \033[0m"
+
+typedef struct s_prompt
+{
+	char	*prog;
+	char	*usr;
+	char	*cwd;
+}	t_prompt;
+
 typedef struct s_word
 {
 	struct s_word	*next;
@@ -58,7 +71,9 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void		read_input(t_word_lst **word_lst);//, t_data *data);
+void		read_input(t_word_lst **word_lst, t_data *data);
+
+char	*get_prompt(t_data *data); ////tmp
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char		**tokenize_op(char *input);
 int			tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);

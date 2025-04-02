@@ -30,6 +30,16 @@ void	free_strarray(char **array)
 	free(array);
 }
 
+void	free_prompt(t_prompt *prompt)
+{
+	if (prompt->prog)
+		free(prompt->prog);
+	if (prompt->usr)
+		free(prompt->usr);
+	if (prompt->cwd)
+		free(prompt->cwd);
+}
+
 int	free_env_list(t_data *data, int i, t_env_node **lst)
 {
 	t_env_node	*tmp;
