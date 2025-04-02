@@ -20,21 +20,17 @@ static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);
 
 void	cd(t_word *input, t_data *data)
 {
-	char	*path;
-	t_env_node	*home_var;
-
-	path = NULL;
+	data->cd_path = NULL;
 	if (input->next)
-		path = input->next->word;
+		data->cd_path = input->next->word;
 	else
 	{
-		home_var = ft_getenv(data->env, "HOME");
-		if (home_var)
-			path = home_var->val;
+		if (handle_with_no_home(data) == -1)
+			return ;
 	}
-	if (chdir(path) == -1)
+	if (chdir(data->cd_path) == -1)
 	{
-		cd_error(path, data, 1);
+		cd_error(data->cd_path, data, 1);
 		return ;
 	}
 	if (!update_pwd_and_oldpwd(data))

@@ -102,11 +102,51 @@ char	*get_name(char *s, t_data *data)
 	return (data->exp->buf);
 }
 
+int	get_var_val(t_data *data, int i, char **tmp)
+{
+	char	*name;
+	t_env_node	*var;
+
+	name = get_name(data->exp->arr[i], data);
+		// if (!name)
+	var = ft_getenv(data->env, name); //////////////////
+	if (var && var->val)
+	{
+		if (data->exp->mid)
+		{
+			*tmp = data->exp->mid;
+			data->exp->mid = ft_strjoin(data->exp->mid, var->val);
+			free(*tmp);
+		}
+		else
+			data->exp->mid = ft_strdup(var->val);
+		// if (!data->exp->mid)
+			// return (free_exp())
+	}
+	return (0);
+}
+
+int	get_extra_chars(t_data *data, char **tmp)
+{
+	if (data->exp->extra)
+	{
+		if (data->exp->mid)
+		{
+			*tmp = data->exp->mid;
+			data->exp->mid = ft_strjoin(data->exp->mid, data->exp->extra);
+			free(*tmp);
+		}
+		else
+			data->exp->mid = ft_strdup(data->exp->extra);
+		// if (!data->exp->mid)
+			//return (freE_exp())
+	}
+	return (0);
+}
+
 int	expand_vars(t_data *data)
 {
 	char	*tmp;
-	char	*name;
-	t_env_node	*var;
 	int	i;
 
 	data->exp->arr = ft_split(data->exp->mid, '$');
@@ -118,35 +158,10 @@ int	expand_vars(t_data *data)
 	data->exp->mid = NULL;
 	while (data->exp->arr[++i])
 	{
-		name = get_name(data->exp->arr[i], data);
-		// if (!name)
-		var = ft_getenv(data->env, name); //////////////////
-		if (var && var->val)
-		{
-			if (data->exp->mid)
-			{
-				tmp = data->exp->mid;
-				data->exp->mid = ft_strjoin(data->exp->mid, var->val);
-				free(tmp);
-			}
-			else
-				data->exp->mid = ft_strdup(var->val);
-			// if (!data->exp->mid)
-				// return (free_exp())
-		}
-		if (data->exp->extra)
-		{
-			if (data->exp->mid)
-			{
-				tmp = data->exp->mid;
-				data->exp->mid = ft_strjoin(data->exp->mid, data->exp->extra);
-				free(tmp);
-			}
-			else
-				data->exp->mid = ft_strdup(data->exp->extra);
-			// if (!data->exp->mid)
-				//return (freE_exp())
-		}
+		if (get_var_val(data, i, &tmp) == -1)
+			return(-1);// return (free_exp())
+		if (get_extra_chars(data, &tmp) == -1)
+			return(-1);// return (free_exp())
 	}
 	return (0);
 }
@@ -163,21 +178,6 @@ int	count_quotes(char *s)
 	}
 	return (i);
 }
-int	has_delimiter(char *arg)
-{
-	if (!arg)
-		return (0);
-	while (*arg)
-	{
-		if (is_delimiter(*arg))
-		{
-			if ((*arg == ' ' && (is_delimiter(*(arg + 1)))) || *arg != ' ')
-				return (1);
-		}
-		arg++;
-	}
-	return (0);
-}
 
 char	*join_three(char *s1, char *s2, char *s3)
 {
@@ -193,13 +193,28 @@ char	*join_three(char *s1, char *s2, char *s3)
 	ft_strlcat(dst, s3, len + 1);
 	return (dst);
 }
+int	join_with_space(t_data *data, char **to_free)
+{
+	int	i;
+
+	i = 0;
+	while (data->exp->words[++i])
+	{
+		data->exp->mid = join_three(data->exp->mid, " ", data->exp->words[i]);
+		if (!data->exp->mid)
+			return (-1);
+		if (*to_free)
+			free(*to_free);
+		*to_free = data->exp->mid;
+	}
+	return (0);
+}
+
 int	handle_quotes(char *arg, t_data *data)
 {
 	int	n;
-	int	i;
 	char	*to_free;
 
-	i = 0;
 	n = count_quotes(arg);
 	if (n & 1)
 		return (0);
@@ -210,25 +225,12 @@ int	handle_quotes(char *arg, t_data *data)
 		if (!data->exp->words)
 			return (-1);// 	return (free_exp());
 		data->exp->mid = data->exp->words[0];
-		while (data->exp->words[++i])
-		{
-			data->exp->mid = join_three(data->exp->mid, " ", data->exp->words[i]);
-			// if (!data->exp->mid)
-			// 	return (free_exp())
-			if (to_free)
-				free(to_free);
-			to_free = data->exp->mid;
-		}
+		if (join_with_space(data, &to_free) == -1)
+			return (-1); // return (free_exp());
 	}
 	return (0);
 }
-// bfr mid aft
-// bft mid
-// bfr aft
 
-// aft mid
-//
-//
 int	join_words(t_data *data, t_word *word)
 {
 	free(word->word);

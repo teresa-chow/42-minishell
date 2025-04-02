@@ -84,3 +84,19 @@ char	find_no_alnum(char *arg)
 	}
 	return (*arg);
 }
+
+int	has_delimiter(char *arg)
+{
+	if (!arg)
+		return (0);
+	while (*arg)
+	{
+		if (is_delimiter(*arg))
+		{
+			if ((*arg == ' ' && (is_delimiter(*(arg + 1)))) || *arg != ' ')
+				return (1);
+		}
+		arg++;
+	}
+	return (0);
+}

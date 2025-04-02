@@ -24,9 +24,6 @@ int	main(int argc, char **argv, char **envp)
 	t_word_lst	*word_lst;
 	int	i;
 
-
-	envp = NULL;
-
 	(void)argc;
 	(void)argv;
 	data_init(&data, envp);

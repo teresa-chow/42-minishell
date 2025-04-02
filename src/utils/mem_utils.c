@@ -87,5 +87,7 @@ void	free_word_lst(t_word_lst **word_lst)
 void	free_to_exit(t_data *data, t_word_lst **word_lst)
 {
 	free_env_list(data, 0, &data->env);
+	free(data->cd_path);
+	data->cd_path = NULL;
 	free_word_lst(word_lst);
 }

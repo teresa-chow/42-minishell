@@ -11,5 +11,6 @@ char	*get_last_exp(char *arg);
 char	find_no_alnum(char *arg);
 char	**get_words(char const *s);
 int	expand(t_data *data, t_word *word);
+int	has_delimiter(char *arg);
 
 #endif
