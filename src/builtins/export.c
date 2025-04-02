@@ -65,7 +65,7 @@ static int	exist_var(t_input_inf *inf_arg, t_data *data)
 		if (!ft_strcmp(env->key, inf_arg->key))
 		{
 			if (inf_arg->val)
-				return (update_var(env, inf_arg, data));
+				return (update_var(env, inf_arg));
 			else
 			{
 				reset_inf(inf_arg);

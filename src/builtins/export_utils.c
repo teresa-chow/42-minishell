@@ -44,16 +44,14 @@ void	sort_env(t_data *data)
 static int	create_copy(t_env_node **copy, t_data *data)
 {
 	t_env_node	*tmp;
-	t_env_node	*env;
 	t_env_node	*last;
 
 	last = NULL;
-	env = data->env;
 	while (env)
 	{
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-			return (free_env_list(data, 1, copy));
+			return (free_env_list(copy, 1));
 		if (!*copy)
 			*copy = tmp;
 		tmp->key = ft_strdup(env->key);
