@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/02 11:00:23 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/02 15:39:29 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,15 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
 	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
-SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c export.c \
-	export_utils.c export_merge_sort.c pwd.c unset.c builtins_utils.c)
+SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
+	export.c export_utils.c export_utils_2.c export_merge_sort.c pwd.c \
+	unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
 	set_path.c print_fd.c)
-SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c)
+SRC_SP_CASES	= $(addprefix $(SP_CASES_DIR)/, expand.c expand_utils.c \
+	expand_split.c)
+SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -35,6 +38,7 @@ OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
+OBJS_SP_CASES	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_SP_CASES:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
 OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
@@ -59,6 +63,8 @@ BUILTINS_DIR	= $(SRC_DIR)/builtins
 EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
+
+SP_CASES_DIR = $(SRC_DIR)/special_cases
 
 ERRORS_DIR	= $(SRC_DIR)/errors
 
@@ -91,11 +97,12 @@ MKDIR	= mkdir -p
 all: $(NAME)	## Compile minishell
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST)
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_SP_CASES) $(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+	$(OBJS_UTILS) $(OBJS_SP_CASES) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) \
+	-o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 
@@ -116,6 +123,9 @@ $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(UTILS_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(SP_CASES_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(ERRORS_DIR)/%.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 13:36:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/19 14:28:29 by carlaugu         ###   ########.fr       */
+/*   Created: 2025-03-24 22:19:13 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-03-24 22:19:13 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,106 +14,121 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-void	execute(char *input, t_data *data)
+static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
+static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
+static void	execute(t_data *data, t_exec_data *inf);
+static void	check_cmd(t_exec_data *inf, t_data *data);
+
+void	exec(t_data *data, t_word *word)
+{
+	t_exec_data	inf;
+
+	if (set_exec_inf(&inf, data, word) == -1)
+		return ;
+	if (!find_slash(inf.input))
+	{
+		if (cmd_in_env_path(&inf, data) == 1)
+			check_cmd(&inf, data);
+	}
+	else
+	{
+		inf.tmp = inf.input;
+		if (!access(inf.input, F_OK))
+			check_cmd(&inf, data);
+		else
+			no_file_or_directory(inf.input, data);
+	}
+	free_arrays(&inf, data, 0);
+}
+
+static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
+{
+	int	i;
+
+	i = 0;
+	ft_bzero(inf, sizeof(t_exec_data));
+	if (!ft_strcmp(word->word, "."))
+	{
+		print_fd(2, "minishell: `.': Not valid input\n", NULL);
+		data->exit_status = 2;
+		return (-1);
+	}
+	inf->wrd_arr = create_wrd_arr(word);
+	inf->env_arr = create_env_arr(data->env);
+	if (!inf->wrd_arr || !inf->env_arr)
+		return (free_arrays(inf, data, 1));
+	inf->path_splited = set_path(data, &i);
+	if (!inf->path_splited && i != -1)
+		return (free_arrays(inf, data, 1));
+	inf->input = word->word;
+	return (0);
+}
+
+static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
+{
+	int	i;
+
+	if (!inf->path_splited)
+	{
+		no_file_or_directory(inf->input, data);
+		return (-1);
+	}
+	i = -1;
+	while (inf->path_splited[++i])
+	{
+		inf->tmp = ft_strjoin(inf->path_splited[i], inf->input);
+		if (!inf->tmp)
+			return (error_allocation(data));
+		if (!access (inf->tmp, F_OK))
+			return (1);
+		free(inf->tmp);
+		inf->tmp = NULL;
+	}
+	command_not_found(inf->input, data);
+	return (0);
+}
+
+static void	execute(t_data *data, t_exec_data *inf)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
-	// if (pid < 0)
-	if (pid == 0)
+	if (pid < 0)
 	{
-		if (execve(input , data->wrd_arr, data->env_arr) < 0)
+		perror("minishell");
+		return ;
+	}
+	else if (pid == 0)
+	{
+		if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 		{
-			perror("minishell");
-			exit(1); //------>> with our exit and check error code to return
+			perror("minishell : execve ");
+			exit(1);
 		}
 	}
 	else
-		wait(NULL);
+		waitpid(pid, &status, 0);
+	if (inf->tmp != inf->input)
+		free(inf->tmp);
+	inf->tmp = NULL;
+	data->exit_status = WEXITSTATUS(status);
 }
-int	find_slash(char *word)
-{
-	while (*word)
-	{
-		if (*word == '/')
-			return (1);
-		word++;
-	}
-	return (0);
-}
-int	is_valid(char *input, t_word *word, t_data *data)
-{
-	(void)data;
 
-	struct stat info;
-
-	ft_bzero(&info, sizeof(info));
-	if (!access(input, F_OK))
-	{
-		stat(input, &info);
-		if (S_ISDIR(info.st_mode))
-			return (is_a_directory(word->word, data));
-		else if (!access(input, X_OK))
-			return (1);
-		else
-			return(access_error(word->word, data));
-	}
-	return (0);
-}
-int	cmd_exist_in_path(t_data *data, t_word *word, char **tmp)
+static void	check_cmd(t_exec_data *inf, t_data *data)
 {
-	char	**env_path;
-	char	*tmp1;
-	int	check;
-	int	i;
-	
-	env_path = set_path(data);
-	if (!env_path)
-		return (no_file_or_directory(word->word, data));
-	i = -1;
-	while (env_path[++i])
-	{
-		tmp1 = ft_strjoin(env_path[i], word->word );
-		if (!tmp1)
-			return (error_allocation(data));
-		check = is_valid(tmp1, word, data);
-		if (check == 1)
-		{
-			*tmp = tmp1;
-			return (1);
-		}
-		else if (check < 0)
-			return (0);
-		free(tmp1);
-	}
-	return (command_not_found(word->word, data));
-}
-/* TODO:Check env with "." ". ./"  "//" , etc.....*/
-int	exec(t_data *data, t_word *word)
-{
-	char	*tmp;
-	int	check;
+	struct stat	i_stat;
 
-	tmp =NULL;
-	data->wrd_arr = creat_wrd_arr(word);
-	data->env_arr = creat_env_arr(data->env);
-	if (!data->wrd_arr || !data->env_arr)
-		return (free_arrays(data, 1));
-	if (!find_slash(word->word))
+	ft_bzero(&i_stat, sizeof(i_stat));
+	if (stat(inf->tmp, &i_stat) == -1)
 	{
-		if (cmd_exist_in_path(data, word, &tmp) == 1)
-			execute(tmp, data);
-		if (tmp)
-			free(tmp);
+		perror("minishell: stat");
+		data->exit_status = 1;
 	}
+	if (S_ISDIR(i_stat.st_mode))
+		is_a_directory(inf->tmp, data);
+	else if (!access(inf->tmp, X_OK))
+		execute(data, inf);
 	else
-	{
-		check = is_valid(word->word, word, data);
-		if (check == 1)
-			execute(word->word, data);
-		else if (!check)
-			no_file_or_directory(word->word, data);
-	}
-	free_arrays(data, 0);
-	return (0);
+		access_error(inf->input, data);
 }

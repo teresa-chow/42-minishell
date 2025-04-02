@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 12:09:00 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:53:08 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,52 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-int	update_var(t_env_node *env, t_ipt_inf *arg_inf)
-{
-	char	*new_val;
+static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data);
+static int	exist_var(t_input_inf *inf_arg, t_data *data);
+static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env);
 
-	if (arg_inf->sep == '+')
-	{
-		new_val = ft_strjoin(env->val, arg_inf->val);
-		if (!new_val)
-			return (error_allocation());
-		if (env->val)
-			free(env->val);
-		env->val = new_val;
-	}
-	else
-	{
-		new_val = arg_inf->val;
-		if (env->val)
-			free(env->val);
-		env->val = new_val;
-		
-	}
-	if (new_val != arg_inf->val)
-		reset_inf(arg_inf);
-	else
-		free(arg_inf->key);
-	return (1);
-}
-int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
+void	export(t_data *data, t_word *word)
 {
+	int	exit;
+
+	exit = -1;
+	if (!word->next)
+		sort_env(data);
+	else
+		handle_with_args(word->next, data, &exit);
+	if (exit == -1)
+		data->exit_status = 0;
+	else
+		data->exit_status = exit;
+}
+
+int	add_var(t_input_inf *inf_arg, t_data *data)
+{
+	int			check;
+	t_env_node	*last;
+	t_env_node	*tmp;
+
+	check = exist_var(inf_arg, data);
+	if (check == -1 || check == 1)
+		return (check);
+	else
+	{
+		last = last_node(data->env);
+		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
+		if (!tmp)
+			return (error_allocation(data));
+		tmp->key = inf_arg->key;
+		tmp->val = inf_arg->val;
+		change_ptrs(last, tmp, &data->env);
+	}
+	return (0);
+}
+
+static int	exist_var(t_input_inf *inf_arg, t_data *data)
+{
+	t_env_node	*env;
+
+	env = data->env;
 	while (env)
 	{
 		if (!ft_strcmp(env->key, inf_arg->key))
@@ -59,6 +76,34 @@ int	exist_var(t_env_node *env, t_ipt_inf *inf_arg)
 	}
 	return (0);
 }
+
+static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
+{
+	char	*new_val;
+
+	if (arg_inf->sep == '+')
+	{
+		new_val = ft_strjoin(env->val, arg_inf->val);
+		if (!new_val)
+			return (error_allocation(data));
+		if (env->val)
+			free(env->val);
+		env->val = new_val;
+	}
+	else
+	{
+		new_val = arg_inf->val;
+		if (env->val)
+			free(env->val);
+		env->val = new_val;
+	}
+	if (new_val != arg_inf->val)
+		reset_inf(arg_inf);
+	else
+		free(arg_inf->key);
+	return (1);
+}
+
 static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 {
 	if (last)
@@ -68,55 +113,4 @@ static void	change_ptrs(t_env_node *last, t_env_node *tmp, t_env_node **env)
 	}
 	if (!*env)
 		*env = tmp;
-}
-
-int	add_var(t_env_node **env, t_ipt_inf *inf_arg)
-{
-	int	check;
-	t_env_node	*last;
-	t_env_node	*tmp;
-
-	check = exist_var(*env, inf_arg);
-	if (check == -1 || check == 1)
-		return (check);
-	else
-	{
-		last = last_node(*env);
-		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
-		if (!tmp)
-			return (-1);
-		tmp->key = inf_arg->key;
-		tmp->val = inf_arg->val;
-		change_ptrs(last, tmp, env);
-	}
-	return (0); 
-}
-/// this builtin can't have (export ARG++23), the sintax is not correct, so we have
-// to handle with this, maybe in expand part??
-// --> same to (export ZA,ZB)
-
-void	export(t_data *data, t_word_lst *word_lst)
-{
-	t_ipt_inf	inf_arg;
-	t_word	*word;
-
-	word = word_lst->word;
-	if (!word->next)
-		sort_env(data->env);
-	else
-	{
-		ft_bzero(&inf_arg, sizeof(t_ipt_inf));
-		word = word->next;
-		while (word)
-		{
-			if (set_inf(word->word, &inf_arg) == -1)
-			{
-				error_allocation();
-				return ;
-			}
-			if (add_var(&data->env, &inf_arg) == -1)
-				return ;
-			word = word->next;
-		}
-	}
 }

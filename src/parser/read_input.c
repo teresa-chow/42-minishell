@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 11:38:01 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/02 14:55:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ void	read_input(t_tree_node **root, t_data *data)
 static int	syntax_check(t_word_lst *word_lst, t_data *data)
 {
 	if (syntax_analysis(word_lst) != 0)
-		data->error_code = ERR_BI;
-	return (data->error_code);
+		data->exit_status = ERR_BI;
+	return (data->exit_status);
 }

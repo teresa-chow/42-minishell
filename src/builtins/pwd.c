@@ -12,16 +12,20 @@
 
 #include "../../include/builtins.h"
 
-void	pwd(void)
+void	pwd(t_data *data)
 {
 	char	*path;
 
 	path = getcwd(NULL, 0);
 	if (!path)
+	{
 		perror("minishell");
+		data->exit_status = 1;
+	}
 	else
 	{
 		ft_printf ("%s\n", path);
 		free(path);
+		data->exit_status = 0;
 	}
 }
