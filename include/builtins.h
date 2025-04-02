@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 12:22:58 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:37:47 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,33 @@
 # include "../lib/libft/ft_printf/ft_printf.h"
 
 /* ================================== ECHO ================================== */
-void	echo(t_word *input);
+void		echo(t_word *input, t_data *data);
 
 /* =================================== CD =================================== */
-void	cd(t_word *input);
+void		cd(t_word *input, t_data *data);
 
 /* ================================== PWD =================================== */
-void	pwd(void);
-
+void		pwd(t_data *data);
 /* ================================= EXPORT================================= */
-void	export(t_data *data, t_word_lst *word_lst);
-void	reset_inf(t_ipt_inf *inf);
-void sort_env(t_data *data);
-t_env_node	*sort_halfs(t_env_node *head); //TODO: typo "halves"
-
+void		export(t_data *data, t_word *word);
+void		reset_inf(t_input_inf *inf);
+void		sort_env(t_data *data);
+void		handle_with_args(t_word *word, t_data *data, int *exit);
+t_env_node	*sort_halfs(t_env_node *head);
+int			add_var(t_input_inf *inf_arg, t_data *data);
 /* ================================= UNSET ================================== */
-void	unset(t_data *data, t_word_lst *word_lst);
-
+void		unset(t_data *data, t_word *word);
 /* ================================== ENV =================================== */
-void	env_cmd(t_env_node *env);
+void		env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
-
-
+void		exit_cmd(t_data *data, t_word_lst **word_lst, int *i);
+void		check_syntax_exit(t_word *word, t_data *data, int *many_args,
+				int *syntax);
+void		check_exit_args(t_data *data, t_word_lst **word_lst, int *i);
 /* ============================== GENERAL UTILS ============================= */
+int			set_inf(char *word, t_input_inf *inf_arg);
 t_env_node	*last_node(t_env_node *env_lst);
-int		set_inf(char *word, t_ipt_inf *inf_arg, t_data *data);
-char	find_sep(char *s);
+t_env_node	*ft_getenv(t_env_node *env, char *key);
 
 #endif

@@ -12,29 +12,54 @@
 
 #include "../../include/builtins.h"
 
-/* TODO: check here if there is -n or -nnnn, etc*/
-void	echo(t_word *input)
+static t_word	*found_start(t_word *input, int *has_flag);
+static int		check_flag(char *word, int *has_flag);
+
+void	echo(t_word *input, t_data *data)
 {
 	t_word	*start;
+	int		has_flag;
 
-	// if (input->next != NULL)
-	// 	flag = input->next->flags;
-	// if (flag == 2)
-	// 	start = input->next->next;
-	start = input->next;
+	has_flag = 0;
+	start = found_start(input->next, &has_flag);
 	while (start)
 	{
-		ft_putstr_fd(start->word, 1);
+		ft_putstr_fd(start->word, STDOUT_FILENO);
 		if (start->next)
-			write (1, " ", 1);
+			write (STDOUT_FILENO, " ", 1);
 		start = start->next;
 	}
-	//if (flag != 2)
-	write (1, "\n", 1);
+	if (!has_flag)
+		write (STDOUT_FILENO, "\n", 1);
+	data->exit_status = 0;
 }
 
-/*
-TODO:
-- check here if there is -n or -nnnn, etc
-- flags ceased to exist in t_word struct
-*/
+static int	check_flag(char *word, int *has_flag)
+{
+	if (!word)
+		return (-1);
+	if (*word != '-' || ((*word == '-') && !*(word + 1)))
+		return (0);
+	else
+		word = word + 1;
+	while (*word)
+	{
+		if (*word != 'n')
+			return (0);
+		word++;
+	}
+	if (!*has_flag)
+		*has_flag = 1;
+	return (1);
+}
+
+static t_word	*found_start(t_word *input, int *has_flag)
+{
+	while (input)
+	{
+		if (!check_flag(input->word, has_flag))
+			return (input);
+		input = input->next;
+	}
+	return (input);
+}

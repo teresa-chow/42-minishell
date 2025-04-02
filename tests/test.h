@@ -18,7 +18,7 @@
 # include "../include/parse.h"
 # include "../include/utils.h"
 
-void	test_builtins(t_data *data, t_word_lst *word_lst);
+void	test_builtins(t_data *data, t_word_lst **word_lst, int *i);
 void	print_word_lst(char ** cmd_lst, t_word_lst **word_lst);
 
 #endif

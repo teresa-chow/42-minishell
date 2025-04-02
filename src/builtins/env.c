@@ -12,7 +12,7 @@
 
 #include "../../include/builtins.h"
 
-void	env_cmd(t_env_node *env)
+void	env_cmd(t_env_node *env, t_data *data)
 {
 	while (env)
 	{
@@ -24,4 +24,5 @@ void	env_cmd(t_env_node *env)
 		}
 		env = env->next;
 	}
+	data->exit_status = 0;
 }

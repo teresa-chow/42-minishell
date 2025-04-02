@@ -13,7 +13,11 @@
 #include "../../include/utils.h"
 #include "../../include/builtins.h"
 
-void	reset_inf(t_ipt_inf *inf)
+static int	create_copy(t_env_node **copy, t_data *data);
+static	void	print_var_val(char *s);
+static void	print_export(t_env_node *env_lst);
+
+void	reset_inf(t_input_inf *inf)
 {
 	free(inf->key);
 	if (inf->val)
@@ -22,7 +26,22 @@ void	reset_inf(t_ipt_inf *inf)
 	inf->val_strt = 0;
 }
 
-static int	creat_copy(t_env_node **copy, t_data *data)
+void	sort_env(t_data *data)
+{
+	t_env_node	*copy;
+
+	if (!data->env)
+		return ;
+	copy = NULL;
+	if (create_copy(&copy, data) == -1)
+		return ;
+	copy = sort_halfs(copy);
+	print_export(copy);
+	free_env_list(data, 0, &copy);
+	data->exit_status = 0;
+}
+
+static int	create_copy(t_env_node **copy, t_data *data)
 {
 	t_env_node	*tmp;
 	t_env_node	*env;
@@ -40,12 +59,12 @@ static int	creat_copy(t_env_node **copy, t_data *data)
 		tmp->key = ft_strdup(env->key);
 		tmp->val = ft_strdup(env->val);
 		if (!tmp->key || (!tmp->val && env->val))
-			return(free_env_list(data, 1, copy));
+			return (free_env_list(data, 1, copy));
 		tmp->prev = last;
 		if (tmp->prev)
 			tmp->prev->next = tmp;
 		last = tmp;
-		env = env->next;	
+		env = env->next;
 	}
 	return (0);
 }
@@ -71,17 +90,4 @@ static void	print_export(t_env_node *env_lst)
 		write(1, "\n", 1);
 		env_lst = env_lst->next;
 	}
-}
-void sort_env(t_data *data)
-{
-	t_env_node	*copy;
-
-	if (!data->env)
-		return ;
-	copy = NULL;
-	if (creat_copy(&copy, data) == -1)
-		return ;
-	copy = sort_halfs(copy);
-	print_export(copy);
-	free_env_list(data, 0, &copy);
 }

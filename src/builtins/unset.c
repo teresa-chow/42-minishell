@@ -14,6 +14,19 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
+static int	clean_env(t_env_node **env, char *word);
+static int	update_env(t_env_node **env, t_env_node *tmp);
+
+void	unset(t_data *data, t_word *word)
+{
+	while (word)
+	{
+		clean_env(&data->env, word->word);
+		word = word->next;
+	}
+	data->exit_status = 0;
+}
+
 static int	update_env(t_env_node **env, t_env_node *tmp)
 {
 	if (tmp->prev)
@@ -42,21 +55,8 @@ static int	clean_env(t_env_node **env, char *word)
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, word))
-			return(update_env(env, tmp));
+			return (update_env(env, tmp));
 		tmp = tmp->next;
 	}
 	return (0);
-}
-
-void	unset(t_data *data, t_word_lst *word_lst)
-{
-	t_word *word;
-
-	word = word_lst->word->next;
-	while (word)
-	{
-		if (clean_env(&data->env, word->word) == -1)
-			return ;
-		word = word->next;
-	}
 }

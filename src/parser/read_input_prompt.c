@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 11:32:08 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:43:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,15 @@ static void	join_rl_prompt(char **rl_prompt, t_prompt prompt);
 
 char	*get_prompt(t_data *data)
 {
-	t_env_node	*tmp;
+	t_env_node	*usr;
 	t_prompt	prompt;
 	char		*rl_prompt;
 
-	tmp = data->env;
 	ft_bzero(&prompt, sizeof(t_prompt));
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key,"USER"))
-			init_prompt(&prompt, tmp->val);
-		tmp = tmp->next;
-	}
-	if (!prompt.usr)
+	usr = ft_getenv(data->env, "USER");
+	if (usr->val)
+		init_prompt(&prompt, usr->val);
+	else
 		init_prompt(&prompt, "Undefined");
 	join_rl_prompt(&rl_prompt, prompt);
 	free_prompt(&prompt);
@@ -41,11 +37,8 @@ char	*get_prompt(t_data *data)
 static void	init_prompt(t_prompt *prompt, char *usr)
 {
 	prompt->prog = ft_strdup("minishell");
-	prompt->usr = ft_calloc(ft_strlen(usr) + 1, sizeof(char));
+	prompt->usr = ft_strdup(usr);
 	prompt->cwd = getcwd(NULL, 0);
-	if (!prompt->prog || !prompt->usr || !prompt->cwd)
-		return ;
-	prompt->usr = usr;
 }
 
 static void	join_rl_prompt(char **rl_prompt, t_prompt prompt)
