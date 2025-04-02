@@ -25,7 +25,7 @@ char	*get_prompt(t_data *data)
 
 	ft_bzero(&prompt, sizeof(t_prompt));
 	usr = ft_getenv(data->env, "USER");
-	if (usr->val)
+	if (usr && usr->val)
 		init_prompt(&prompt, usr->val);
 	else
 		init_prompt(&prompt, "Undefined");
