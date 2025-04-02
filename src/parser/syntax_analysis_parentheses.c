@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/01 14:16:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:44:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,13 @@ static int	check_nest_lvl(char *word, int i)
 			if (check_nest_lvl(word, ++i) != 0)
 				return (-1);
 		}
-		while (word[++i] && word[i] != '(' && word[i] != ')')
+		while (word[i] && word[i] != '(' && word[i] != ')')
 		{
-			if (word[i] == '|')
+			if ((word[i - 1] == '|') && (word[i] == '|'))
 				op = 1;
 			else if ((word[i - 1] == '&') && (word[i] == '&'))
 				op = 1;
+			++i;
 		}
 		if (word[i] == ')' && !op)
 			return (err_syntax(")"));
