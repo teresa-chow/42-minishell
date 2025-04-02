@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/01 14:15:13 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:26:12 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
+
+# define BG_CYA "\033[46;1;37m "
+# define BG_MAG "\033[45;1;37m "
+# define BG_YEL "\033[43;1;37m "
+# define NC " \033[0m"
+
+typedef struct s_prompt
+{
+	char	*prog;
+	char	*usr;
+	char	*cwd;
+}	t_prompt;
 
 typedef struct s_word
 {
@@ -60,6 +72,7 @@ typedef struct s_tree_node
 
 /* =========================== INPUT PROCESSING ============================= */
 void			read_input(t_tree_node **tree, t_data *data);
+char			*get_prompt(t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char			**tokenize_op(char *input);

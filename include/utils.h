@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/01 15:37:07 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:59:58 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	print_fd(int fd, const char *msg, char *token);
 
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);
+void	free_prompt(t_prompt *prompt);
 void	free_word_lst(t_word_lst **word_lst);
 void	free_words(t_word **word);
-int	free_env_list(t_data *data, int i, t_env_node **lst);
+int		free_env_list(t_data *data, int i, t_env_node **lst);
 
 /* =============================== ENV INIT ================================ */
 int		init_env_lst(char **envp, t_data *data);
