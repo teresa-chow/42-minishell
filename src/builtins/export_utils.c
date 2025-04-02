@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_print.c                                     :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/12 12:20:43 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:07:56 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,16 @@ void	sort_env(t_data *data)
 static int	create_copy(t_env_node **copy, t_data *data)
 {
 	t_env_node	*tmp;
+	t_env_node	*env;
 	t_env_node	*last;
 
 	last = NULL;
+	env = data->env;
 	while (env)
 	{
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-			return (free_env_list(copy, 1));
+			return (free_env_list(data, 1, copy));
 		if (!*copy)
 			*copy = tmp;
 		tmp->key = ft_strdup(env->key);

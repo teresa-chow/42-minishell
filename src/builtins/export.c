@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/27 16:53:08 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:01:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	exist_var(t_input_inf *inf_arg, t_data *data)
 		if (!ft_strcmp(env->key, inf_arg->key))
 		{
 			if (inf_arg->val)
-				return (update_var(env, inf_arg));
+				return (update_var(env, inf_arg, data));
 			else
 			{
 				reset_inf(inf_arg);
