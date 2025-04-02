@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 11:32:08 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:07:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ char	*get_prompt(t_data *data)
 
 	tmp = data->env;
 	ft_bzero(&prompt, sizeof(t_prompt));
-	while (tmp)
+	while (tmp) //TODO: see ft_getenv
 	{
-		if (!ft_strcmp(tmp->key,"USER"))
+		if (!ft_strcmp(tmp->key, "USER"))
 			init_prompt(&prompt, tmp->val);
 		tmp = tmp->next;
 	}

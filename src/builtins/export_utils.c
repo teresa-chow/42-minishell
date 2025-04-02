@@ -22,25 +22,23 @@ void	reset_inf(t_ipt_inf *inf)
 	inf->val_strt = 0;
 }
 
-static int	creat_copy(t_env_node **copy, t_data *data)
+static int	creat_copy(t_env_node **copy, t_env_node *env)
 {
 	t_env_node	*tmp;
-	t_env_node	*env;
 	t_env_node	*last;
 
 	last = NULL;
-	env = data->env;
 	while (env)
 	{
 		tmp = ft_calloc(sizeof(t_env_node), sizeof(char));
 		if (!tmp)
-			return (free_env_list(data, 1, copy));
+			return (free_env_list(copy, 1));
 		if (!*copy)
 			*copy = tmp;
 		tmp->key = ft_strdup(env->key);
 		tmp->val = ft_strdup(env->val);
 		if (!tmp->key || (!tmp->val && env->val))
-			return(free_env_list(data, 1, copy));
+			return(free_env_list(copy, 1));
 		tmp->prev = last;
 		if (tmp->prev)
 			tmp->prev->next = tmp;
@@ -72,16 +70,16 @@ static void	print_export(t_env_node *env_lst)
 		env_lst = env_lst->next;
 	}
 }
-void sort_env(t_data *data)
+void sort_env(t_env_node *env_lst)
 {
 	t_env_node	*copy;
 
-	if (!data->env)
+	if (!env_lst)
 		return ;
 	copy = NULL;
-	if (creat_copy(&copy, data) == -1)
+	if (creat_copy(&copy, env_lst) == -1)
 		return ;
 	copy = sort_halfs(copy);
 	print_export(copy);
-	free_env_list(data, 0, &copy);
+	free_env_list(&copy, 0);
 }
