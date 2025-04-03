@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:13:04 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/24 14:45:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:04:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	**tokenize_op(char *input)
 	cmd_lst = ft_calloc(1, ((substr_count(input) + 1) * sizeof(char *)));
 	if (!input || !cmd_lst)
 		return (NULL);
+	while (is_delimiter(input[i]))
+		i++;
 	while (input[i])
 	{
 		cmd_lst[j] = ft_substr(input, i, substr_len(&input[i]));
@@ -98,8 +100,8 @@ static unsigned int	substr_len(const char *str)
 	unsigned int	i;
 
 	i = 0;
-	if ((!is_operator(str[i]))
-		|| (str[i] == '&' && !is_equal_next(str, i)))
+	if (((!is_operator(str[i])) || (str[i] == '&' && !is_equal_next(str, i)))
+		&& !is_delimiter(str[i]))
 		i = substr_len_no_op(str, i);
 	else
 	{
