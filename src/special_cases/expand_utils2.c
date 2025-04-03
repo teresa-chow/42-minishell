@@ -20,11 +20,11 @@ int	check_lst_exp(t_data *data, char *arg)
 	char	*lst_exp;
 	int	i;
 
-	lst_exp = get_last_exp(arg);
+	lst_exp = get_last_exp(arg) + 1;
 	data->exp->no_alnum = find_extra(lst_exp);
 	if (data->exp->no_alnum)
 	{
-		if (*lst_exp == '$' && *(lst_exp + 1) == '?' && *(lst_exp + 2) == '?')
+		if (*lst_exp == '?' && *(lst_exp + 1) == '?')
 			i = ft_strlen(lst_exp) - ft_strlen(ft_strchr(lst_exp + 2, data->exp->no_alnum));
 		else
 			i = ft_strlen(lst_exp) - ft_strlen(ft_strchr(lst_exp, data->exp->no_alnum));
@@ -36,22 +36,28 @@ int	check_lst_exp(t_data *data, char *arg)
 	return (0);
 }
 
+
+
 int	get_exp_vars(char *arg, t_data *data)
 {
 	int	mid_len;
 	char	*start;
 	char	*end;
+	char	*last_exp;
 
 	mid_len = ft_strlen(arg) - (ft_strlen(data->exp->bfr) 
-		+ ft_strlen(data->exp->aft) + ft_strlen(ft_strchr(arg, '"')));
+		+ ft_strlen(data->exp->aft) + (count_begin_quotes(arg) + count_last_quotes(arg)));
 	data->exp->mid = ft_calloc(mid_len + 1, sizeof(char));
 	if (!data->exp->mid)
 		return (-1);
-	start = ft_strchr(arg, '$');
+	last_exp = get_last_exp(arg);
+	if (data->exp->no_alnum == '$')
+		last_exp++;
+	start = get_valid_dollar(arg);
 	if (*start == '$' && *(start + 1) == '?' && *(start + 2) == '?')
-		end = ft_strchr(get_last_exp(arg), data->exp->no_alnum) + 1;
+		end = ft_strchr(last_exp, data->exp->no_alnum) + 1;
 	else
-		end = ft_strchr(get_last_exp(arg), data->exp->no_alnum);
+		end = ft_strchr(last_exp, data->exp->no_alnum);
 	ft_strlcpy(data->exp->mid, start, (end - start) + 1);
 	return (0);
 }

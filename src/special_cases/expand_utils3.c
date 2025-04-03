@@ -43,10 +43,26 @@ char	*get_var_and_extra_chars(char *s, t_data *data)
 	return (data->exp->buf);
 }
 /*extra functions to handle_quotes*/
-int	count_quotes(char *s)
+int	count_begin_quotes(char *s)
 {
 	int	i;
 
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] != '"')
+			break;
+	}
+	return (i);
+}
+
+int	count_last_quotes(char *s)
+{
+	int	i;
+
+	s = ft_strchr(get_last_exp(s), '"');
+	if (!s)
+		return (0);
 	i = -1;
 	while (s[++i])
 	{

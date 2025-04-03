@@ -42,7 +42,7 @@ char	*get_last_exp(char *arg)
 
 	while (*arg)
 	{
-		if (*arg == '$')
+		if (*arg == '$' && (ft_isalnum(*(arg + 1)) || *(arg + 1) == '?'))
 			last = arg;
 		arg++;
 	}
@@ -50,11 +50,13 @@ char	*get_last_exp(char *arg)
 }
 char	find_extra(char *arg)
 {
-	if (*(arg + 1) == '?' && *(arg + 2) == '?')
+	if (*arg == '?' && *(arg + 1) == '?')
 		return (*(arg + 2));
+	else if (*arg == '?' && !*(arg + 1))
+		return (0);
 	while (*arg)
 	{
-		if (!ft_isalnum(*arg) && *arg != '$' && *arg != '?')
+		if (!ft_isalnum(*arg) && *arg != '?')
 			break;
 		arg++;
 	}

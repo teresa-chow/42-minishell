@@ -15,22 +15,54 @@
 #include "../../include/special_cases.h"
 #include "../../include/utils.h"
 
+char	*get_valid_dollar(char*arg)
+{
+	while (*arg)
+	{
+		if (*arg == '$' && (ft_isalnum(*(arg + 1)) || *(arg + 1) == '?'))
+			break;
+		arg++;
+	}
+	return (arg);
+}
+
+int	check_bfr(char *arg, t_data *data)
+{
+	char	*start;
+	char	*end;
+	int	i;
+
+	end = get_valid_dollar(arg);
+	start = arg;
+	i = 0;
+	while (start != end)
+	{
+		if (*start != '"')
+			i++;
+		start++;
+	}
+	if (!i)
+		return (0);
+	data->exp->bfr = ft_calloc(i + 1, sizeof(char));
+	i = 0;
+	while (arg != end)
+	{
+		if (*arg != '"')
+			data->exp->bfr[i++] = *arg;
+		arg++;
+	}
+
+	return (0);
+}
+
 int	check_bfr_aft_mid(char *arg, t_data *data)
 {
-	char	c;
-	
-	if (*arg != '$')
+	if (*arg != '$' || (*arg == '$' && *(arg + 1) == '$'))
 	{
-		if (*arg == '"')
-		{
-			c = first_char(arg);
-			arg = ft_strchr(arg , c);
-		}
-		data->exp->bfr = ft_substr(arg , 0, ft_strlen(arg) - ft_strlen(ft_strchr(arg, '$')));
-		if (!data->exp->bfr)
-			return (-1);		
+		if (check_bfr(arg, data) == -1)
+			return (-1);	
 	}
-	if (check_lst_exp(data, arg) == -1)
+		if (check_lst_exp(data, arg) == -1)
 		return (-1);
 	if (get_exp_vars(arg, data) == -1)
 		return(-1);
@@ -91,7 +123,7 @@ int	handle_quotes(char *arg, t_data *data)
 	int	n;
 	char	*to_free;
 
-	n = count_quotes(arg);
+	n = count_begin_quotes(arg);
 	if (n & 1)
 		return (0);
 	if (has_delimiter(data->exp->mid))
@@ -142,7 +174,7 @@ int	expand(t_data *data, t_word *word)
 // 	var1 = ft_getenv(data->env, "ZA");
 // 	var1->val = "Bye		World";
 // 	word->word = ft_strdup("\"\"\"\"$ZZ--$ZA\"\"\"\"");
-// 	// word->word = "\"\"ola..$ZZ..$ZA?\"\"";
+	// word->word = ft_strdup("\"\"\"$$$HOME$$\"\"\"");
 
 // 		/////    TESTE    ///////
 // //////////////////////////////////////////////////////////////////
