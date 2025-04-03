@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 17:26:01 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:53:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ static int	syntax_check(t_word_lst *word_lst, t_data *data);
 void	read_input(t_tree_node **root, t_data *data)
 {
 	char		*input;
+	char		*prompt;
 	char		**cmd_lst;
 	t_word_lst	*word_lst;
 
-	input = readline(get_prompt(data));
+	prompt = get_prompt(data);
+	input = readline(prompt);
 	if (input && *input)
 	{
 		add_history(input);
@@ -43,6 +45,7 @@ void	read_input(t_tree_node **root, t_data *data)
 			free_word_lst(&word_lst);
 		}
 	}
+	free(prompt);
 	if (input)
 		free(input);
 }

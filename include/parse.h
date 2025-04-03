@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 11:26:12 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 09:26:20 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ typedef struct s_word_lst
 typedef enum
 {
 	CMD,
-	GROUP, //will always execute in a subprocess: changes in directory will not affect current shell
-	EXP,
-	REDIR,
+	GROUP,
+	EXP, // ?
 	PIPE,
 	AND,
 	OR

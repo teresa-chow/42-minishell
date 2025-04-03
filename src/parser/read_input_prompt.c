@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 16:43:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:07:53 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_prompt(t_data *data)
 
 	ft_bzero(&prompt, sizeof(t_prompt));
 	usr = ft_getenv(data->env, "USER");
-	if (usr->val)
+	if (usr)
 		init_prompt(&prompt, usr->val);
 	else
 		init_prompt(&prompt, "Undefined");

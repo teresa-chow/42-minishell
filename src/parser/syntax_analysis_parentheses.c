@@ -6,13 +6,15 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 17:44:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:26:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 #include "../../include/errors.h"
+
+#include "../../tests/test.h"
 
 static int	check_nest_lvl(char *word, int i);
 static int	rec_syntax_analysis(char *word);
@@ -86,13 +88,14 @@ static int	check_nest_lvl(char *word, int i)
 			if (check_nest_lvl(word, ++i) != 0)
 				return (-1);
 		}
-		while (word[i] && word[i] != '(' && word[i] != ')')
+		if (word[i] == ')' && !op)
+			return (err_syntax(")"));
+		while (word[++i] && word[i] != '(' && word[i] != ')')
 		{
 			if ((word[i - 1] == '|') && (word[i] == '|'))
 				op = 1;
 			else if ((word[i - 1] == '&') && (word[i] == '&'))
 				op = 1;
-			++i;
 		}
 		if (word[i] == ')' && !op)
 			return (err_syntax(")"));
