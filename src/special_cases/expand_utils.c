@@ -50,13 +50,11 @@ char	*get_last_exp(char *arg)
 }
 char	find_extra(char *arg)
 {
-	if (*arg == '?' && *(arg + 1) == '?')
-		return (*(arg + 2));
-	else if (*arg == '?' && !*(arg + 1))
-		return (0);
+	if (*arg == '?')
+		return (*(arg + 1));
 	while (*arg)
 	{
-		if (!ft_isalnum(*arg) && *arg != '?')
+		if (!ft_isalnum(*arg))
 			break;
 		arg++;
 	}
