@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/01 12:02:43 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/04/03 11:38:52 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c cd_utils.c echo.c env.c exit.c
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
 	set_path.c print_fd.c)
-SRC_SPECIAL_CASES	= $(addprefix $(SPECIAL_CASES_DIR)/, expand.c expand_utils.c expand_split.c)
+SRC_SPECIAL_CASES	= $(addprefix $(SPECIAL_CASES_DIR)/, expand.c expand_utils.c expand_utils2.c expand_utils3.c \
+			expand_split.c)
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 

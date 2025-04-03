@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 12:23:20 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:48:10 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	free_words(t_word **word);
 void	free_to_exit(t_data *data, t_word_lst **word_lst);
 void	free_prompt(t_prompt *prompt);;
 int		free_env_list(t_data *data, int i, t_env_node **lst);
+int		free_exp(t_data *data, t_word *word, int i);
 /* =========================== ENV INIT =========================== */
 int		init_env_lst(char **envp, t_data *data);
 

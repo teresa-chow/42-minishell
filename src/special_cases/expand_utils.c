@@ -6,39 +6,13 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:01:14 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/01 12:09:02 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:06:21 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/errors.h"
 #include "../../include/special_cases.h"
 #include "../../include/utils.h"
-
-int	free_exp_data(t_data *data, t_word *word, int i)
-{
-	if (data->exp)
-	{
-		if (data->exp->bfr && data->exp->bfr != word->word)
-			free(data->exp->bfr);
-		if (data->exp->mid)
-			free(data->exp->mid);
-		if (data->exp->aft && data->exp->aft != word->word)
-			free(data->exp->aft);
-		if (data->exp->buf)
-			free(data->exp->buf);
-		if (data->exp->extra)
-			free(data->exp->extra);
-		if (data->exp->arr)
-			free_strarray(data->exp->arr);
-		if (data->exp->words)
-			free_strarray(data->exp->words);
-		free(data->exp);
-		data->exp = NULL;
-		if (i)
-			return (error_allocation(data));
-	}
-	return (0);
-}
 
 int	find_expand(t_word *word, t_data *data)
 {
@@ -49,7 +23,7 @@ int	find_expand(t_word *word, t_data *data)
 		tmp =word->word;
 		while (*tmp)
 		{
-			if (*tmp == '$' && ft_isalnum(*(tmp + 1)))
+			if (*tmp == '$' && (ft_isalnum(*(tmp + 1)) || *(tmp + 1) == '?'))
 			{
 				if (expand(data, word) == -1)
 					return (-1);
@@ -57,7 +31,7 @@ int	find_expand(t_word *word, t_data *data)
 			}
 			tmp++;
 		}
-		free_exp_data(data, word, 0); //////
+		free_exp(data, word, 0);
 		word = word->next;
 	}
 	return (0);
@@ -74,11 +48,13 @@ char	*get_last_exp(char *arg)
 	}
 	return (last);
 }
-char	find_no_alnum(char *arg)
+char	find_extra(char *arg)
 {
+	if (*(arg + 1) == '?' && *(arg + 2) == '?')
+		return (*(arg + 2));
 	while (*arg)
 	{
-		if (!ft_isalnum(*arg) && *arg != '$')
+		if (!ft_isalnum(*arg) && *arg != '$' && *arg != '?')
 			break;
 		arg++;
 	}
