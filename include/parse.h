@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 11:26:12 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:08:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "../lib/libft/ft_printf/ft_printf.h"
 
 # define BG_CYA "\033[46;1;37m "
-# define BG_MAG "\033[45;1;37m "
+# define BG_RED "\033[41;1;37m "
 # define BG_YEL "\033[43;1;37m "
 # define NC " \033[0m"
 
@@ -53,9 +53,8 @@ typedef struct s_word_lst
 typedef enum
 {
 	CMD,
-	GROUP, //will always execute in a subprocess: changes in directory will not affect current shell
-	EXP,
-	REDIR,
+	GROUP,
+	EXP, // ?
 	PIPE,
 	AND,
 	OR
@@ -112,7 +111,7 @@ int				is_valid_redir(t_word *word);
 int				check_quotes(char *word);
 // Abstract Syntax Tree (AST)
 void			create_syntax_tree(t_word_lst *word_lst, t_tree_node **root);
-t_tree_node		*add_node(int index, t_word *word);
+t_tree_node		*add_node(void);
 
 #endif
 
