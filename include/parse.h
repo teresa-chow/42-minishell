@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/03 11:46:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:08:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int				is_valid_redir(t_word *word);
 int				check_quotes(char *word);
 // Abstract Syntax Tree (AST)
 void			create_syntax_tree(t_word_lst *word_lst, t_tree_node **root);
-t_tree_node		*add_node(int index, t_word *word);
+t_tree_node		*add_node(void);
 
 #endif
 
