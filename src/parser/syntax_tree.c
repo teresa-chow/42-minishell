@@ -6,24 +6,34 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/02 17:26:30 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/03 13:22:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
+static int	is_group(t_word_lst *word_lst);
 static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root);
 
 void	create_syntax_tree(t_word_lst *word_lst, t_tree_node **root)
 {
 	(void)word_lst;
 	(void)root;
+	if (is_group(word_lst))
+		ft_printf("is group\n");
 	//check first if there's only one command inside parentheses
 	find_low_precedence(word_lst, root);
 	//start building subtree: mem alloc left and right nodes
 	ft_printf("root: %s, type: %d\n",
 		(*root)->word->word, (*root)->type); //delete
+}
+
+static int	is_group(t_word_lst *word_lst)
+{
+	if (!word_lst->next && word_lst->word->word[0] == '(')
+		return (1);
+	return (0);
 }
 
 static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root)
