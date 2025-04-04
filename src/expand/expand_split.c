@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
-#include "../../include/special_cases.h"
+#include "../../include/expand.h"
 
 static unsigned int	ft_substr_count(char const *s)
 {

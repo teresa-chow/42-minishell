@@ -13,7 +13,7 @@
 #include "../../include/parse.h"
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
-#include "../../include/special_cases.h"
+#include "../../include/expand.h"
 
 static	int	update_pwd_and_oldpwd(t_data *data);
 static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);

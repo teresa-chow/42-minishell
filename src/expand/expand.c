@@ -12,82 +12,55 @@
 
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
-#include "../../include/special_cases.h"
+#include "../../include/expand.h"
 #include "../../include/utils.h"
 
-char	*get_valid_dollar(char*arg)
+int	expand_vars(t_data *data);
+int	get_before_aft_mid(char *arg, t_data *data);
+int	handle_quotes(char *arg, t_data *data);
+int	join_words(t_data *data, t_word *word);
+
+int	expand(t_data *data, t_word *word)
 {
-	while (*arg)
-	{
-		if (*arg == '$' && (ft_isalnum(*(arg + 1)) || *(arg + 1) == '?'))
-			break;
-		arg++;
-	}
-	return (arg);
-}
+// /////////////////////////////////////////////////////////////////	
+// 		/////    TESTE    ///////
+// 	t_env_node	*var;
+// 	t_env_node	*var1;
 
-int	check_bfr(char *arg, t_data *data)
-{
-	char	*start;
-	char	*end;
-	int	i;
+// 	var = ft_getenv(data->env, "ZZ");
+// 	var->val = "Hello		  World";
+// 	var1 = ft_getenv(data->env, "ZA");
+// 	var1->val = "Bye		World";
+// 	word->word = ft_strdup("\"\"\"\"$ZZ--$ZA\"\"\"\"");
+	// word->word = ft_strdup("\"\"\"ola...eu""vou..??$$$--$HOME\"\"$PWD\"\"fim..\"\"\"");
 
-	end = get_valid_dollar(arg);
-	start = arg;
-	i = 0;
-	while (start != end)
-	{
-		if (*start != '"')
-			i++;
-		start++;
-	}
-	if (!i)
-		return (0);
-	data->exp->bfr = ft_calloc(i + 1, sizeof(char));
-	i = 0;
-	while (arg != end)
-	{
-		if (*arg != '"')
-			data->exp->bfr[i++] = *arg;
-		arg++;
-	}
-
+// 		/////    TESTE    ///////
+// //////////////////////////////////////////////////////////////////
+	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
+	if (!data->exp)
+		return (error_allocation(data));
+	if (get_before_aft_mid(word->word, data) == -1)
+		return (free_exp(data, word, 1));
+	if (expand_vars(data) == -1)
+		return (free_exp(data, word, 1));
+	if (handle_quotes(word->word, data) == -1)
+		return (free_exp(data, word, 1));
+	if (join_words(data, word) == -1)
+		return (free_exp(data, word, 1));
 	return (0);
 }
 
-int	check_bfr_aft_mid(char *arg, t_data *data)
+int	get_before_aft_mid(char *arg, t_data *data)
 {
 	if (*arg != '$' || (*arg == '$' && *(arg + 1) == '$'))
 	{
-		if (check_bfr(arg, data) == -1)
+		if (get_before(arg, data) == -1)
 			return (-1);	
 	}
-		if (check_lst_exp(data, arg) == -1)
+	if (get_after(data, arg) == -1)
 		return (-1);
-	if (get_exp_vars(arg, data) == -1)
+	if (get_mid(arg, data) == -1)
 		return(-1);
-	return (0);
-}
-
-int	expand_dollar(t_data *data, char **tmp, int i)
-{
-	char	*exit_status;
-
-	if (!get_var_and_extra_chars(data->exp->arr[i], data))
-		return (-1);
-	exit_status = ft_itoa(data->exit_status);
-	if (!exit_status)
-		return (-1);
-	if (data->exp->mid)
-	{
-		*tmp = data->exp->mid;
-		data->exp->mid = ft_strjoin(data->exp->mid, exit_status);
-		free(*tmp);
-		if (!data->exp->mid)
-			return (-1);
-	}
-	else
-		data->exp->mid = exit_status;
 	return (0);
 }
 
@@ -159,35 +132,5 @@ int	join_words(t_data *data, t_word *word)
 	}
 	if (!word->word)
 		return (-1);
-	return (0);
-}
-
-int	expand(t_data *data, t_word *word)
-{
-// /////////////////////////////////////////////////////////////////	
-// 		/////    TESTE    ///////
-// 	t_env_node	*var;
-// 	t_env_node	*var1;
-
-// 	var = ft_getenv(data->env, "ZZ");
-// 	var->val = "Hello		  World";
-// 	var1 = ft_getenv(data->env, "ZA");
-// 	var1->val = "Bye		World";
-// 	word->word = ft_strdup("\"\"\"\"$ZZ--$ZA\"\"\"\"");
-	// word->word = ft_strdup("\"\"\"$$$HOME$$\"\"\"");
-
-// 		/////    TESTE    ///////
-// //////////////////////////////////////////////////////////////////
-	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
-	if (!data->exp)
-		return (error_allocation(data));
-	if (check_bfr_aft_mid(word->word, data) == -1)
-		return (free_exp(data, word, 1));
-	if (expand_vars(data) == -1)
-		return (free_exp(data, word, 1));
-	if (handle_quotes(word->word, data) == -1)
-		return (free_exp(data, word, 1));
-	if (join_words(data, word) == -1)
-		return (free_exp(data, word, 1));
 	return (0);
 }

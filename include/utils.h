@@ -33,7 +33,6 @@ int		free_env_list(t_data *data, int i, t_env_node **lst);
 int		free_exp(t_data *data, t_word *word, int i);
 /* =========================== ENV INIT =========================== */
 int		init_env_lst(char **envp, t_data *data);
-
 /* =========================== SET PATH =========================== */
 char	**set_path(t_data *data, int *i);
 

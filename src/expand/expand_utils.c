@@ -11,31 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../include/errors.h"
-#include "../../include/special_cases.h"
+#include "../../include/expand.h"
 #include "../../include/utils.h"
 
-int	find_expand(t_word *word, t_data *data)
-{
-	char	*tmp;
-
-	while (word)
-	{
-		tmp =word->word;
-		while (*tmp)
-		{
-			if (*tmp == '$' && (ft_isalnum(*(tmp + 1)) || *(tmp + 1) == '?'))
-			{
-				if (expand(data, word) == -1)
-					return (-1);
-				break;
-			}
-			tmp++;
-		}
-		free_exp(data, word, 0);
-		word = word->next;
-	}
-	return (0);
-}
 char	*get_last_exp(char *arg)
 {
 	char	*last;
@@ -48,9 +26,11 @@ char	*get_last_exp(char *arg)
 	}
 	return (last);
 }
-char	find_extra(char *arg)
+char	find_extra_var_name(char *arg)
 {
-	if (*arg == '?')
+	if (*arg == '?' && *get_valid_dollar(arg))
+		return (0);
+	else
 		return (*(arg + 1));
 	while (*arg)
 	{
@@ -61,18 +41,42 @@ char	find_extra(char *arg)
 	return (*arg);
 }
 
-int	has_delimiter(char *arg)
+char	*get_valid_dollar(char*arg)
 {
-	if (!arg)
-		return (0);
 	while (*arg)
 	{
-		if (is_delimiter(*arg))
-		{
-			if ((*arg == ' ' && (is_delimiter(*(arg + 1)))) || *arg != ' ')
-				return (1);
-		}
+		if (*arg == '$' && (ft_isalnum(*(arg + 1)) || *(arg + 1) == '?'))
+			break;
 		arg++;
 	}
-	return (0);
+	return (arg);
+}
+
+int	count_begin_quotes(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] != '"')
+			break;
+	}
+	return (i);
+}
+
+int	count_end_quotes(char *s)
+{
+	int	i;
+
+	s = ft_strchr(get_last_exp(s), '"');
+	if (!s)
+		return (0);
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] != '"')
+			break;
+	}
+	return (i);
 }
