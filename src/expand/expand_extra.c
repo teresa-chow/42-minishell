@@ -83,11 +83,11 @@ int	get_mid(char *arg, t_data *data)
 
 	start = get_valid_dollar(arg);
 	last = get_last_exp(arg);
-	end = ft_strchr(last, find_extra_var_name(last));
+	// if (data->exp->no_alnum == '$')
+	// 	last++;
+	end = ft_strchr(last + 1, find_extra_var_name(last + 1));
 	if (*end == '?' && *(end + 1) == '?')
 		end = end + 1;
-	// else
-	// 	end = ft_strchr(get_last_exp(start) + 1, find_extra_var_name(start + 1));
 	len = ft_strlen(data->exp->bfr) + ft_strlen(data->exp->aft) + count_begin_quotes(arg) 
 						+ count_end_quotes(arg);
 	len = ft_strlen(arg) - len;

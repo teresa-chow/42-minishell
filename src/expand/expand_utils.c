@@ -30,7 +30,7 @@ char	find_extra_var_name(char *arg)
 {
 	if (*arg == '?' && *get_valid_dollar(arg))
 		return (0);
-	else
+	else if (*arg == '?')
 		return (*(arg + 1));
 	while (*arg)
 	{
