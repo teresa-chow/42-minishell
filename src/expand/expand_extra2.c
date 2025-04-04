@@ -74,8 +74,9 @@ int	get_extra_chars(t_data *data, char **tmp)
 
 char	*get_var_and_extra_chars(char *s, t_data *data)
 {
+	char	*start_extra;
+	char	*tmp;
 	char	c;
-	int	len;
 
 	free(data->exp->buf);
 	free(data->exp->extra);
@@ -86,16 +87,31 @@ char	*get_var_and_extra_chars(char *s, t_data *data)
 		return (s);
 	if (c)
 	{
-		len = ft_strlen(s) - ft_strlen(ft_strchr(s, c));
-		data->exp->buf = ft_calloc(len + 1, sizeof(char));
+		if (*s == '?' && *(s + 1) == '?')
+			start_extra = s + 1;
+		else
+			start_extra = ft_strchr(s, c);
+		data->exp->buf = ft_calloc((start_extra - s) + 1, sizeof(char));
 		if (!data->exp->buf)
 			return (NULL);
-		ft_strlcpy(data->exp->buf, s, len + 1);
-		len = ft_strlen(ft_strchr(s, c));
-		data->exp->extra = ft_calloc(len + 1, sizeof(char));
+		int i = 0;
+		(void)i;
+		tmp = s;
+		while (tmp != start_extra)
+		{
+			data->exp->buf[i++] = *tmp;
+			tmp++;
+		}
+		data->exp->extra = ft_calloc(ft_strlen(start_extra) + 1, sizeof(char));
 		if (!data->exp->buf)
 			return (NULL);
-		ft_strlcpy(data->exp->extra, ft_strchr(s, c), len + 1);
+		tmp = start_extra;
+		i = 0;
+		while (*tmp)
+		{
+			data->exp->extra[i++] = *tmp;
+			tmp++;
+		}
 	}
 	return (data->exp->buf);
 }
