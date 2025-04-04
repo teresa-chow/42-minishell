@@ -6,41 +6,66 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/03 16:10:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:49:12 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
+static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end);
 static int	is_group(t_word_lst *word_lst);
-static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **root);
-static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root);
+static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node);
+static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node);
 
-void	create_syntax_tree(t_word_lst *word_lst, t_tree_node **root)
+void	create_syntax_tree(t_word_lst *start, t_word_lst *end, int index,
+	t_tree_node **node)
 {
-	if (is_group(word_lst))
-		rm_parentheses(word_lst, root);
-	else
-		find_low_precedence(word_lst, root);
-	if ((*root)->type != CMD) //start building subtree: mem alloc left and right nodes
+	t_word_lst	*pivot;
+	t_word_lst	*new_start;
+	t_word_lst	*new_end;
+
+	new_start = NULL;
+	new_end = NULL;
+	pivot = find_pivot(start, end);
+	if (is_group(pivot)) //tmp solution, needs refactoring
 	{
-		//(*root)->left = add_node();
-		//(*root)->right = add_node();
-		ft_printf("root: %s, type: %d\n",
-			(*root)->word->word, (*root)->type); //delete
+		handle_cmd_group(pivot, index, node);
+		return ;
 	}
+	(*node)->word = pivot->word;
+	fill_node(pivot, index, node);
+	if (index)
+		++index;
+	if ((*node)->type != CMD)
+	{
+		new_end = last_partition_node(start, pivot);
+		(*node)->left = add_node();
+		create_syntax_tree(start, new_end, ++index, &(*node)->left);
+		new_start = first_partition_node(pivot);
+		(*node)->right = add_node();
+		create_syntax_tree(new_start, end, ++index, &(*node)->right);
+	}
+	ft_printf("(*node)->index: %d | (*node)->word: %s | (*node)->type: %d\n", (*node)->index, (*node)->word->word, (*node)->type);
 	return ;
 }
 
-t_tree_node	*add_node(void)
+static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 {
-	t_tree_node	*new;
+	t_word_lst	*tmp_lst;
+	t_word_lst	*pivot;
 
-	new = ft_calloc(1, sizeof(t_tree_node));
-	if (!new)
-		return (NULL);
-	return (new);
+	tmp_lst = start;
+	pivot = start;
+	while (tmp_lst != end)
+	{
+		if ((!ft_strcmp(tmp_lst->word->word, "|"))
+			|| (!ft_strcmp(tmp_lst->word->word, "&&"))
+			|| (!ft_strcmp(tmp_lst->word->word, "||")))
+			pivot = tmp_lst;
+		tmp_lst = tmp_lst->next;
+	}
+	return (pivot);
 }
 
 static int	is_group(t_word_lst *word_lst)
@@ -50,12 +75,23 @@ static int	is_group(t_word_lst *word_lst)
 	return (0);
 }
 
-static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **root)
+// TODO: handle groups, currently only handling single command group as input
+static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node)
+{
+	if (!index && !pivot->next)
+	{
+		rm_parentheses(pivot, node);
+		return ;
+	}
+}
+
+static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node)
 {
 	char		*tmp_group;
 	char		**cmd_lst;
 	t_word_lst	*tmp_lst;
 
+	(void)node;
 	tmp_group = ft_substr(word_lst->word->word, 1,
 		group_len(word_lst->word->word, 0) - 2);
 	cmd_lst = tokenize_op(tmp_group);
@@ -70,34 +106,7 @@ static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **root)
 		}
 		tokenize_w_lst(cmd_lst, tmp_lst);
 		free_strarray(cmd_lst);
-		find_low_precedence(tmp_lst, root);
-	}
-}
-
-static void	find_low_precedence(t_word_lst *word_lst, t_tree_node **root)
-{
-	t_word_lst	*tmp_lst;
-
-	tmp_lst = word_lst;
-	(*root)->word = tmp_lst->word;
-	(*root)->type = CMD;
-	while (tmp_lst)
-	{
-		if (!ft_strcmp(tmp_lst->word->word, "|"))
-		{
-			(*root)->word = tmp_lst->word;
-			(*root)->type = PIPE;
-		}
-		else if (!ft_strcmp(tmp_lst->word->word, "&&"))
-		{
-			(*root)->word = tmp_lst->word;
-			(*root)->type = AND;
-		}
-		else if (!ft_strcmp(tmp_lst->word->word, "||"))
-		{
-			(*root)->word = tmp_lst->word;
-			(*root)->type = OR;
-		}
-		tmp_lst = tmp_lst->next;
+		create_syntax_tree(tmp_lst, NULL, 0, node);
+		free(tmp_lst);
 	}
 }

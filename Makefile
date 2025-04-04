@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/02 15:39:29 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/04 15:29:57 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -170,7 +170,7 @@ norm:	## Execute norminette
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
 
-valgrind: all	## Run valgrind (suppress readline() memory leaks)
+vg: all	## Run valgrind (suppress readline() memory leaks)
 	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
