@@ -32,7 +32,7 @@ int	expand(t_data *data, t_word *word)
 // 	var1 = ft_getenv(data->env, "ZA");
 // 	var1->val = "Bye		World";
 // 	word->word = ft_strdup("\"\"\"\"$ZZ--$ZA\"\"\"\"");
-// 	// word->word = ft_strdup("");
+	// word->word = ft_strdup("\"$?$?$?$?$?????\"$PPWD$$$$OLDPWD$$");
 
 // 		/////    TESTE    ///////
 // //////////////////////////////////////////////////////////////////
