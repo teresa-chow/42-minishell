@@ -25,8 +25,8 @@ void	print_fd(int fd, const char *msg, char *token);
 
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);
-void	free_word_lst(t_word_lst **word_lst);
-void	free_words(t_word **word);
+void	free_word_lst(t_word_lst **word_lst, t_data *data);
+void	free_words(t_word **word, t_data *data);
 void	free_to_exit(t_data *data, t_word_lst **word_lst);
 void	free_prompt(t_prompt *prompt);;
 void	free_many(char **s1, char **s2, char **s3);

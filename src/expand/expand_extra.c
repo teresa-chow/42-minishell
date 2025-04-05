@@ -16,9 +16,10 @@
 int	expand_tilde(t_word *word, t_data *data)
 {
 	free(word->word);
+	word->word = NULL;
 	if (handle_with_home(data) == -1)
 		return (error_allocation(data));
-	word->word = ft_strdup(data->home_path);
+	word->word = data->home_path;
 	if (!word->word)
 		return (-1);
 	return (0);

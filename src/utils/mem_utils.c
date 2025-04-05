@@ -103,12 +103,14 @@ int	free_env_list(t_data *data, int i, t_env_node **lst)
 	return (0);
 }
 
-void	free_words(t_word **word)
+void	free_words(t_word **word, t_data *data)
 {
 	t_word	*tmp;
 
 	while (*word != NULL)
 	{
+		if (data->home_path == (*word)->word)
+			data->home_path = NULL;
 		free((*word)->word);
 		tmp = *word;
 		*word = (*word)->next;
@@ -116,13 +118,13 @@ void	free_words(t_word **word)
 	}
 }
 
-void	free_word_lst(t_word_lst **word_lst)
+void	free_word_lst(t_word_lst **word_lst, t_data *data)
 {
 	t_word_lst	*tmp;
 
 	while (*word_lst)
 	{
-		free_words(&(*word_lst)->word);
+		free_words(&(*word_lst)->word, data);
 		tmp = *word_lst;
 		*word_lst = (*word_lst)->next;
 		free(tmp);
@@ -134,5 +136,5 @@ void	free_to_exit(t_data *data, t_word_lst **word_lst)
 	free_env_list(data, 0, &data->env);
 	free(data->home_path);
 	data->home_path = NULL;
-	free_word_lst(word_lst);
+	free_word_lst(word_lst, data);
 }

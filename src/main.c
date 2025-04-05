@@ -59,8 +59,8 @@ static void	data_init(t_data *data, char **envp)
 }
 static	void	free_old_mem(t_data *data, t_word_lst **word_lst)
 {
+	free_word_lst(word_lst, data);
 	if (data->home_path)
 		free(data->home_path);
 	data->home_path = NULL;
-	free_word_lst(word_lst);
 }	
