@@ -17,6 +17,8 @@
 #include "../tests/test.h" //tmp
 
 static void	data_init(t_data *data, char **envp);
+static void	free_old_mem(t_data *data, t_word_lst **word_lst);
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -41,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		if (word_lst->word != NULL)
 			test_builtins(&data, &word_lst, &i);
 		if (i)
-			free_word_lst(&word_lst);
+			free_old_mem(&data, &word_lst);
 		// printf("\n\nError code of '%s': %d\n", save ,data.exit_status);
 		free(save); /////////////////////////////////////////////////////////
 	}
@@ -55,3 +57,10 @@ static void	data_init(t_data *data, char **envp)
 	if (init_env_lst(envp, data) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 }
+static	void	free_old_mem(t_data *data, t_word_lst **word_lst)
+{
+	if (data->home_path)
+		free(data->home_path);
+	data->home_path = NULL;
+	free_word_lst(word_lst);
+}	

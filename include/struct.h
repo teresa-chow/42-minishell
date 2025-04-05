@@ -85,7 +85,7 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
-	char		*cd_path;
+	char		*home_path;
 	int			exit_status;
 }	t_data;
 

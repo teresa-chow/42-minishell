@@ -15,6 +15,25 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
+void	free_many(char **s1, char **s2, char **s3)
+{
+	if (s1)
+	{
+		free(*s1);
+		*s1 = NULL;
+	}
+	if (s2)
+	{
+		free(*s2);
+		*s2 = NULL;
+	}
+	if (s3)
+	{
+		free(*s3);
+		*s3 = NULL;
+	}
+}
+
 void	free_strarray(char **array)
 {
 	int	i;
@@ -113,7 +132,7 @@ void	free_word_lst(t_word_lst **word_lst)
 void	free_to_exit(t_data *data, t_word_lst **word_lst)
 {
 	free_env_list(data, 0, &data->env);
-	free(data->cd_path);
-	data->cd_path = NULL;
+	free(data->home_path);
+	data->home_path = NULL;
 	free_word_lst(word_lst);
 }

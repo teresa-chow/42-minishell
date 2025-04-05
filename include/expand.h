@@ -19,7 +19,9 @@ int	get_extra_chars(t_data *data, char **tmp);
 int	get_mid(char *arg, t_data *data);
 int	get_var_val(t_data *data, int i, char **tmp);
 int	has_delimiter(char *arg);
+int	is_valid_mid(t_data *data);
 int	join_with_space(t_data *data, char **to_free);
+int	set_mid(t_data *data, char **tmp);
 //EXPAND UTILS
 char	find_extra_var_name(char *arg);
 char	*get_last_exp(char *arg);

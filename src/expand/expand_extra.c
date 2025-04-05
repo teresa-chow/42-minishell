@@ -11,6 +11,18 @@
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
+#include "../../include/errors.h"
+
+int	expand_tilde(t_word *word, t_data *data)
+{
+	free(word->word);
+	if (handle_with_home(data) == -1)
+		return (error_allocation(data));
+	word->word = ft_strdup(data->home_path);
+	if (!word->word)
+		return (-1);
+	return (0);
+}
 
 int	find_expand(t_word *word, t_data *data)
 {
@@ -28,6 +40,11 @@ int	find_expand(t_word *word, t_data *data)
 				break;
 			}
 			tmp++;
+		}
+		if (!ft_strcmp(word->word, "~"))
+		{
+			if (expand_tilde(word, data) == -1)
+				return (-1);
 		}
 		free_exp(data, word, 0);
 		word = word->next;
@@ -83,8 +100,6 @@ int	get_mid(char *arg, t_data *data)
 
 	start = get_valid_dollar(arg);
 	last = get_last_exp(arg);
-	// if (data->exp->no_alnum == '$')
-	// 	last++;
 	end = ft_strchr(last + 1, find_extra_var_name(last + 1));
 	if (*end == '?' && *(end + 1) == '?')
 		end = end + 1;
@@ -109,7 +124,7 @@ int	join_with_space(t_data *data, char **to_free)
 		data->exp->mid = join_three(data->exp->mid, " ", data->exp->words[i]);
 		if (!data->exp->mid)
 			return (-1);
-		free(*to_free);
+		free_many(to_free, NULL, NULL);
 		*to_free = data->exp->mid;
 	}
 	return (0);

@@ -44,7 +44,7 @@ int	get_var_val(t_data *data, int i, char **tmp)
 		{
 			*tmp = data->exp->mid;
 			data->exp->mid = ft_strjoin(data->exp->mid, var->val);
-			free(*tmp);
+			free_many(tmp, NULL, NULL);
 		}
 		else
 			data->exp->mid = ft_strdup(var->val);
@@ -62,7 +62,7 @@ int	get_extra_chars(t_data *data, char **tmp)
 		{
 			*tmp = data->exp->mid;
 			data->exp->mid = ft_strjoin(data->exp->mid, data->exp->extra);
-			free(*tmp);
+			free_many(tmp, NULL, NULL);
 		}
 		else
 			data->exp->mid = ft_strdup(data->exp->extra);
@@ -75,16 +75,10 @@ int	get_extra_chars(t_data *data, char **tmp)
 char	*get_var_and_extra_chars(char *s, t_data *data)
 {
 	char	*start_extra;
-	char	*tmp;
 	char	c;
 
-	free(data->exp->buf);
-	free(data->exp->extra);
-	data->exp->buf = NULL;
-	data->exp->extra = NULL;
+	free_many(&data->exp->buf, &data->exp->extra, NULL);
 	c = find_extra_var_name(s);
-	if (!c)
-		return (s);
 	if (c)
 	{
 		if (*s == '?' && *(s + 1) == '?')
@@ -94,26 +88,14 @@ char	*get_var_and_extra_chars(char *s, t_data *data)
 		data->exp->buf = ft_calloc((start_extra - s) + 1, sizeof(char));
 		if (!data->exp->buf)
 			return (NULL);
-		int i = 0;
-		(void)i;
-		tmp = s;
-		while (tmp != start_extra)
-		{
-			data->exp->buf[i++] = *tmp;
-			tmp++;
-		}
+		add_chars(s, start_extra, data->exp->buf);
 		data->exp->extra = ft_calloc(ft_strlen(start_extra) + 1, sizeof(char));
 		if (!data->exp->buf)
 			return (NULL);
-		tmp = start_extra;
-		i = 0;
-		while (*tmp)
-		{
-			data->exp->extra[i++] = *tmp;
-			tmp++;
-		}
+		add_chars(start_extra, ft_strchr(start_extra, 0), data->exp->extra);
+		s = data->exp->buf;
 	}
-	return (data->exp->buf);
+	return (s);
 }
 
 int	expand_dollar(t_data *data, char **tmp, int i)
@@ -129,7 +111,7 @@ int	expand_dollar(t_data *data, char **tmp, int i)
 	{
 		*tmp = data->exp->mid;
 		data->exp->mid = ft_strjoin(data->exp->mid, exit_status);
-		free(*tmp);
+		free_many(tmp, &exit_status, NULL);
 		if (!data->exp->mid)
 			return (-1);
 	}
