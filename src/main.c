@@ -41,10 +41,9 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&word_lst, &data);
 		char	*save = ft_strdup(word_lst->word->word); //////////////////////////////////
 		if (word_lst->word != NULL)
-			test_builtins(&data, &word_lst, &i);
+ 			test_builtins(&data, &word_lst, &i);
 		if (i)
 			free_old_mem(&data, &word_lst);
-		// printf("\n\nError code of '%s': %d\n", save ,data.exit_status);
 		free(save); /////////////////////////////////////////////////////////
 	}
 	rl_clear_history();

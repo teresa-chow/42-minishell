@@ -29,7 +29,7 @@ void	free_word_lst(t_word_lst **word_lst, t_data *data);
 void	free_words(t_word **word, t_data *data);
 void	free_to_exit(t_data *data, t_word_lst **word_lst);
 void	free_prompt(t_prompt *prompt);;
-void	free_many(char **s1, char **s2, char **s3);
+// void	free_many(char **s1, char **s2, char **s3);
 int		free_env_list(t_data *data, int i, t_env_node **lst);
 int		free_exp(t_data *data, t_word *word, int i);
 /* =========================== ENV INIT =========================== */

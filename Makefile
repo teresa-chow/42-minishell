@@ -26,9 +26,9 @@ SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c export.c \
 	export_utils.c export_utils_2.c export_merge_sort.c pwd.c unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
-	set_path.c print_fd.c general_utils.c)
-EXPAND	= $(addprefix $(EXPAND_DIR)/, expand.c expand_utils.c expand_utils2.c expand_extra.c \
-			expand_extra2.c expand_extra3.c expand_split.c)
+	set_path.c print_fd.c general_utils.c) \
+#EXPAND	= $(addprefix $(EXPAND_DIR)/, \ 
+#//////////////////////////////  HEEEEREEEEE  //////////////////////////////////////////////
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 

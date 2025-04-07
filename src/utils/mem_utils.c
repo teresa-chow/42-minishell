@@ -59,32 +59,6 @@ void	free_prompt(t_prompt *prompt)
 		free(prompt->cwd);
 }
 
-int	free_exp(t_data *data, t_word *word, int i)
-{
-	if (data->exp)
-	{
-		if (data->exp->bfr && data->exp->bfr != word->word)
-			free(data->exp->bfr);
-		if (data->exp->mid)
-			free(data->exp->mid);
-		if (data->exp->aft && data->exp->aft != word->word)
-			free(data->exp->aft);
-		if (data->exp->buf)
-			free(data->exp->buf);
-		if (data->exp->extra)
-			free(data->exp->extra);
-		if (data->exp->arr)
-			free_strarray(data->exp->arr);
-		if (data->exp->words)
-			free_strarray(data->exp->words);
-		free(data->exp);
-		data->exp = NULL;
-		if (i)
-			return (error_allocation(data));
-	}
-	return (0);
-}
-
 int	free_env_list(t_data *data, int i, t_env_node **lst)
 {
 	t_env_node	*tmp;
