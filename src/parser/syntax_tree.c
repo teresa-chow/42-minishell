@@ -45,7 +45,6 @@ void	create_syntax_tree(t_word_lst *start, t_word_lst *end, int index,
 		(*node)->right = add_node();
 		create_syntax_tree(new_start, end, ++index, &(*node)->right);
 	}
-	ft_printf("(*node)->index: %d | (*node)->word: %s | (*node)->type: %d\n", (*node)->index, (*node)->word->word, (*node)->type);
 	return ;
 }
 

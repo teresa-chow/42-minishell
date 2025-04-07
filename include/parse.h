@@ -117,7 +117,8 @@ void			create_syntax_tree(t_word_lst *start, t_word_lst *end,
 t_tree_node		*add_node(void);
 void			fill_node(t_word_lst *pivot, int index, t_tree_node **node);
 // Execution -- move to exec directory (?)
-void			exec_ast(t_data *data, t_tree_node **root, int *i);
+void	ast_depth_search(t_data *data, t_tree_node **node, int *i);
+void			exec_ast(t_data *data, t_tree_node **node, int *i);
 
 #endif
 

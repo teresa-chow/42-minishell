@@ -30,18 +30,18 @@ int	main(int argc, char **argv, char **envp)
 	while (i)
 	{
 		root = ft_calloc(1, sizeof(t_tree_node));
-		if (!root)
+		/*if (!root)
 		{
 			free_env_list(&data, 1, &data.env);
 			break;
-		}
+		}*/
 		read_input(&root, &data);
-		//if (root->word->word)
-		//	exec_ast(&data, &root, &i);
+		if (root->word->word)
+			exec_ast(&data, &root, &i);
 		if (i)
 			free_old_mem(&data); //TODO: refactor to include tree (?)
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	return (0);
 }
 

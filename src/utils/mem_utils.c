@@ -77,7 +77,6 @@ void	free_word_lst(t_word_lst **word_lst)
 
 	while (*word_lst)
 	{
-		free_words(&(*word_lst)->word);
 		tmp = *word_lst;
 		*word_lst = (*word_lst)->next;
 		free(tmp);
