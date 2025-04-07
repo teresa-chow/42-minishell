@@ -1,13 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/03/20 17:30:08 by carlaugu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXPAND_H
 #define EXPAND_H
 
 # include "utils.h"
 
-/* -------------------------------------------------------------------------- */
-/*                                     EXPAND                                 */
-/* -------------------------------------------------------------------------- */
 int	expand(t_data *data, t_word *word);
-//EXPAND EXTRA FUNCTIONS
 char	**get_words(char const *s);
 char	*get_var_and_extra_chars(char *s, t_data *data);
 char	*join_three(char *s1, char *s2, char *s3);
@@ -22,7 +30,8 @@ int	has_delimiter(char *arg);
 int	is_valid_mid(t_data *data);
 int	join_with_space(t_data *data, char **to_free);
 int	set_mid(t_data *data, char **tmp);
-//EXPAND UTILS
+
+/* ================================ UTILS ================================== */
 char	find_extra_var_name(char *arg);
 char	*get_last_exp(char *arg);
 char	*get_valid_dollar(char*arg);

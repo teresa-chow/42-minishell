@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/02 15:22:04 by tchow-so         ###   ########.fr       */
+/*   Created: 2025-03-25 19:44:11 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-03-25 19:44:11 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exit_cmd(t_data *data, t_word_lst **word_lst, int *i)
 	*i = 0;
 }
 
-void	check_syntax_exit(t_word *word, t_data *data, int *many_args, int *syntax)
+void	check_syntax(t_word *word, t_data *data, int *many_args, int *syntax)
 {
 	char	*tmp;
 
@@ -51,7 +51,7 @@ void	check_exit_args(t_data *data, t_word_lst **word_lst, int *i)
 
 	many_args = 0;
 	syntax_error = 0;
-	check_syntax_exit((*word_lst)->word, data, &many_args, &syntax_error);
+	check_syntax((*word_lst)->word, data, &many_args, &syntax_error);
 	if (many_args && !syntax_error)
 	{
 		exit_error_many_args(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-28 17:04:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-28 17:04:20 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/28 17:04:20 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/03 15:33:39 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 	tmp = s;
 	if (s && ft_isdigit(*s))
 	{
+		if (*exit == -1)
+			*exit = ERR;
 		error_export_syntax(s, data);
 		return (0);
 	}

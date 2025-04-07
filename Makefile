@@ -27,9 +27,8 @@ SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
-	set_path.c print_fd.c)
-SRC_SP_CASES	= $(addprefix $(SP_CASES_DIR)/, expand.c expand_utils.c \
-	expand_split.c)
+	set_path.c print_fd.c general_utils.c)
+SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_split.c)
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
@@ -38,7 +37,7 @@ OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
-OBJS_SP_CASES	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_SP_CASES:.c=.o)))
+OBJS_EXPANDER	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXPANDER:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
 OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
@@ -64,7 +63,7 @@ EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
 
-SP_CASES_DIR = $(SRC_DIR)/special_cases
+EXPANDER_DIR = $(SRC_DIR)/expander
 
 ERRORS_DIR	= $(SRC_DIR)/errors
 
@@ -97,11 +96,11 @@ MKDIR	= mkdir -p
 all: $(NAME)	## Compile minishell
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_SP_CASES) $(OBJS_ERRORS) $(OBJS_TEST)
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(OBJS_SP_CASES) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) \
+	$(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) \
 	-o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
@@ -125,7 +124,7 @@ $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
 $(BUILD_DIR)/%.o: $(UTILS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(SP_CASES_DIR)/%.c
+$(BUILD_DIR)/%.o: $(EXPANDER_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(ERRORS_DIR)/%.c

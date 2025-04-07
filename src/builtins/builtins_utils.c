@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*   builtins_utils_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/28 16:52:48 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/02 16:40:14 by tchow-so         ###   ########.fr       */
+/*   Created: 2025-03-28 16:52:48 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-03-28 16:52:48 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,11 @@ t_env_node	*last_node(t_env_node *env_lst)
 
 t_env_node	*ft_getenv(t_env_node *env, char *key)
 {
-	t_env_node *tmp;
-
-	tmp = env ;
-	while (tmp)
+	while (env)
 	{
-		if (!ft_strcmp(tmp->key, key))
-			return (tmp);
-		tmp = tmp->next;
+		if (!ft_strcmp(env->key, key))
+			return (env);
+		env = env->next;
 	}
 	return (NULL);
 }

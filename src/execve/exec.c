@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-24 22:19:13 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/03 15:38:10 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static void	execute(t_data *data, t_exec_data *inf)
 	pid_t	pid;
 	int		status;
 
+	status = 0;
 	pid = fork();
 	if (pid < 0)
 	{

@@ -13,28 +13,24 @@
 #include "../../include/parse.h"
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
-#include "../../include/special_cases.h"
+#include "../../include/expand.h"
 
 static	int	update_pwd_and_oldpwd(t_data *data);
 static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);
 
 void	cd(t_word *input, t_data *data)
 {
-	char	*path;
-	t_env_node	*home_var;
-
-	path = NULL;
+	data->home_path = NULL;
 	if (input->next)
-		path = input->next->word;
+		data->home_path = input->next->word;
 	else
 	{
-		home_var = ft_getenv(data->env, "HOME");
-		if (home_var)
-			path = home_var->val;
+		if (handle_with_home(data) == -1)
+			return ;
 	}
-	if (chdir(path) == -1)
+	if (chdir(data->home_path) == -1)
 	{
-		cd_error(path, data, 1);
+		cd_error(data->home_path, data, 1);
 		return ;
 	}
 	if (!update_pwd_and_oldpwd(data))
@@ -68,7 +64,7 @@ static int	update_pwd_and_oldpwd(t_data *data)
 	return (0);
 }
 
-void	handle_old(t_env_node *old, t_env_node *pwd, char *curr)
+static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr)
 {
 	if (old)
 	{

@@ -13,11 +13,10 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
+/* Structs associated with parsing can be found in parse.h header file */
 #include "parse.h"
 
-/* -------------------------------------------------------------------------- */
-/*                           EXPORT AND ENV INIT                              */
-/* -------------------------------------------------------------------------- */
+/* =========================== EXPORT + ENV INIT =========================== */
 typedef struct s_input_inf
 {
 	int		val_strt;
@@ -26,9 +25,7 @@ typedef struct s_input_inf
 	char	sep;
 }	t_input_inf;
 
-/* -------------------------------------------------------------------------- */
-/*                            ENV STRUCT                                      */
-/* -------------------------------------------------------------------------- */
+/* ================================== ENV ================================== */
 typedef struct s_env_node
 {
 	char				*key;
@@ -45,25 +42,7 @@ typedef struct s_env_init
 	t_input_inf	inf;
 }	t_env_init;
 
-/* -------------------------------------------------------------------------- */
-/*                            PARSER                                */
-/* -------------------------------------------------------------------------- */
-/*typedef struct s_word
-{
-	struct s_word	*next;
-	char	*word;
-	int		flags;
-}	t_word;
-
-typedef struct s_word_lst
-{
-	struct s_word_lst	*next;
-	struct s_word		*word;
-}	t_word_lst;*/ //TODO: needs review
-
-/* -------------------------------------------------------------------------- */
-/*                               SPECIAL CASES                                */
-/* -------------------------------------------------------------------------- */
+/* =============================== EXPANDER ================================ */
 typedef struct s_expand
 {
 	char	*bfr;
@@ -78,9 +57,7 @@ typedef struct s_expand
 	int	invalid_pos;
 }	t_expand;
 
-/* -------------------------------------------------------------------------- */
-/*                                 GENERAL                                    */
-/* -------------------------------------------------------------------------- */
+/* ================================ GENERAL ================================ */
 typedef struct s_data
 {
 	t_env_node	*env;
