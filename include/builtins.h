@@ -46,7 +46,7 @@ void		env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
 void		exit_cmd(t_data *data, t_tree_node **node, int *i);
-//void		check_exit_args(t_data *data, t_tree_node **node, int *i);
+void		check_exit_args(t_data *data, t_tree_node **node, int *i);
 
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);

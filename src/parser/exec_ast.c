@@ -43,7 +43,6 @@ static int is_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 {
 	int	is_bi;
 
-	(void)i;
 	is_bi = 1;
 	if (ft_strcmp((*node)->word->word, "echo") == 0)
 		echo((*node)->word, data);
@@ -57,8 +56,8 @@ static int is_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 		unset(data, (*node)->word->next);
 	else if (ft_strcmp((*node)->word->word,"env") == 0)
 		env_cmd(data->env, data);
-	//else if (!ft_strcmp((*node)->word->word, "exit"))
-		//check_exit_args(data, node, i);
+	else if (!ft_strcmp((*node)->word->word, "exit"))
+		check_exit_args(data, node, i);
 	else
 		is_bi = 0;
 	return (is_bi);

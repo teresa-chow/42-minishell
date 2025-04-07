@@ -45,16 +45,14 @@ typedef struct s_env_init
 /* =============================== EXPANDER ================================ */
 typedef struct s_expand
 {
-	char	*bfr;
-	char	*mid;
-	char	*aft;
-	char	*invalid_str;
-	char	*buf;
-	char	*extra;
-	char	**arr;
+	char	*new;
 	char	**words;
-	char	no_alnum;
-	int	invalid_pos;
+	bool	in_dbl;
+	bool	in_sing;
+	bool	to_exp;
+	bool	has_exp;
+	bool	has_sing;
+	bool	has_dbl;
 }	t_expand;
 
 /* ================================ GENERAL ================================ */

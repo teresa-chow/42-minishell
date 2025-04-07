@@ -14,9 +14,8 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-//static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
-//	int *syntax);
-//static void	check_exit_args(t_data *data, t_tree_node **node, int *i);
+static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
+	int *syntax);
 
 void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 {
@@ -24,7 +23,7 @@ void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 	*i = 0;
 }
 
-/*static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
+static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 	int *syntax)
 {
 	char	*tmp;
@@ -47,9 +46,9 @@ void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 		}
 		tmp++;
 	}
-}*/
+}
 
-/*static void	check_exit_args(t_data *data, t_tree_node **node, int *i)
+void	check_exit_args(t_data *data, t_tree_node **node, int *i)
 {
 	int		many_args;
 	int		syntax_error;
@@ -63,4 +62,4 @@ void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 		return ;
 	}
 	exit_cmd(data, node, i);
-}*/
+}
