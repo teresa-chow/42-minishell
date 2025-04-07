@@ -25,10 +25,9 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c\
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c export.c \
 	export_utils.c export_utils_2.c export_merge_sort.c pwd.c unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
-SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c \
-	set_path.c print_fd.c general_utils.c) \
-#EXPAND	= $(addprefix $(EXPAND_DIR)/, \ 
-#//////////////////////////////  HEEEEREEEEE  //////////////////////////////////////////////
+SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c set_path.c print_fd.c general_utils.c)
+EXPAND	= $(addprefix $(EXPAND_DIR)/, expand_split.c exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c \
+		exp_qts_main.c)
 SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
@@ -63,7 +62,7 @@ EXECVE_DIR	= $(SRC_DIR)/execve
 
 UTILS_DIR	= $(SRC_DIR)/utils
 
-EXPAND_DIR = $(SRC_DIR)/expand
+EXPAND_DIR = $(SRC_DIR)/quoting_expansion
 
 ERRORS_DIR	= $(SRC_DIR)/errors
 

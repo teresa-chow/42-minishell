@@ -66,12 +66,14 @@ typedef struct s_word_lst
 /* -------------------------------------------------------------------------- */
 typedef struct s_expand
 {
+	char	*new;
+	char	**words;
 	bool	in_dbl;
 	bool	in_sing;
-	int	has_exp;
-	int	has_sing;
-	int	has_dbl;
-	char	*new;
+	bool	to_exp;
+	bool	has_exp;
+	bool	has_sing;
+	bool	has_dbl;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
