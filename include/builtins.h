@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/02 15:37:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/18 12:22:58 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void		echo(t_word *input, t_data *data);
 
 /* =================================== CD =================================== */
 void		cd(t_word *input, t_data *data);
-
 /* ================================== PWD =================================== */
 void		pwd(t_data *data);
 /* ================================= EXPORT================================= */
@@ -43,8 +42,6 @@ void		env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
 void		exit_cmd(t_data *data, t_word_lst **word_lst, int *i);
-void		check_syntax_exit(t_word *word, t_data *data, int *many_args,
-				int *syntax);
 void		check_exit_args(t_data *data, t_word_lst **word_lst, int *i);
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);

@@ -69,10 +69,13 @@ typedef struct s_expand
 	char	*bfr;
 	char	*mid;
 	char	*aft;
+	char	*invalid_str;
+	char	*buf;
+	char	*extra;
 	char	**arr;
-	char	buf[100];
-	char	extra[100];
+	char	**words;
 	char	no_alnum;
+	int	invalid_pos;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
@@ -82,6 +85,7 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
+	char		*home_path;
 	int			exit_status;
 }	t_data;
 
