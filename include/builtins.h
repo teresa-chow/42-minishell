@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/18 12:22:58 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:57:33 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void		unset(t_data *data, t_word *word);
 void		env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
-void		exit_cmd(t_data *data, t_word_lst **word_lst, int *i);
-void		check_exit_args(t_data *data, t_word_lst **word_lst, int *i);
+void		exit_cmd(t_data *data, t_tree_node **node, int *i);
+//void		check_exit_args(t_data *data, t_tree_node **node, int *i);
 
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);

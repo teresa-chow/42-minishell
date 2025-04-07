@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/01 10:39:30 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:11:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
-#include "../include/special_cases.h"
+#include "../include/expand.h"
 #include "../include/errors.h"
 
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
 
-void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
+/*void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 { /// has pelicas???????
    	if (ft_strcmp((*word_lst)->word->word, "echo") == 0)
 	{
-		if (find_expand((*word_lst)->word, data) == -1)
-			return ;
+		//if (find_expand((*word_lst)->word, data) == -1)
+		//	return ;
 		echo((*word_lst)->word, data);
 	}
 	else if (ft_strcmp((*word_lst)->word->word, "cd") == 0)
@@ -48,7 +48,7 @@ void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 						    /// we have to free the tree
 	else
 		exec(data, (*word_lst)->word);
-}
+}*/
 /*****************************************************************************\
 |                             PARSER TEST FUNCTIONS                           |
 \*****************************************************************************/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-25 19:44:11 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/07 14:59:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-void	exit_cmd(t_data *data, t_word_lst **word_lst, int *i)
+//static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
+//	int *syntax);
+//static void	check_exit_args(t_data *data, t_tree_node **node, int *i);
+
+void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	free_to_exit(data, word_lst);
+	free_to_exit(data, node);
 	*i = 0;
 }
 
-void	check_syntax(t_word *word, t_data *data, int *many_args, int *syntax)
+/*static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
+	int *syntax)
 {
 	char	*tmp;
 
@@ -42,20 +47,20 @@ void	check_syntax(t_word *word, t_data *data, int *many_args, int *syntax)
 		}
 		tmp++;
 	}
-}
+}*/
 
-void	check_exit_args(t_data *data, t_word_lst **word_lst, int *i)
+/*static void	check_exit_args(t_data *data, t_tree_node **node, int *i)
 {
 	int		many_args;
 	int		syntax_error;
 
 	many_args = 0;
 	syntax_error = 0;
-	check_syntax((*word_lst)->word, data, &many_args, &syntax_error);
+	check_syntax_exit((*node)->word, data, &many_args, &syntax_error);
 	if (many_args && !syntax_error)
 	{
 		exit_error_many_args(data);
 		return ;
 	}
-	exit_cmd(data, word_lst, i);
-}
+	exit_cmd(data, node, i);
+}*/

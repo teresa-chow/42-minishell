@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/04 14:01:30 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:23:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root)
 		return ;
 	}
 	tokenize_w_lst(cmd_lst, word_lst);
-	//print_word_lst(cmd_lst, &word_lst); //tmp
 	free_strarray(cmd_lst);
 	if (syntax_check(word_lst, data) == 0)
 		create_syntax_tree(word_lst, NULL, 0, root); //check if NULL or last node
