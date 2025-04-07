@@ -34,6 +34,18 @@ void	free_many(char **s1, char **s2, char **s3)
 	}
 }
 
+int	free_exp(t_data *data, t_word *word, int i)
+{
+	if (data->exp->new != word->word)
+		free(data->exp->new);
+	if (data->exp->words)
+		free_strarray(data->exp->words);
+	ft_bzero(data->exp, sizeof(t_expand));
+	if (i)
+		return (error_allocation(data));
+	return (0);
+}
+
 void	free_strarray(char **array)
 {
 	int	i;

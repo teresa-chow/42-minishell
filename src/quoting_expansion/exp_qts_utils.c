@@ -65,7 +65,7 @@ char	*get_next_qt(char *s, t_data *data)
 {
 	while (*s)
 	{
-		if (*s == '$' && is_valid_dollar(s) && !data->exp->to_exp)
+		if (*s == '$' && is_valid_dollar(s) && !data->exp->to_exp && !data->exp->in_sing)
 			data->exp->to_exp = !data->exp->to_exp;
 		if (*s == '\'' && data->exp->in_sing)
 			break;

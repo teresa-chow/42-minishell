@@ -29,9 +29,12 @@ int	analyze_args(t_word *word, t_data *data)
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
 			if (handle_arg(word, data) == -1)
-				return (-1);// return(free_exp);
+				return(free_exp(data, word, 1));
+			free(word->word);
+			word->word = data->exp->new;
 		}
 		reset_checkers(data);
+		free_exp(data, word, 0);
 		word = word->next;
 	}
 	return (0);
@@ -57,7 +60,7 @@ static int	handle_arg(t_word *word, t_data *data)
 
 /////////////////   TO FINISH ////////////////////////////////
 
-void	join_splited_words(t_data *data, char *tmp)
+void	join_splited_words(t_data *data, char **tmp)
 {
 	int	i;
 	int	j;
@@ -65,16 +68,15 @@ void	join_splited_words(t_data *data, char *tmp)
 	i = -1;
 	while (data->exp->words[++i])
 	{
-		tmp = ft_strchr(tmp, 0);
 		j = -1;
 		while (data->exp->words[i][++j])
-			tmp[j] = data->exp->words[i][j];
+			*(*tmp)++ = data->exp->words[i][j];
 		if (data->exp->words[i + 1])
-			tmp[j] = ' ';
+			*(*tmp)++ = ' ';
 	}
 }
 
-int	get_split_words(t_data *data, char **ptr, char *tmp)
+int	get_split_words(t_data *data, char **ptr, char **tmp)
 {
 	char	*inval;
 	char	box;
@@ -107,24 +109,23 @@ static int	handle_normal(char **ptr, t_data *data)
 	int	len;
 	char	*end;
 	char	*tmp;
+	char	*start;
 
+	(void)start;
 	end = get_next_qt(*ptr, data);
 	len = get_len(*ptr, end, data);
 	tmp = ft_calloc(len + 1, sizeof(char));
+	start = tmp;
 	if (!tmp)
 		return (-1);
-	while (**ptr)
+	while (*ptr != end)
 	{
 		if (**ptr == '$' && is_valid_dollar(*ptr))
-			get_split_words(data, ptr, tmp);
+			get_split_words(data, ptr, &tmp);
 		else
-		{
-			end = ft_strchr(tmp, 0);
-			tmp[end - tmp] = **ptr;
-			(*ptr)++;
-		}
+			*tmp++ = *(*ptr)++;
 	}
-	//// call build_new
+	build_new(data, start, tmp, len);
 	return (0);
 }
 
