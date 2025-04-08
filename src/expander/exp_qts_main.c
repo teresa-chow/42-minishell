@@ -14,7 +14,7 @@
 
 static int	handle_arg(t_word *word, t_data *data);
 static int	handle_normal(char **ptr, t_data *data);
-
+int	expand_tilde(t_word *word, t_data *data);
 int	build_new(t_data *data, char *bgn, char *end, int len);
 int	handle_exp_qts(char **ptr, t_data *data);
 
@@ -25,8 +25,11 @@ int	analyze_args(t_word *word, t_data *data)
 		return (error_allocation(data));
 	while (word)
 	{
-		// if (!ft_strcmp(word->word, "~"))
-		// 	expand_tilde();
+		if (!ft_strcmp(word->word, "~"))
+		{
+			if (expand_tilde(word, data) == -1)
+				return (free_exp(data, word, 1));
+		}
 		check_special_char(word->word, data);
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
@@ -42,10 +45,16 @@ int	analyze_args(t_word *word, t_data *data)
 	return (0);
 }
 
-// int	expand_tilde(t_word *word)
-// {
-
-// }
+int	expand_tilde(t_word *word, t_data *data)
+{
+	if (handle_with_home(data) == -1)
+		return (-1);
+	free (word->word);
+	word->word = ft_strdup(data->home_path);
+	if (!word->word)
+		return (-1);
+	return (0);
+}
 
 static int	handle_arg(t_word *word, t_data *data)
 {
@@ -109,7 +118,7 @@ int	get_var_val(t_data *data, char **ptr, char **tmp)
 		*tmp += ft_strlen(exit_val);
 	}
 	var = ft_getenv(data->env, *ptr);
-	if (var && **ptr != '?')
+	if (var && var->val && **ptr != '?')
 	{
 		if (has_delimiter(var->val) && !data->exp->in_dbl)
 		{

@@ -55,8 +55,8 @@ static void	data_init(t_data *data, char **envp)
 //TODO: move to mem_utils (adapted, doesn't take word_lst)
 static	void	free_old_mem(t_data *data)
 {
-	if (data->home_path)
-		free(data->home_path);
+	// here we have to free t_word
+	free(data->home_path);
 	data->home_path = NULL;
 	free(data->exp);
 	data->exp = NULL;

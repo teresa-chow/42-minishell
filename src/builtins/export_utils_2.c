@@ -42,7 +42,7 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 	char	*tmp;
 
 	tmp = s;
-	if (s && ft_isdigit(*s))
+	if ((s && ft_isdigit(*s)) || *s == '=')
 	{
 		if (*exit == -1)
 			*exit = ERR;

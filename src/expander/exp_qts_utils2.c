@@ -68,7 +68,7 @@ static int	var_val_len(char *s, t_data *data, char **bgn)
 	box = *non_alnum;
 	*non_alnum = 0;
 	var = ft_getenv(data->env, s);
-	if (var)
+	if (var && var->val)
 	{
 		if (has_delimiter(var->val) && !data->exp->in_dbl)
 		{
