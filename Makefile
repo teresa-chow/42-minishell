@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/08 10:46:20 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/08 12:12:33 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,20 +21,22 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
-	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c exec_ast.c)
+	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
+SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	export.c export_utils.c export_utils_2.c export_merge_sort.c pwd.c \
 	unset.c builtins_utils.c builtins_utils_2.c)
-SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
-SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
 	set_path.c print_fd.c utils.c)
 SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, exp_qts_main.c expand_split.c \
 	exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c)
-SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
+OBJS_EXECUTER 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECUTER:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
@@ -58,17 +60,19 @@ LIB_DIR			= lib
 # Sources
 PARSER_DIR		= $(SRC_DIR)/parser
 
+EXPANDER_DIR	= $(SRC_DIR)/expander
+
 BUILTINS_DIR	= $(SRC_DIR)/builtins
 
-EXECVE_DIR	= $(SRC_DIR)/execve
+EXECVE_DIR		= $(SRC_DIR)/execve
 
-UTILS_DIR	= $(SRC_DIR)/utils
+UTILS_DIR		= $(SRC_DIR)/utils
 
-EXPANDER_DIR = $(SRC_DIR)/expander
+EXPANDER_DIR 	= $(SRC_DIR)/expander
 
-ERRORS_DIR	= $(SRC_DIR)/errors
+ERRORS_DIR		= $(SRC_DIR)/errors
 
-TEST_DIR	= tests
+TEST_DIR		= tests
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
@@ -96,13 +100,14 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST)
+$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
+	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
+	$(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) \
-	-o $(NAME) $(RLFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
+	$(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 
@@ -114,6 +119,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(EXECUTER_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(BUILTINS_DIR)/%.c

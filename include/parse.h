@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 11:41:20 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 12:00:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;
 
+//TODO: currently not accounting for exapansions and redirections -- would it make sense to include them ?
 typedef enum
 {
 	CMD,
 	GROUP,
-	EXP, // ?
 	PIPE,
 	AND,
 	OR
@@ -62,7 +62,7 @@ typedef enum
 
 typedef struct s_tree_node
 {
-	int					index; //needed ?
+	int					index;
 	e_type				type;
 	t_word				*word;
 	struct s_tree_node	*left;
