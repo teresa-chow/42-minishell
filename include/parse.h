@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/07 14:56:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 10:41:54 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_tree_node		*add_node(void);
 void			fill_node(t_word_lst *pivot, int index, t_tree_node **node);
 // Execution -- move to exec directory (?)
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i);
-void			exec_ast(t_data *data, t_tree_node **node, int *i);
+int			exec_ast(t_data *data, t_tree_node **node, int *i);
 
 #endif
 
