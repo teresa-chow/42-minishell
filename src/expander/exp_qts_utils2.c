@@ -107,14 +107,16 @@ static int	len_splited_words(t_data *data, char *val)
 static int	exit_status_len(t_data *data)
 {
 	int	i;
+	int	n;
 
 	i = 0;
+	n = data->exit_status;
 	if (!data->exit_status)
 		return (1);
-	while (data->exit_status)
+	while (n)
 	{
 		i++;
-		data->exit_status /= 10;
+		n /= 10;
 	}
 	return (i);
 }

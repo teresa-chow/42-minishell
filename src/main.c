@@ -58,4 +58,6 @@ static	void	free_old_mem(t_data *data)
 	if (data->home_path)
 		free(data->home_path);
 	data->home_path = NULL;
+	free(data->exp);
+	data->exp = NULL;
 }	
