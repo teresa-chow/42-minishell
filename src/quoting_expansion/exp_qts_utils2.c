@@ -70,7 +70,7 @@ static int	var_val_len(char *s, t_data *data, char **bgn)
 	var = ft_getenv(data->env, s);
 	if (var)
 	{
-		if (has_delimiter(var->val))
+		if (has_delimiter(var->val) && !data->exp->in_dbl)
 		{
 			len = len_splited_words(data, var->val);
 			if (len == -1)

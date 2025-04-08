@@ -71,7 +71,7 @@ char	*get_next_qt(char *s, t_data *data)
 			break;
 		else if (*s == '"' && data->exp->in_dbl)
 			break;
-		else if (*s == '\'' || *s == '"')
+		else if ((*s == '\'' || *s == '"') && !data->exp->in_dbl && !data->exp->in_sing)
 			break;
 		s++;
 	}

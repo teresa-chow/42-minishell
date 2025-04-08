@@ -76,10 +76,11 @@ void	join_splited_words(t_data *data, char **tmp)
 	}
 }
 
-int	get_split_words(t_data *data, char **ptr, char **tmp)
+int	get_var_val(t_data *data, char **ptr, char **tmp)
 {
 	char	*inval;
 	char	box;
+	char	*end_val;
 	t_env_node	*var;
 
 	if (data->exp->words)
@@ -94,10 +95,20 @@ int	get_split_words(t_data *data, char **ptr, char **tmp)
 	var = ft_getenv(data->env, *ptr);
 	if (var)
 	{
-		data->exp->words = get_words(var->val);
-		if (!data->exp->words)
-			return (-1);
-		join_splited_words(data, tmp);
+		if (has_delimiter(var->val))
+		{
+			data->exp->words = get_words(var->val);
+			if (!data->exp->words)
+				return (-1);
+			join_splited_words(data, tmp);
+		}
+		else
+		{
+			end_val = ft_strchr(var->val, 0);
+			add_chars(var->val, end_val, *tmp);
+			*tmp = ft_strchr(*tmp, 0);
+		}
+
 	}
 	*inval = box;
 	*ptr = inval;
@@ -111,7 +122,6 @@ static int	handle_normal(char **ptr, t_data *data)
 	char	*tmp;
 	char	*start;
 
-	(void)start;
 	end = get_next_qt(*ptr, data);
 	len = get_len(*ptr, end, data);
 	tmp = ft_calloc(len + 1, sizeof(char));
@@ -121,11 +131,12 @@ static int	handle_normal(char **ptr, t_data *data)
 	while (*ptr != end)
 	{
 		if (**ptr == '$' && is_valid_dollar(*ptr))
-			get_split_words(data, ptr, &tmp);
+			get_var_val(data, ptr, &tmp);
 		else
 			*tmp++ = *(*ptr)++;
 	}
 	build_new(data, start, tmp, len);
+	free(start);
 	return (0);
 }
 
@@ -150,10 +161,29 @@ int	build_new(t_data *data, char *bgn, char *end, int len)
 	return (0);
 }
 
-// int	fill_with_dbl_quotes()
-// {
+//"ola.$HOME"
+int	handle_dbl_quotes(t_data *data, char *ptr, int len)
+{
+	char	*start;
+	char	*end;
+	char	*tmp;
 
-// }
+	end = get_next_qt(ptr, data);
+	tmp = ft_calloc(len + 1, sizeof(char));
+	// if (!tmp)
+	start = tmp;
+	(void)start;
+	while (ptr != end)
+	{
+		if (*ptr == '$' && is_valid_dollar(ptr))
+			get_var_val(data, &ptr, &tmp);
+		else
+			*tmp++ = *ptr++;
+	}
+	build_new(data, start, tmp, len);
+	free(start);
+	return (0);
+}
 
 int	handle_exp_qts(char **ptr, t_data *data)
 {
@@ -166,13 +196,13 @@ int	handle_exp_qts(char **ptr, t_data *data)
 	len = get_len(*ptr + 1, end,data);
 	if (!data->exp->to_exp)
 		i = build_new(data, *ptr + 1, end, len);
-	// else
-	// 	 i = fill_with_dbl_quotes();
+	else
+		i = handle_dbl_quotes(data, *ptr + 1, len);
 	if (i == -1)
 		return (-1);
 	update_quotes_exp_status(end, data);
 	if (*end)
-		*ptr = end + 1; ///// this is equal to others ---handle_normal();
+		*ptr = end + 1;
 	else
 		*ptr = end;
 	return (0);
