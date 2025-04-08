@@ -51,6 +51,8 @@ void	check_special_char(char *s, t_data *data)
 /* Find invalid char in var name */
 char	*find_non_alnum(char *s)
 {
+	if (*s == '?')
+		return (s + 1);
 	while (*s)
 	{
 		if (!ft_isalnum(*s))
