@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_qts_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-07 16:25:40 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/08 15:49:28 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	get_var_val(t_data *data, char **ptr, char **tmp)
 	var = ft_getenv(data->env, *ptr);
 	if (var && **ptr != '?')
 	{
-		if (has_delimiter(var->val))
+		if (has_delimiter(var->val) && !data->exp->in_dbl)
 		{
 			data->exp->words = get_words(var->val);
 			if (!data->exp->words)
