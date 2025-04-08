@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_div.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:09:23 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/01 11:25:31 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:21:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../../include/utils.h"
 
 /* Tokenization (2): split words (divide by whitespaces) */
-int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
+void	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 {
 	t_word		*word_tmp;
 	int			i;
@@ -41,5 +41,4 @@ int	tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst)
 			add_word_lst(&word_lst);
 	}
 	word_tmp = NULL;
-	return (0);
 }

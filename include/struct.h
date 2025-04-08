@@ -13,6 +13,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
+/* Structs associated with parsing can be found in parse.h header file */
 #include "parse.h"
 
 /* -------------------------------------------------------------------------- */
@@ -46,23 +47,7 @@ typedef struct s_env_init
 }	t_env_init;
 
 /* -------------------------------------------------------------------------- */
-/*                            PARSER                                */
-/* -------------------------------------------------------------------------- */
-/*typedef struct s_word
-{
-	struct s_word	*next;
-	char	*word;
-	int		flags;
-}	t_word;
-
-typedef struct s_word_lst
-{
-	struct s_word_lst	*next;
-	struct s_word		*word;
-}	t_word_lst;*/ //TODO: needs review
-
-/* -------------------------------------------------------------------------- */
-/*                               SPECIAL CASES                                */
+/*                                EXPANDER                                    */
 /* -------------------------------------------------------------------------- */
 typedef struct s_expand
 {

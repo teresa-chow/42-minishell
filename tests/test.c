@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/03 14:21:32 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:05:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
 
-void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
+/*void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 {
    	if (ft_strcmp((*word_lst)->word->word, "echo") == 0)
 	{
@@ -56,7 +56,8 @@ void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 							    /// we have to free the tree
 	else
 		exec(data, (*word_lst)->word);
-}
+}*/
+
 /*****************************************************************************\
 |                             PARSER TEST FUNCTIONS                           |
 \*****************************************************************************/

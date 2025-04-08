@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_div_redirect.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:26:29 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/13 10:26:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:30:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static unsigned int	substr_len(const char *str, unsigned int start)
 	unsigned int	len;
 
 	end = start;
-	while (is_redirection(str[end]) || str[end] == '|')
+	while (is_redirection(str[end]))
 		end++;
 	len = end - start;
 	return (len);

@@ -29,9 +29,6 @@
 # include "parse.h"
 # include "builtins.h"
 
-/* -------------------------------------------------------------------------- */
-/*                                      Errors                                */
-/* -------------------------------------------------------------------------- */
 int	err_syntax(char *token);
 int	error_allocation(t_data *data);
 int	command_not_found(char *token, t_data *data);

@@ -6,82 +6,105 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 15:27:31 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:54:01 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
 
-//t_tree_node	*create_tree()
+static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end);
+//static int	is_group(t_word_lst *word_lst);
+//static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node);
+//static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node);
 
-/*
-sample tree
-
-		  0
-	1			2
-3		4	5		6
-
-*/
-
-/*
-Sample : depth-first search (DFS) 0 1 3 4 2 5 6 -- stack data structure
-traverses from root and proceeds through the nodes as far as possible until
-we reach the node with no unvisited nodes nearby
->> builds the tree sub-tree by sub-tree
-LIFO
-- inorder traversal : left-root-right
-- preorder traversal : root-left-right
-- postorder traversal : left-right-root
-*/
-/*static void print_depth_first(t_tree_node *root) //tmp function
+void	create_syntax_tree(t_word_lst *start, t_word_lst *end, int index,
+	t_tree_node **node)
 {
-	t_tree_node	*process_stack[100];
-	size_t		process_stack_num = 0;
-	
-	process_stack[0] = root;
-	process_stack_num++;
-	while (process_stack_num > 0)
+	t_word_lst	*pivot;
+	t_word_lst	*new_start;
+	t_word_lst	*new_end;
+
+	new_start = NULL;
+	new_end = NULL;
+	pivot = find_pivot(start, end);
+	/*if (is_group(pivot)) //tmp solution, needs refactoring
 	{
-		t_tree_node	*current = process_stack[process_stack_num - 1];
-		process_stack_num--;
-		printf("%d ", current->val);
-		if (current->val == 4)
+		handle_cmd_group(pivot, index, node);
+		return ;
+	}*/
+	fill_node(pivot, index, node);
+	if (index)
+		++index;
+	if ((*node)->type != CMD)
+	{
+		new_end = last_partition_node(start, pivot);
+		(*node)->left = add_node();
+		create_syntax_tree(start, new_end, ++index, &(*node)->left);
+		new_start = first_partition_node(pivot);
+		(*node)->right = add_node();
+		create_syntax_tree(new_start, end, ++index, &(*node)->right);
+	}
+	return ;
+}
+
+static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
+{
+	t_word_lst	*tmp_lst;
+	t_word_lst	*pivot;
+
+	tmp_lst = start;
+	pivot = start;
+	while (tmp_lst != end)
+	{
+		if ((!ft_strcmp(tmp_lst->word->word, "|"))
+			|| (!ft_strcmp(tmp_lst->word->word, "&&"))
+			|| (!ft_strcmp(tmp_lst->word->word, "||")))
+			pivot = tmp_lst;
+		tmp_lst = tmp_lst->next;
+	}
+	return (pivot);
+}
+
+/*static int	is_group(t_word_lst *word_lst)
+{
+	if (!word_lst->next && word_lst->word->word[0] == '(')
+		return (1);
+	return (0);
+}*/
+
+// TODO: handle groups, currently only handling single command group as input
+/*static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node)
+{
+	if (!index && !pivot->next)
+	{
+		rm_parentheses(pivot, node);
+		return ;
+	}
+}
+
+static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node)
+{
+	char		*tmp_group;
+	char		**cmd_lst;
+	t_word_lst	*tmp_lst;
+
+	(void)node;
+	tmp_group = ft_substr(word_lst->word->word, 1,
+		group_len(word_lst->word->word, 0) - 2);
+	cmd_lst = tokenize_op(tmp_group);
+	if (cmd_lst)
+	{
+		free(tmp_group);
+		tmp_lst = ft_calloc(1, sizeof(t_word_lst));
+		if (!tmp_lst)
 		{
-			printf("Found node %d (4)\n", current->val);
-			break ;
+			free_strarray(cmd_lst);
+			return ;
 		}
-		else
-			printf("Not yet: %d\n", current->val);
-		if (current->right != NULL)
-		{
-			process_stack[process_stack_num] = current->right;
-			process_stack_num++;
-		}
-		if (current->left != NULL)
-		{
-			process_stack[process_stack_num] = current->left;
-			process_stack_num++;
-		}
+		tokenize_w_lst(cmd_lst, tmp_lst);
+		free_strarray(cmd_lst);
+		create_syntax_tree(tmp_lst, NULL, 0, node);
+		free(tmp_lst);
 	}
 }*/
-
-/*
-recursive -- less efficient: more call stacks
-to exit: int found 0 or 1 (if 1 return),
-return after condition wouldn't suffice
-*/
-/*static void print_depth_first_rec(t_tree_node *node) //tmp function
-{
-	printf("%d ", node->val); //any action needed instead of printing
-	if (node->left != NULL)
-		print_depth_first_rec(node->left);
-	if (node->right != NULL)
-		print_depth_first_rec(node->right);
-}*/
-
-/*
-Sample : breadth-first search (BFS) 0 1 2 3 4 5 6 -- queue data structure
-traverses tree level by level
-FIFO
-*/

@@ -6,7 +6,7 @@
 #    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/03 11:38:52 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/04/08 13:44:32 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,26 +17,30 @@ NAME		= minishell
 # ============================================================================ #
 
 SRC				= $(addprefix $(SRC_DIR)/, main.c)
-SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c\
+SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
-	tokenize_utils.c syntax_analysis.c syntax_analysis_utils.c syntax_tree.c \
-	syntax_tree_utils.c)
-SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c export.c \
-	export_utils.c export_utils_2.c export_merge_sort.c pwd.c unset.c builtins_utils.c builtins_utils_2.c)
-SRC_EXECVE	= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
-SRC_UTILS	= $(addprefix $(UTILS_DIR)/, mem_utils.c init_env.c set_path.c print_fd.c general_utils.c)
-EXPAND	= $(addprefix $(EXPAND_DIR)/, expand_split.c exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c \
-		exp_qts_main.c)
-SRC_ERRORS	= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
+	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
+	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
+SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c)
+SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
+	export.c export_utils.c export_utils_2.c export_merge_sort.c pwd.c \
+	unset.c builtins_utils.c builtins_utils_2.c)
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
+	set_path.c print_fd.c utils.c)
+SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, exp_qts_main.c expand_split.c \
+	exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
+OBJS_EXECUTER 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECUTER:.c=.o)))
 OBJS_BUILTINS	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_BUILTINS:.c=.o)))
 OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
-OBJS_EXPAND		= $(addprefix $(BUILD_DIR)/, $(notdir $(EXPAND:.c=.o)))
+OBJS_EXPANDER	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXPANDER:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
 OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
@@ -56,17 +60,19 @@ LIB_DIR			= lib
 # Sources
 PARSER_DIR		= $(SRC_DIR)/parser
 
+EXPANDER_DIR	= $(SRC_DIR)/expander
+
 BUILTINS_DIR	= $(SRC_DIR)/builtins
 
-EXECVE_DIR	= $(SRC_DIR)/execve
+EXECVE_DIR		= $(SRC_DIR)/execve
 
-UTILS_DIR	= $(SRC_DIR)/utils
+UTILS_DIR		= $(SRC_DIR)/utils
 
-EXPAND_DIR = $(SRC_DIR)/quoting_expansion
+EXECUTER_DIR 	= $(SRC_DIR)/executer
 
-ERRORS_DIR	= $(SRC_DIR)/errors
+ERRORS_DIR		= $(SRC_DIR)/errors
 
-TEST_DIR	= tests
+TEST_DIR		= tests
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
@@ -94,12 +100,14 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPAND) $(OBJS_ERRORS) $(OBJS_TEST)
+$(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
+	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
+	$(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 ######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
-	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_BUILTINS) $(OBJS_EXECVE) \
-	$(OBJS_UTILS) $(OBJS_EXPAND) $(OBJS_ERRORS) $(OBJS_TEST) $(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
+	$(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 
@@ -113,6 +121,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 $(BUILD_DIR)/%.o: $(PARSER_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(BUILD_DIR)/%.o: $(EXECUTER_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 $(BUILD_DIR)/%.o: $(BUILTINS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -122,7 +133,7 @@ $(BUILD_DIR)/%.o: $(EXECVE_DIR)/%.c
 $(BUILD_DIR)/%.o: $(UTILS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(EXPAND_DIR)/%.c
+$(BUILD_DIR)/%.o: $(EXPANDER_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(ERRORS_DIR)/%.c
@@ -167,12 +178,12 @@ norm:	## Execute norminette
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
 
-valgrind: all	## Run valgrind (suppress readline() memory leaks)
-	printf "{\\nignore_libreadline_leaks\\nMemcheck:Leak\\n...\\n \
-    obj:*/libreadline.so.*\\n}" > rl.supp
+vg: all	## Run valgrind (suppress readline() memory leaks)
+	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
-	--suppressions=rl.supp --track-fds=yes --trace-children=yes ./$(NAME)
+	--suppressions=rl.supp --track-fds=yes --trace-children=yes \
+	--log-file=memleaks.log ./$(NAME)
 
 
 ##@ TOOL INSTALLATION
@@ -198,6 +209,32 @@ help:	## Display this help info
 
 .PHONY: all clean fclean re norm valgrind install help
 
+# ============================================================================ #
+# UTILS: READLINE LEAKS SUPPRESSION FILE                                       #
+# ============================================================================ #
+
+define RL_SUPP
+{
+   name
+   Memcheck:Leak
+   fun:*alloc
+   ...
+   obj:*/libreadline.so.*
+   ...
+}
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+endef
 
 # ============================================================================ #
 # UTILS: SHELL FORMATTING                                                      #

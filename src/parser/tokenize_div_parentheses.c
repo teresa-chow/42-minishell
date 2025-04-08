@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 16:21:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:05:41 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ unsigned int	group_len(const char *str, unsigned int start)
 	end = start;
 	while (str[end] && str[end] != ')')
 	{
-		end++;
+		++end;
 		if (is_quote(str[end]))
 			end += next_quote(str, end, is_quote(str[end]));
 		while (str[end] == '(')
 			end += group_len(str, end);
 	}
 	if (str[end] == ')')
-		end++;
+		++end;
 	len = end - start;
 	return (len);
 }
