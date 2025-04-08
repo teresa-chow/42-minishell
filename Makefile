@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/08 12:12:33 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/08 13:44:32 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ EXECVE_DIR		= $(SRC_DIR)/execve
 
 UTILS_DIR		= $(SRC_DIR)/utils
 
-EXPANDER_DIR 	= $(SRC_DIR)/expander
+EXECUTER_DIR 	= $(SRC_DIR)/executer
 
 ERRORS_DIR		= $(SRC_DIR)/errors
 

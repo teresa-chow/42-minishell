@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 11:52:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:21:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			break;
 		}*/
 		read_input(&root, &data);
-		if (root->word->word)
+		if (root->word)
 			ast_depth_search(&data, &root, &i);
 		if (i)
 			free_old_mem(&data); //TODO: refactor to include tree (?)

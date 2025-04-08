@@ -82,6 +82,7 @@ int	get_var_val(t_data *data, char **ptr, char **tmp)
 	char	box;
 	char	*end_val;
 	t_env_node	*var;
+	char	*exit_val;
 
 	if (data->exp->words)
 	{
@@ -92,8 +93,16 @@ int	get_var_val(t_data *data, char **ptr, char **tmp)
 	inval = find_non_alnum(*ptr);
 	box = *inval;
 	*inval = 0;
+	if (**ptr == '?')
+	{
+		exit_val = ft_itoa(data->exit_status);
+		// if (!exit_val)
+		end_val = ft_strchr(exit_val, 0);
+		add_chars(exit_val, end_val, *tmp);
+		*tmp += ft_strlen(exit_val);
+	}
 	var = ft_getenv(data->env, *ptr);
-	if (var)
+	if (var && **ptr != '?')
 	{
 		if (has_delimiter(var->val))
 		{
@@ -106,7 +115,7 @@ int	get_var_val(t_data *data, char **ptr, char **tmp)
 		{
 			end_val = ft_strchr(var->val, 0);
 			add_chars(var->val, end_val, *tmp);
-			*tmp = ft_strchr(*tmp, 0);
+			*tmp += ft_strlen(var->val);
 		}
 
 	}

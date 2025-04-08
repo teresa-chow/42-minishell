@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 12:02:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:57:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 {
 	//expand variables that need expansion
 	//remove quotes
-	if (analyze_args((*node)->word->next, data) == -1) //rename: expander (?)
+	if (analyze_args((*node)->word, data) == -1) //rename: expander (?)
 		return (-1);
 	if (!exec_builtin_cmd(data, node, i))
 		exec(data, (*node)->word);

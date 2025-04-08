@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/07 15:11:08 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:05:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,19 @@
 \*****************************************************************************/
 
 /*void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
-{ /// has pelicas???????
+{
    	if (ft_strcmp((*word_lst)->word->word, "echo") == 0)
 	{
-		//if (find_expand((*word_lst)->word, data) == -1)
-		//	return ;
+		// t_env_node	*var;
+		// t_env_node	*var1;
+
+		// var = ft_getenv(data->env, "ZZ");
+		// var->val = ft_strdup("Car   	TT");
+		// var1 = ft_getenv(data->env, "ZA");
+		// var1->val = ft_strdup("ANA      SIL");
+		(*word_lst)->word->next->word = ft_strdup("\'\"ola\"\'$HOME\'\"\'");
+		if (analyze_args((*word_lst)->word->next, data) == -1)
+			return ;
 		echo((*word_lst)->word, data);
 	}
 	else if (ft_strcmp((*word_lst)->word->word, "cd") == 0)
@@ -45,7 +53,7 @@
 		env_cmd(data->env, data);
 	else if (!ft_strcmp((*word_lst)->word->word, "exit"))
 		check_exit_args(data, word_lst, i); /// in the future, the argument is the tree and then
-						    /// we have to free the tree
+							    /// we have to free the tree
 	else
 		exec(data, (*word_lst)->word);
 }*/
