@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
 #    Updated: 2025/04/08 13:44:32 by tchow-so         ###   ########.fr        #

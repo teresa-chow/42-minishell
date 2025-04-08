@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
 /*   Updated: 2025/04/07 16:23:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 #include "../../include/struct.h"

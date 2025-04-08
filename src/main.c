@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
 /*   Updated: 2025/04/08 14:21:26 by tchow-so         ###   ########.fr       */
@@ -41,8 +41,8 @@ int	main(int argc, char **argv, char **envp)
 		if (i)
 			free_old_mem(&data); //TODO: refactor to include tree (?)
 	}
-	//rl_clear_history();
-	return (0);
+	rl_clear_history();
+	return (data.exit_status);
 }
 
 static void	data_init(t_data *data, char **envp)

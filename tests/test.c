@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
 /*   Updated: 2025/04/08 14:05:10 by tchow-so         ###   ########.fr       */
@@ -29,7 +29,7 @@
 		// var->val = ft_strdup("Car   	TT");
 		// var1 = ft_getenv(data->env, "ZA");
 		// var1->val = ft_strdup("ANA      SIL");
-		(*word_lst)->word->next->word = ft_strdup("\'\"ola\"\'$HOME\'\"\'");
+		// (*word_lst)->word->next->word = ft_strdup("\'\"ola\"\'$HOME\'\"\'");
 		if (analyze_args((*word_lst)->word->next, data) == -1)
 			return ;
 		echo((*word_lst)->word, data);
@@ -57,6 +57,7 @@
 	else
 		exec(data, (*word_lst)->word);
 }*/
+
 /*****************************************************************************\
 |                             PARSER TEST FUNCTIONS                           |
 \*****************************************************************************/
