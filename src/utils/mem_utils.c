@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/07 14:58:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:59:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_prompt(t_prompt *prompt)
 
 int	free_env_list(t_data *data, int i, t_env_node **lst)
 {
-	t_env_node *tmp;
+	t_env_node	*tmp;
 
 	while (*lst)
 	{
@@ -51,7 +51,7 @@ int	free_env_list(t_data *data, int i, t_env_node **lst)
 		free((*lst)->val);
 		free((*lst));
 		(*lst) = tmp;
-  	}
+	}
 	*lst = NULL;
 	if (i)
 		return (error_allocation(data));
@@ -64,6 +64,8 @@ void	free_words(t_word **word)
 
 	while (*word != NULL)
 	{
+		//if (data->home_path == (*word)->word)
+		//	data->home_path = NULL;
 		free((*word)->word);
 		tmp = *word;
 		*word = (*word)->next;

@@ -15,6 +15,7 @@ minishell
 src/parser/syntax_tree_refactored.c
 
 en.subject.pdf
+testt.txt
 
 rl.supp
 memleaks.log

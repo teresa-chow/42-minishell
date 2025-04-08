@@ -32,7 +32,9 @@ typedef struct s_exec_data
 
 void	exec(t_data *data, t_word *word);
 
-/* ================================ UTILS ================================== */
+/* -------------------------------------------------------------------------- */
+/*                                Execve Utils                                */
+/* -------------------------------------------------------------------------- */
 int		free_arrays(t_exec_data *inf, t_data *data, int i);
 int		find_slash(char *word);
 char	**create_wrd_arr(t_word *word);
