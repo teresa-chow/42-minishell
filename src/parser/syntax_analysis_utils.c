@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_analysis_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so  <tchow-so@student.42porto.>      +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:12:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/17 16:12:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/03/28 09:07:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	check_logical_op(t_word *word)
 {
 	char		token[3];
 
+	if (!word)
+		return (-1);
 	if (is_operator(word->word[0]))
 	{
 		if (ft_strlen(word->word) == 1)
@@ -94,11 +96,34 @@ int	is_valid_redir(t_word *word)
 	len = ft_strlen(word->word);
 	if (len == 2 && is_redirection(word->word[0]))
 	{
-		if (!ft_strcmp(word->word, ">>") || !ft_strcmp(word->word, "<<")
-			|| !ft_strcmp(word->word, ">|"))
+		if (!ft_strcmp(word->word, ">>") || !ft_strcmp(word->word, "<<"))
 			return (1);
 		else
 			return (err_syntax(&word->word[1]));
 	}
+	return (0);
+}
+
+int	check_quotes(char *word)
+{
+	int		i;
+	int		code;
+	int		count;
+
+	i = -1;
+	code = 0;
+	count = 0;
+	while (word[++i])
+	{
+		if ((count % 2 == 0) && (is_quote(word[i])))
+		{
+			code = is_quote(word[i]);
+			count++;
+		}
+		else if ((count % 2 != 0) && (code == is_quote(word[i])))
+			count++;
+	}
+	if (count % 2 != 0)
+		return (err_syntax("newline"));
 	return (0);
 }

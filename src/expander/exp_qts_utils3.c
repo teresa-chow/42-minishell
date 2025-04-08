@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils_2.c                                 :+:      :+:    :+:   */
+/*   exp_qts_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-28 16:52:48 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-03-28 16:52:48 by carlaugu         ###   ########.fr       */
+/*   Created: 2025-04-07 16:23:30 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-04-07 16:23:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "../../include/expand.h"
 
-t_env_node	*last_node(t_env_node *env_lst)
+void	update_quotes_exp_status(char *ptr, t_data *data)
 {
-	while (env_lst)
-	{
-		if (!env_lst->next)
-			break ;
-		env_lst = env_lst->next;
-	}
-	return (env_lst);
-}
-
-t_env_node	*ft_getenv(t_env_node *env, char *key)
-{
-	while (env)
-	{
-		if (!ft_strcmp(env->key, key))
-			return (env);
-		env = env->next;
-	}
-	return (NULL);
+	if (*ptr == '\'')
+		data->exp->in_sing = !data->exp->in_sing;
+	else if (*ptr == '"')
+		data->exp->in_dbl = !data->exp->in_dbl;
+	data->exp->to_exp = false;
 }

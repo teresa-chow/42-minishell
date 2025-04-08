@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mem_utils.c                                        :+:      :+:    :+:   */
+/*   mem_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,70 +15,42 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-void	free_strarray(char **array)
+void	free_many(char **s1, char **s2, char **s3)
 {
-	int	i;
-
-	i = 0;
-	if (!array)
-		return ;
-	while (array[i])
+	if (s1)
 	{
-		free(array[i]);
-		i++;
+		free(*s1);
+		*s1 = NULL;
 	}
-	free(array);
-}
-
-void	free_prompt(t_prompt *prompt)
-{
-	if (prompt->prog)
-		free(prompt->prog);
-	if (prompt->usr)
-		free(prompt->usr);
-	if (prompt->cwd)
-		free(prompt->cwd);
-}
-
-int	free_env_list(t_data *data, int i, t_env_node **lst)
-{
-	t_env_node *tmp;
-
-	while (*lst)
+	if (s2)
 	{
-		tmp = (*lst)->next;
-		free((*lst)->key);
-		free((*lst)->val);
-		free((*lst));
-		(*lst) = tmp;
-  	}
-	*lst = NULL;
+		free(*s2);
+		*s2 = NULL;
+	}
+	if (s3)
+	{
+		free(*s3);
+		*s3 = NULL;
+	}
+}
+
+int	free_exp(t_data *data, t_word *word, int i)
+{
+	if (data->exp->new != word->word)
+		free(data->exp->new);
+	if (data->exp->words)
+		free_strarray(data->exp->words);
+	ft_bzero(data->exp, sizeof(t_expand));
 	if (i)
 		return (error_allocation(data));
 	return (0);
 }
 
-void	free_words(t_word **word)
+void	free_to_exit(t_data *data, t_tree_node **node)
 {
-	t_word	*tmp;
-
-	while (*word != NULL)
-	{
-		free((*word)->word);
-		tmp = *word;
-		*word = (*word)->next;
-		free(tmp);
-	}
-}
-
-void	free_word_lst(t_word_lst **word_lst)
-{
-	t_word_lst	*tmp;
-
-	while (*word_lst)
-	{
-		tmp = *word_lst;
-		*word_lst = (*word_lst)->next;
-		free(tmp);
-	}
+    (void)node; //tmp
+	free_env_list(data, 0, &data->env);
+	free(data->home_path);
+	data->home_path = NULL;
+	//TODO: free ast tree
 }

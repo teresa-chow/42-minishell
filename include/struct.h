@@ -3,61 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/19 10:17:08 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:46:22 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef STRUCT_H
+# define STRUCT_H
 
-/* -------------------------------------------------------------------------- */
-/*                               Env Struct                                   */
-/* -------------------------------------------------------------------------- */
-typedef struct s_env_node
-{
-	char	*key;
-	char	*val;
-	struct s_env_node *next;
-	struct s_env_node *prev;
-}	t_env_node;
+/* Structs associated with parsing can be found in parse.h header file */
+#include "parse.h"
 
-/* -------------------------------------------------------------------------- */
-/*                            Parser Structs                                  */
-/* -------------------------------------------------------------------------- */
-/*typedef struct s_word
+/* =========================== EXPORT + ENV INIT =========================== */
+typedef struct s_input_inf
 {
-	struct s_word	*next;
-	char	*word;
-	int		flags;
-}	t_word;
-
-typedef struct s_word_lst
-{
-	struct s_word_lst	*next;
-	struct s_word		*word;
-}	t_word_lst;*/ //TODO: needs review
-
-/* -------------------------------------------------------------------------- */
-/*                           Export and env init                              */
-/* -------------------------------------------------------------------------- */
-typedef	struct s_ipt_inf
-{
+	int		val_strt;
 	char	*key;
 	char	*val;
 	char	sep;
-	int	val_strt;
-}	t_ipt_inf;
-/* -------------------------------------------------------------------------- */
-/*                                 General                                    */
-/* -------------------------------------------------------------------------- */
-typedef struct	s_data
+}	t_input_inf;
+
+/* ================================== ENV ================================== */
+typedef struct s_env_node
 {
-	char	**env_arr;
-	char	**wrd_arr;
-	t_env_node *env;
-	int	error_code;
+	char				*key;
+	char				*val;
+	struct s_env_node	*next;
+	struct s_env_node	*prev;
+}	t_env_node;
+
+typedef struct s_env_init
+{
+	t_env_node	*oldpwd;
+	t_env_node	*tmp;
+	t_env_node	*last;
+	t_input_inf	inf;
+}	t_env_init;
+
+/* =============================== EXPANDER ================================ */
+typedef struct s_expand
+{
+	char	*new;
+	char	**words;
+	bool	in_dbl;
+	bool	in_sing;
+	bool	to_exp;
+	bool	has_exp;
+	bool	has_sing;
+	bool	has_dbl;
+}	t_expand;
+
+/* ================================ GENERAL ================================ */
+typedef struct s_data
+{
+	t_env_node	*env;
+	t_expand	*exp;
+	char		*home_path;
+	int			exit_status;
 }	t_data;
+
 #endif

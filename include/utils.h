@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 12:23:20 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/07 14:58:45 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@ void	print_fd(int fd, const char *msg, char *token);
 
 /* =========================== MEMORY MANAGEMENT =========================== */
 void	free_strarray(char **array);
+void	free_prompt(t_prompt *prompt);
 void	free_word_lst(t_word_lst **word_lst);
 void	free_words(t_word **word);
-int	free_env_list(t_data *data, int i, t_env_node **lst);
+void	free_to_exit(t_data *data, t_tree_node **node);
+void	free_many(char **s1, char **s2, char **s3);
+int		free_env_list(t_data *data, int i, t_env_node **lst);
+int		free_exp(t_data *data, t_word *word, int i);
 
-/* =========================== ENV INIT =========================== */
+/* =============================== ENV INIT ================================ */
 int		init_env_lst(char **envp, t_data *data);
 
-/* =========================== SET PATH =========================== */
-char	**set_path(t_data *data);
+/* =============================== SET PATH ================================ */
+char	**set_path(t_data *data, int *i);
+
+/* ================================ GENERAL ================================ */
+void	add_chars(char *start, char *end, char *dst);
+int	    handle_with_home(t_data *data);
 
 #endif

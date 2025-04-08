@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/19 13:09:17 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:30:08 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,27 @@
 
 # include <stdlib.h>
 # include <sys/wait.h>
-#include <sys/stat.h>
-
+# include <sys/stat.h>
 
 # include "utils.h"
 # include "../lib/libft/libft/libft.h"
+# include "parse.h"
 
-char	*get_path(t_env_node *env);
-int	exec(t_data *data, t_word *word);
+typedef struct s_exec_data
+{
+	char	**path_splited;
+	char	**env_arr;
+	char	**wrd_arr;
+	char	*tmp;
+	char	*input;
+}	t_exec_data;
 
-/* -------------------------------------------------------------------------- */
-/*                                Execve Utils                                */
-/* -------------------------------------------------------------------------- */
-int	free_arrays(t_data *data, int i);
-char	**creat_wrd_arr(t_word *word);
-char	**creat_env_arr(t_env_node *env);
+void	exec(t_data *data, t_word *word);
+
+/* ================================ UTILS ================================== */
+int		free_arrays(t_exec_data *inf, t_data *data, int i);
+int		find_slash(char *word);
+char	**create_wrd_arr(t_word *word);
+char	**create_env_arr(t_env_node *env);
 
 #endif

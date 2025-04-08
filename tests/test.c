@@ -6,32 +6,57 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/19 14:11:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:05:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
+#include "../include/expand.h"
+#include "../include/errors.h"
 
 /*****************************************************************************\
 |                            BUILTINS TEST FUNCTIONS                          |
 \*****************************************************************************/
-void	test_builtins(t_data *data, t_word_lst *word_lst)
+
+/*void	test_builtins(t_data *data, t_word_lst **word_lst, int *i)
 {
-	if (ft_strcmp(word_lst->word->word, "echo") == 0)
-		echo(word_lst->word);
-	else if (ft_strcmp(word_lst->word->word, "cd") == 0)
-		cd(word_lst->word);
-	else if (ft_strcmp(word_lst->word->word, "pwd") == 0)
-		pwd();	
-	else if (ft_strcmp(word_lst->word->word ,"export") == 0)
-		export(data, word_lst);
-	else if (ft_strcmp(word_lst->word->word,"unset") == 0)
-		unset(data, word_lst);
-	else if (ft_strcmp(word_lst->word->word,"env") == 0)
-		env_cmd(data->env);
+   	if (ft_strcmp((*word_lst)->word->word, "echo") == 0)
+	{
+		// t_env_node	*var;
+		// t_env_node	*var1;
+
+		// var = ft_getenv(data->env, "ZZ");
+		// var->val = ft_strdup("Car   	TT");
+		// var1 = ft_getenv(data->env, "ZA");
+		// var1->val = ft_strdup("ANA      SIL");
+		(*word_lst)->word->next->word = ft_strdup("\'\"ola\"\'$HOME\'\"\'");
+		if (analyze_args((*word_lst)->word->next, data) == -1)
+			return ;
+		echo((*word_lst)->word, data);
+	}
+	else if (ft_strcmp((*word_lst)->word->word, "cd") == 0)
+	{
+		if ((*word_lst)->word->next && (*word_lst)->word->next->next)
+		{
+				cd_error(NULL, data, 0);
+				return ;
+		}
+		cd((*word_lst)->word, data);
+	}
+	else if (ft_strcmp((*word_lst)->word->word, "pwd") == 0)
+		pwd(data);	
+	else if (ft_strcmp((*word_lst)->word->word ,"export") == 0)
+		export(data, (*word_lst)->word);
+	else if (ft_strcmp((*word_lst)->word->word,"unset") == 0)
+		unset(data, (*word_lst)->word->next);
+	else if (ft_strcmp((*word_lst)->word->word,"env") == 0)
+		env_cmd(data->env, data);
+	else if (!ft_strcmp((*word_lst)->word->word, "exit"))
+		check_exit_args(data, word_lst, i); /// in the future, the argument is the tree and then
+							    /// we have to free the tree
 	else
-		exec(data, word_lst->word);
-}
+		exec(data, (*word_lst)->word);
+}*/
 /*****************************************************************************\
 |                             PARSER TEST FUNCTIONS                           |
 \*****************************************************************************/
