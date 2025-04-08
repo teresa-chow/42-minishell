@@ -64,11 +64,6 @@ void	free_words(t_word **word)
 
 	while (*word != NULL)
 	{
-<<<<<<< HEAD
-=======
-		//if (data->home_path == (*word)->word)
-		//	data->home_path = NULL;
->>>>>>> 04e9df1391363dd32613c9638ffe11fa4fe01cf0
 		free((*word)->word);
 		tmp = *word;
 		*word = (*word)->next;
