@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 11:28:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/08 11:52:41 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "../../include/expand.h"
 #include "../../include/errors.h"
 
-static int	is_builtin_cmd(t_tree_node **node);
-static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
+static int	exec_ast(t_data *data, t_tree_node **node, int *i);
+static int exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 {
@@ -26,45 +26,49 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 	tmp = *node;
 	if (tmp->left)
 		ast_depth_search(data, &tmp->left, i);
-	if (exec_ast(data, node, i) == -1) //check if cmd or condition / pipe
-		return ;
+	if (exec_ast(data, node, i) == -1)
+		return ; //check early return
 	if (tmp->right)
 		ast_depth_search(data, &tmp->right, i);
 }
 
-int	exec_ast(t_data *data, t_tree_node **node, int *i)
+static int	exec_ast(t_data *data, t_tree_node **node, int *i)
+{
+	if ((*node)->type == AND)
+	{
+		if (data->exit_status != 0)
+			return (-1);
+	}
+	else if ((*node)->type == OR)
+	{
+		if (data->exit_status == 0)
+			return (-1);
+	}
+	else if ((*node)->type == CMD)
+	{
+		if (exec_ast_cmd(data, node, i) == -1) //check if cmd or condition / pipe
+			return (-1);
+	}
+	return (0);
+}
+
+int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 {
 	//expand variables that need expansion
 	//remove quotes
-	if (is_builtin_cmd(node))
-	{
-		if (analyze_args((*node)->word->next, data) == -1) //expander (?)
-			return (-1);
-		exec_builtin_cmd(data, node, i);
-	}
-	else
+	if (analyze_args((*node)->word->next, data) == -1) //rename: expander (?)
+		return (-1);
+	if (!exec_builtin_cmd(data, node, i))
 		exec(data, (*node)->word);
 	//check exit codes for conditional execution
 	return (0);
 }
 
-static int	is_builtin_cmd(t_tree_node **node)
+static int exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	if (!ft_strcmp((*node)->word->word, "echo")
-		|| !ft_strcmp((*node)->word->word, "cd")
-		|| !ft_strcmp((*node)->word->word, "pwd")
-		|| !ft_strcmp((*node)->word->word ,"export")
-		|| !ft_strcmp((*node)->word->word,"unset")
-		|| !ft_strcmp((*node)->word->word,"env")
-		|| !ft_strcmp((*node)->word->word, "exit"))
-		return (1);
-	else
-		return (0);
+	int	bi;
 
-}
-
-static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
-{
+	bi = 1;
 	if (!ft_strcmp((*node)->word->word, "echo"))
 		echo((*node)->word, data);
 	else if (!ft_strcmp((*node)->word->word, "cd")) //TODO: check cd verification (cd_error)
@@ -79,6 +83,9 @@ static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 		env_cmd(data->env, data);
 	else if (!ft_strcmp((*node)->word->word, "exit"))
 		check_exit_args(data, node, i);
+	else
+		bi = 0;
+	return (bi);
 }
 
 //conditional_exec
