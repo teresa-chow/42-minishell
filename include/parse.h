@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/09 15:11:48 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:14:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,20 @@ typedef struct s_prompt
 	char	*cwd;
 }	t_prompt;
 
-typedef enum
+typedef enum e_redir
 {
 	NONE,
 	OUT,
 	APPEND,
 	IN,
 	HEREDOC
-}	e_redir;
-
+}	t_redir;
 
 typedef struct s_word
 {
 	struct s_word		*next;
 	char				*word;
-	e_redir				redir;
+	t_redir				redir;
 }	t_word;
 
 typedef struct s_word_lst
@@ -61,20 +60,19 @@ typedef struct s_word_lst
 	struct s_word		*word;
 }	t_word_lst;
 
-//TODO: currently not accounting for expansions and redirections -- would it make sense to include them ?
-typedef enum
+typedef enum e_type
 {
 	CMD,
 	GROUP,
 	PIPE,
 	AND,
 	OR
-}	e_type;
+}	t_type;
 
 typedef struct s_tree_node
 {
 	int					index;
-	e_type				type;
+	t_type				type;
 	t_word				*word;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
@@ -84,7 +82,6 @@ typedef struct s_tree_node
 void			read_input(t_tree_node **tree, t_data *data);
 char			*get_prompt(t_data *data);
 
-char	*get_prompt(t_data *data); ////tmp
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char			**tokenize_op(char *input);
 void			tokenize_w_lst(char **cmd_lst, t_word_lst *word_lst);
