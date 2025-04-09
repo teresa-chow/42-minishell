@@ -36,6 +36,8 @@ int	get_len(char *bgn, char *end, t_data *data)
 	len = 0;
 	while (bgn != end)
 	{
+		if (data->exp->export_cmd&& *bgn == '=')
+			data->exp->export_after_equal = true;
 		if (*bgn == '$' && is_valid_dollar(bgn))
 		{
 			if (*(bgn + 1) == '?')
@@ -52,7 +54,7 @@ int	get_len(char *bgn, char *end, t_data *data)
 			bgn++;
 		}
 	}
-	data->exp->words = 0;
+	data->exp->export_after_equal = false;
 	return (len);
 }
 
@@ -70,12 +72,12 @@ static int	var_val_len(char *s, t_data *data, char **bgn)
 	var = ft_getenv(data->env, s);
 	if (var && var->val)
 	{
-		if (has_delimiter(var->val) && !data->exp->in_dbl)
+		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_after_equal)
 		{
 			len = len_splited_words(data, var->val);
 			if (len == -1)
 				return (-1);
-			free_strarray(data->exp->words);
+			// free_strarray(data->exp->words);
 		}
 		else
 			len = ft_strlen(var->val);

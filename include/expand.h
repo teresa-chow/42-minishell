@@ -24,10 +24,15 @@ int	analyze_args(t_word *word, t_data *data);
 char	*find_non_alnum(char *s);
 char	**get_words(char const *s);
 char	*get_next_qt(char *s, t_data *data);
+int	build_new(t_data *data, char *bgn, char *end, int len);
+int	expand_tilde(t_word **word, t_data *data);
+int	get_var_val(t_data *data, char **ptr, char **tmp);
 int	get_len(char *bgn, char *end, t_data *data);
 int	has_delimiter(char *s);
 int	is_valid_dollar(char *s);
-void	check_special_char(char *s, t_data *data);
+int	join_normal_and_expansion(t_data *data, char **ptr, int len, char *end);
+void	analyze_token_context(char *s, t_data *data);
+void	join_splited_words(t_data *data, char **tmp);
 void	reset_checkers(t_data *data);
 void	update_quotes_exp_status(char *ptr, t_data *data);
 

@@ -15,7 +15,7 @@
 #include "../include/utils.h"
 
 static void	data_init(t_data *data, char **envp);
-static void	free_old_mem(t_data *data);
+static void	reset_old_data(t_data *data);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
 		if (i)
-			free_old_mem(&data); //TODO: refactor to include tree (?)
+			reset_old_data(&data); //TODO: refactor to include tree (?)
 	}
 	rl_clear_history();
 	return (data.exit_status);
@@ -53,9 +53,11 @@ static void	data_init(t_data *data, char **envp)
 }
 
 //TODO: move to mem_utils (adapted, doesn't take word_lst)
-static	void	free_old_mem(t_data *data)
+static	void	reset_old_data(t_data *data)
 {
 	// here we have to free t_word
+	data->exp->export_cmd = false;
+	data->exp->export_after_equal = false;
 	free(data->home_path);
 	data->home_path = NULL;
 	free(data->exp);

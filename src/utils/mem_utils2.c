@@ -15,25 +15,6 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-// void	free_many(char **s1, char **s2, char **s3)
-// {
-// 	if (s1)
-// 	{
-// 		free(*s1);
-// 		*s1 = NULL;
-// 	}
-// 	if (s2)
-// 	{
-// 		free(*s2);
-// 		*s2 = NULL;
-// 	}
-// 	if (s3)
-// 	{
-// 		free(*s3);
-// 		*s3 = NULL;
-// 	}
-// }
-
 int	free_exp(t_data *data, t_word *word, int i)
 {
 	if (data->exp->new != word->word)
