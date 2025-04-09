@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/03 11:46:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:07:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ static void	join_rl_prompt(char **rl_prompt, t_prompt prompt)
 	tmp = ft_strjoin(tmp2, prompt.cwd);
 	free(tmp2);
 	tmp2 = ft_strjoin(tmp, NC);
-	*rl_prompt = ft_strjoin(tmp2, " ");
+	*rl_prompt = ft_strjoin(tmp2, "\n");
 	free(tmp2);
 }
