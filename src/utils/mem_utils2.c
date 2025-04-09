@@ -56,8 +56,8 @@ void	free_ast(t_tree_node **root)
 	free_ast(&tmp->left);
 	free_ast(&tmp->right);
 	free_words(&tmp->word);
-	//free(tmp);
-	tmp = NULL;
+	free(tmp);
+	*root = NULL;
 }
 
 void	free_to_exit(t_data *data, t_tree_node **root)
