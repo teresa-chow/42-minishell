@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/09 14:46:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:11:48 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ typedef struct s_prompt
 typedef enum
 {
 	NONE,
-	IN,
-	APPEND,
 	OUT,
+	APPEND,
+	IN,
 	HEREDOC
 }	e_redir;
 
