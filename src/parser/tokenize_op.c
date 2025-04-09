@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 15:13:04 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/09 15:04:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:27:01 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static unsigned int	substr_len(const char *str)
 		i = substr_len_no_op(str, i);
 	else
 	{
-		while (str[i] && is_equal_next(str, i)) // single & scenario
+		while (str[i] && is_equal_next(str, i))
 			i++;
 		i++;
 		while (is_delimiter(str[i]))

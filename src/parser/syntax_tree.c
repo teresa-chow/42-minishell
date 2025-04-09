@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/09 17:39:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:25:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 #include "../../include/utils.h"
 
 static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end);
-static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node);
-static void	rm_parentheses(t_word_lst *word_lst, int index,
-	t_tree_node **node);
+static void			handle_cmd_group(t_word_lst *pivot, int index,
+						t_tree_node **node);
+static void			rm_parentheses(t_word_lst *word_lst, int index,
+						t_tree_node **node);
 
 void	create_syntax_tree(t_word_lst *start, t_word_lst *end, int index,
 	t_tree_node **node)
@@ -28,7 +29,7 @@ void	create_syntax_tree(t_word_lst *start, t_word_lst *end, int index,
 	new_start = NULL;
 	new_end = NULL;
 	pivot = find_pivot(start, end);
-	if (pivot->word->word[0] == '(') //tmp solution, needs refactoring
+	if (pivot->word->word[0] == '(')
 	{
 		handle_cmd_group(pivot, index, node);
 		return ;
@@ -66,7 +67,6 @@ static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 	return (pivot);
 }
 
-// TODO: handle groups, currently only handling single command group as input
 static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node)
 {
 	(*node)->word = ft_calloc(1, sizeof(t_word));
@@ -75,7 +75,6 @@ static void	handle_cmd_group(t_word_lst *pivot, int index, t_tree_node **node)
 	(*node)->type = GROUP;
 	(*node)->left = add_node();
 	rm_parentheses(pivot, ++index, &(*node)->left);
-
 }
 
 static void	rm_parentheses(t_word_lst *word_lst, int index, t_tree_node **node)
@@ -85,7 +84,7 @@ static void	rm_parentheses(t_word_lst *word_lst, int index, t_tree_node **node)
 	t_word_lst	*tmp_lst;
 
 	tmp_group = ft_substr(word_lst->word->word, 1,
-		ft_strlen(word_lst->word->word) - 2);
+			ft_strlen(word_lst->word->word) - 2);
 	cmd_lst = tokenize_op(tmp_group);
 	if (cmd_lst)
 	{

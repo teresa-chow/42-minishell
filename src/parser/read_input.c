@@ -6,15 +6,13 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/09 14:50:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:27:36 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 #include "../../include/struct.h"
-
-#include "../../tests/test.h" //delete
 
 static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root);
 static int	syntax_check(t_word_lst *word_lst, t_data *data);
@@ -52,7 +50,7 @@ static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root)
 	tokenize_w_lst(cmd_lst, word_lst);
 	free_strarray(cmd_lst);
 	if (syntax_check(word_lst, data) == 0)
-		create_syntax_tree(word_lst, NULL, 0, root); //check if NULL or last node
+		create_syntax_tree(word_lst, NULL, 0, root);
 	free_word_lst(&word_lst);
 }
 

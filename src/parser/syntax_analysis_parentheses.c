@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/03 11:30:55 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:28:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	rec_syntax_analysis(char *word);
 static int	check_parentheses(char *word);
 static int	check_nests(char *word);
 
-//TODO: memory alloc failure unhandled + tmp_group == '\0'
 int	check_group(char *word)
 {
 	if (check_parentheses(word) != 0)
@@ -67,7 +66,7 @@ static int	check_nests(char *word)
 		{
 			if (check_nest_lvl(word, i) != 0)
 				return (ERR_BI);
-		} 
+		}
 		if (word[i])
 			i++;
 	}
