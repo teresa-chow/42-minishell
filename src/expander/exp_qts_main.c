@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_qts_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/08 15:49:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:16:22 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,11 @@ int	join_normal_and_expansion(t_data *data, char **ptr, int len, char *end)
 	char	*start;
 	char	*tmp;
 
-	if (!end)
+	if (!data->exp->in_dbl)
+	{
 		end = get_next_qt(*ptr, data);
-	if (!len)
 		len = get_len(*ptr, end, data);
+	}
 	tmp = ft_calloc(len + 1, sizeof(char));
 	// if (!tmp)
 	start = tmp;
@@ -165,6 +166,7 @@ int	join_normal_and_expansion(t_data *data, char **ptr, int len, char *end)
 	free(start);
 	return (0);
 }
+
 
 int	handle_exp_qts(char **ptr, t_data *data)
 {
