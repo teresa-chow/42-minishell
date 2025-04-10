@@ -13,7 +13,6 @@
 #include "../../include/expand.h"
 
 static int	handle_arg(t_word *word, t_data *data);
-static int	check_token_context_details(t_word **word, t_data *data);
 int	handle_exp_qts(char **ptr, t_data *data);
 int	rebuild_tword(t_data *data, t_word **word);
 void	reset_small_part_flags(t_data *data);
@@ -40,46 +39,6 @@ int	analyze_args(t_word *word, t_data *data)
 			reset_big_part_flags(data);
 		}
 		word = word->next;
-	}
-	return (0);
-}
-
-int	analyze_token_context(t_word **word, t_data *data)
-{
-	if (!ft_strcmp((*word)->word, "export"))
-		data->exp->export_cmd = true;
-	if (is_valid_tilde((*word)->word))
-	{
-		if (expand_tilde(word, data) == -1)
-			return (-1);
-	}
-	if (check_token_context_details(word, data) == -1)
-		return (-1);
-	return (0);
-}
-/* This is an auxiliary function for analyze_token_context */
-static int	check_token_context_details(t_word **word, t_data *data)
-{
-	char	*s;
-
-	s = (*word)->word;
-	while (*s)
-	{
-		if (data->exp->export_cmd && *s == '=' && is_valid_tilde(s + 1))
-		{
-			data->exp->til_aft_equal = true;
-			if (expand_tilde(word, data) == -1)
-				return (-1);
-			data->exp->til_aft_equal = false;
-			s = (*word)->word;
-		}
-		if (*s == '\'' && !data->exp->has_sing)
-			data->exp->has_sing = true;
-		else if (*s == '"' && !data->exp->has_dbl)
-			data->exp->has_dbl = true;
-		else if (*s == '$' && is_valid_dollar(s) && !data->exp->has_exp)
-			data->exp->has_exp = true;
-		s++;
 	}
 	return (0);
 }

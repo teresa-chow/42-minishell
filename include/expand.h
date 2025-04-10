@@ -21,6 +21,7 @@
 /* -------------------------------------------------------------------------- */
 int		analyze_args(t_word *word, t_data *data);
 //EXPAND EXTRA FUNCTIONS
+int	analyze_token_context(t_word **word, t_data *data);
 char	**get_words(char const *s);
 int	build_new(t_data *data, char *bgn, char *end, int len);
 int	expand_tilde(t_word **word, t_data *data);
