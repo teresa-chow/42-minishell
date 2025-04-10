@@ -6,12 +6,12 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/08 15:07:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:16:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
-#define EXPAND_H
+# define EXPAND_H
 
 # include "utils.h"
 # include "errors.h"
@@ -19,7 +19,7 @@
 /* -------------------------------------------------------------------------- */
 /*                            EXPAND AND QUOTES                               */
 /* -------------------------------------------------------------------------- */
-int	analyze_args(t_word *word, t_data *data);
+int		analyze_args(t_word *word, t_data *data);
 //EXPAND EXTRA FUNCTIONS
 char	*find_non_alnum(char *s);
 char	**get_words(char const *s);

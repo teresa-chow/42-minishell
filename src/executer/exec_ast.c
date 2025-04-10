@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 13:57:03 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:34:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "../../include/errors.h"
 
 static int	exec_ast(t_data *data, t_tree_node **node, int *i);
-static int exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
+static int	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 {
@@ -46,7 +46,7 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 	}
 	else if ((*node)->type == CMD)
 	{
-		if (exec_ast_cmd(data, node, i) == -1) //check if cmd or condition / pipe
+		if (exec_ast_cmd(data, node, i) == -1) //check pipe
 			return (-1);
 	}
 	return (0);
@@ -60,7 +60,6 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 		return (-1);
 	if (!exec_builtin_cmd(data, node, i))
 		exec(data, (*node)->word);
-	//check exit codes for conditional execution
 	return (0);
 }
 
@@ -74,12 +73,12 @@ static int exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 	else if (!ft_strcmp((*node)->word->word, "cd")) //check cd verification (at the bottom)
 		cd((*node)->word, data);
 	else if (!ft_strcmp((*node)->word->word, "pwd"))
-		pwd(data);	
-	else if (!ft_strcmp((*node)->word->word ,"export"))
+		pwd(data);
+	else if (!ft_strcmp((*node)->word->word, "export"))
 		export(data, (*node)->word);
-	else if (!ft_strcmp((*node)->word->word,"unset"))
+	else if (!ft_strcmp((*node)->word->word, "unset"))
 		unset(data, (*node)->word->next);
-	else if (!ft_strcmp((*node)->word->word,"env"))
+	else if (!ft_strcmp((*node)->word->word, "env"))
 		env_cmd(data->env, data);
 	else if (!ft_strcmp((*node)->word->word, "exit"))
 		check_exit_args(data, node, i);

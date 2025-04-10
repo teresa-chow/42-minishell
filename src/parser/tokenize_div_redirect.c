@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 10:26:29 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/24 14:30:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:57:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ static unsigned int	substr_len(const char *str, unsigned int start)
 	unsigned int	len;
 
 	end = start;
-	while (is_redirection(str[end]))
+	while (is_redirection(str[end]) && (end < start + 2))
+	{
 		end++;
+		if (str[end] != str[end - 1])
+			break ;
+	}
 	len = end - start;
 	return (len);
 }

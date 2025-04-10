@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 11:55:45 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:16:22 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ int	join_normal_and_expansion(t_data *data, char **ptr, int len, char *end)
 	free(start);
 	return (0);
 }
+
 
 int	handle_exp_qts(char **ptr, t_data *data)
 {

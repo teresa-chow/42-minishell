@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 11:45:32 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:15:53 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../include/utils.h"
 
 static void	data_init(t_data *data, char **envp);
-static void	reset_old_data(t_data *data);
+static void	reset_mem(t_data *data, t_tree_node **root, int i);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -30,16 +30,18 @@ int	main(int argc, char **argv, char **envp)
 	while (i)
 	{
 		root = ft_calloc(1, sizeof(t_tree_node));
-		/*if (!root)
+		if (!root)
 		{
 			free_env_list(&data, 1, &data.env);
 			break;
-		}*/
+		}
 		read_input(&root, &data);
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
-		if (i)
-			reset_old_data(&data); //TODO: refactor to include tree (?)
+		//if (i)
+		//	reset_old_data(&data); //TODO: refactor to include tree (?)
+		reset_mem(&data, &root, i);
+		free(root);
 	}
 	rl_clear_history();
 	return (data.exit_status);
@@ -52,14 +54,15 @@ static void	data_init(t_data *data, char **envp)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 }
 
-//TODO: move to mem_utils (adapted, doesn't take word_lst)
-static	void	reset_old_data(t_data *data)
+//TODO: move to mem_utils
+static	void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
-	// here we have to free t_word
 	data->exp->export_cmd = false;
 	data->exp->export_after_equal = false;
 	free(data->home_path);
 	data->home_path = NULL;
 	free(data->exp);
-	data->exp = NULL;
+	free_ast(root);
+	if (!i)
+		free_env_list(data, 0, &data->env);
 }	

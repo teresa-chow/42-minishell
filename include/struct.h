@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 11:53:14 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:14:04 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define STRUCT_H
 
 /* Structs associated with parsing can be found in parse.h header file */
-#include "parse.h"
+# include "parse.h"
 
 /* -------------------------------------------------------------------------- */
 /*                           EXPORT AND ENV INIT                              */
