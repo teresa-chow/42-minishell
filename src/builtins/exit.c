@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 10:33:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:15:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 
 void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	free_to_exit(data, node);
+	(void)data;
+	(void)node;
 	*i = 0;
 	write(STDERR_FILENO, "exit\n", 5);
 }

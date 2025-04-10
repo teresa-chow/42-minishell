@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 10:23:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:06:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,4 @@ void	free_ast(t_tree_node **root)
 	free_ast(&tmp->right);
 	free_words(&tmp->word);
 	root = NULL;
-}
-
-void	free_to_exit(t_data *data, t_tree_node **root)
-{
-	free_ast(root);
-	free_env_list(data, 0, &data->env);
-	free(data->home_path);
-	data->home_path = NULL;
 }
