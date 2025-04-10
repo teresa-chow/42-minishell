@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 14:21:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:42:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		if (i)
 			free_old_mem(&data, &root);
 	}
-	//rl_clear_history();
+	rl_clear_history();
 	return (data.exit_status);
 }
 
@@ -55,7 +55,7 @@ static void	data_init(t_data *data, char **envp)
 //TODO: move to mem_utils (adapted, doesn't take word_lst)
 static	void	free_old_mem(t_data *data, t_tree_node **root)
 {
-	if (root)
+	if (*root)
 		free_ast(root);
 	if (data->home_path)
 		free(data->home_path);
