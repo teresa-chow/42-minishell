@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/07 14:57:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:30:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		env_cmd(t_env_node *env, t_data *data);
 
 /* ================================== EXIT ================================== */
 void		exit_cmd(t_data *data, t_tree_node **node, int *i);
-void		check_exit_args(t_data *data, t_tree_node **node, int *i);
+long		exit_atol(t_word *word, t_data *data, int *syntax);
 
 /* ============================== GENERAL UTILS ============================= */
 int			set_inf(char *word, t_input_inf *inf_arg);
