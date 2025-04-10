@@ -49,6 +49,11 @@ typedef struct s_env_init
 /* -------------------------------------------------------------------------- */
 /*                                EXPANDER                                    */
 /* -------------------------------------------------------------------------- */
+// in_dbl and in_sing  -> to know if we are inside quotes and how to handle
+// to_exp -> to know if we can expand only if is a valid dollar sign and 
+//            if we are not inside single quotes
+//to_split -> used to split data.exp.new_string when there are no quotes
+//             and it's not an export value expansion
 typedef struct s_expand
 {
 	char	*new;
@@ -59,6 +64,9 @@ typedef struct s_expand
 	bool	has_exp;
 	bool	has_sing;
 	bool	has_dbl;
+	bool	to_split;
+	bool	export_cmd;
+	bool	export_after_equal;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */

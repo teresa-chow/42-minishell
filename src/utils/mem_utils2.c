@@ -15,25 +15,6 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-void	free_many(char **s1, char **s2, char **s3)
-{
-	if (s1)
-	{
-		free(*s1);
-		*s1 = NULL;
-	}
-	if (s2)
-	{
-		free(*s2);
-		*s2 = NULL;
-	}
-	if (s3)
-	{
-		free(*s3);
-		*s3 = NULL;
-	}
-}
-
 int	free_exp(t_data *data, t_word *word, int i)
 {
 	if (data->exp->new != word->word)
@@ -58,3 +39,14 @@ void	free_ast(t_tree_node **root)
 	free_words(&tmp->word);
 	root = NULL;
 }
+
+/*
+carlos -- check
+  (void)node; //tmp
+	free_env_list(data, 0, &data->env);
+	free(data->home_path);
+	data->home_path = NULL;
+	free(data->exp);
+	//TODO: free ast tree
+}
+*/

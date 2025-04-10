@@ -35,8 +35,10 @@ int	is_valid_dollar(char *s)
 	return (0);
 }
 /* Used to check is we have to handle with arg or not*/
-void	check_special_char(char *s, t_data *data)
+void	analyze_token_context(char *s, t_data *data)
 {
+	if (!ft_strcmp(s, "export"))
+		data->exp->export_cmd = true;
 	while (*s)
 	{
 		if (*s == '\'' && !data->exp->has_sing)

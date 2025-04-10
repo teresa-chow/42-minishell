@@ -15,7 +15,7 @@
 #include "../include/utils.h"
 
 static void	data_init(t_data *data, char **envp);
-static void	free_old_mem(t_data *data, t_tree_node **root, int i);
+static void	reset_mem(t_data *data, t_tree_node **root, int i);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -38,7 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&root, &data);
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
-		free_old_mem(&data, &root, i);
+		//if (i)
+		//	reset_old_data(&data); //TODO: refactor to include tree (?)
+		reset_mem(&data, &root, i);
 		free(root);
 	}
 	rl_clear_history();
@@ -47,13 +49,13 @@ int	main(int argc, char **argv, char **envp)
 
 static void	data_init(t_data *data, char **envp)
 {
-	ft_bzero(data, sizeof(t_data)); //is resetting exit satus -- static ?
+	ft_bzero(data, sizeof(t_data));
 	if (init_env_lst(envp, data) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 }
 
-//TODO: move to mem_utils (adapted, doesn't take word_lst)
-static	void	free_old_mem(t_data *data, t_tree_node **root, int i)
+//TODO: move to mem_utils
+static	void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
 	if (!i)
 		free_env_list(data, 0, &data->env);
@@ -62,4 +64,8 @@ static	void	free_old_mem(t_data *data, t_tree_node **root, int i)
 	if (data->home_path)
 		free(data->home_path);
 	data->home_path = NULL;
+	free(data->exp);
+	data->exp = NULL;
+  data->exp->export_cmd = false;
+	data->exp->export_after_equal = false;
 }	
