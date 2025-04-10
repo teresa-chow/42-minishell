@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/03 11:27:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:12:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
+static void	categorize_redir(t_word *word);
 
 int	syntax_analysis(t_word_lst *word_lst)
 {
@@ -71,6 +72,8 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 				return (ERR_BI);
 			if (check_redir_seq(tmp_lst, tmp_word) != 0)
 				return (ERR_BI);
+			else if (is_redirection(tmp_word->word[0]))
+				categorize_redir(tmp_word);
 		}
 		else
 		{
@@ -82,4 +85,17 @@ static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word)
 		tmp_word = tmp_word->next;
 	}
 	return (0);
+}
+
+static void	categorize_redir(t_word *word)
+{
+	if (!ft_strcmp(word->word, ">"))
+		word->redir = OUT;
+	else if (!ft_strcmp(word->word, ">>"))
+		word->redir = APPEND;
+	else if (!ft_strcmp(word->word, "<"))
+		word->redir = IN;
+	else if (!ft_strcmp(word->word, "<<"))
+		word->redir = HEREDOC;
+	return ;
 }

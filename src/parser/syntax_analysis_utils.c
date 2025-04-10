@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:12:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/28 09:07:22 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:00:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ int	check_op_syntax(char *word)
 			return (err_syntax("|"));
 	if (len > 2)
 	{
-		if (word[0] == '<')
-			return (err_syntax("<"));
-		else if (word[0] == '>')
-			return (err_syntax(">"));
-		else if (word[0] == '|')
+		if (word[0] == '|')
 			return (err_syntax("||"));
 		else if (word[0] == '&')
 			return (err_syntax("&&"));

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/07 14:58:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:06:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include "../../include/builtins.h"
 #include "../../include/parse.h"
 #include "../../include/errors.h"
-
-void	free_many(char **s1, char **s2, char **s3)
-{
-	if (s1)
-	{
-		free(*s1);
-		*s1 = NULL;
-	}
-	if (s2)
-	{
-		free(*s2);
-		*s2 = NULL;
-	}
-	if (s3)
-	{
-		free(*s3);
-		*s3 = NULL;
-	}
-}
 
 int	free_exp(t_data *data, t_word *word, int i)
 {
@@ -46,11 +27,26 @@ int	free_exp(t_data *data, t_word *word, int i)
 	return (0);
 }
 
-void	free_to_exit(t_data *data, t_tree_node **node)
+void	free_ast(t_tree_node **root)
 {
-    (void)node; //tmp
+	t_tree_node	*tmp;
+
+	tmp = *root;
+	if (!tmp)
+		return ;
+	free_ast(&tmp->left);
+	free_ast(&tmp->right);
+	free_words(&tmp->word);
+	root = NULL;
+}
+
+/*
+carlos -- check
+  (void)node; //tmp
 	free_env_list(data, 0, &data->env);
 	free(data->home_path);
 	data->home_path = NULL;
+	free(data->exp);
 	//TODO: free ast tree
 }
+*/

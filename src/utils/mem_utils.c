@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/08 14:59:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 10:50:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	free_words(t_word **word)
 
 	while (*word != NULL)
 	{
-		//if (data->home_path == (*word)->word)
-		//	data->home_path = NULL;
 		free((*word)->word);
 		tmp = *word;
 		*word = (*word)->next;
