@@ -38,8 +38,6 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&root, &data);
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
-		//if (i)
-		//	reset_old_data(&data); //TODO: refactor to include tree (?)
 		reset_mem(&data, &root, i);
 		free(root);
 	}
