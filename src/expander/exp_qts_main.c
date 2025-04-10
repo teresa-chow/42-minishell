@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 16:37:50 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:54:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,6 @@ int	get_var_val(t_data *data, char **ptr, char **tmp)
 		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_after_equal)
 		{
 			data->exp->to_split = true;
-			// data->exp->words = get_words(var->val);
-			// if (!data->exp->words)
-			// 	return (-1);
 			join_splited_words(data, tmp);
 		}
 		else

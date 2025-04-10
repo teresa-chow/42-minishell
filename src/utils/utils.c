@@ -42,7 +42,6 @@ static int	get_home(t_data *data)
 	char	*end;
 	int	len;
 
-	data->no_home = true;
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
 	{

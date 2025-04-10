@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 10:50:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,52 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-void	free_strarray(char **array)
+void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
-	int	i;
+	t_env_node	*var;
 
-	i = 0;
-	if (!array)
-		return ;
-	while (array[i])
+	if (data->exp)
 	{
-		free(array[i]);
-		i++;
+		data->exp->export_cmd = false;
+		data->exp->export_after_equal = false;
 	}
-	free(array);
+	if(data->no_home)
+		free(data->env_home_var);
+	var = ft_getenv(data->env, "HOME");
+	if (var)
+		data->env_home_var = var->val;
+	else
+		data->no_home = true;
+	free(data->exp);
+	data->exp = NULL;
+	free_ast(root);
+	if (!i)
+		free_env_list(data, 0, &data->env);
 }
 
-void	free_prompt(t_prompt *prompt)
+void	free_ast(t_tree_node **root)
 {
-	if (prompt->prog)
-		free(prompt->prog);
-	if (prompt->usr)
-		free(prompt->usr);
-	if (prompt->cwd)
-		free(prompt->cwd);
+	t_tree_node	*tmp;
+
+	tmp = *root;
+	if (!tmp)
+		return ;
+	free_ast(&tmp->left);
+	free_ast(&tmp->right);
+	free_words(&tmp->word);
+	root = NULL;
+}
+
+int	free_exp(t_data *data, t_word *word, int i)
+{
+	if (data->exp->new != word->word)
+		free(data->exp->new);
+	if (data->exp->words)
+		free_strarray(data->exp->words);
+	ft_bzero(data->exp, sizeof(t_expand));
+	if (i)
+		return (error_allocation(data));
+	return (0);
 }
 
 int	free_env_list(t_data *data, int i, t_env_node **lst)
@@ -67,18 +90,6 @@ void	free_words(t_word **word)
 		free((*word)->word);
 		tmp = *word;
 		*word = (*word)->next;
-		free(tmp);
-	}
-}
-
-void	free_word_lst(t_word_lst **word_lst)
-{
-	t_word_lst	*tmp;
-
-	while (*word_lst)
-	{
-		tmp = *word_lst;
-		*word_lst = (*word_lst)->next;
 		free(tmp);
 	}
 }

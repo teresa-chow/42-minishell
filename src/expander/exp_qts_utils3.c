@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:23:30 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 17:13:18 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:20:32 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	expand_tilde(t_word **word, t_data *data)
 	else
 		(*word)->word = data->env_home_var;
 	free (to_free);
-	if (data->no_home)
-		free(data->env_home_var);
 	return (0);
 }
 
