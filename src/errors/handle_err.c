@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 16:33:04 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:11:14 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	error_allocation(t_data *data)
 
 int	command_not_found(char *token, t_data *data)
 {
-	print_fd(2, "%s: command not found\n", token);
+	print_fd(2, "minishell: %s: command not found\n", token);
 	data->exit_status = ERR_F;
 	return (ERR_F);
 }

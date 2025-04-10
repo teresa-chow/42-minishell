@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/28 09:49:44 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 09:10:06 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ unsigned int	next_quote(const char *str, unsigned int start, int code)
 			++end;
 		if (str[end] && (str[end] == '\''))
 			++end;
-		while (str[end] && !is_delimiter(str[end])
+		while (str[end] && !is_delimiter(str[end]) && str[end] != '\''
 			&& str[end] != '(' && str[end] != ')')
 			++end;
 	}
@@ -60,7 +60,7 @@ unsigned int	next_quote(const char *str, unsigned int start, int code)
 			++end;
 		if (str[end] && (str[end] == '\"'))
 			++end;
-		while (str[end] && !is_delimiter(str[end])
+		while (str[end] && !is_delimiter(str[end]) && str[end] != '\"'
 			&& str[end] != '(' && str[end] != ')')
 			++end;
 	}
