@@ -12,14 +12,6 @@
 
 #include "../../include/expand.h"
 
-void	update_quotes_exp_status(char *ptr, t_data *data)
-{
-	if (*ptr == '\'')
-		data->exp->in_sing = !data->exp->in_sing;
-	else if (*ptr == '"')
-		data->exp->in_dbl = !data->exp->in_dbl;
-}
-
 int	expand_tilde(t_word **word, t_data *data)
 {
 	char	*equal_pos;
@@ -40,7 +32,7 @@ int	expand_tilde(t_word **word, t_data *data)
 		(*word)->word = ft_strjoin((*word)->word, data->env_home_var);
 		if (!(*word)->word)
 			return (-1);
-		*(equal_pos + 1)= box;
+		*(equal_pos + 1) = box;
 	}
 	else
 		(*word)->word = data->env_home_var;

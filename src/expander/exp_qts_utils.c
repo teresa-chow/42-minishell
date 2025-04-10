@@ -3,105 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exp_qts_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 15:24:14 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 17:09:30 by carlaugu         ###   ########.fr       */
+/*   Created: 2025-04-10 23:02:03 by carlaugu          #+#    #+#             */
+/*   Updated: 2025-04-10 23:02:03 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
-/* Used to expand when no quotes */
-int	has_delimiter(char *s)
+/* This is an auxiliary function for get_var_len  and  get_var_val*/
+void	temp_string_change(char **ptr, char **inval, char *box, bool end)
 {
-	while (*s)
+	if (!end)
 	{
-		if (*s == ' ' && *(s + 1) == ' ')
-			return (1);
-		else if (*s == ' ' && is_delimiter(*(s +1)))
-			return (1);
-		else if (is_delimiter(*s))
-			return (1);
-		s++;
+		*inval = find_non_alnum(*ptr);
+		*box = **inval;
+		**inval = 0;
 	}
-	return (0);
-}
-/* Used to check if is a valid var name */
-int	is_valid_dollar(char *s)
-{
-	if (*(s + 1) == '?' || ft_isalnum(*(s + 1)))
-		return (1);
-	return (0);
-}
-
-bool	is_valid_tilde(char *s)
-{
-	if (*s == '~' && !*(s + 1))
-		return (true);
-	return (false);
-}
-
-/* Used to check is we have to handle with arg or not*/
-int	analyze_token_context(t_word **word, t_data *data)
-{
-	char	*s;
-
-	if (!ft_strcmp((*word)->word, "export"))
-		data->exp->export_cmd = true;
-	if (is_valid_tilde((*word)->word))
+	if (end)
 	{
-		if (expand_tilde(word, data) == -1)
-			return (free_exp(data,*word, 1));
+		**inval = *box;
+		*ptr = *inval;
 	}
-	s = (*word)->word;
-	while (*s)
-	{
-		if (data->exp->export_cmd && *s == '=' && is_valid_tilde(s + 1))
-		{
-			data->exp->til_aft_equal = true;
-			expand_tilde(word, data);
-			data->exp->til_aft_equal = false;
-			s = (*word)->word;
-		}
-		if (*s == '\'' && !data->exp->has_sing)
-			data->exp->has_sing = !data->exp->has_sing;
-		else if (*s == '"' && !data->exp->has_dbl)
-			data->exp->has_dbl = !data->exp->has_dbl;
-		else if (*s == '$' && is_valid_dollar(s) && !data->exp->has_exp)
-			data->exp->has_exp = !data->exp->has_exp;
-		s++;
-	}
-	return (0);
-}
-/* Find invalid char in var name */
-char	*find_non_alnum(char *s)
-{
-	if (*s == '?')
-		return (s + 1);
-	while (*s)
-	{
-		if (!ft_isalnum(*s))
-			break;
-		s++;
-	}
-	return (s);
-}
-/* Find the next quote if we are in or out of quotes 
-and check if has dollar sign between */
-char	*get_next_qt(char *s, t_data *data)
-{
-	while (*s)
-	{
-		if (*s == '$' && is_valid_dollar(s) && !data->exp->to_exp && !data->exp->in_sing)
-			data->exp->to_exp = !data->exp->to_exp;
-		if (*s == '\'' && data->exp->in_sing)
-			break;
-		else if (*s == '"' && data->exp->in_dbl)
-			break;
-		else if ((*s == '\'' || *s == '"') && !data->exp->in_dbl && !data->exp->in_sing)
-			break;
-		s++;
-	}
-	return (s);
 }

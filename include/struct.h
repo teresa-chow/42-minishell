@@ -56,21 +56,23 @@ typedef struct s_env_init
 	if we are not inside single quotes
 - to_split--> used to split data.exp.new_string when there are no quotes
 	and it's not an export value expansion
+- export_after_equal--> this, check if when we are in export builtin if 
+	has equal signal must be treated as a literal
 */
 typedef struct s_expand
 {
 	char	*new;
 	char	**words;
-	bool	in_dbl;
-	bool	in_sing;
-	bool	to_exp;
+	bool	in_dbl; //
+	bool	in_sing; //
+	bool	to_exp; //
 	bool	has_exp;
-	bool	has_sing;
-	bool	has_dbl;
+	bool	has_sing; //
+	bool	has_dbl; //
 	bool	to_split;
-	bool	til_aft_equal;
-	bool	export_cmd;
-	bool	export_after_equal;
+	bool	til_aft_equal; //
+	bool	export_cmd; //
+	bool	export_after_equal; //
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
