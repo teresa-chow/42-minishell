@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 13:58:53 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:07:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 	free(data->home_path);
 	data->home_path = NULL;
 	free(data->exp);
+	data->exp = NULL;
 	free_ast(root);
 	if (!i)
 		free_env_list(data, 0, &data->env);
