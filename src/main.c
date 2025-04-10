@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 11:06:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 12:07:36 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	main(int argc, char **argv, char **envp)
 		read_input(&root, &data);
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
-		//if (i)
-		//	reset_old_data(&data); //TODO: refactor to include tree (?)
 		reset_mem(&data, &root, i);
 		free(root);
 	}
@@ -57,15 +55,12 @@ static void	data_init(t_data *data, char **envp)
 //TODO: move to mem_utils
 static	void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
-	if (!i)
-		free_env_list(data, 0, &data->env);
-	if (*root)
-		free_ast(root);
-	if (data->home_path)
-		free(data->home_path);
+	data->exp->export_cmd = false;
+	data->exp->export_after_equal = false;
+	free(data->home_path);
 	data->home_path = NULL;
 	free(data->exp);
-	data->exp = NULL;
-  data->exp->export_cmd = false;
-	data->exp->export_after_equal = false;
+	free_ast(root);
+	if (!i)
+		free_env_list(data, 0, &data->env);
 }	
