@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 09:34:07 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:32:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include "../../include/errors.h"
 
 static int	exec_ast(t_data *data, t_tree_node **node, int *i);
-static int	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
+static int is_builtin_cmd(t_tree_node **node);
+static void	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 {
@@ -54,24 +55,42 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 
 int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	//expand variables that need expansion
-	//remove quotes
 	if (analyze_args((*node)->word, data) == -1) //rename: expander (?)
 		return (-1);
-	if (!exec_builtin_cmd(data, node, i))
+	if (is_builtin_cmd(node))
+		exec_builtin_cmd(data, node, i);
+	else
 		exec(data, (*node)->word);
 	return (0);
 }
 
-static int exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
+static int is_builtin_cmd(t_tree_node **node)
 {
-	int	bi;
+	if (!ft_strcmp((*node)->word->word, "echo")
+		|| !ft_strcmp((*node)->word->word, "cd")
+		|| !ft_strcmp((*node)->word->word, "pwd")
+		|| !ft_strcmp((*node)->word->word, "export")
+		|| !ft_strcmp((*node)->word->word, "unset")
+		|| !ft_strcmp((*node)->word->word, "env")
+		|| !ft_strcmp((*node)->word->word, "exit"))
+		return (1);
+	return (0);
+}
 
-	bi = 1;
+static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
+{
 	if (!ft_strcmp((*node)->word->word, "echo"))
 		echo((*node)->word, data);
-	else if (!ft_strcmp((*node)->word->word, "cd")) //check cd verification (at the bottom)
+	else if (!ft_strcmp((*node)->word->word, "cd"))
+	{
+		if ((*node)->word->next	&& (*node)->word->next->next
+		&& (*node)->word->next->next->redir == NONE)
+		{
+			cd_error(NULL, data, 0);
+			return ;
+		}
 		cd((*node)->word, data);
+	}
 	else if (!ft_strcmp((*node)->word->word, "pwd"))
 		pwd(data);
 	else if (!ft_strcmp((*node)->word->word, "export"))
@@ -82,15 +101,4 @@ static int exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 		env_cmd(data->env, data);
 	else if (!ft_strcmp((*node)->word->word, "exit"))
 		check_exit_args(data, node, i);
-	else
-		bi = 0;
-	return (bi);
 }
-
-/* Removed cd builtin check (redirections)
-	if ((*node)->word->next && (*node)->word->next->next)
-	{
-			cd_error(NULL, data, 0);
-			return ;
-	}
-*/
