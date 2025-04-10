@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 13:52:49 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:21:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 	else if (!ft_strcmp((*node)->word->word, "env"))
 		env_cmd(data->env, data);
 	else if (!ft_strcmp((*node)->word->word, "exit"))
-		check_exit_args(data, node, i);
+		exit_cmd(data, node, i);
 }
