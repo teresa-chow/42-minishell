@@ -31,16 +31,7 @@ void	add_chars(char *start, char *end, char *dst)
 /* Handle with HOME var*/
 int	handle_with_home(t_data *data)
 {
-	t_env_node	*home_var;
-
-	home_var = ft_getenv(data->env, "HOME");
-	if (home_var)
-	{
-		data->home_path = ft_strdup(home_var->val);
-		if (!data->home_path)
-			return(error_allocation(data));	
-	}
-	else
+	if (!data->env_home_var)
 		return (get_home(data));
 	return (0);
 }
@@ -51,6 +42,7 @@ static int	get_home(t_data *data)
 	char	*end;
 	int	len;
 
+	data->no_home = true;
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
 	{
@@ -59,13 +51,13 @@ static int	get_home(t_data *data)
 	}
 	end = find_end(tmp);
 	len = end - tmp;
-	data->home_path = ft_calloc(len + 1, sizeof(char));
-	if (!data->home_path)
+	data->env_home_var = ft_calloc(len + 1, sizeof(char));
+	if (!data->env_home_var)
 	{
 		free(tmp);
 		return (error_allocation(data));
 	}
-	add_chars(tmp, end, data->home_path);
+	add_chars(tmp, end, data->env_home_var);
 	free(tmp);
 	return (0);
 }

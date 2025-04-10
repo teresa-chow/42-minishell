@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/27 16:36:56 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:55:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,23 @@ static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);
 
 void	cd(t_word *input, t_data *data)
 {
-	data->home_path = NULL;
-	if (input->next)
-		data->home_path = input->next->word;
+	char	*to_exec;
+
+	to_exec = NULL;
+	if (input->next && input->next->word)
+		to_exec = input->next->word;
 	else
 	{
-		if (handle_with_home(data) == -1)
-			return ;
+		if (!data->env_home_var)
+		{
+			if (handle_with_home(data) == -1)
+				return ;
+		}
+		to_exec = data->env_home_var;
 	}
-	if (chdir(data->home_path) == -1)
+	if (chdir(to_exec) == -1)
 	{
-		cd_error(data->home_path, data, 1);
+		cd_error(to_exec, data, 1);
 		return ;
 	}
 	if (!update_pwd_and_oldpwd(data))

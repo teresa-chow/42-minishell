@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 12:14:04 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:59:45 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_expand
 	bool	has_sing;
 	bool	has_dbl;
 	bool	to_split;
+	bool	til_aft_equal;
 	bool	export_cmd;
 	bool	export_after_equal;
 }	t_expand;
@@ -79,8 +80,9 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
-	char		*home_path;
+	char		*env_home_var;
 	int			exit_status;
+	bool	no_home;
 }	t_data;
 
 #endif

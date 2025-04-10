@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/09 18:16:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:38:44 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_len(char *bgn, char *end, t_data *data);
 int	has_delimiter(char *s);
 int	is_valid_dollar(char *s);
 int	join_normal_and_expansion(t_data *data, char **ptr, int len, char *end);
-void	analyze_token_context(char *s, t_data *data);
+int	analyze_token_context(t_word **word, t_data *data);
 void	join_splited_words(t_data *data, char **tmp);
 void	reset_checkers(t_data *data);
 void	update_quotes_exp_status(char *ptr, t_data *data);

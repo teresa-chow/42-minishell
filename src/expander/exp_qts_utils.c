@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_qts_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-07 15:24:14 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-07 15:24:14 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/07 15:24:14 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/10 17:09:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,36 @@ int	is_valid_dollar(char *s)
 		return (1);
 	return (0);
 }
-/* Used to check is we have to handle with arg or not*/
-void	analyze_token_context(char *s, t_data *data)
+
+bool	is_valid_tilde(char *s)
 {
-	if (!ft_strcmp(s, "export"))
+	if (*s == '~' && !*(s + 1))
+		return (true);
+	return (false);
+}
+
+/* Used to check is we have to handle with arg or not*/
+int	analyze_token_context(t_word **word, t_data *data)
+{
+	char	*s;
+
+	if (!ft_strcmp((*word)->word, "export"))
 		data->exp->export_cmd = true;
+	if (is_valid_tilde((*word)->word))
+	{
+		if (expand_tilde(word, data) == -1)
+			return (free_exp(data,*word, 1));
+	}
+	s = (*word)->word;
 	while (*s)
 	{
+		if (data->exp->export_cmd && *s == '=' && is_valid_tilde(s + 1))
+		{
+			data->exp->til_aft_equal = true;
+			expand_tilde(word, data);
+			data->exp->til_aft_equal = false;
+			s = (*word)->word;
+		}
 		if (*s == '\'' && !data->exp->has_sing)
 			data->exp->has_sing = !data->exp->has_sing;
 		else if (*s == '"' && !data->exp->has_dbl)
@@ -49,6 +72,7 @@ void	analyze_token_context(char *s, t_data *data)
 			data->exp->has_exp = !data->exp->has_exp;
 		s++;
 	}
+	return (0);
 }
 /* Find invalid char in var name */
 char	*find_non_alnum(char *s)

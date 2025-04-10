@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_qts_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-07 16:23:30 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-07 16:23:30 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/07 16:23:30 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/10 17:13:18 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,31 @@ void	update_quotes_exp_status(char *ptr, t_data *data)
 
 int	expand_tilde(t_word **word, t_data *data)
 {
-	if (handle_with_home(data) == -1)
-		return (-1);
-	free ((*word)->word);
-	(*word)->word = ft_strdup(data->home_path);
-	if (!(*word)->word)
-		return (-1);
-	*word = (*word)->next;
+	char	*equal_pos;
+	char	*to_free;
+	char	box;
+
+	if (!data->env_home_var)
+	{
+		if (handle_with_home(data) == -1)
+			return (-1);
+	}
+	to_free = (*word)->word;
+	if (data->exp->til_aft_equal)
+	{
+		equal_pos = ft_strchr((*word)->word, '=');
+		box = *(equal_pos + 1);
+		*(equal_pos + 1) = 0;	
+		(*word)->word = ft_strjoin((*word)->word, data->env_home_var);
+		if (!(*word)->word)
+			return (-1);
+		*(equal_pos + 1)= box;
+	}
+	else
+		(*word)->word = data->env_home_var;
+	free (to_free);
+	if (data->no_home)
+		free(data->env_home_var);
 	return (0);
 }
 

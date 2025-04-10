@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 12:16:22 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:37:50 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,8 @@ int	analyze_args(t_word *word, t_data *data)
 		return (error_allocation(data));
 	while (word)
 	{
-		if (!ft_strcmp(word->word, "~"))
-		{
-			if (expand_tilde(&word, data) == -1)
-				return (free_exp(data, word, 1));
-			continue;
-		}
-		analyze_token_context(word->word, data);
+		if (analyze_token_context(&word, data) == -1)
+			return(free_exp(data, word, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
 			if (handle_arg(word, data) == -1)
@@ -149,6 +144,11 @@ int	join_normal_and_expansion(t_data *data, char **ptr, int len, char *end)
 	{
 		end = get_next_qt(*ptr, data);
 		len = get_len(*ptr, end, data);
+	}
+	if (!len)
+	{
+		*ptr = end;
+		return (0);
 	}
 	tmp = ft_calloc(len + 1, sizeof(char));
 	// if (!tmp)
