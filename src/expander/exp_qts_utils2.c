@@ -16,18 +16,17 @@ static int	exit_status_len(t_data *data);
 static int	var_val_len(char *s, t_data *data, char **bgn);
 static int	len_splited_words(t_data *data, char *val);
 
-void	reset_checkers(t_data *data)
+void	reset_big_part_flags(t_data *data)
 {
 	data->exp->has_dbl = false;
-	data->exp->has_exp = false;
 	data->exp->has_sing = false;
-	data->exp->in_dbl = false;
-	data->exp->in_sing = false;
-	data->exp->to_exp = false;
+	data->exp->has_exp = false;
+	data->exp->export_cmd = false;
+	data->exp->to_split = false;
 }
 
 /* These function get the length of normal chars with expansions */
-int	get_len(char *bgn, char *end, t_data *data)
+int	get_total_len(char *bgn, char *end, t_data *data)
 {
 	int	len;
 
@@ -36,8 +35,6 @@ int	get_len(char *bgn, char *end, t_data *data)
 	len = 0;
 	while (bgn != end)
 	{
-		if (data->exp->export_cmd&& *bgn == '=')
-			data->exp->export_after_equal = true;
 		if (*bgn == '$' && is_valid_dollar(bgn))
 		{
 			if (*(bgn + 1) == '?')
@@ -54,7 +51,6 @@ int	get_len(char *bgn, char *end, t_data *data)
 			bgn++;
 		}
 	}
-	data->exp->export_after_equal = false;
 	return (len);
 }
 
@@ -77,7 +73,6 @@ static int	var_val_len(char *s, t_data *data, char **bgn)
 			len = len_splited_words(data, var->val);
 			if (len == -1)
 				return (-1);
-			// free_strarray(data->exp->words);
 		}
 		else
 			len = ft_strlen(var->val);
