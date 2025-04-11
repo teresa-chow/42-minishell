@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:45:35 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/11 16:01:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:24:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	redirect_stdout(int **fd, char **files, int i, int type)
 {
 	if (type == 1)
-		(*fd)[i] = open(files[i], O_WRONLY | O_CREAT, 0644);
+		(*fd)[i] = open(files[i], O_WRONLY | O_CREAT, 0644); //must check permissions of existing files
 	else if (type == 2)
 		(*fd)[i] = open(files[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*fd)[i] == -1)
@@ -30,7 +30,7 @@ void	redirect_stdout(int **fd, char **files, int i, int type)
 		perror("minishell: dup2");
 		return ;
 	}
-	close((*fd)[i]);
+	//close((*fd)[i]);
 }
 
 void	close_fd(int *fd, int count)
