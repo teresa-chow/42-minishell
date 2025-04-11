@@ -56,7 +56,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 {
 	//expand variables that need expansion
 	//remove quotes
-	if (analyze_args((*node)->word, data) == -1) //rename: expander (?)
+	if (handle_tokens((*node)->word, data) == -1) //rename: expander (?)
 		return (-1);
 	if (!exec_builtin_cmd(data, node, i))
 		exec(data, (*node)->word);

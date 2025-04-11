@@ -29,8 +29,8 @@ SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
 	set_path.c print_fd.c utils.c)
-SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, exp_qts_main.c exp_qts_analyze.c expand_split.c \
-	exp_qts_checkers.c exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c)
+SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c expand_tilde.c expand_val_split.c \
+	handle_tokens_main.c handle_tokens_utils.c string_tword_builder.c token_checkers.c token_expansion_analyze.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 

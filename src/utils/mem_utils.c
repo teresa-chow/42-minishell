@@ -14,18 +14,15 @@
 #include "../../include/builtins.h"
 #include "../../include/parse.h"
 #include "../../include/errors.h"
+#include "../../include/expand.h"
 
 void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
 	t_env_node	*var;
 
-	if (data->exp)
-	{
-		data->exp->export_cmd = false;
-		data->exp->export_after_equal = false;
-	}
 	if(data->no_home)
 		free(data->env_home_var);
+	data->env_home_var = NULL;
 	var = ft_getenv(data->env, "HOME");
 	if (var)
 		data->env_home_var = var->val;

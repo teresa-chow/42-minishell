@@ -22,12 +22,13 @@ int	analyze_token_context(t_word **word, t_data *data)
 	{
 		if (expand_tilde(word, data) == -1)
 			return (-1);
+		return (0);
 	}
 	if (check_token_context_details(word, data) == -1)
 		return (-1);
 	return (0);
 }
-/* This is an auxiliary function for analyze_token_context */
+
 static int	check_token_context_details(t_word **word, t_data *data)
 {
 	char	*s;
@@ -41,7 +42,7 @@ static int	check_token_context_details(t_word **word, t_data *data)
 			if (expand_tilde(word, data) == -1)
 				return (-1);
 			data->exp->til_aft_equal = false;
-			s = (*word)->word;
+			break;
 		}
 		if (*s == '\'' && !data->exp->has_sing)
 			data->exp->has_sing = true;

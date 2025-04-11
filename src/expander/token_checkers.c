@@ -36,41 +36,40 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 	return (s);
 }
 
-/* Find invalid char in var name */
+/* Find invalid char in env var name */
 char	*find_non_alnum(char *s)
 {
 	if (*s == '?')
 		return (s + 1);
 	while (*s)
 	{
-		if (!ft_isalnum(*s))
+		if (!ft_isalnum(*s) && *s != '_')
 			break;
 		s++;
 	}
 	return (s);
 }
 
-/* Used to expand when no quotes */
-int	has_delimiter(char *s)
+bool	has_delimiter(char *s)
 {
 	while (*s)
 	{
 		if (*s == ' ' && *(s + 1) == ' ')
-			return (1);
+			return (true);
 		else if (*s == ' ' && is_delimiter(*(s +1)))
-			return (1);
+			return (true);
 		else if (is_delimiter(*s))
-			return (1);
+			return (true);
 		s++;
 	}
-	return (0);
+	return (false);
 }
 /* Used to check if is a valid var name */
-int	is_valid_dollar(char *s)
+bool	is_valid_dollar(char *s)
 {
 	if (*(s + 1) == '?' || ft_isalnum(*(s + 1)))
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 bool	is_valid_tilde(char *s)
