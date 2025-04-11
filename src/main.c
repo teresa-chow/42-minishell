@@ -6,11 +6,12 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 19:06:18 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:17:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../include/execute.h"
 #include "../include/errors.h"
 #include "../include/utils.h"
 

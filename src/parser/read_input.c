@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 18:02:34 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:45:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	read_input(t_tree_node **root, t_data *data)
 	char		**cmd_lst;
 
 	prompt = get_prompt(data);
-	input = readline(prompt);
+	if (isatty(STDOUT_FILENO))
+		input = readline(prompt);
+	else
+		input = readline(NULL);
 	if (input && *input)
 	{
 		add_history(input);
