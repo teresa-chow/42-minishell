@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 17:25:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:28:46 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 
 	i = 0;
 	ft_bzero(inf, sizeof(t_exec_data));
-	/*if (!ft_strcmp(word->word, "."))
-	{
-		print_fd(2, "minishell: `.': Not valid input\n", NULL);
-		data->exit_status = 2;
-		return (-1);
-	}*/
+	// if (!ft_strcmp(word->word, "."))
+	// {
+	// 	print_fd(2, "minishell: `.': Not valid input\n", NULL);
+	// 	data->exit_status = 2;
+	// 	return (-1);
+	// }
 	inf->wrd_arr = create_wrd_arr(word);
 	inf->env_arr = create_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)

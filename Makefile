@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/10 20:30:52 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/11 11:55:48 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
 	set_path.c print_fd.c utils.c)
 SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, exp_qts_main.c expand_split.c \
-	exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c)
+	exp_qts_utils.c exp_qts_utils2.c exp_qts_utils3.c exp_qts_analyze.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 18:09:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@
 
 void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
+	t_env_node	*var;
+
 	if (data->exp)
 	{
 		data->exp->export_cmd = false;
 		data->exp->export_after_equal = false;
 	}
-	free(data->home_path);
-	data->home_path = NULL;
+	if(data->no_home)
+		free(data->env_home_var);
+	var = ft_getenv(data->env, "HOME");
+	if (var)
+		data->env_home_var = var->val;
+	else
+		data->no_home = true;
 	free(data->exp);
 	data->exp = NULL;
 	free_ast(root);
