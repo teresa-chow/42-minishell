@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 13:58:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:01:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ void	free_word_lst(t_word_lst **word_lst)
 		free(tmp);
 	}
 }
+void	free_w_lst_words(t_word_lst **word_lst)
+{
+	t_word_lst	*tmp;
+
+	while (*word_lst)
+	{
+		tmp = *word_lst;
+		free_words(&tmp->word);
+		*word_lst = (*word_lst)->next;
+		free(tmp);
+	}
+}
+
 void	free_prompt(t_prompt *prompt)
 {
 	if (prompt->prog)
