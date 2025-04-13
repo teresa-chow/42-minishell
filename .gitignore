@@ -16,6 +16,7 @@ src/parser/syntax_tree_refactored.c
 
 en.subject.pdf
 testt.txt
+Dockerfile
 
 rl.supp
 memleaks.log
