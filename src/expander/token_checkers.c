@@ -54,11 +54,7 @@ bool	has_delimiter(char *s)
 {
 	while (*s)
 	{
-		if (*s == ' ' && *(s + 1) == ' ')
-			return (true);
-		else if (*s == ' ' && is_delimiter(*(s +1)))
-			return (true);
-		else if (is_delimiter(*s))
+		if (is_delimiter(*s))
 			return (true);
 		s++;
 	}

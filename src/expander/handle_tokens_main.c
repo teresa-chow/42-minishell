@@ -48,8 +48,12 @@ static int	process_token(t_word *word, t_data *data)
 	int	i;
 
 	ptr = word->word;
+	if (data->exp->export_cmd && *ptr == '$')
+			data->exp->to_split = true;
 	while (*ptr)
 	{
+		if (*ptr == '$' && (*(ptr + 1) == '\'' || *(ptr + 1) == '"'))
+			ptr++;
 		if (*ptr == '\'' || *ptr == '"')
 			i = handle_quotes(&ptr, data);
 		else
