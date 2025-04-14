@@ -12,34 +12,6 @@
 
 #include "../../include/expand.h"
 
-int	expand_tilde(t_word **word, t_data *data)
-{
-	char	*equal_pos;
-	char	*to_free;
-	char	box;
-
-	if (!data->env_home_var)
-	{
-		if (handle_with_home(data) == -1)
-			return (-1);
-	}
-	to_free = (*word)->word;
-	if (data->exp->til_aft_equal)
-	{
-		equal_pos = ft_strchr((*word)->word, '=');
-		box = *(equal_pos + 1);
-		*(equal_pos + 1) = 0;	
-		(*word)->word = ft_strjoin((*word)->word, data->env_home_var);
-		if (!(*word)->word)
-			return (-1);
-		*(equal_pos + 1) = box;
-	}
-	else
-		(*word)->word = data->env_home_var;
-	free (to_free);
-	return (0);
-}
-
 int	build_new(t_data *data, char *bgn, char *end, int len)
 {
 	int	total;
@@ -61,7 +33,36 @@ int	build_new(t_data *data, char *bgn, char *end, int len)
 	return (0);
 }
 
-void	join_splited_words(t_data *data, char **tmp)
+int	rebuild_tword(t_data *data, t_word **word)
+{
+	t_word	*old_next;
+	t_word	*tmp;
+	t_word	*last;
+	int	i;
+
+	old_next = (*word)->next;
+	data->exp->words = get_words((*word)->word);
+	if (!data->exp->words)
+		return (-1);
+	free((*word)->word);
+	(*word)->word = data->exp->words[0];
+	i = 0;
+	last = *word;
+	while (data->exp->words[++i])
+	{
+		tmp = ft_calloc(sizeof(t_word), sizeof(char));
+		if (!tmp)
+			return (-1);
+		last->next = tmp;
+		tmp->word = data->exp->words[i];
+		last = tmp;
+	}
+	last->next = old_next;
+	*word = last;
+	return (0);
+}
+
+void	join_split_words(t_data *data, char **tmp)
 {
 	int	i;
 	int	j;
