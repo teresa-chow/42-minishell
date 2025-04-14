@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 09:10:06 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:23:41 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 		quote = ft_substr(cmd, *j, next_quote(cmd, *j, is_quote(cmd[*j])));
 		if (!quote)
 			return (-1);
-		if (!cmd[*j - 1] || is_delimiter(cmd[*j - 1]))
+		if (!cmd[*j - 1] || is_redirection(cmd[*j - 1])
+			|| is_delimiter(cmd[*j - 1]))
 		{
 			init_word(*word_lst, word);
 			(*word)->word = quote;
@@ -50,8 +51,8 @@ unsigned int	next_quote(const char *str, unsigned int start, int code)
 			++end;
 		if (str[end] && (str[end] == '\''))
 			++end;
-		while (str[end] && !is_delimiter(str[end]) && str[end] != '\''
-			&& str[end] != '(' && str[end] != ')')
+		while (str[end] && !is_delimiter(str[end]) && !is_redirection(str[end])
+			&& str[end] != '\'' && str[end] != '(' && str[end] != ')')
 			++end;
 	}
 	else if (code == 2)
@@ -60,8 +61,8 @@ unsigned int	next_quote(const char *str, unsigned int start, int code)
 			++end;
 		if (str[end] && (str[end] == '\"'))
 			++end;
-		while (str[end] && !is_delimiter(str[end]) && str[end] != '\"'
-			&& str[end] != '(' && str[end] != ')')
+		while (str[end] && !is_delimiter(str[end]) && !is_redirection(str[end])
+			&& str[end] != '\"' && str[end] != '(' && str[end] != ')')
 			++end;
 	}
 	return (end - start);
