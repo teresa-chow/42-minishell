@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/14 14:09:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:13:36 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ static int	redir_count(t_word *word, int *type)
 
 static void	alloc_fd(int **fd, int count)
 {
-	*fd = ft_calloc(count + 1, sizeof(int));
+	*fd = ft_calloc(count, sizeof(int));
 	if (!fd)
 		perror("minishell: ft_calloc");
-	(*fd)[count] = 0;
 }
 
 static char	**get_file_array(t_word *word, int count)
@@ -78,7 +77,7 @@ static char	**get_file_array(t_word *word, int count)
 
 	tmp = word;
 	i = 0;
-	files = ft_calloc(count + 1, sizeof(char *));
+	files = ft_calloc(count, sizeof(char *));
 	if (!files)
 	{
 		perror("minishell: ft_calloc");
@@ -94,7 +93,6 @@ static char	**get_file_array(t_word *word, int count)
 		}
 		tmp = tmp->next;
 	}
-	files[i] = 0;
 	return (files);
 }
 
@@ -118,5 +116,5 @@ static void	create_files(int *fd, char **files, int count, int type)
 		}
 		i++;
 	}
-	redirect_stdout(fd, i);
+	redirect_stdout(fd, i - 1);
 }
