@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/14 13:55:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:09:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int	redir_count(t_word *word, int *type);
 static void	alloc_fd(int **fd, int count);
 static char	**get_file_array(t_word *word, int count);
-static void	create_files(int **fd, char **files, int count, int type);
+static void	create_files(int *fd, char **files, int count, int type);
 
 void	redir_out(t_word *word)
 {
@@ -33,7 +33,7 @@ void	redir_out(t_word *word)
 		return ;
 	alloc_fd(&fd, count);
 	files = get_file_array(word, count);
-	create_files(&fd, files, count, type);
+	create_files(fd, files, count, type);
     close_fd(fd, count);
 	free_strarray(files);
 }
@@ -67,7 +67,7 @@ static void	alloc_fd(int **fd, int count)
 	*fd = ft_calloc(count + 1, sizeof(int));
 	if (!fd)
 		perror("minishell: ft_calloc");
-	fd[count] = 0;
+	(*fd)[count] = 0;
 }
 
 static char	**get_file_array(t_word *word, int count)
@@ -98,15 +98,19 @@ static char	**get_file_array(t_word *word, int count)
 	return (files);
 }
 
-static void	create_files(int **fd, char **files, int count, int type)
+static void	create_files(int *fd, char **files, int count, int type)
 {
 	int	i;
 
+	(void)type;
 	i = 0;
-	while (i < count - 1)
+	while (i < count)
 	{
-    	(*fd)[i] = open(files[i], O_WRONLY | O_CREAT, 0644);
-		if ((*fd)[i] == -1)
+		if (type == 1)
+			fd[i] = open(files[i], O_WRONLY | O_CREAT, 0644); //must check permissions of existing files
+		else if (type == 2)
+			fd[i] = open(files[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd[i] == -1)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", files[i]);
 			perror("");
@@ -114,5 +118,5 @@ static void	create_files(int **fd, char **files, int count, int type)
 		}
 		i++;
 	}
-	redirect_stdout(fd, files, i, type);
+	redirect_stdout(fd, i);
 }
