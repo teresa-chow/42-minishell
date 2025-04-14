@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:45:35 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/11 17:24:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:50:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	redirect_stdout(int **fd, char **files, int i, int type)
 		(*fd)[i] = open(files[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*fd)[i] == -1)
 	{
-		perror("minishell: open");
+		print_fd(STDERR_FILENO, "minishell: %s: ", files[i]);
+		perror("");
 		return ;
 	}
 	if (dup2((*fd)[i], STDOUT_FILENO) == -1)
@@ -30,7 +31,6 @@ void	redirect_stdout(int **fd, char **files, int i, int type)
 		perror("minishell: dup2");
 		return ;
 	}
-	//close((*fd)[i]);
 }
 
 void	close_fd(int *fd, int count)

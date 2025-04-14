@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/11 16:42:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:43:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	redir_out(t_word *word)
 	files = get_file_array(word, count);
 	create_files(&fd, files, count, type);
     close_fd(fd, count);
-	//free_strarray(files);
+	free_strarray(files);
 }
 
 static int	redir_count(t_word *word, int *type)
