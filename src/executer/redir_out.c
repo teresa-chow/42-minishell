@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/14 14:14:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:28:58 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**get_file_array(t_word *word, int count)
 
 	tmp = word;
 	i = 0;
-	files = ft_calloc(count, sizeof(char *));
+	files = ft_calloc(count + 1, sizeof(char *));
 	if (!files)
 	{
 		perror("minishell: ft_calloc");
@@ -93,6 +93,7 @@ static char	**get_file_array(t_word *word, int count)
 		}
 		tmp = tmp->next;
 	}
+	files[count] = 0;
 	return (files);
 }
 
