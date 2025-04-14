@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/14 13:43:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:55:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ static void	create_files(int **fd, char **files, int count, int type)
     	(*fd)[i] = open(files[i], O_WRONLY | O_CREAT, 0644);
 		if ((*fd)[i] == -1)
 		{
-			perror("minishell: open");
+			print_fd(STDERR_FILENO, "minishell: %s: ", files[i]);
+			perror("");
 			return ;
 		}
 		i++;
