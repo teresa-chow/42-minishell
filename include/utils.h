@@ -32,7 +32,7 @@ void	free_words(t_word **word);
 //void	free_to_exit(t_data *data, t_tree_node **node);
 void	free_ast(t_tree_node **root);
 int		free_env_list(t_data *data, int i, t_env_node **lst);
-int		free_exp(t_data *data, t_word *word, int i);
+int		free_exp(t_data *data, int i);
 
 /* =============================== ENV INIT ================================ */
 int		init_env_lst(char **envp, t_data *data);

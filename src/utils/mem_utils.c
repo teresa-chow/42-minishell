@@ -28,8 +28,8 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 		data->env_home_var = var->val;
 	else
 		data->no_home = true;
-	free(data->exp);
-	data->exp = NULL;
+	if (data->exp)
+		free_exp(data, 0);
 	free_ast(root);
 	if (!i)
 		free_env_list(data, 0, &data->env);
@@ -48,13 +48,16 @@ void	free_ast(t_tree_node **root)
 	root = NULL;
 }
 
-int	free_exp(t_data *data, t_word *word, int i)
+int	free_exp(t_data *data, int i)
 {
-	if (data->exp->new != word->word)
-		free(data->exp->new);
-	if (data->exp->words)
+	free(data->exp->new);
+	if (i && data->exp->words)
 		free_strarray(data->exp->words);
+	else
+		free(data->exp->words);
 	ft_bzero(data->exp, sizeof(t_expand));
+	free(data->exp);
+	data->exp = NULL;
 	if (i)
 		return (error_allocation(data));
 	return (0);

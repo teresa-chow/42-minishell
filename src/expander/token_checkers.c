@@ -63,7 +63,7 @@ bool	has_delimiter(char *s)
 /* Used to check if is a valid var name */
 bool	is_valid_dollar(char *s)
 {
-	if (*(s + 1) == '?' || ft_isalnum(*(s + 1)))
+	if (*(s + 1) == '?' || ft_isalnum(*(s + 1)) || *(s + 1) == '_')
 		return (true);
 	return (false);
 }
