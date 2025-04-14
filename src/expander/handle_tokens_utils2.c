@@ -37,7 +37,10 @@ int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 		else
 			*tmp++ = *(*ptr)++;
 	}
-	build_new(data, start, tmp, len);
+	if (data->exp->to_split)
+		rebuild_tword(data, data->word, start);
+	else
+		build_new(data, start, tmp, len);
 	free(start);
 	return (0);
 }

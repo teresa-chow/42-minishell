@@ -89,6 +89,7 @@ void	reset_small_part_flags(t_data *data)
 	data->exp->to_exp = false;
 	data->exp->export_after_equal = false;
 	data->exp->to_exp = false;
+	data->exp->to_split = false;
 }
 
 void	reset_big_part_flags(t_data *data)

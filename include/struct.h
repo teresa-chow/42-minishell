@@ -82,6 +82,7 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
+	struct s_word	**word;
 	char		*env_home_var;
 	int			exit_status;
 	bool	no_home;

@@ -50,7 +50,6 @@ void	free_ast(t_tree_node **root)
 
 int	free_exp(t_data *data, int i)
 {
-	free(data->exp->new);
 	if (i && data->exp->words)
 		free_strarray(data->exp->words);
 	else

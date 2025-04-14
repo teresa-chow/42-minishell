@@ -15,25 +15,24 @@
 int	build_new(t_data *data, char *bgn, char *end, int len)
 {
 	int	total;
-	char	*to_free;
+	char	*tmp;
 
 	total = ft_strlen(data->exp->new) + len + 1;
-	to_free = data->exp->new;
+	tmp = data->exp->new;
 	data->exp->new = ft_calloc(total, sizeof(char));
 	if (!data->exp->new)
 		return (-1);
-	if (to_free)
+	if (tmp)
 	{
-		ft_strlcpy(data->exp->new, to_free, total);
+		ft_strlcpy(data->exp->new, tmp, total);
 		add_chars(bgn, end, ft_strchr(data->exp->new, 0));
 	}
 	else
 		add_chars(bgn, end, data->exp->new);
-	free(to_free);
 	return (0);
 }
 
-int	rebuild_tword(t_data *data, t_word **word)
+int	rebuild_tword(t_data *data, t_word **word, char *tmp1) //// free old mem
 {
 	t_word	*old_next;
 	t_word	*tmp;
@@ -41,11 +40,17 @@ int	rebuild_tword(t_data *data, t_word **word)
 	int	i;
 
 	old_next = (*word)->next;
-	data->exp->words = get_words((*word)->word);
+	data->exp->words = get_words(tmp1);
 	if (!data->exp->words)
 		return (-1);
-	free((*word)->word);
-	(*word)->word = data->exp->words[0];
+	if ((*word)->word != data->exp->new)
+		free((*word)->word);
+	if (!data->exp->new)
+		(*word)->word = ft_strdup(data->exp->words[0]);
+	else
+		(*word)->word = ft_strjoin(data->exp->new, data->exp->words[0]);
+	if (!(*word)->word)
+		return (-1);
 	i = 0;
 	last = *word;
 	while (data->exp->words[++i])
@@ -54,19 +59,29 @@ int	rebuild_tword(t_data *data, t_word **word)
 		if (!tmp)
 			return (-1);
 		last->next = tmp;
-		tmp->word = data->exp->words[i];
+		tmp->word = ft_strdup(data->exp->words[i]);
+		if (!tmp->word)
+			return (-1);
 		last = tmp;
 	}
 	last->next = old_next;
 	*word = last;
+	free (data->exp->new);
+	data->exp->new = last->word;
+	free_strarray(data->exp->words);
+	data->exp->words = 0;
 	return (0);
 }
 
-void	join_split_words(t_data *data, char **tmp)
+
+int	join_split_words(t_data *data, char **tmp, char *val)
 {
 	int	i;
 	int	j;
 
+	data->exp->words = get_words(val);
+	if (!data->exp->words)
+		return (-1);
 	i = -1;
 	while (data->exp->words[++i])
 	{
@@ -78,4 +93,5 @@ void	join_split_words(t_data *data, char **tmp)
 	}
 	free_strarray(data->exp->words);
 	data->exp->words = 0;
+	return (0);
 }

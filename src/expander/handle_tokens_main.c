@@ -14,8 +14,7 @@
 
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node);
 static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node);
-static void	is_to_split(char *s, t_data *data);
-static int	process_token(t_word *word, t_data *data);
+static int	process_token(t_word **word, t_data *data);
 
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 {
@@ -27,6 +26,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	last = NULL;
 	while (word)
 	{
+			data->word = &word;
 		if (analyze_token_context(&word, data) == -1)
 			return(free_exp(data, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
@@ -44,24 +44,23 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 
 static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node)
 {
-	if (process_token(*word, data) == -1)
+	if (process_token(word, data) == -1)
 		return(-1);
-	if (data->exp->to_split)
-	{
-		if (rebuild_tword(data, word) == -1)
-			return (-1);
-	}
 	if (!(*word)->word)
 		delete_node(word, last, node);
 	return (0);
 }
 
-static int	process_token(t_word *word, t_data *data)
+static int	process_token(t_word **word, t_data *data)
 {
 	char	*ptr;
+	char	*start;
 	int	i;
 
-	ptr = word->word;
+	ptr = ft_strdup((*word)->word);
+	if (!ptr)
+		return (-1);
+	start = ptr;
 	while (*ptr)
 	{
 		if (*ptr == '$' && (*(ptr + 1) == '\'' || *(ptr + 1) == '"'))
@@ -73,12 +72,12 @@ static int	process_token(t_word *word, t_data *data)
 		if (i == -1)
 			return (-1);
 		reset_small_part_flags(data);
+		if ((*word)->word != data->exp->new)
+			free((*word)->word);
+		(*word)->word = data->exp->new;
 	}
-	free(word->word);
-	word->word = data->exp->new;
 	data->exp->new = NULL;
-	if (word->word && data->exp->export_cmd && data->exp->has_exp)
-		is_to_split(word->word, data);
+	free(start);
 	return (0);
 }
 
@@ -90,21 +89,4 @@ static void	delete_node(t_word **curr, t_word **last, t_tree_node **node)
 		(*node)->word = (*curr)->next;
 	free(*curr);
 	*curr = *last;
-}
-
-static void	is_to_split(char *s, t_data *data)
-{
-	char	*end;
-	char	box;
-
-	end = ft_strchr(s, '=');
-	if (end)
-	{
-		box = *end;
-		*end = 0;
-	}
-	if (has_delimiter(s))
-		data->exp->to_split = true;
-	if (end)
-		*end = box; 
 }
