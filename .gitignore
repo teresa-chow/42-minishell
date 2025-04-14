@@ -13,6 +13,8 @@ minishell
 */*.swp
 */*.swo
 
+file*
+
 en.subject.pdf
 
 rl.supp
