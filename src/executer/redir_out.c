@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/14 14:28:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:34:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ static void	create_files(int *fd, char **files, int count, int type)
 	while (i < count)
 	{
 		if (type == 1)
-			fd[i] = open(files[i], O_WRONLY | O_CREAT, 0644);
+			fd[i] = open(files[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		else if (type == 2)
-			fd[i] = open(files[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd[i] = open(files[i], O_WRONLY | O_TRUNC | O_CREAT | O_APPEND, 0644);
 		if (fd[i] == -1)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", files[i]);
