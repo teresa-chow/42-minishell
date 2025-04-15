@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 18:05:13 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:04:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parse.h"
+#include "../include/execute.h"
 #include "../include/errors.h"
 #include "../include/utils.h"
 
@@ -38,7 +39,6 @@ int	main(int argc, char **argv, char **envp)
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
 		reset_mem(&data, &root, i);
-		free(root);
 	}
 	// rl_clear_history();
 	return (data.exit_status);

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 18:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:13:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_ast(t_tree_node **root)
 	free_ast(&tmp->left);
 	free_ast(&tmp->right);
 	free_words(&tmp->word);
+	free(tmp);
 	root = NULL;
 }
 

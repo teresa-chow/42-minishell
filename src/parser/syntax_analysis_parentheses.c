@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/09 18:28:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:50:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ static int	check_nests(char *word);
 
 int	check_group(char *word)
 {
-	if (check_parentheses(word) != 0)
-		return (ERR_BI);
-	if (check_nests(word) != 0)
-		return (ERR_BI);
-	if (rec_syntax_analysis(word) != 0)
-		return (ERR_BI);
+	if (word[0] == '(')
+	{
+		if (check_parentheses(word) != 0)
+			return (ERR_BI);
+		if (check_nests(word) != 0)
+			return (ERR_BI);
+		if (rec_syntax_analysis(word) != 0)
+			return (ERR_BI);
+	}
 	return (0);
 }
 

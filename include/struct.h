@@ -65,12 +65,12 @@ typedef struct s_expand
 {
 	char	*new;
 	char	**words;
-	bool	in_dbl;
-	bool	in_sing;
-	bool	to_exp;
+	bool	in_dbl; //
+	bool	in_sing; //
+	bool	to_exp; //
 	bool	has_exp;
-	bool	has_sing;
-	bool	has_dbl;
+	bool	has_sing; //
+	bool	has_dbl; //
 	bool	to_split;
 	bool	til_aft_equal;
 	bool	export_cmd;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:57:47 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/18 12:22:23 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:05:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ void	echo(t_word *input, t_data *data)
 	start = found_start(input->next, &has_flag);
 	while (start)
 	{
-		ft_putstr_fd(start->word, STDOUT_FILENO);
-		if (start->next)
-			write (STDOUT_FILENO, " ", 1);
-		start = start->next;
+		if (start->redir != NONE && start->next)
+			start = start->next->next;
+		if (start && start->redir == NONE)
+		{
+			ft_putstr_fd(start->word, STDOUT_FILENO);
+			if (start->next)
+				write (STDOUT_FILENO, " ", 1);
+			start = start->next;
+		}
 	}
 	if (!has_flag)
 		write (STDOUT_FILENO, "\n", 1);
