@@ -29,6 +29,7 @@ void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end)
 		*ptr = *no_alnum;
 	}
 }
+
 /* 
 `ptr` advances the outer pointer `cpy` from `process_token`
 until the end of the segment (`end`).

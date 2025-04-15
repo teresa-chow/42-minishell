@@ -3,6 +3,7 @@
 .vscode/
 .DS_Store
 */.DS_Store
+Dockerfile
 
 .build/
 */*/.build/
@@ -12,11 +13,9 @@ minishell
 */*.swp
 */*.swo
 
-src/parser/syntax_tree_refactored.c
+file*
 
 en.subject.pdf
-testt.txt
-Dockerfile
 
 rl.supp
 memleaks.log

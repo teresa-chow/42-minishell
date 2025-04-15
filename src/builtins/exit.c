@@ -6,62 +6,80 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 11:15:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:31:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "../../include/builtins.h"
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
 static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 	int *syntax);
+static int	check_is_digit(t_word *word, t_data *data, int *syntax);
+static int	check_overflow(t_word *word, t_data *data, int *syntax);
 
 void	exit_cmd(t_data *data, t_tree_node **node, int *i)
-{
-	(void)data;
-	(void)node;
-	*i = 0;
-	write(STDERR_FILENO, "exit\n", 5);
-}
-
-static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
-	int *syntax)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	if (word->next)
-	{
-		tmp = word->next->word;
-		if (word->next->next)
-			*many_args = 1;
-		data->exit_status = ft_atoi(word->next->word);
-	}
-	while (tmp && *tmp)
-	{
-		if (!ft_isdigit(*tmp))
-		{
-			exit_error_syntax(word->next->word, data);
-			*syntax = 1;
-			break ;
-		}
-		tmp++;
-	}
-}
-
-void	check_exit_args(t_data *data, t_tree_node **node, int *i)
 {
 	int		many_args;
 	int		syntax_error;
 
 	many_args = 0;
 	syntax_error = 0;
+	write(STDERR_FILENO, "exit\n", 5);
 	check_syntax_exit((*node)->word, data, &many_args, &syntax_error);
 	if (many_args && !syntax_error)
 	{
 		exit_error_many_args(data);
 		return ;
 	}
-	exit_cmd(data, node, i);
+	*i = 0;
+}
+
+static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
+	int *syntax)
+{
+	if (word->next)
+	{
+		if (word->next->next)
+			*many_args = 1;
+		data->exit_status = ft_atoi(word->next->word);
+		if (check_is_digit(word->next, data, syntax))
+			check_overflow(word->next, data, syntax);
+	}
+}
+
+static int	check_is_digit(t_word *word, t_data *data, int *syntax)
+{
+	int	i;
+
+	i = 0;
+	while (word->word[i])
+	{
+		if (i == 0 && word->word[i] == '-')
+			i++;
+		if (!ft_isdigit(word->word[i]))
+		{
+			exit_error_syntax(word->word, data);
+			*syntax = 1;
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+static int	check_overflow(t_word *word, t_data *data, int *syntax)
+{
+	long	val;
+
+	val = 0;
+	val = exit_atol(word, data, syntax);
+	if (!*syntax && (val < 0 || val > 255))
+	{
+		data->exit_status = val % 256;
+		*syntax = 1;
+	}
+	return (0);
 }
