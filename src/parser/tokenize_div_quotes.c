@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/15 11:49:18 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:50:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,8 @@ int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 			*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 		}
 		else
-		{
-			to_free = (*word)->word;
-			(*word)->word = ft_strjoin((*word)->word, quote);
-			if (!(*word)->word)
-				return (-1);
-			free(to_free);
-			free(quote);
-			*j += next_quote(cmd, *j, is_quote(cmd[*j]));
-		}
+			quote_join_word(cmd, j, word, quote);
+		free(quote);
 	}
 	return (0);
 }
