@@ -57,7 +57,9 @@ static int	count_words(t_env_node *env, t_word *word)
 	{
 		while (word)
 		{
-			count++;
+			if (ft_strcmp(word->word, ">") && ft_strcmp(word->word, "<") 
+			&& ft_strcmp(word->word, ">>") && ft_strcmp(word->word, "<<"))
+				count++;
 			word = word->next;
 		}
 	}
@@ -75,9 +77,13 @@ char	**create_wrd_arr(t_word *word)
 	i = -1;
 	while (word)
 	{
-		arr[++i] = ft_strdup(word->word);
-		if (!arr[i])
+		if (ft_strcmp(word->word, ">") && ft_strcmp(word->word, "<") 
+		&& ft_strcmp(word->word, ">>") && ft_strcmp(word->word, "<<"))
+		{
+			arr[++i] = ft_strdup(word->word);
+			if (!arr[i])
 			return (NULL);
+		}
 		word = word->next;
 	}
 	return (arr);
