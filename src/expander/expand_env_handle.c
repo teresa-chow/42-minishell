@@ -13,7 +13,7 @@
 #include "../../include/expand.h"
 
 static int	split_words_len(t_data *data, char *val);
-static void	find_and_get_expand_value(t_data *data, char **ptr, char **tmp);
+static int	find_and_get_expand_value(t_data *data, char **ptr, char **tmp);
 
 int	get_expand_val(t_data *data, char **ptr, char **tmp)
 {
@@ -39,7 +39,7 @@ int	get_expand_val(t_data *data, char **ptr, char **tmp)
 	return (0);
 }
 
-static void	find_and_get_expand_value(t_data *data, char **ptr, char **tmp)
+static int	find_and_get_expand_value(t_data *data, char **ptr, char **tmp)
 {
 	t_env_node	*var;
 	char	*end_val;
@@ -50,7 +50,8 @@ static void	find_and_get_expand_value(t_data *data, char **ptr, char **tmp)
 		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_after_equal)
 		{
 			data->exp->to_split = true;
-			join_split_words(data, tmp);
+			if (join_split_words(data, tmp, var->val) == -1)
+				return (-1);
 		}
 		else
 		{
@@ -59,6 +60,7 @@ static void	find_and_get_expand_value(t_data *data, char **ptr, char **tmp)
 			*tmp += ft_strlen(var->val);
 		}
 	}
+	return (0);
 }
 
 int	expand_val_len(char **bgn, t_data *data)
@@ -103,5 +105,7 @@ static int	split_words_len(t_data *data, char *val)
 		if (data->exp->words[i + 1])
 			len++;
 	}
+	free_strarray(data->exp->words);
+	data->exp->words = 0;
 	return (len);
 }

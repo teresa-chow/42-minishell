@@ -23,10 +23,12 @@ int	analyze_token_context(t_word **word, t_data *data);
 int	build_new(t_data *data, char *bgn, char *end, int len);
 int	expand_val_len(char **bgn, t_data *data);
 int	expand_tilde(t_word **word, t_data *data);
+int	exp_join_segment(t_data *data, char **ptr, int len, char *end);
 int	get_expand_val(t_data *data, char **ptr, char **tmp);
-int	handle_tokens(t_word *word, t_data *data);
-int	rebuild_tword(t_data *data, t_word **word);
-void	join_split_words(t_data *data, char **tmp);
+int	handle_quotes(char **ptr, t_data *data);
+int	handle_tokens(t_word *word, t_data *data, t_tree_node **node);
+int	join_split_words(t_data *data, char **tmp, char *val);
+int	rebuild_tword(t_data *data, t_word **word, char *tmp1);
 //EXPAND  UTILS
 char	**get_words(char const *s);
 int	get_segment_len(char *bgn, char *end, t_data *data);

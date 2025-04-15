@@ -33,10 +33,12 @@ void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end)
 int	get_segment_len(char *bgn, char *end, t_data *data)
 {
 	int	len;
+	int	new;
 
 	if (!data->exp->to_exp)
 		return (end - bgn);
 	len = 0;
+	new = 0;
 	while (bgn != end)
 	{
 		if (*bgn == '$' && is_valid_dollar(bgn))
@@ -47,7 +49,12 @@ int	get_segment_len(char *bgn, char *end, t_data *data)
 				bgn += 2;
 			}
 			else
-				len += expand_val_len(&bgn, data);
+			{
+				new = expand_val_len(&bgn, data);
+				if (new < 0)
+					return (-1); 
+				len = len + new;
+			}
 		}
 		else
 		{
@@ -82,6 +89,7 @@ void	reset_small_part_flags(t_data *data)
 	data->exp->to_exp = false;
 	data->exp->export_after_equal = false;
 	data->exp->to_exp = false;
+	data->exp->to_split = false;
 }
 
 void	reset_big_part_flags(t_data *data)

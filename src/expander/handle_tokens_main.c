@@ -12,44 +12,55 @@
 
 #include "../../include/expand.h"
 
-static int	exp_join_segment(t_data *data, char **ptr, int len, char *end);
-static int	first_check(t_data *data, int *len, char **end, char **ptr);
-static int	handle_quotes(char **ptr, t_data *data);
-static int	process_token(t_word *word, t_data *data);
+static void	delete_node(t_word **curr, t_word **last, t_tree_node **node);
+static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node);
+static int	process_token(t_word **word, t_data *data);
 
-int	handle_tokens(t_word *word, t_data *data)
+int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 {
+	t_word	*last;
+
 	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
 	if (!data->exp)
 		return (error_allocation(data));
+	last = NULL;
 	while (word)
 	{
+			data->word = &word;
 		if (analyze_token_context(&word, data) == -1)
-			return(free_exp(data, word, 1));
+			return(free_exp(data, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
-			if (process_token(word, data) == -1)
-				return(free_exp(data, word, 1));
-			if (data->exp->to_split)
-			{
-				if (rebuild_tword(data, &word) == -1)
-					return (free_exp(data, word, 1));
-			}
+			if (handle_process(data, &word, &last, node) == -1)
+				return (free_exp(data, 1));
 			reset_big_part_flags(data);
 		}
-		word = word->next;
+		last = word;
+		if (word)
+			word = word->next;
 	}
 	return (0);
 }
 
-static int	process_token(t_word *word, t_data *data)
+static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node)
+{
+	if (process_token(word, data) == -1)
+		return(-1);
+	if (!(*word)->word)
+		delete_node(word, last, node);
+	return (0);
+}
+
+static int	process_token(t_word **word, t_data *data)
 {
 	char	*ptr;
+	char	*start;
 	int	i;
 
-	ptr = word->word;
-	if (data->exp->export_cmd && *ptr == '$')
-			data->exp->to_split = true;
+	ptr = ft_strdup((*word)->word);
+	if (!ptr)
+		return (-1);
+	start = ptr;
 	while (*ptr)
 	{
 		if (*ptr == '$' && (*(ptr + 1) == '\'' || *(ptr + 1) == '"'))
@@ -61,77 +72,21 @@ static int	process_token(t_word *word, t_data *data)
 		if (i == -1)
 			return (-1);
 		reset_small_part_flags(data);
+		if ((*word)->word != data->exp->new)
+			free((*word)->word);
+		(*word)->word = data->exp->new;
 	}
-	free(word->word);
-	word->word = data->exp->new;
 	data->exp->new = NULL;
-	return (0);
-}
-
-static int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
-{
-	char	*start;
-	char	*tmp;
-
-	if (first_check(data, &len, &end, ptr) == 2)
-		return (0);
-	tmp = ft_calloc(len + 1, sizeof(char));
-	if (!tmp)
-		return (-1);
-	start = tmp;
-	while (*ptr != end)
-	{
-		if (**ptr == '$' && is_valid_dollar(*ptr))
-		{
-			if (get_expand_val(data, ptr, &tmp) == -1)
-				return (-1);
-		}
-		else
-			*tmp++ = *(*ptr)++;
-	}
-	build_new(data, start, tmp, len);
 	free(start);
 	return (0);
 }
 
-static int	first_check(t_data *data, int *len, char **end, char **ptr)
+static void	delete_node(t_word **curr, t_word **last, t_tree_node **node)
 {
-	if (!data->exp->in_dbl)
-	{
-		*end = find_next_quote_and_parse(*ptr, data);
-		*len = get_segment_len(*ptr, *end, data);
-	}
-	if (!*len)
-	{
-		*ptr = *end;
-		return (2);
-	}
-	return (0);
+	if (*last)
+		(*last)->next = (*curr)->next;
+	if ((*node)->word == *curr)
+		(*node)->word = (*curr)->next;
+	free(*curr);
+	*curr = *last;
 }
-
-static int	handle_quotes(char **ptr, t_data *data)
-{
-	int	i;
-	int	len;
-	char	*end;
-
-	if (**ptr == '\'')
-		data->exp->in_sing = true;
-	else if (**ptr == '"')
-		data->exp->in_dbl = true;
-	(*ptr)++;
-	end = find_next_quote_and_parse(*ptr, data);
-	len = get_segment_len(*ptr, end, data);
-	if (!data->exp->to_exp)
-		i = build_new(data, *ptr, end, len);
-	else
-		i = exp_join_segment(data, ptr, len, end);
-	if (i == -1)
-		return (-1);
-	if (*end)
-		*ptr = end + 1;
-	else
-		*ptr = end;
-	return (0);
-}
-

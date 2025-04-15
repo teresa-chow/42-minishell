@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/10 18:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/15 10:11:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,16 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 {
 	t_env_node	*var;
 
-	if (data->exp)
-	{
-		data->exp->export_cmd = false;
-		data->exp->export_after_equal = false;
-	}
 	if(data->no_home)
 		free(data->env_home_var);
+	data->env_home_var = NULL;
 	var = ft_getenv(data->env, "HOME");
 	if (var)
 		data->env_home_var = var->val;
 	else
 		data->no_home = true;
-	free(data->exp);
-	data->exp = NULL;
+	if (data->exp)
+		free_exp(data, 0);
 	free_ast(root);
 	if (!i)
 		free_env_list(data, 0, &data->env);
@@ -51,13 +47,15 @@ void	free_ast(t_tree_node **root)
 	root = NULL;
 }
 
-int	free_exp(t_data *data, t_word *word, int i)
+int	free_exp(t_data *data, int i)
 {
-	if (data->exp->new != word->word)
-		free(data->exp->new);
-	if (data->exp->words)
+	if (i && data->exp->words)
 		free_strarray(data->exp->words);
+	else
+		free(data->exp->words);
 	ft_bzero(data->exp, sizeof(t_expand));
+	free(data->exp);
+	data->exp = NULL;
 	if (i)
 		return (error_allocation(data));
 	return (0);
