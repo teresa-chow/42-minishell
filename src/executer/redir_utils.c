@@ -6,13 +6,18 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/11 15:55:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:12:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/execute.h"
 #include "../../include/utils.h"
+
+void	save_old_stdin(int *old_stdin)
+{
+	*old_stdin = dup(STDIN_FILENO);
+}
 
 void	save_old_stdout(int *old_stdout)
 {
