@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 11:32:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/12 11:36:19 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:56:26 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	env_cmd(t_env_node *env, t_data *data)
 		if (env->val)
 		{
 			ft_putstr_fd(env->key, 1);
-			write (1, "=", 1);
 			ft_putendl_fd(env->val, 1);
 		}
 		env = env->next;

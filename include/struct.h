@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 12:14:04 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:59:45 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,23 @@ typedef struct s_env_init
 	if we are not inside single quotes
 - to_split--> used to split data.exp.new_string when there are no quotes
 	and it's not an export value expansion
+- export_after_equal--> this, check if when we are in export builtin if 
+	has equal signal must be treated as a literal
 */
 typedef struct s_expand
 {
 	char	*new;
 	char	**words;
-	bool	in_dbl;
-	bool	in_sing;
-	bool	to_exp;
+	bool	in_dbl; //
+	bool	in_sing; //
+	bool	to_exp; //
 	bool	has_exp;
-	bool	has_sing;
-	bool	has_dbl;
+	bool	has_sing; //
+	bool	has_dbl; //
 	bool	to_split;
-	bool	export_cmd;
-	bool	export_after_equal;
+	bool	til_aft_equal; //
+	bool	export_cmd; //
+	bool	export_after_equal; //
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
@@ -79,8 +82,10 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
-	char		*home_path;
+	struct s_word	**word;
+	char		*env_home_var;
 	int			exit_status;
+	bool	no_home;
 }	t_data;
 
 #endif
