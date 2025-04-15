@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/15 16:50:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:19:21 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	quote_join_word(char *cmd, int *j, t_word **word, char *quote);
 int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
 	char	*quote;
-	char	*to_free;
 
 	quote = NULL;
 	if (is_quote(cmd[*j]))
