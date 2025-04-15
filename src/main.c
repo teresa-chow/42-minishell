@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		reset_mem(&data, &root, i);
 		free(root);
 	}
-	// rl_clear_history();
+	rl_clear_history();
 	return (data.exit_status);
 }
 
