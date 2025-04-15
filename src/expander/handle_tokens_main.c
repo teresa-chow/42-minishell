@@ -40,6 +40,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 		if (word)
 			word = word->next;
 	}
+	free_exp(data, 0);
 	return (0);
 }
 

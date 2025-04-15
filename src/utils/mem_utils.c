@@ -28,8 +28,6 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 		data->env_home_var = var->val;
 	else
 		data->no_home = true;
-	if (data->exp)
-		free_exp(data, 0);
 	free_ast(root);
 	if (!i)
 		free_env_list(data, 0, &data->env);
