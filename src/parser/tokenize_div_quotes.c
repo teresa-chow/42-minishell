@@ -6,11 +6,13 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/15 11:05:54 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:49:18 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+
+static int	quote_join_word(char *cmd, int *j, t_word **word, char *quote);
 
 int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
@@ -26,16 +28,11 @@ int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 			|| is_delimiter(cmd[*j - 1]))
 		{
 			init_word(*word_lst, word);
-			(*word)->word = quote;
+			(*word)->word = ft_strdup(quote);
 			*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 		}
 		else
-		{
-			(*word)->word = ft_strjoin((*word)->word, quote);
-			if (!(*word)->word)
-				return (-1);
-			*j += next_quote(cmd, *j, is_quote(cmd[*j]));
-		}
+			quote_join_word(cmd, j, word, quote);
 		free(quote);
 	}
 	return (0);
@@ -67,4 +64,18 @@ unsigned int	next_quote(const char *str, unsigned int start, int code)
 			++end;
 	}
 	return (end - start);
+}
+
+static int	quote_join_word(char *cmd, int *j, t_word **word, char *quote)
+{
+	char	*tmp;
+
+	tmp = ft_strdup((*word)->word);
+	free((*word)->word);
+	(*word)->word = ft_strjoin(tmp, quote);
+	free(tmp);
+	if (!(*word)->word)
+		return (-1);
+	*j += next_quote(cmd, *j, is_quote(cmd[*j]));
+	return (0);
 }
