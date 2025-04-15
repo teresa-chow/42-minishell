@@ -17,6 +17,7 @@ static int	quote_join_word(char *cmd, int *j, t_word **word, char *quote);
 int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 {
 	char	*quote;
+	char	*to_free;
 
 	quote = NULL;
 	if (is_quote(cmd[*j]))
@@ -32,8 +33,15 @@ int	handle_quote(char *cmd, int *j, t_word_lst **word_lst, t_word **word)
 			*j += next_quote(cmd, *j, is_quote(cmd[*j]));
 		}
 		else
-			quote_join_word(cmd, j, word, quote);
-		free(quote);
+		{
+			to_free = (*word)->word;
+			(*word)->word = ft_strjoin((*word)->word, quote);
+			if (!(*word)->word)
+				return (-1);
+			free(to_free);
+			free(quote);
+			*j += next_quote(cmd, *j, is_quote(cmd[*j]));
+		}
 	}
 	return (0);
 }

@@ -12,6 +12,9 @@
 
 #include "../../include/expand.h"
 
+static int	create_new_nodes(t_data *data, t_word **last);
+static int	update_word(t_data *data, t_word **word);
+
 int	build_new(t_data *data, char *bgn, char *end, int len)
 {
 	int	total;
@@ -32,38 +35,20 @@ int	build_new(t_data *data, char *bgn, char *end, int len)
 	return (0);
 }
 
-int	rebuild_tword(t_data *data, t_word **word, char *tmp1) //// free old mem
+int	rebuild_tword(t_data *data, t_word **word, char *to_splt)
 {
 	t_word	*old_next;
-	t_word	*tmp;
 	t_word	*last;
-	int	i;
 
 	old_next = (*word)->next;
-	data->exp->words = get_words(tmp1);
+	data->exp->words = get_words(to_splt);
 	if (!data->exp->words)
 		return (-1);
-	if ((*word)->word != data->exp->new)
-		free((*word)->word);
-	if (!data->exp->new)
-		(*word)->word = ft_strdup(data->exp->words[0]);
-	else
-		(*word)->word = ft_strjoin(data->exp->new, data->exp->words[0]);
-	if (!(*word)->word)
+	if (update_word(data, word) == -1)
 		return (-1);
-	i = 0;
 	last = *word;
-	while (data->exp->words[++i])
-	{
-		tmp = ft_calloc(sizeof(t_word), sizeof(char));
-		if (!tmp)
-			return (-1);
-		last->next = tmp;
-		tmp->word = ft_strdup(data->exp->words[i]);
-		if (!tmp->word)
-			return (-1);
-		last = tmp;
-	}
+	if (create_new_nodes(data, &last) == -1)
+		return (-1);
 	last->next = old_next;
 	*word = last;
 	free (data->exp->new);
@@ -73,6 +58,39 @@ int	rebuild_tword(t_data *data, t_word **word, char *tmp1) //// free old mem
 	return (0);
 }
 
+static int	update_word(t_data *data, t_word **word)
+{
+	if ((*word)->word != data->exp->new)
+		free((*word)->word);
+	if (!data->exp->new)
+		(*word)->word = ft_strdup(data->exp->words[0]);
+	else
+		(*word)->word = ft_strjoin(data->exp->new, data->exp->words[0]);
+	if (!(*word)->word)
+		return (-1);
+	return (0);
+}
+
+static int	create_new_nodes(t_data *data, t_word **last)
+{
+	int	i;
+	t_word	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	while (data->exp->words[++i])
+	{
+		tmp = ft_calloc(sizeof(t_word), sizeof(char));
+		if (!tmp)
+			return (-1);
+		(*last)->next = tmp;
+		tmp->word = ft_strdup(data->exp->words[i]);
+		if (!tmp->word)
+			return (-1);
+		*last = tmp;
+	}
+	return (0);
+}
 
 int	join_split_words(t_data *data, char **tmp, char *val)
 {
