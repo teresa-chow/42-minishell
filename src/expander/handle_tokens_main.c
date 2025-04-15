@@ -12,9 +12,10 @@
 
 #include "../../include/expand.h"
 
-static void	delete_node(t_word **curr, t_word **last, t_tree_node **node);
 static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node);
 static int	process_token(t_word **word, t_data *data);
+static void	delete_node(t_word **curr, t_word **last, t_tree_node **node);
+static void	update_word_and_reset_flag(t_data *data, t_word **word);
 
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 {
@@ -26,7 +27,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	last = NULL;
 	while (word)
 	{
-			data->word = &word;
+		data->word = &word;
 		if (analyze_token_context(&word, data) == -1)
 			return(free_exp(data, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
@@ -53,32 +54,37 @@ static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_nod
 
 static int	process_token(t_word **word, t_data *data)
 {
-	char	*ptr;
+	char	*cpy;
 	char	*start;
 	int	i;
 
-	ptr = ft_strdup((*word)->word);
-	if (!ptr)
+	cpy = ft_strdup((*word)->word);
+	if (!cpy)
 		return (-1);
-	start = ptr;
-	while (*ptr)
+	start = cpy;
+	while (*cpy)
 	{
-		if (*ptr == '$' && (*(ptr + 1) == '\'' || *(ptr + 1) == '"'))
-			ptr++;
-		if (*ptr == '\'' || *ptr == '"')
-			i = handle_quotes(&ptr, data);
+		if (*cpy == '$' && (*(cpy + 1) == '\'' || *(cpy + 1) == '"'))
+			cpy++;
+		if (*cpy == '\'' || *cpy == '"')
+			i = handle_quotes(&cpy, data);
 		else
-			i = exp_join_segment(data, &ptr, 0, NULL);
+			i = exp_join_segment(data, &cpy, 0, NULL);
 		if (i == -1)
 			return (-1);
-		reset_small_part_flags(data);
-		if ((*word)->word != data->exp->new)
-			free((*word)->word);
-		(*word)->word = data->exp->new;
+		update_word_and_reset_flag(data, word);
 	}
 	data->exp->new = NULL;
 	free(start);
 	return (0);
+}
+
+static	void	update_word_and_reset_flag(t_data *data, t_word **word)
+{
+	reset_small_part_flags(data);
+	if ((*word)->word != data->exp->new)
+		free((*word)->word);
+	(*word)->word = data->exp->new;
 }
 
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node)

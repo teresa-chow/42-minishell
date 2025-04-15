@@ -12,15 +12,35 @@
 
 #include "../../include/expand.h"
 
-static int	first_check(t_data *data, int *len, char **end, char **ptr);
+static int	get_len_and_end(t_data *data, int *len, char **end, char **ptr);
+static	int	updt_new_or_tword(t_data *data, char *srt, char *end, int len);
 
+void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end)
+{
+	if (!end)
+	{
+		*no_alnum = find_non_alnum(*ptr);
+		*box = **no_alnum;
+		**no_alnum = 0;
+	}
+	if (end)
+	{
+		**no_alnum = *box;
+		*ptr = *no_alnum;
+	}
+}
+
+/* 
+`ptr` advances the outer pointer `cpy` from `process_token`
+until the end of the segment (`end`).
+*/
 int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 {
 	char	*start;
 	char	*tmp;
 	int	i;
 
-	i = first_check(data, &len, &end, ptr);
+	i = get_len_and_end(data, &len, &end, ptr);
 	if (i == -1 || i == 1)
 		return (i);
 	tmp = ft_calloc(len + 1, sizeof(char));
@@ -37,15 +57,25 @@ int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 		else
 			*tmp++ = *(*ptr)++;
 	}
-	if (data->exp->to_split)
-		rebuild_tword(data, data->word, start);
-	else
-		build_new(data, start, tmp, len);
-	free(start);
+	if (updt_new_or_tword(data, start, tmp, len) == -1)
+		return (-1);
 	return (0);
 }
 
-static int	first_check(t_data *data, int *len, char **end, char **ptr)
+static	int	updt_new_or_tword(t_data *data, char *srt, char *end, int len)
+{
+	int	i;
+
+	i = 0;
+	if (data->exp->to_split || data->exp->export_exp_bfr_equal)
+		i = rebuild_tword(data, data->word, srt);
+	else
+		i = build_new(data, srt, end, len);
+	free(srt);
+	return (i);
+}
+
+static int	get_len_and_end(t_data *data, int *len, char **end, char **ptr)
 {
 	if (!data->exp->in_dbl)
 	{

@@ -30,7 +30,7 @@
 		// var1 = ft_getenv(data->env, "ZA");
 		// var1->val = ft_strdup("ANA      SIL");
 		// (*word_lst)->word->next->word = ft_strdup("\'\"ola\"\'$HOME\'\"\'");
-		if (analyze_args((*word_lst)->word->next, data) == -1)
+		if (handle_tokens((*word_lst)->word->next, data) == -1)
 			return ;
 		echo((*word_lst)->word, data);
 	}

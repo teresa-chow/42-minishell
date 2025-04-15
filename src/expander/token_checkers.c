@@ -22,7 +22,7 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 	while (*s)
 	{
 		if (data->exp->export_cmd && *s == '=' && first_char != '=')
-			data->exp->export_after_equal = true;
+			data->exp->export_has_equal = true;
 		if (*s == '$' && is_valid_dollar(s) && !data->exp->in_sing)
 			data->exp->to_exp = true;
 		if (*s == '\'' && data->exp->in_sing)

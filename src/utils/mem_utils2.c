@@ -41,6 +41,7 @@ void	free_word_lst(t_word_lst **word_lst)
 		free(tmp);
 	}
 }
+
 void	free_w_lst_words(t_word_lst **word_lst)
 {
 	t_word_lst	*tmp;

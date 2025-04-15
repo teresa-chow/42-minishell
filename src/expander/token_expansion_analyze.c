@@ -13,9 +13,12 @@
 #include "../../include/expand.h"
 
 static int	check_token_context_details(t_word **word, t_data *data);
+static int	export_has_exp_bfr_equal(char *s);
 
 int	analyze_token_context(t_word **word, t_data *data)
 {
+	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word))
+		data->exp->export_exp_bfr_equal = true;
 	if (!ft_strcmp((*word)->word, "export"))
 		data->exp->export_cmd = true;
 	if (is_valid_tilde((*word)->word))
@@ -51,6 +54,23 @@ static int	check_token_context_details(t_word **word, t_data *data)
 		else if (*s == '$' && is_valid_dollar(s) && !data->exp->has_exp)
 			data->exp->has_exp = true;
 		s++;
+	}
+	return (0);
+}
+
+static int	export_has_exp_bfr_equal(char *s)
+{
+	char	*equal;
+
+	equal = ft_strchr(s, '=');
+	if (equal)
+	{
+		while (s != equal)
+		{
+			if (*s == '$' && is_valid_dollar(s + 1))
+				return (1);
+			s++;
+		}
 	}
 	return (0);
 }

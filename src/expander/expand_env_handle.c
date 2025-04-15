@@ -47,7 +47,7 @@ static int	find_and_get_expand_value(t_data *data, char **ptr, char **tmp)
 	var = ft_getenv(data->env, *ptr);
 	if (var && var->val && **ptr != '?')
 	{
-		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_after_equal)
+		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_has_equal)
 		{
 			data->exp->to_split = true;
 			if (join_split_words(data, tmp, var->val) == -1)
@@ -76,7 +76,7 @@ int	expand_val_len(char **bgn, t_data *data)
 	var = ft_getenv(data->env, *bgn);
 	if (var && var->val)
 	{
-		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_after_equal)
+		if (has_delimiter(var->val) && !data->exp->in_dbl && !data->exp->export_has_equal)
 		{
 			len = split_words_len(data, var->val);
 			if (len == -1)

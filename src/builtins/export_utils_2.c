@@ -41,6 +41,8 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 {
 	char	*tmp;
 
+	if (!s)
+		return (0);
 	tmp = s;
 	if ((s && ft_isdigit(*s)) || *s == '=')
 	{
