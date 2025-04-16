@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 10:53:34 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:43:04 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/execute.h"
+#include "../../include/errors.h"
 #include "../../include/utils.h"
 
 void	save_old_in_out(int *old_stdin, int *old_stdout)
@@ -36,3 +37,38 @@ void	reset_old_in_out(int old_stdin, int old_stdout)
 	close(old_stdout);
 }
 
+int redir_in_out_check(t_word *word, t_data *data)
+{
+	(void)data;
+	while (word)
+	{
+		if (word->redir != NONE)
+		{
+			if (word->next)
+			{
+				if (access(word->next->word, F_OK) < 0)
+				{
+					no_file_or_directory(word->next->word, data);
+					data->exit_status = 1;
+					return (-1);
+				}
+				if (word->redir == OUT && access(word->next->word, W_OK) < 0)
+				{
+					print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
+					perror("");
+					data->exit_status = 1;
+					return (-1);
+				}
+				if (word->redir == IN && access(word->next->word, R_OK) < 0)
+				{
+					print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
+					perror("");
+					data->exit_status = 1;
+					return (-1);
+				}
+			}
+		}
+		word = word->next;
+	}
+	return (0);
+}
