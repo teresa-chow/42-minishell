@@ -37,38 +37,60 @@ void	reset_old_in_out(int old_stdin, int old_stdout)
 	close(old_stdout);
 }
 
+int	check_permission(t_word *word, t_data *data)
+{
+	if ((word->redir == OUT  || word->redir == APPEND) 
+		&& access(word->next->word, W_OK) == -1)
+	{
+		print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
+		perror("");
+		data->exit_status = 1;
+		return (-1);
+	}
+	if (word->redir == IN && access(word->next->word, R_OK) == -1)
+	{
+		print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
+		perror("");
+		data->exit_status = 1;
+		return (-1);
+	}
+	return (0);
+}
+
+int	handle_redir(t_data *data, t_word *word)
+{
+	if (data->redir_in)
+		redir_in(word, data);
+	else if (data->redir_out)
+		redir_out(data, word);
+	data->redir_in = false;
+	data->redir_out = false;
+}
+
 int redir_in_out_check(t_word *word, t_data *data)
 {
-	(void)data;
-	while (word)
+	t_word	*tmp;
+
+	tmp = word;
+	while (tmp)
 	{
-		if (word->redir != NONE)
+		if (tmp->redir != NONE && tmp->next)
 		{
-			if (word->next)
+			if (!access(tmp->next->word, F_OK))
 			{
-				if (access(word->next->word, F_OK) < 0)
-				{
-					no_file_or_directory(word->next->word, data);
-					data->exit_status = 1;
+				if (check_permission(tmp, data) == -1)
 					return (-1);
-				}
-				if (word->redir == OUT && access(word->next->word, W_OK) < 0)
-				{
-					print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
-					perror("");
-					data->exit_status = 1;
-					return (-1);
-				}
-				if (word->redir == IN && access(word->next->word, R_OK) < 0)
-				{
-					print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
-					perror("");
-					data->exit_status = 1;
-					return (-1);
-				}
+				if (tmp->redir == IN)
+					data->redir_in = true;
+				else if (tmp->redir == OUT || tmp->redir == APPEND)
+					data->redir_out = true;
 			}
+			else
+				return (no_file_or_dir(tmp->next->word, data, 1), 1);
 		}
-		word = word->next;
+		tmp = tmp->next;
 	}
+	if (handle_redir(data, word) == -1)
+		return (-1);
 	return (0);
 }

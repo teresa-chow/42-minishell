@@ -89,6 +89,8 @@ typedef struct s_data
 	char		*env_home_var;
 	int			exit_status;
 	bool	no_home;
+	bool	redir_in;
+	bool	redir_out;
 }	t_data;
 
 #endif
