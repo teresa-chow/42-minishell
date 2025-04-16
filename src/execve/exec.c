@@ -47,12 +47,6 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 
 	i = 0;
 	ft_bzero(inf, sizeof(t_exec_data));
-	// if (!ft_strcmp(word->word, "."))
-	// {
-	// 	print_fd(2, "minishell: `.': Not valid input\n", NULL);
-	// 	data->exit_status = 2;
-	// 	return (-1);
-	// }
 	inf->wrd_arr = create_wrd_arr(word);
 	inf->env_arr = create_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)
