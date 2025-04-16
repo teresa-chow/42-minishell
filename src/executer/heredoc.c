@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 11:45:02 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:42:13 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,3 +16,22 @@
 
 //end of file will not expand (analyze heredoc prior to expansions), content will
 //readline
+
+int	redir_heredoc(t_data *data, t_word *word)
+{
+	(void)data;
+	(void)word;
+	/*char		*input;
+
+	if (isatty(STDOUT_FILENO))
+		input = readline("> ");
+	else
+		input = readline(NULL);
+	if (input && *input)
+	{
+		//heredoc processing
+	}
+	if (input)
+		free(input);*/
+	return (0);
+}
