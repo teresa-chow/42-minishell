@@ -90,7 +90,7 @@ static int	check_redir_in(t_word *word, t_data *data)
 	{
 		if (access(word->word, R_OK) == -1)
 		{
-			print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
+			print_fd(STDERR_FILENO, "minishell: %s: ", word->word);
 			perror("");
 			data->exit_status = 1;
 			return (-1);
@@ -108,7 +108,7 @@ static int	check_redir_out(t_word *word, t_data *data)
 	{
 		if (access(word->word, W_OK) < 0)
 		{
-			print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
+			print_fd(STDERR_FILENO, "minishell: %s: ", word->word);
 			perror("");
 			data->exit_status = 1;
 			return (-1);
