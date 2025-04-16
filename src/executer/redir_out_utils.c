@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_out_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:45:35 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/14 14:11:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:18:35 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 void	redirect_stdout(int *fd, int i)
 {
 	if (dup2(fd[i], STDOUT_FILENO) == -1)
+	{
+		perror("minishell: dup2");
+		return ;
+	}
+}
+
+void	redirect_stdin(int *fd, int i)
+{
+	if (dup2(fd[i], STDIN_FILENO) == -1)
 	{
 		perror("minishell: dup2");
 		return ;

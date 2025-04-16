@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/15 16:16:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:19:05 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ void			ast_depth_search(t_data *data, t_tree_node **node, int *i);
 int				exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
 
 /* ============================= REDIRECTIONS ============================== */
-void		save_old_stdin(int *old_stdin);
+int		redir_in(t_word *word);
 void		redir_out(t_word *word);
-void		save_old_stdout(int *old_stdout);
-void		reset_old_stdout(int old_stdout);
+void		save_old_in_out(int *old_stdin, int *old_stdout);
+void		reset_old_in_out(int old_stdin, int old_stdout);
+void		redirect_stdin(int *fd, int i);
 void		redirect_stdout(int *fd, int i);
 void		close_fd(int *fd, int count);
 

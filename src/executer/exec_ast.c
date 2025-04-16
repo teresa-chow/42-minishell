@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/15 16:14:44 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:06:12 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 		if (data->exit_status == 0)
 			return (-1);
 	}
+	/*
+	else if ((*node)->type == PIPE)
+	{
+		//pipe function here
+	}
+	*/
 	else if ((*node)->type == CMD)
 	{
-		if (exec_ast_cmd(data, node, i) == -1) //check pipe
+		if (exec_ast_cmd(data, node, i) == -1)
 			return (-1);
 	}
 	return (0);
@@ -56,19 +62,20 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 
 int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	//int	old_stdin;
+	int	old_stdin;
 	int	old_stdout;
 	
-	//save_old_stdin(&old_stdin);
-	save_old_stdout(&old_stdout);
+	save_old_in_out(&old_stdin, &old_stdout);
 	if (handle_tokens((*node)->word, data, node) == -1)
+		return (-1);
+	if (redir_in((*node)->word) == -1)
 		return (-1);
 	redir_out((*node)->word);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
 	else if ((*node)->word->redir == NONE)
 		exec(data, (*node)->word);
-	reset_old_stdout(old_stdout);
+	reset_old_in_out(old_stdin, old_stdout);
 	return (0);
 }
 
