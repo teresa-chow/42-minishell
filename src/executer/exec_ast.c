@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 10:56:02 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:59:36 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	if (handle_tokens((*node)->word, data, node) == -1)
 		return (-1);
 	//redir_in();
-	redir_out((*node)->word);
+	if (redir_out(data, (*node)->word) == -1)
+		return (-1);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
 	else if ((*node)->word->redir == NONE)

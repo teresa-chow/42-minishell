@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 10:54:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:56:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			ast_depth_search(t_data *data, t_tree_node **node, int *i);
 int				exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
 
 /* ============================= REDIRECTIONS ============================== */
-void		redir_out(t_word *word);
+int			redir_out(t_data *data, t_word *word);
 void		save_old_in_out(int *old_stdin, int *old_stdout);
 void		reset_old_in_out(int old_stdin, int old_stdout);
 void		redirect_stdout(int *fd, int i);
