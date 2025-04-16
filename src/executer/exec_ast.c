@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 15:06:12 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/16 16:59:36 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "../../include/errors.h"
 
 static int	exec_ast(t_data *data, t_tree_node **node, int *i);
-static int is_builtin_cmd(t_tree_node **node);
+static int 	is_builtin_cmd(t_tree_node **node);
 static void	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
@@ -68,9 +68,10 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	save_old_in_out(&old_stdin, &old_stdout);
 	if (handle_tokens((*node)->word, data, node) == -1)
 		return (-1);
-	if (redir_in((*node)->word) == -1)
+	if (redir_in((*node)->word, data) == -1)
 		return (-1);
 	redir_out((*node)->word);
+		return (-1);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
 	else if ((*node)->word->redir == NONE)
