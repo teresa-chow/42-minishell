@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 10:53:34 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/04/16 11:45:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,5 @@
 #include "../../include/execute.h"
 #include "../../include/utils.h"
 
-void	save_old_in_out(int *old_stdin, int *old_stdout)
-{
-	*old_stdin = dup(STDIN_FILENO);
-	*old_stdout = dup(STDOUT_FILENO);
-}
-
-void	reset_old_in_out(int old_stdin, int old_stdout)
-{
-	if (dup2(old_stdin, STDIN_FILENO) == -1)
-	{
-		perror("minishell: dup2");
-		return ;
-	}
-	close(old_stdin);
-	if (dup2(old_stdout, STDOUT_FILENO) == -1)
-	{
-		perror("minishell: dup2");
-		return ;
-	}
-	close(old_stdout);
-}
-
+//end of file will not expand (analyze heredoc prior to expansions), content will
+//readline

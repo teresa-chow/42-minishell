@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 14:54:32 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:36:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ static int	create_copy(t_env_node **copy, t_data *data)
 
 static	void	print_var_val(char *s)
 {
-	ft_putchar_fd('"', 1);
-	ft_putstr_fd(s, 1);
-	ft_putchar_fd('"', 1);
+	ft_putchar_fd('"', STDOUT_FILENO);
+	ft_putstr_fd(s, STDOUT_FILENO);
+	ft_putchar_fd('"', STDOUT_FILENO);
 }
 
 static void	print_export(t_env_node *env_lst)
@@ -86,11 +86,11 @@ static void	print_export(t_env_node *env_lst)
 		{
 			if (env_lst->val[0])
 			{
-				write (1, "=", 1);
+				write (STDOUT_FILENO, "=", 1);
 				print_var_val(env_lst->val);
 			}
 		}
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 		env_lst = env_lst->next;
 	}
 }
