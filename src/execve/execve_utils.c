@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:43:59 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/20 16:57:24 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:59:08 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ static int	count_words(t_env_node *env, t_word *word)
 	{
 		while (word)
 		{
-			if (ft_strcmp(word->word, ">") && ft_strcmp(word->word, "<") 
-			&& ft_strcmp(word->word, ">>") && ft_strcmp(word->word, "<<"))
+			if (word->redir != NONE)
+				word = word->next;
+			else
 				count++;
 			word = word->next;
 		}
@@ -77,13 +78,14 @@ char	**create_wrd_arr(t_word *word)
 	i = -1;
 	while (word)
 	{
-		if (ft_strcmp(word->word, ">") && ft_strcmp(word->word, "<") 
-		&& ft_strcmp(word->word, ">>") && ft_strcmp(word->word, "<<"))
+		if (word->redir == NONE)
 		{
 			arr[++i] = ft_strdup(word->word);
 			if (!arr[i])
 			return (NULL);
 		}
+		else
+			word = word->next;
 		word = word->next;
 	}
 	return (arr);

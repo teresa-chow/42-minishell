@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exp_qts_checkers.c                                 :+:      :+:    :+:   */
+/*   token_checkers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-10 22:48:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-10 22:48:01 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/10 22:48:01 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/16 11:52:51 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	is_valid_dollar(char *s)
 
 bool	is_valid_tilde(char *s)
 {
-	if (*s == '~' && !*(s + 1))
+	if (*s == '~' && ((!*(s + 1)) || *(s + 1) == '/'))
 		return (true);
 	return (false);
 }
