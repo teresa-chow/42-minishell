@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 14:59:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:21:30 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ int	redir_out(t_data *data, t_word *word)
 	int type;
 	int	*fd;
 	char **files;
-	int	flag;
 
 	type = 0;
-	flag = 0;
 	ft_bzero(&files, sizeof(char *));
 	count = redir_count(word, &type);
 	if (!count)
@@ -39,11 +37,12 @@ int	redir_out(t_data *data, t_word *word)
 	if (create_files(fd, files, count, type) == -1)
 	{
 		data->exit_status = ERR;
-		flag = -1;
+		free_strarray(files);
+		return (-1);
 	}
-    close_fd(fd, count);
+	close_fd(fd, count);
 	free_strarray(files);
-	return (flag);
+	return (0);
 }
 
 static int	redir_count(t_word *word, int *type)
@@ -121,6 +120,7 @@ static int	create_files(int *fd, char **files, int count, int type)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", files[i]);
 			perror("");
+			close_fd(fd, i);
 			return (-1);
 		}
 		i++;
