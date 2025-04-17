@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:03:56 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:05:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,8 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 		if (data->exit_status == 0)
 			return (-1);
 	}
-	/*
 	else if ((*node)->type == PIPE)
-	{
-		//pipe function here
-	}
-	*/
+		redir_pipe(data, (*node)->word);
 	else if ((*node)->type == CMD)
 	{
 		if (exec_ast_cmd(data, node, i) == -1)
