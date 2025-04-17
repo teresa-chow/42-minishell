@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
+#    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/17 10:19:44 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/17 11:02:44 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,18 +23,19 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
 	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
-SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c redir_check.c \
-	heredoc.c redir_utils.c redir_in.c redir_out.c redir_out_utils.c)
+SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c redir_pipe.c \
+	redir_check.c heredoc.c redir_utils.c redir_in.c redir_out.c \
+	redir_out_utils.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	exit_utils.c export.c export_utils.c export_utils_2.c export_merge_sort.c \
 	pwd.c unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
-	set_path.c print_fd.c utils.c)
-SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c expand_tilde.c \
-  expand_val_split.c handle_tokens_main.c handle_tokens_utils.c \
-  string_tword_builder.c token_checkers.c token_expansion_analyze.c \
-	handle_tokens_utils2.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c \
+	init_env.c set_path.c print_fd.c utils.c)
+SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \
+	expand_tilde.c expand_val_split.c handle_tokens_main.c \
+	handle_tokens_utils.c string_tword_builder.c token_checkers.c \
+	token_expansion_analyze.c handle_tokens_utils2.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
@@ -110,7 +111,6 @@ $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
 	$(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
-######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
 	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
 	$(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
