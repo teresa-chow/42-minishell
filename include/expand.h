@@ -27,7 +27,7 @@ int	build_new(t_data *data, char *bgn, char *end, int len);
 int	expand_val_len(char **bgn, t_data *data);
 int	expand_tilde(t_word **word, t_data *data);
 
-void	expand_wildcard(void);
+void	expand_wildcard(char *directory);
 
 
 int	exp_join_segment(t_data *data, char **ptr, int len, char *end);

@@ -41,7 +41,7 @@ static int	check_token_context_details(t_word **word, t_data *data)
 	{
 		if (*s == '*')
 		{
-			expand_wildcard();
+			expand_wildcard(".");
 			break;	
 		}
 		if (data->exp->export_cmd && *s == '=' && is_valid_tilde(s + 1))

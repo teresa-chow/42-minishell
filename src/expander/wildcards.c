@@ -12,16 +12,31 @@
 
 #include "../../include/expand.h"
 
-void	expand_wildcard(void)
+# include <sys/stat.h>
+
+void	expand_wildcard(char *directory)
 {
 	DIR *dir;
 	struct	dirent *entry;
+	struct stat	i_stat;
+	
 
-	dir = opendir(".");
+	dir = opendir(directory);
+	if (!dir)
+		return ;
 	entry = readdir(dir);
 	while (entry)
 	{
-		printf("%s ", entry->d_name);
+		if (!stat(entry->d_name, &i_stat))
+		{
+			if (S_ISDIR(i_stat.st_mode) && !ft_strchr(entry->d_name, '.'))
+			{
+					expand_wildcard(entry->d_name);
+					printf("%s ", entry->d_name);
+			}
+			else if (!S_ISDIR(i_stat.st_mode) && !ft_strchr(entry->d_name, '.'))
+				printf("%s ", entry->d_name);
+		}
 		entry = readdir(dir);
 	}
 	write (1, "\n", 1);
