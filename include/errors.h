@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/03/20 14:27:02 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 09:55:28 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 int	err_syntax(char *token);
 int	error_allocation(t_data *data);
 int	command_not_found(char *token, t_data *data);
-int	no_file_or_directory(char *token, t_data *data);
+int	no_file_or_dir(char *token, t_data *data, int i);
 int	is_a_directory(char *token, t_data *data);
 int	access_error(char *token, t_data *data);
 int	cd_error(char *token, t_data *data, int i);
