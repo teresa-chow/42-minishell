@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:43:59 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:29:20 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ char	**create_env_arr(t_env_node *env)
 {
 	int		i;
 	char	**arr;
-	char	*tmp;
 
 	arr = ft_calloc ((count_words(env, NULL) + 1), sizeof(char *));
 	if (!arr)
@@ -103,15 +102,12 @@ char	**create_env_arr(t_env_node *env)
 	i = -1;
 	while (env)
 	{
-		arr[++i] = ft_strjoin(env->key, "=");
+		if (env->val)
+			arr[++i] = join_three(env->key, "=", env->val);
+		else
+			arr[++i] = join_three(env->key, NULL, NULL);
 		if (!arr[i])
 			return (NULL);
-		tmp = ft_strjoin(arr[i], env->val);
-		if (!tmp)
-			return (NULL);
-		if (arr[i] != tmp)
-			free(arr[i]);
-		arr[i] = tmp;
 		env = env->next;
 	}
 	return (arr);

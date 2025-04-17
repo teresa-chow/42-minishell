@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:31:52 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
 static void	execute(t_data *data, t_exec_data *inf);
 static void	check_cmd(t_exec_data *inf, t_data *data);
+void	execute(t_data *data, t_exec_data *inf);
 
 void	exec(t_data *data, t_word *word)
 {
@@ -47,6 +48,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 
 	i = 0;
 	ft_bzero(inf, sizeof(t_exec_data));
+	inf->input = word->word;
 	inf->wrd_arr = create_wrd_arr(word);
 	inf->env_arr = create_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)
@@ -54,7 +56,16 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 	inf->path_splited = set_path(data, &i);
 	if (!inf->path_splited && i != -1)
 		return (free_arrays(inf, data, 1));
-	inf->input = word->word;
+	else if (!inf->path_splited && i == -1)
+	{
+		if (!access(word->word, F_OK))
+		{
+			inf->tmp = inf->input;
+			if (!access(word->word, X_OK))
+			execute (data, inf);
+			return (-1);
+		}
+	}
 	return (0);
 }
 
@@ -82,7 +93,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	return (0);
 }
 
-static void	execute(t_data *data, t_exec_data *inf)
+void	execute(t_data *data, t_exec_data *inf)
 {
 	pid_t	pid;
 	int		status;

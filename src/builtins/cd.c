@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:38:42 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	cd(t_word *input, t_data *data)
 	{
 		if (!data->env_home_var)
 		{
-			if (handle_with_home(data) == -1)
-				return ;
+			print_fd(2, "minishell: cd: HOME not set\n", NULL);
+			data->exit_status = 1;
+			return ;
 		}
 		to_exec = data->env_home_var;
 	}

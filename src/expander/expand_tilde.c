@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:36:18 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:07:36 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	update_word(t_data *data, t_word **word);
 
 int	expand_tilde(t_word **word, t_data *data)
 {
+	(void)word;
+	(void)data;
 	char	*to_free;
 
 	if (data->no_home)
@@ -51,22 +53,6 @@ static int	update_word(t_data *data, t_word **word)
 	if (!(*word)->word)
 		return (-1);
 	return (0);
-}
-
-static char	*join_three(char *s1, char *s2, char *s3)
-{
-	size_t	len;
-	char	*dst;
-
-	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
-	dst = malloc((len + 1) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	ft_strlcpy(dst, s1, ft_strlen(s1) + 1);
-	ft_strlcat(dst, s2, len + 1);
-	if (s3)
-		ft_strlcat(dst, s3, len + 1);
-	return (dst);
 }
 
 static int	expand_tilde_to_export(t_data *data, t_word **word)

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:25:49 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,8 @@ static void	print_export(t_env_node *env_lst)
 		ft_putstr_fd(env_lst->key, 1);
 		if (env_lst->val)
 		{
-			if (env_lst->val[0])
-			{
-				write (1, "=", 1);
-				print_var_val(env_lst->val);
-			}
+			write (1, "=", 1);
+			print_var_val(env_lst->val);
 		}
 		write(1, "\n", 1);
 		env_lst = env_lst->next;

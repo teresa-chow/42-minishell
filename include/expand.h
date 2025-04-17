@@ -6,15 +6,18 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:51:46 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
 # define EXPAND_H
 
+#include <dirent.h>
+
 # include "utils.h"
 # include "errors.h"
+
 
 /* -------------------------------------------------------------------------- */
 /*                            EXPAND AND QUOTES                               */
@@ -23,6 +26,10 @@ int	analyze_token_context(t_word **word, t_data *data);
 int	build_new(t_data *data, char *bgn, char *end, int len);
 int	expand_val_len(char **bgn, t_data *data);
 int	expand_tilde(t_word **word, t_data *data);
+
+void	expand_wildcard(void);
+
+
 int	exp_join_segment(t_data *data, char **ptr, int len, char *end);
 int	get_expand_val(t_data *data, char **ptr, char **tmp);
 int	handle_quotes(char **ptr, t_data *data);

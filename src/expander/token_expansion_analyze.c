@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:20:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:42:50 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ static int	check_token_context_details(t_word **word, t_data *data)
 	s = (*word)->word;
 	while (*s)
 	{
+		if (*s == '*')
+		{
+			expand_wildcard();
+			break;	
+		}
 		if (data->exp->export_cmd && *s == '=' && is_valid_tilde(s + 1))
 		{
 			data->exp->til_aft_equal = true;
