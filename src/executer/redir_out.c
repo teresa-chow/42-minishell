@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 15:21:30 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:01:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ static int	create_files(int *fd, char **files, int count, int type)
 {
 	int	i;
 
-	(void)type;
 	i = 0;
 	while (i < count)
 	{
