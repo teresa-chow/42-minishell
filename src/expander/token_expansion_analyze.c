@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_expansion_analyze.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:20:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/16 12:38:19 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
