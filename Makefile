@@ -6,11 +6,12 @@
 #    By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/17 09:58:41 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/17 10:19:44 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
+BONUS		= minishell_bonus
 
 # ============================================================================ #
 # FILES                                                                        #
@@ -103,6 +104,8 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
+bonus: $(BONUS)
+
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
 	$(OBJS_ERRORS) $(OBJS_TEST)
@@ -112,6 +115,15 @@ $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
 	$(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
+
+$(BONUS): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
+	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
+	$(OBJS_ERRORS) $(OBJS_TEST)
+	@printf "$(GRN)>> Generated object files (bonus)$(NC)\n\n"
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
+	$(LIBFT_ARC) -o $(BONUS) $(RLFLAGS)
+	@printf "$(GRN)>> Compiled minishell (bonus)$(NC)\n\n"
 
 
 $(BUILD_DIR):
@@ -165,7 +177,7 @@ clean:	## Remove object files
 	@printf "$(GRN)>> Removed object files$(NC)\n\n"
 
 fclean: clean	## Remove executable files
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
 	$(MAKE) $(LIBFT_DIR) fclean
 	@printf "$(GRN)>> Removed Libft archive$(NC)\n\n"

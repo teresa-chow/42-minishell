@@ -9,6 +9,7 @@ Dockerfile
 */*/.build/
 
 minishell
+minishell_bonus
 */*/*.a
 */*.swp
 */*.swo
