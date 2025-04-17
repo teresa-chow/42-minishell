@@ -32,7 +32,7 @@
 int	err_syntax(char *token);
 int	error_allocation(t_data *data);
 int	command_not_found(char *token, t_data *data);
-int	no_file_or_directory(char *token, t_data *data);
+int	no_file_or_dir(char *token, t_data *data, int i);
 int	is_a_directory(char *token, t_data *data);
 int	access_error(char *token, t_data *data);
 int	cd_error(char *token, t_data *data, int i);

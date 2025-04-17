@@ -65,12 +65,12 @@ typedef struct s_expand
 {
 	char	*new;
 	char	**words;
-	bool	in_dbl; //
-	bool	in_sing; //
-	bool	to_exp; //
+	bool	in_dbl;
+	bool	in_sing;
+	bool	to_exp;
 	bool	has_exp;
-	bool	has_sing; //
-	bool	has_dbl; //
+	bool	has_sing;
+	bool	has_dbl;
 	bool	to_split;
 	bool	til_aft_equal;
 	bool	export_cmd;
@@ -81,6 +81,12 @@ typedef struct s_expand
 /* -------------------------------------------------------------------------- */
 /*                                 GENERAL                                    */
 /* -------------------------------------------------------------------------- */
+
+/*
+- redin_in and redir_out used to check if has redir
+- no_home to know if we have home env or not
+- exp used to handle with expansions
+*/
 typedef struct s_data
 {
 	t_env_node	*env;
@@ -89,6 +95,8 @@ typedef struct s_data
 	char		*env_home_var;
 	int			exit_status;
 	bool	no_home;
+	bool	redir_in;
+	bool	redir_out;
 }	t_data;
 
 #endif

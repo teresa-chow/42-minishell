@@ -36,7 +36,7 @@ void	exec(t_data *data, t_word *word)
 		if (!access(inf.input, F_OK))
 			check_cmd(&inf, data);
 		else
-			no_file_or_directory(inf.input, data);
+			no_file_or_dir(inf.input, data, 0);
 	}
 	free_arrays(&inf, data, 0);
 }
@@ -64,7 +64,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 
 	if (!inf->path_splited)
 	{
-		no_file_or_directory(inf->input, data);
+		no_file_or_dir(inf->input, data, 0);
 		return (-1);
 	}
 	i = -1;
