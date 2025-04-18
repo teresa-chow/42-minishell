@@ -62,7 +62,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 		{
 			inf->tmp = inf->input;
 			if (!access(word->word, X_OK))
-			execute (data, inf);
+				execute (data, inf);
 			return (-1);
 		}
 	}
