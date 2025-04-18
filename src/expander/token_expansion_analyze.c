@@ -27,6 +27,8 @@ int	analyze_token_context(t_word **word, t_data *data)
 			return (-1);
 		return (0);
 	}
+	if (handle_wildcard((*word)->word, data) == -1)
+		return (-1);
 	if (check_token_context_details(word, data) == -1)
 		return (-1);
 	return (0);
@@ -39,11 +41,6 @@ static int	check_token_context_details(t_word **word, t_data *data)
 	s = (*word)->word;
 	while (*s)
 	{
-		if (*s == '*')
-		{
-			expand_wildcard(".");
-			break;	
-		}
 		if (data->exp->export_cmd && *s == '=' && is_valid_tilde(s + 1))
 		{
 			data->exp->til_aft_equal = true;

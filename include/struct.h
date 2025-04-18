@@ -63,6 +63,7 @@ typedef struct s_env_init
 */
 typedef struct s_expand
 {
+	char	*wild_substr;
 	char	*new;
 	char	**words;
 	bool	in_dbl;
@@ -76,6 +77,9 @@ typedef struct s_expand
 	bool	export_cmd;
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
+	bool	bfr_wild;
+	bool	aft_wild;
+	bool	mid_wild;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */
