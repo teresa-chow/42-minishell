@@ -33,7 +33,7 @@ SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
 SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c expand_tilde.c \
   expand_val_split.c handle_tokens_main.c handle_tokens_utils.c \
   string_tword_builder.c token_checkers.c token_expansion_analyze.c \
-	handle_tokens_utils2.c wildcards_analyze.c)
+	handle_tokens_utils2.c wildcards_analyze.c wildcards_check_match.c wildcards_utils.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 

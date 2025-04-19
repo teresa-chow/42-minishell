@@ -77,9 +77,6 @@ typedef struct s_expand
 	bool	export_cmd;
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
-	bool	bfr_wild;
-	bool	aft_wild;
-	bool	mid_wild;
 }	t_expand;
 
 /* -------------------------------------------------------------------------- */

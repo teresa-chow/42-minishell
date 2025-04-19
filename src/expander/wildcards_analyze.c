@@ -12,50 +12,65 @@
 
 #include "../../include/expand.h"
 
-static char	find_last_char(char *s);
-static int      take_out_asterisk(char *s, t_data *data);
+static int	is_matching_pattern(char *pat, char *name);
+static int	directory_analyze(char *s, t_word **word, t_data *data);
 
-/*TODO: free data.exp.wild_substr*/
-int	handle_wildcard(char *s, t_data *data)
+/* 
+'pat' var name is short for 'pattern' 
+'name' var name is file name
+*/
+///  free_data->wild here and when fail something of memory 
+int	handle_wildcard(t_word **word, t_data *data)
 {
 	char	*ch;
-	char	first_ch;
-	char	last_ch;
 
-	ch = ft_strchr(s, '*');
+	ch = ft_strchr((*word)->word, '*');
 	if (!ch)
 		return (0);
-	first_ch = *s;
-	last_ch = find_last_char(s);
-	if (first_ch == '*' && last_ch != '*')
-		data->exp->aft_wild = true;
-	else if (first_ch != '*' && last_ch == '*')
-		data->exp->bfr_wild = true;
-	else if (first_ch == '*' && last_ch == '*')
-		data->exp->mid_wild = true;
-	if (take_out_asterisk(s, data) == -1)
-                return (-1);
+	directory_analyze((*word)->word, word, data);
         // expand_wildcard();
 	return (0);
 }
 
-static char	find_last_char(char *s)
+// openDIR and CLOSEDIR <<<<-------------------
+static int	directory_analyze(char *s, t_word **word, t_data *data)
 {
-	while (*s)
-		s++;
-	return (*(s - 1));
+	DIR	*dir;
+	struct dirent	*entry;
+
+	(void)s;
+	(void)word;
+	dir = opendir(".");
+	if (!dir)
+	{
+		perror ("Cannot open current directory");
+		data->exit_status = 1;
+		// return (444234242);
+	}
+	entry = readdir(dir);
+	while (entry)
+	{
+		if (entry->d_name[0] != '.' && is_matching_pattern(s, entry->d_name))
+			        // expand_wildcard() and create t_word;
+		entry = readdir(dir);
+	}
+	return (0);
 }
 
-static int      take_out_asterisk(char *s, t_data *data)
+static int	is_matching_pattern(char *pat, char *name)
 {
-	if (data->exp->bfr_wild)
-		data->exp->wild_substr = ft_substr(s, 0, ft_strlen(s) 
-                - ft_strlen(ft_strchr(s, '*')));
-	else if (data->exp->aft_wild)
-                data->exp->wild_substr = ft_substr(s, 1, ft_strlen(s + 1));
-	else if (data->exp->mid_wild)
-                data->exp->wild_substr = ft_substr(s, 1, ft_strlen(s + 1)
-                - ft_strlen(ft_strchr(s + 1, '*')));
-	if (!data->exp->wild_substr)
-                return (-1);
+	char	*last_ast;
+	char	*first_ast;
+
+	last_ast = NULL;
+	first_ast = next_ast(pat);
+	last_ast = get_last_ast(pat);
+	if (*pat != '*' && match_begin(pat, name))
+		return (1);
+	else if (match_end(last_ast + 1, name))
+		return (1);
+	else if (first_ast != last_ast && match_mid(first_ast, last_ast, name))
+		return (1);
+	else
+		return (0);
 }

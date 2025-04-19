@@ -29,7 +29,6 @@ int	expand_tilde(t_word **word, t_data *data);
 int	exp_join_segment(t_data *data, char **ptr, int len, char *end);
 int	get_expand_val(t_data *data, char **ptr, char **tmp);
 int	handle_quotes(char **ptr, t_data *data);
-int	handle_wildcard(char *s, t_data *data);
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node);
 int	join_split_words(t_data *data, char **tmp, char *val);
 int	rebuild_tword(t_data *data, t_word **word, char *tmp1);
@@ -45,4 +44,12 @@ bool	is_valid_dollar(char *s);
 bool	is_valid_tilde(char *s);
 char	*find_next_quote_and_parse(char *s, t_data *data);
 char	*find_non_alnum(char *s);
+// Wildcards
+int	handle_wildcard(t_word **word, t_data *data);
+char	*find_first_no_ast(char *s);
+char	*get_last_ast(char *s);
+char	*match_begin(char *pat, char *name);
+char	*match_end(char *pat, char *name);
+char	*match_mid(char *pat, char *last_ast, char *name);
+char	*next_ast(char *s);
 #endif
