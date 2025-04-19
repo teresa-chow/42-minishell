@@ -16,11 +16,12 @@
 'pat' var name is short for 'pattern' 
 'name' var name is file name
 */
-char	*match_begin(char *pat, char *name)
+char	*match_begin(char *pat, char *name, t_data *data)
 {
 	char	*substr;
 	char	*ast_pos;
 
+	data->wild->bgn = true;
 	if (*pat != *name)
 		return (0);
 	ast_pos = next_ast(pat);
@@ -30,30 +31,31 @@ char	*match_begin(char *pat, char *name)
 	return (substr);
 }
 
-char	*match_end(char *pat, char *name)
+char	*match_end(char *pat, char *name, t_data *data)
 {
 	int	pat_len;
 	int	name_len;
 	char	*substr;
 
-	if (!*pat)
-		return (NULL);
+	data->wild->end = true;
 	pat_len = ft_strlen(pat);
 	name_len = ft_strlen(name);
 	substr = ft_strstr(&name[name_len - pat_len], pat);
 	return (substr);
 }
 
-char	*match_mid(char *pat, char *last_ast, char *name)
+char	*match_mid(char *pat, char *last_ast, char *name, t_data *data)
 {
 	char	*substr;
 	char	*ast_pos;
 
-	(void)last_ast;
+	if (!pat)
+		return (NULL);
+	data->wild->mid = true;
 	*last_ast = 0;
 	pat = find_first_no_ast(pat);
 	substr = NULL;
-	while (!substr && pat)
+	while (pat)
 	{
 		ast_pos = next_ast(pat);
 		if (ast_pos)

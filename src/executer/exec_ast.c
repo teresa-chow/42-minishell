@@ -70,6 +70,8 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);
+	if (handle_wildcard((*node)->word, data) == -1)
+		return (-1);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
 	else if ((*node)->word->redir == NONE)

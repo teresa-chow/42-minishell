@@ -63,7 +63,6 @@ typedef struct s_env_init
 */
 typedef struct s_expand
 {
-	char	*wild_substr;
 	char	*new;
 	char	**words;
 	bool	in_dbl;
@@ -79,6 +78,18 @@ typedef struct s_expand
 	bool	export_exp_bfr_equal;
 }	t_expand;
 
+typedef	struct s_wildcard
+{
+	bool	bgn;
+	bool	mid;
+	bool	end;
+	bool	bgn_ok;
+	bool	mid_ok;
+	bool	end_ok;
+	struct	s_word	*wild_word;
+}	t_wildcard;
+
+
 /* -------------------------------------------------------------------------- */
 /*                                 GENERAL                                    */
 /* -------------------------------------------------------------------------- */
@@ -92,6 +103,7 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
+	t_wildcard	*wild;
 	struct s_word	**word;
 	char		*env_home_var;
 	int			exit_status;

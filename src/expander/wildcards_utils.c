@@ -12,6 +12,13 @@
 
 #include "../../include/expand.h"
 
+void	free_wild(t_data *data)
+{
+	ft_bzero(data->wild, sizeof(t_wildcard));
+	free(data->wild);
+	data->wild = NULL;
+}
+
 char	*get_last_ast(char *s)
 {
 	char	*ast;
@@ -44,4 +51,15 @@ char	*find_first_no_ast(char *s)
 		s++;
 	}
 	return (s);
+}
+
+t_word	*last_word(t_word *tmp_word)
+{
+	while (tmp_word)
+	{
+		if (!tmp_word->next)
+			break;
+		tmp_word = tmp_word->next;
+	}
+	return (tmp_word);
 }

@@ -27,8 +27,6 @@ int	analyze_token_context(t_word **word, t_data *data)
 			return (-1);
 		return (0);
 	}
-	if (handle_wildcard(word, data) == -1)
-		return (-1);
 	if (check_token_context_details(word, data) == -1)
 		return (-1);
 	return (0);
