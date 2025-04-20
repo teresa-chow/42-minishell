@@ -52,7 +52,6 @@ int	handle_wildcard(t_word *word, t_data *data)
 	return (0);
 }
 
-
 // openDIR and CLOSEDIR <<<<-------------------
 static int	directory_analyze(char *s, t_word *word, t_data *data)
 {
@@ -92,7 +91,10 @@ static int	is_matching_pattern(char *pat, char *name, t_data *data)
 	first_ast = next_ast(pat);
 	last_ast = get_last_ast(pat);
 	if (*pat != '*' && match_begin(pat, name, data))
+	{
+		name = name + ft_strlen(pat) - ft_strlen(next_ast(pat));
 		data->wild->bgn_ok = true;
+	}
 	if (*(last_ast + 1) && match_end(last_ast + 1, name, data))
 		data->wild->end_ok = true;
 	if (first_ast != last_ast && match_mid(first_ast, last_ast, name, data))

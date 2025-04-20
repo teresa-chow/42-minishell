@@ -12,8 +12,10 @@
 
 #include "../../include/expand.h"
 
+static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
+
 /* 
-'pat' var name is short for 'pattern' 
+'pat' var name is short for 'pattern'
 'name' var name is file name
 */
 char	*match_begin(char *pat, char *name, t_data *data)
@@ -44,31 +46,49 @@ char	*match_end(char *pat, char *name, t_data *data)
 	return (substr);
 }
 
-char	*match_mid(char *pat, char *last_ast, char *name, t_data *data)
+int	match_mid(char *pat, char *last_ast, char *name, t_data *data)
 {
-	char	*substr;
 	char	*ast_pos;
+	char	*substr;
+	int	i;
+	int	j;
 
-	if (!pat)
-		return (NULL);
-	data->wild->mid = true;
-	*last_ast = 0;
+	init_vars(&i, &j, data, pat ,last_ast);
 	pat = find_first_no_ast(pat);
-	substr = NULL;
-	while (pat)
+	while (pat && *pat)
 	{
+		j++;
 		ast_pos = next_ast(pat);
 		if (ast_pos)
 			*ast_pos = 0;
 		substr = ft_strstr(name, pat);
-		if (ast_pos)
+		if (substr)
 		{
-			pat = ast_pos + 1;
-			*ast_pos = '*';
+			name = substr + ft_strlen(pat);
+			i++;
 		}
-		else
-			pat = NULL;
+		if (ast_pos)
+			*ast_pos = '*';
+		pat = find_first_no_ast(ast_pos);
 	}
 	*last_ast = '*';
-	return (substr);
+	if (i == j)
+		return (1);
+	return (0);
+}
+
+static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last)
+{
+	*i = 0;
+	*j = 0;
+	while (fst != last)
+	{
+		if (*fst != '*')
+		{
+			data->wild->mid = true;
+			break;
+		}
+		fst++;
+	}
+	*last = 0;
 }

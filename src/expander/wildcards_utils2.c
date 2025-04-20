@@ -58,9 +58,6 @@ int	verify_match(t_data *data)
 
 void	reset_bool(t_data *data)
 {
-	data->wild->bgn =false;
-	data->wild->mid =false;
-	data->wild->end =false;
 	data->wild->bgn_ok =false;
 	data->wild->mid_ok =false;
 	data->wild->end_ok =false;

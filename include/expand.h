@@ -47,12 +47,12 @@ char	*find_non_alnum(char *s);
 // Wildcards
 int	create_word_node(char *name, t_data *data);
 int	handle_wildcard(t_word *word, t_data *data);
+int     match_mid(char *pat, char *last_ast, char *name, t_data *data);
 int	verify_match(t_data *data);
 char	*find_first_no_ast(char *s);
 char	*get_last_ast(char *s);
 char	*match_begin(char *pat, char *name, t_data *data);
 char	*match_end(char *pat, char *name, t_data *data);
-char	*match_mid(char *pat, char *last_ast, char *name, t_data *data);
 char	*next_ast(char *s);
 t_word	*last_word(t_word *tmp_word);
 void	free_wild(t_data *data);

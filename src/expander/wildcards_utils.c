@@ -44,6 +44,8 @@ char	*next_ast(char *s)
 
 char	*find_first_no_ast(char *s)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s != '*')
