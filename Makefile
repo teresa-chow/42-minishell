@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/17 11:02:44 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/21 09:55:02 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,9 @@ SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c \
 SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \
 	expand_tilde.c expand_val_split.c handle_tokens_main.c \
 	handle_tokens_utils.c string_tword_builder.c token_checkers.c \
-	token_expansion_analyze.c handle_tokens_utils2.c)
+	token_expansion_analyze.c handle_tokens_utils2.c wildcards_analyze.c \
+	wildcards_check_match.c wildcards_expand.c wildcards_utils.c \
+	wildcards_utils2.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
