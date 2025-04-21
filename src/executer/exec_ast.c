@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/21 15:58:08 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/21 16:40:48 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "../../include/errors.h"
 
 static int	exec_ast(t_data *data, t_tree_node **node, int *i);
-static int is_builtin_cmd(t_tree_node **node);
 static void	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
@@ -80,7 +79,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	return (0);
 }
 
-static int is_builtin_cmd(t_tree_node **node)
+int is_builtin_cmd(t_tree_node **node)
 {
 	if (!ft_strcmp((*node)->word->word, "echo")
 		|| !ft_strcmp((*node)->word->word, "cd")

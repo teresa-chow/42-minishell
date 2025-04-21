@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/21 16:27:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:02:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,23 @@ static int	read_from_pipe(t_data *data, t_tree_node **node, int *i, int *fd);
 
 void	ast_handle_pipe(t_data *data, t_tree_node **node, int *i)
 {
-	int	old_stdin;
-	int	old_stdout;
+	int	id;
+	//int	old_stdin;
+	//int	old_stdout;
 	
-	old_stdin = dup(STDIN_FILENO);
-	old_stdout = dup(STDOUT_FILENO);
+	//old_stdin = dup(STDIN_FILENO);
+	//old_stdout = dup(STDOUT_FILENO);
 	create_pipe(data, node, i);
-	reset_old_in_out(old_stdin, old_stdout);
+	if (is_builtin_cmd(node))
+	{
+		id = fork();
+		if (id == -1)
+		{
+			ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
+			return (-1);
+		}
+	}
+	//reset_old_in_out(old_stdin, old_stdout);
 }
 
 static int	create_pipe(t_data *data, t_tree_node **node, int *i)
@@ -41,37 +51,28 @@ static int	create_pipe(t_data *data, t_tree_node **node, int *i)
 		ft_putstr_fd("Minishell: pipe error\n", STDERR_FILENO);
 		return (-1);
 	}
-	if (write_to_pipe(data, node, i, fd) == -1)
-	{
-//		close(fd[0]);
-//		close(fd[1]);
-		return (-1);
-	}
-	if (read_from_pipe(data, node, i, fd) == -1)
-	{
-//		close(fd[0]);
-//		close(fd[1]);
-		return (-1);
-	}
-	close(fd[0]);
-	close(fd[1]);
 	return (0);
 }
 
 static int	write_to_pipe(t_data *data, t_tree_node **node, int *i, int *fd)
 {
-//	int	id;
+	int	id;
 
-	/*id = fork();
-	if (get_proc_id(&id) == -1)
-		return (-1);
-	if (id == 0)
-	{*/
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		ast_depth_search(data, &(*node)->left, i);
-		close(fd[1]);
-	/*}
+	if (is_builtin_cmd(node))
+	{
+		id = fork();
+		if (get_proc_id(&id) == -1)
+			return (-1);
+		if (id == 0)
+		{
+			close(fd[0]);
+			dup2(fd[1], STDOUT_FILENO);
+			ast_depth_search(data, &(*node)->left, i);
+			close(fd[1]);
+		}
+		else
+		{}
+	}
 	else
 	{
 		close(fd[1]);
@@ -104,7 +105,7 @@ static int	read_from_pipe(t_data *data, t_tree_node **node, int *i, int *fd)
 	return (0);
 }
 
-/*static int	get_proc_id(int *id)
+static int	get_proc_id(int *id)
 {
 	*id = fork();
 	if (*id == -1)
@@ -113,4 +114,4 @@ static int	read_from_pipe(t_data *data, t_tree_node **node, int *i, int *fd)
 		return (-1);
 	}
 	return (0);
-}*/
+}
