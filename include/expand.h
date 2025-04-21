@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:51:46 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPAND_H
 # define EXPAND_H
 
+#include <dirent.h>
+
 # include "utils.h"
 # include "errors.h"
+
 
 /* -------------------------------------------------------------------------- */
 /*                            EXPAND AND QUOTES                               */
@@ -41,4 +44,18 @@ bool	is_valid_dollar(char *s);
 bool	is_valid_tilde(char *s);
 char	*find_next_quote_and_parse(char *s, t_data *data);
 char	*find_non_alnum(char *s);
+// Wildcards
+int	create_word_node(char *name, t_data *data);
+int	handle_wildcard(t_word *word, t_data *data);
+int     match_mid(char *pat, char *last_ast, char *name, t_data *data);
+int	verify_match(t_data *data);
+char	*find_first_no_ast(char *s);
+char	*get_last_ast(char *s);
+char	*match_begin(char *pat, char *name, t_data *data);
+char	*match_end(char *pat, char *name, t_data *data);
+char	*next_ast(char *s);
+t_word	*last_word(t_word *tmp_word);
+void	free_wild(t_data *data);
+void	reset_bool(t_data *data);
+
 #endif

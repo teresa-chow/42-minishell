@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,18 @@ typedef struct s_expand
 	bool	export_exp_bfr_equal;
 }	t_expand;
 
+typedef	struct s_wildcard
+{
+	bool	bgn;
+	bool	mid;
+	bool	end;
+	bool	bgn_ok;
+	bool	mid_ok;
+	bool	end_ok;
+	struct	s_word	*wild_word;
+}	t_wildcard;
+
+
 /* -------------------------------------------------------------------------- */
 /*                                 GENERAL                                    */
 /* -------------------------------------------------------------------------- */
@@ -91,6 +103,7 @@ typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
+	t_wildcard	*wild;
 	struct s_word	**word;
 	char		*env_home_var;
 	int			exit_status;
