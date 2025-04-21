@@ -17,18 +17,30 @@
 
 static void	data_init(t_data *data, char **envp);
 
+// int	global;
+
+// void handler(int signum)
+// {
+// 	(void)signum;
+// 	printf("hello\n");
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		data;
 	t_tree_node	*root;
+	// struct	sigaction	sa;
 	int	i;
 
 	(void)argc;
 	(void)argv;
 	i = 1;
+	// sa.sa_handler = handler;
+
 	data_init(&data, envp);
 	while (i)
 	{
+		// sigaction(SIGINT, &sa, NULL);
 		root = ft_calloc(1, sizeof(t_tree_node));
 		if (!root)
 		{

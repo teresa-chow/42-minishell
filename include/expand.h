@@ -46,6 +46,7 @@ char	*find_next_quote_and_parse(char *s, t_data *data);
 char	*find_non_alnum(char *s);
 // Wildcards
 int	create_word_node(char *name, t_data *data);
+int	free_wild(t_data *data, int i, DIR *dir);
 int	handle_wildcard(t_word *word, t_data *data);
 int     match_mid(char *pat, char *last_ast, char *name, t_data *data);
 int	verify_match(t_data *data);
@@ -55,7 +56,7 @@ char	*match_begin(char *pat, char *name, t_data *data);
 char	*match_end(char *pat, char *name, t_data *data);
 char	*next_ast(char *s);
 t_word	*last_word(t_word *tmp_word);
-void	free_wild(t_data *data);
+void	update_tword(t_data *data, t_word **word, t_word *last);
 void	reset_bool(t_data *data);
 
 #endif

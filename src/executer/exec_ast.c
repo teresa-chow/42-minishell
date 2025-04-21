@@ -68,9 +68,9 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	save_old_in_out(&old_stdin, &old_stdout);
 	if (handle_tokens((*node)->word, data, node) == -1)
 		return (-1);
-	if (redir_in_out_check((*node)->word, data) != 0)
-		return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
+		return (-1);
+	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);

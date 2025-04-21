@@ -78,6 +78,10 @@ typedef struct s_expand
 	bool	export_exp_bfr_equal;
 }	t_expand;
 
+/*
+- wild_word is used to create a temp t_word with 
+	new values to append to the original t_word
+*/
 typedef	struct s_wildcard
 {
 	bool	bgn;

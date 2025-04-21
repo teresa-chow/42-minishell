@@ -13,12 +13,17 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+#include <signal.h>
+
 # include "parse.h"
 # include "builtins.h"
 # include "struct.h"
-
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
+
+
+/* Global variable */
+extern int	global;
 
 /* =============================== PRINT TO FD ============================== */
 void	print_fd(int fd, const char *msg, char *token);
