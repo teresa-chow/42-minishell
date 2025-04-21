@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 15:06:01 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:28:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 /* ================= ABSTRACT SYNTAX TREE(AST) EXECUTION =================== */
 void		ast_depth_search(t_data *data, t_tree_node **node, int *i);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
-int			redir_pipe(t_data *data, t_word *word);
+void		ast_handle_pipe(t_data *data, t_tree_node **node, int *i);
+//int			redir_pipe(t_data *data, t_word *word);
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);

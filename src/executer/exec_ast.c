@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/21 09:52:06 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/21 15:58:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 	t_tree_node	*tmp;
 
 	tmp = *node;
+	if (tmp->type == PIPE)
+	{
+		ast_handle_pipe(data, node, i);
+		return ;
+	}
 	if (tmp->left)
 		ast_depth_search(data, &tmp->left, i);
 	if (exec_ast(data, node, i) == -1)
@@ -46,8 +51,6 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 		if (data->exit_status == 0)
 			return (-1);
 	}
-	else if ((*node)->type == PIPE)
-		redir_pipe(data, (*node)->word);
 	else if ((*node)->type == CMD)
 	{
 		if (exec_ast_cmd(data, node, i) == -1)
