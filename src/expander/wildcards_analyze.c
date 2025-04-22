@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_analyze.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-18 17:34:28 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-18 17:34:28 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/18 17:34:28 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/22 11:21:20 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	directory_analyze(char *s, t_data *data);
 int	handle_wildcard(t_word *word, t_data *data)
 {
 	t_word	*last;
+	int	i;
 
 	data->wild = ft_calloc(sizeof(t_wildcard), 1);
 	if (!data->wild)
@@ -31,8 +32,11 @@ int	handle_wildcard(t_word *word, t_data *data)
 	{
 		if (ft_strchr(word->word, '*'))
 		{
-			if (directory_analyze(word->word, data) == -1)
+			i = directory_analyze(word->word, data);
+			if (i == -1)
 				return (-1);
+			else if (i == 2)
+				break;
 			update_tword(data, &word, last);
 		}
 		last = word;
@@ -42,10 +46,33 @@ int	handle_wildcard(t_word *word, t_data *data)
 	return (0);
 }
 
+int	check_directory(struct dirent *entry, char *s, bool *check, t_data *data)
+{
+	struct stat	i_stat;
+
+	if (entry->d_name[0] != '.' && !ft_strcmp("*/", s))
+	{
+		ft_bzero(&i_stat, sizeof(i_stat));
+		if (stat(entry->d_name, &i_stat) == -1)
+		{
+			perror("minishell: stat");
+			data->exit_status = 1;
+			return (-1);
+		}
+		if (S_ISDIR(i_stat.st_mode))
+		{
+			*check = true;
+			data->wild->print_dir = true;
+		}
+	}
+	return (0);
+}
+
 static int	directory_analyze(char *s, t_data *data)
 {
 	DIR	*dir;
 	struct dirent	*entry;
+	bool	build_new;
 
 	dir = opendir(".");
 	if (!dir)
@@ -57,12 +84,19 @@ static int	directory_analyze(char *s, t_data *data)
 	entry = readdir(dir);
 	while (entry)
 	{
-		if (entry->d_name[0] != '.' && is_matching_pattern(s, entry->d_name, data))
+		if (entry->d_name[0] != '.' && !ft_strcmp("*", s))
+			build_new = true;
+		else if (check_directory(entry, s, &build_new, data) == -1)
+			return (2);
+		else if (entry->d_name[0] != '.' && is_matching_pattern(s, entry->d_name, data))
+			build_new = true;
+		if (build_new)
 		{
 			if (create_word_node(entry->d_name, data) == -1)
 				return (free_wild(data,1, dir));
 		}
 		reset_bool(data);
+		build_new = false;
 		entry = readdir(dir);
 	}
 	closedir(dir);

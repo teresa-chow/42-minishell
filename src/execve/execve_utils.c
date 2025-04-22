@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:43:59 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 13:29:20 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:37:20 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**create_env_arr(t_env_node *env)
 	{
 		if (env->val)
 			arr[++i] = join_three(env->key, "=", env->val);
-		else
+		else if (!ft_strcmp(env->key, "OLDPWD"))
 			arr[++i] = join_three(env->key, NULL, NULL);
 		if (!arr[i])
 			return (NULL);

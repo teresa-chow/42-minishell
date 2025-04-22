@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 15:51:46 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:07:49 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXPAND_H
 
 #include <dirent.h>
+# include <sys/stat.h>
 
 # include "utils.h"
 # include "errors.h"

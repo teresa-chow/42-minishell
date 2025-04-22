@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/11 15:45:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:30:27 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	read_input(t_tree_node **root, t_data *data)
 		input = readline(prompt);
 	else
 		input = readline(NULL);
+	// if (!input)
+	// 	exit(1);////////////////////////////// FREE THE MEMORY
 	if (input && *input)
 	{
 		add_history(input);
