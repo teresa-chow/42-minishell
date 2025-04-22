@@ -13,69 +13,59 @@
 #include "../../include/expand.h"
 
 static int	is_matching_pattern(char *pat, char *name, t_data *data);
-static int	directory_analyze(char *s, t_word *word, t_data *data);
+static int	directory_analyze(char *s, t_data *data);
 
 /* 
 'pat' var name is short for 'pattern' 
 'name' var name is file name
 */
-///  free_data->wild here and when fail something of memory 
 int	handle_wildcard(t_word *word, t_data *data)
 {
 	t_word	*last;
-	t_word	*last_new;
 
 	data->wild = ft_calloc(sizeof(t_wildcard), 1);
 	if (!data->wild)
-		return (1);
+		return (error_allocation(data));
 	last = word;
 	while (word)
 	{
 		if (ft_strchr(word->word, '*'))
 		{
-			directory_analyze(word->word, word, data);
-			if (data->wild->wild_word)
-			{
-				last_new = last_word(data->wild->wild_word);
-				last_new->next = word->next;
-				free(word->word);
-				free(word);
-				last->next = data->wild->wild_word;
-				word = last_new;
-				data->wild->wild_word = NULL;
-			}
+			if (directory_analyze(word->word, data) == -1)
+				return (-1);
+			update_tword(data, &word, last);
 		}
 		last = word;
 		word = word->next;
 	}
-        free_wild(data);
+        free_wild(data, 0, NULL);
 	return (0);
 }
 
-// openDIR and CLOSEDIR <<<<-------------------
-static int	directory_analyze(char *s, t_word *word, t_data *data)
+static int	directory_analyze(char *s, t_data *data)
 {
 	DIR	*dir;
 	struct dirent	*entry;
 
-	(void)s;
-	(void)word;
 	dir = opendir(".");
 	if (!dir)
 	{
 		perror ("Cannot open current directory");
 		data->exit_status = 1;
-		// return (444234242);
+		return (-1);
 	}
 	entry = readdir(dir);
 	while (entry)
 	{
 		if (entry->d_name[0] != '.' && is_matching_pattern(s, entry->d_name, data))
-			create_word_node(entry->d_name, data);
+		{
+			if (create_word_node(entry->d_name, data) == -1)
+				return (free_wild(data,1, dir));
+		}
 		reset_bool(data);
 		entry = readdir(dir);
 	}
-	closedir(dir); // if fail???
+	closedir(dir);
 	return (0);
 }
 

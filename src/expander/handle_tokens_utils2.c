@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:44:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:15 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:07:24 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

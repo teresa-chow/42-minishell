@@ -55,9 +55,27 @@ int	verify_match(t_data *data)
 	return (0);
 }
 
+void	update_tword(t_data *data, t_word **word, t_word *last)
+{
+	t_word	*last_new;
+
+	if (data->wild->wild_word)
+	{
+		last_new = last_word(data->wild->wild_word);
+		last_new->next = (*word)->next;
+		free((*word)->word);
+		free(*word);
+		last->next = data->wild->wild_word;
+		*word = last_new;
+		data->wild->wild_word = NULL;
+	}
+}
 
 void	reset_bool(t_data *data)
 {
+	data->wild->bgn =false;
+	data->wild->mid =false;
+	data->wild->end =false;
 	data->wild->bgn_ok =false;
 	data->wild->mid_ok =false;
 	data->wild->end_ok =false;

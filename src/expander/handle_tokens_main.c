@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_main.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:12 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:55:26 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 		if (word)
 			word = word->next;
 	}
+	free_exp(data, 0);
 	return (0);
 }
 
@@ -64,8 +65,6 @@ static int	process_token(t_word **word, t_data *data)
 	start = cpy;
 	while (*cpy)
 	{
-		if (*cpy == '$' && (*(cpy + 1) == '\'' || *(cpy + 1) == '"'))
-			cpy++;
 		if (*cpy == '\'' || *cpy == '"')
 			i = handle_quotes(&cpy, data);
 		else

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:41:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	**set_path(t_data *data, int *i);
 /* ================================ GENERAL ================================ */
 void	add_chars(char *start, char *end, char *dst);
 int		handle_with_home(t_data *data);
+char	*join_three(char *s1, char *s2, char *s3);
 
 #endif

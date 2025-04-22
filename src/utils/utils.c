@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                   		:+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 11:29:26 by carlaugu          #+#    #+#             */
 /*   Updated: 2025/04/08 15:03:41 by tchow-so         ###   ########.fr       */
@@ -26,6 +26,23 @@ void	add_chars(char *start, char *end, char *dst)
 		dst[i++] = *start;
 		start++;
 	}
+}
+
+char	*join_three(char *s1, char *s2, char *s3)
+{
+	size_t	len;
+	char	*dst;
+
+	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3);
+	dst = malloc((len + 1) * sizeof(char));
+	if (!dst)
+		return (NULL);
+	ft_strlcpy(dst, s1, ft_strlen(s1) + 1);
+	if (s2)
+		ft_strlcat(dst, s2, len + 1);
+	if (s3)
+		ft_strlcat(dst, s3, len + 1);
+	return (dst);
 }
 
 /* Handle with HOME var*/

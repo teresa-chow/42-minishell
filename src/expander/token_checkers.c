@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_checkers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:48:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ bool	is_valid_dollar(char *s)
 
 bool	is_valid_tilde(char *s)
 {
-	if (*s == '~' && !*(s + 1))
+	if (*s == '~' && ((!*(s + 1)) || *(s + 1) == '/'))
 		return (true);
 	return (false);
 }

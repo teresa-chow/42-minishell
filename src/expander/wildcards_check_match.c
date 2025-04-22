@@ -12,6 +12,7 @@
 
 #include "../../include/expand.h"
 
+static	int	find_return(int i, int j);
 static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
 
 /* 
@@ -72,9 +73,15 @@ int	match_mid(char *pat, char *last_ast, char *name, t_data *data)
 		pat = find_first_no_ast(ast_pos);
 	}
 	*last_ast = '*';
+	return (find_return(i, j));
+}
+
+static int	find_return(int i, int j)
+{
 	if (i == j)
 		return (1);
 	return (0);
+
 }
 
 static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last)

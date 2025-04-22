@@ -12,11 +12,19 @@
 
 #include "../../include/expand.h"
 
-void	free_wild(t_data *data)
+int	free_wild(t_data *data, int i, DIR *dir)
 {
+	if (i)
+	{
+		free_words(&data->wild->wild_word);
+		closedir(dir);
+	}
 	ft_bzero(data->wild, sizeof(t_wildcard));
 	free(data->wild);
 	data->wild = NULL;
+	if (i)
+		return (error_allocation(data));
+	return (0);
 }
 
 char	*get_last_ast(char *s)
