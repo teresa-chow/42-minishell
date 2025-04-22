@@ -30,9 +30,17 @@ int	free_wild(t_data *data, int i, DIR *dir)
 char	*get_last_ast(char *s)
 {
 	char	*ast;
+	bool	in_quotes;
+
+	ast = NULL;
+	in_quotes = false;
 	while (*s)
 	{
-		if (*s == '*')
+		if ((*s == '"' || *s == '\'') && !in_quotes)
+			in_quotes = true;
+		else if ((*s == '"' || *s == '\'') && in_quotes)
+			in_quotes = false;
+		if (*s == '*' && !in_quotes)
 			ast = s;
 		s++;
 	}
@@ -41,9 +49,16 @@ char	*get_last_ast(char *s)
 
 char	*next_ast(char *s)
 {
+	bool	in_quotes;
+
+	in_quotes = false;
 	while (*s)
 	{
-		if (*s == '*')
+		if ((*s == '"' || *s == '\'') && !in_quotes)
+			in_quotes = true;
+		else if ((*s == '"' || *s == '\'') && in_quotes)
+			in_quotes = false;
+		if (*s == '*' && !in_quotes) 
 			return (s);
 		s++;
 	}

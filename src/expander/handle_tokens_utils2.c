@@ -113,9 +113,6 @@ int	handle_quotes(char **ptr, t_data *data)
 		i = exp_join_segment(data, ptr, len, end);
 	if (i == -1)
 		return (-1);
-	if (*end)
-		*ptr = end + 1;
-	else
-		*ptr = end;
+	*ptr = end;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 11:07:49 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/22 21:36:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ char	*next_ast(char *s);
 t_word	*last_word(t_word *tmp_word);
 void	update_tword(t_data *data, t_word **word, t_word *last);
 void	reset_bool(t_data *data);
+// Quote removal
+int		remove_quotes(t_word *word);
 
 #endif
