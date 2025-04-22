@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/21 16:40:48 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:20:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	if (handle_wildcard((*node)->word, data) == -1)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
-		return (-1);
+		return (-1); //check redirections prior to executing command
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
-	else if ((*node)->word->redir == NONE)
+	else
 		exec(data, (*node)->word);
 	reset_old_in_out(old_stdin, old_stdout);
 	return (0);
@@ -81,39 +81,47 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 
 int is_builtin_cmd(t_tree_node **node)
 {
-	if (!ft_strcmp((*node)->word->word, "echo")
-		|| !ft_strcmp((*node)->word->word, "cd")
-		|| !ft_strcmp((*node)->word->word, "pwd")
-		|| !ft_strcmp((*node)->word->word, "export")
-		|| !ft_strcmp((*node)->word->word, "unset")
-		|| !ft_strcmp((*node)->word->word, "env")
-		|| !ft_strcmp((*node)->word->word, "exit"))
+	t_word	*tmp;
+
+	tmp = (*node)->word;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!tmp)
+		return (0);
+	if (!ft_strcmp(tmp->word, "echo")
+		|| !ft_strcmp(tmp->word, "cd")
+		|| !ft_strcmp(tmp->word, "pwd")
+		|| !ft_strcmp(tmp->word, "export")
+		|| !ft_strcmp(tmp->word, "unset")
+		|| !ft_strcmp(tmp->word, "env")
+		|| !ft_strcmp(tmp->word, "exit"))
 		return (1);
 	return (0);
 }
 
 static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	if (!ft_strcmp((*node)->word->word, "echo"))
-		echo((*node)->word, data);
-	else if (!ft_strcmp((*node)->word->word, "cd"))
+	t_word	*tmp;
+
+	tmp = (*node)->word;
+	while (tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!ft_strcmp(tmp->word, "echo"))
+		echo(tmp, data);
+	else if (!ft_strcmp(tmp->word, "cd"))
 	{
-		if ((*node)->word->next	&& (*node)->word->next->next
-		&& (*node)->word->next->next->redir == NONE)
-		{
-			cd_error(NULL, data, 0);
+		if (!cd_arg_check(tmp, data))
 			return ;
-		}
-		cd((*node)->word, data);
+		cd(tmp, data);
 	}
-	else if (!ft_strcmp((*node)->word->word, "pwd"))
+	else if (!ft_strcmp(tmp->word, "pwd"))
 		pwd(data);
-	else if (!ft_strcmp((*node)->word->word, "export"))
-		export(data, (*node)->word);
-	else if (!ft_strcmp((*node)->word->word, "unset"))
-		unset(data, (*node)->word->next);
-	else if (!ft_strcmp((*node)->word->word, "env"))
+	else if (!ft_strcmp(tmp->word, "export"))
+		export(data, tmp);
+	else if (!ft_strcmp(tmp->word, "unset"))
+		unset(data, tmp->next);
+	else if (!ft_strcmp(tmp->word, "env"))
 		env_cmd(data->env, data);
-	else if (!ft_strcmp((*node)->word->word, "exit"))
-		exit_cmd(data, node, i);
+	else if (!ft_strcmp(tmp->word, "exit"))
+		exit_cmd(data, tmp, i);
 }

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/21 16:41:30 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:11:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void		close_fd(int *fd, int count);
 
 /* ================================ UTILS ================================== */
 int			is_builtin_cmd(t_tree_node **node);
+int			cd_arg_check(t_word *word, t_data *data);
 
 #endif

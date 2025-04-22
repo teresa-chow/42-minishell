@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/22 15:05:06 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 static int	check_is_digit(t_word *word, t_data *data, int *syntax);
 static int	check_overflow(t_word *word, t_data *data, int *syntax);
 
-void	exit_cmd(t_data *data, t_tree_node **node, int *i)
+void	exit_cmd(t_data *data, t_word *word, int *i)
 {
 	int		many_args;
 	int		syntax_error;
@@ -28,7 +28,7 @@ void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 	many_args = 0;
 	syntax_error = 0;
 	write(STDERR_FILENO, "exit\n", 5);
-	check_syntax_exit((*node)->word, data, &many_args, &syntax_error);
+	check_syntax_exit(word, data, &many_args, &syntax_error);
 	if (many_args && !syntax_error)
 	{
 		exit_error_many_args(data);
