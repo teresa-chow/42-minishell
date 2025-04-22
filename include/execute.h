@@ -34,6 +34,6 @@ void		redirect_stdout(int *fd, int i);
 void		close_fd(int *fd, int count);
 
 /* ================================ UTILS ================================== */
-int			is_builtin_cmd(t_tree_node **node)
+int			is_builtin_cmd(t_tree_node **node);
 
 #endif
