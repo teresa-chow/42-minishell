@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:07:09 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ typedef struct s_expand
 	bool	export_exp_bfr_equal;
 }	t_expand;
 
+/*
+- wild_word is used to create a temp t_word with 
+	new values to append to the original t_word
+*/
 typedef	struct s_wildcard
 {
 	bool	bgn;
@@ -86,6 +90,7 @@ typedef	struct s_wildcard
 	bool	bgn_ok;
 	bool	mid_ok;
 	bool	end_ok;
+	bool	print_dir;
 	struct	s_word	*wild_word;
 }	t_wildcard;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-19 14:35:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-19 14:35:44 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/19 14:35:44 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/22 14:20:25 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

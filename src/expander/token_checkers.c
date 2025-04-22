@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:48:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:27:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 	char	first_char;
 
 	first_char = *s;
+	s++;
 	while (*s)
 	{
 		if (data->exp->export_cmd && *s == '=' && first_char != '=')
@@ -26,9 +27,9 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 		if (*s == '$' && is_valid_dollar(s) && !data->exp->in_sing)
 			data->exp->to_exp = true;
 		if (*s == '\'' && data->exp->in_sing)
-			break;
+			return (s + 1); //break;
 		else if (*s == '"' && data->exp->in_dbl)
-			break;
+			return (s + 1); //break;
 		else if ((*s == '\'' || *s == '"') && !data->exp->in_dbl && !data->exp->in_sing)
 			break;
 		s++;

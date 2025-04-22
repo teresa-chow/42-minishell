@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-19 22:35:17 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-19 22:35:17 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/19 22:35:17 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/22 11:10:18 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	create_word_node(char *name, t_data *data)
 		last = last_word(data->wild->wild_word);
 		last->next = new;
 	}
-	new->word = ft_strdup(name);
+	if (data->wild->print_dir)
+		new->word = ft_strjoin(name, "/");
+	else
+		new->word = ft_strdup(name);
 	if (!new->word)
 		return (-1);
 	return (0);
@@ -79,4 +82,5 @@ void	reset_bool(t_data *data)
 	data->wild->bgn_ok =false;
 	data->wild->mid_ok =false;
 	data->wild->end_ok =false;
+	data->wild->print_dir = false;
 }
