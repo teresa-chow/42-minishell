@@ -25,7 +25,7 @@ char	*match_begin(char *pat, char *name, t_data *data)
 	char	*ast_pos;
 
 	data->wild->bgn = true;
-	if (*pat != *name)
+	if ((*pat != '"' && *pat != '\'') && *pat != *name)
 		return (0);
 	ast_pos = next_ast(pat);
 	*ast_pos = 0;
@@ -40,6 +40,8 @@ char	*match_end(char *pat, char *name, t_data *data)
 	int	name_len;
 	char	*substr;
 
+	if (!*pat || (*pat + 1))
+		return (NULL);
 	data->wild->end = true;
 	pat_len = ft_strlen(pat);
 	name_len = ft_strlen(name);

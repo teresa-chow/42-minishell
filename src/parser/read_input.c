@@ -17,6 +17,9 @@
 static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root);
 static int	syntax_check(t_word_lst *word_lst, t_data *data);
 
+/// @brief 
+/// @param root 
+/// @param data 
 void	read_input(t_tree_node **root, t_data *data)
 {
 	char		*input;
