@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/23 16:22:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:39:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 {
 	t_tree_node	*tmp;
 
-	if (!*node)
-		return ;
 	tmp = *node;
+	if (!tmp)
+		return ;
 	if (tmp->type == PIPE) //segfault
 	{
 		ast_handle_pipe(data, node, i);
