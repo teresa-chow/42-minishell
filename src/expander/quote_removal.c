@@ -6,46 +6,56 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:48:41 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/22 21:36:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:38:20 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int	remove_quotes(t_word *word)
+int	remove_quotes(char **str, bool to_free);
+
+int	process_remove(t_word *word)
+{
+	while (word)
+	{
+		if (remove_quotes(&word->word, 1) == -1)
+			return (-1);
+		word = word->next;
+	}
+	return (0);
+}
+
+int	remove_quotes(char **str, bool to_free)
 {
 	int	len;
-	char	*tmp;
 	char	*new;
+	char	*start;
 	int	i;
 
 	len = 0;
-	tmp = NULL;
-	while (word)
+	i = -1;
+	start = *str;
+	if (ft_strchr(*str, '\'') || ft_strchr(*str, '"'))
 	{
-		if (ft_strchr(word->word, '\'') || ft_strchr(word->word, '"'))
+		while (**str)
 		{
-			tmp = word->word;
-			while (*tmp)
-			{
-				if (*tmp != '\'' && *tmp != '"')
-					len++;
-				tmp++;
-			}
-			new = ft_calloc(len + 1, sizeof(char));
-			// if (!new)
-			tmp = word->word;
-			i = -1;
-			while (*tmp)
-			{
-				if (*tmp != '\'' && *tmp != '"')
-					new[++i] = (*tmp)++;
-				tmp++;
-			}
-			free(word->word);
-			word->word = new;
+			if (**str != '\'' && **str != '"')
+				len++;
+			(*str)++;
 		}
-		word = word->next;
+		new = ft_calloc(len + 1, sizeof(char));
+		// if (!new)
+		i = -1;
+		*str = start;
+		while (**str)
+		{
+			if (**str != '\'' && **str != '"')
+				new[++i] = *(*str);
+			(*str)++;
+		}
+		if (to_free)
+			free(start);
+		*str = new;
 	}
 	return (0);
 }

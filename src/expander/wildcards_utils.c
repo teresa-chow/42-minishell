@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:35:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 14:20:25 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:09:01 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,23 @@ int	free_wild(t_data *data, int i, DIR *dir)
 char	*get_last_ast(char *s)
 {
 	char	*ast;
-	bool	in_quotes;
+	bool	in_dbl;
+	bool	in_sing;
 
+	in_dbl = false;
+	in_sing = false;
 	ast = NULL;
-	in_quotes = false;
 	while (*s)
 	{
-		if ((*s == '"' || *s == '\'') && !in_quotes)
-			in_quotes = true;
-		else if ((*s == '"' || *s == '\'') && in_quotes)
-			in_quotes = false;
-		if (*s == '*' && !in_quotes)
+		if (*s == '"' && !in_sing && !in_dbl)
+			in_dbl = true;
+		else if (*s == '"' && in_dbl)
+			in_dbl = false;
+		if (*s == '\'' && !in_sing && !in_dbl)
+			in_sing = true;
+		else if (*s == '\'' && in_sing)
+			in_sing = false;
+		if (*s == '*' && !in_sing && !in_dbl) 
 			ast = s;
 		s++;
 	}
@@ -49,16 +55,22 @@ char	*get_last_ast(char *s)
 
 char	*next_ast(char *s)
 {
-	bool	in_quotes;
+	bool	in_dbl;
+	bool	in_sing;
 
-	in_quotes = false;
+	in_dbl = false;
+	in_sing = false;
 	while (*s)
 	{
-		if ((*s == '"' || *s == '\'') && !in_quotes)
-			in_quotes = true;
-		else if ((*s == '"' || *s == '\'') && in_quotes)
-			in_quotes = false;
-		if (*s == '*' && !in_quotes) 
+		if (*s == '"' && !in_sing && !in_dbl)
+			in_dbl = true;
+		else if (*s == '"' && in_dbl)
+			in_dbl = false;
+		if (*s == '\'' && !in_sing && !in_dbl)
+			in_sing = true;
+		else if (*s == '\'' && in_sing)
+			in_sing = false;
+		if (*s == '*' && !in_sing && !in_dbl) 
 			return (s);
 		s++;
 	}
