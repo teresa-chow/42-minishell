@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/22 22:26:55 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/22 22:35:49 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ast_handle_pipe(t_data *data, t_tree_node **node, int *i)
 		return ;
 	pipe_output(data, &(*node)->right, i, &fd[2]);
 	pipe_input(data, &(*node)->left, i, &fd[2]);
+	close(fd[1]);
+	close(fd[0]);
 }
 
 static int	create_pipe(int	fd[2])
