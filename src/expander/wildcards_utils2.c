@@ -84,3 +84,14 @@ void	reset_bool(t_data *data)
 	data->wild->end_ok =false;
 	data->wild->print_dir = false;
 }
+
+int	has_only_ast(char *s)
+{
+	while (*s)
+	{
+		if (*s != '*')
+			return (0);
+		s++;
+	}
+	return (1);
+}

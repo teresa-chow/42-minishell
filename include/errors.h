@@ -30,6 +30,7 @@
 # include "builtins.h"
 
 int	err_syntax(char *token);
+int     error_open_dir(t_data *data);
 int	error_allocation(t_data *data);
 int	command_not_found(char *token, t_data *data);
 int	no_file_or_dir(char *token, t_data *data, int i);

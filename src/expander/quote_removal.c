@@ -14,7 +14,7 @@
 
 int	remove_quotes(char **str, bool to_free);
 
-int	process_remove(t_word *word)
+int	process_remove_quotes(t_word *word)
 {
 	while (word)
 	{

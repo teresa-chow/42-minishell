@@ -12,8 +12,10 @@
 
 #include "../../include/expand.h"
 
-static int	is_matching_pattern(char *pat, char *name, t_data *data);
 static int	directory_analyze(char *s, t_data *data);
+static int	is_matching_pattern(char *pat, char *name, t_data *data);
+static int	first_set(DIR **dir, struct dirent **entry, 
+	bool *build_n, t_data *data);
 
 /* 
 'pat' var name is short for 'pattern' 
@@ -74,17 +76,11 @@ static int	directory_analyze(char *s, t_data *data)
 	struct dirent	*entry;
 	bool	build_new;
 
-	dir = opendir(".");
-	if (!dir)
-	{
-		perror ("Cannot open current directory");
-		data->exit_status = 1;
+	if (first_set(&dir, &entry, &build_new, data) == -1)
 		return (-1);
-	}
-	entry = readdir(dir);
 	while (entry)
 	{
-		if (entry->d_name[0] != '.' && !ft_strcmp("*", s))
+		if (entry->d_name[0] != '.' && has_only_ast(s))
 			build_new = true;
 		else if (check_directory(entry, s, &build_new, data) == -1)
 			return (2);
@@ -100,6 +96,17 @@ static int	directory_analyze(char *s, t_data *data)
 		entry = readdir(dir);
 	}
 	closedir(dir);
+	return (0);
+}
+
+static int	first_set(DIR **dir, struct dirent **entry, 
+		bool *build_n, t_data *data)
+{
+	*build_n = false;
+	*dir = opendir(".");
+	if (!*dir)
+		return (error_open_dir(data));
+	*entry = readdir(*dir);
 	return (0);
 }
 
@@ -119,7 +126,7 @@ static int	is_matching_pattern(char *pat, char *name, t_data *data)
 		name = name + ft_strlen(pat) - ft_strlen(next_ast(pat));
 		data->wild->bgn_ok = true;
 	}
-	if (last_ast && match_end(last_ast, name, data))
+	if (last_ast && match_end(last_ast + 1, name, data))
 		data->wild->end_ok = true;
 	if (first_ast != last_ast && match_mid(first_ast, last_ast, name, data))
 		data->wild->mid_ok = true;

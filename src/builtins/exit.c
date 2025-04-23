@@ -28,11 +28,14 @@ void	exit_cmd(t_data *data, t_tree_node **node, int *i)
 	many_args = 0;
 	syntax_error = 0;
 	write(STDERR_FILENO, "exit\n", 5);
-	check_syntax_exit((*node)->word, data, &many_args, &syntax_error);
-	if (many_args && !syntax_error)
+	if ((*node)->word)
 	{
-		exit_error_many_args(data);
-		return ;
+		check_syntax_exit((*node)->word, data, &many_args, &syntax_error);
+		if (many_args && !syntax_error)
+		{
+			exit_error_many_args(data);
+			return ;
+		}
 	}
 	*i = 0;
 }

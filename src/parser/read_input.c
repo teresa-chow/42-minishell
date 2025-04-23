@@ -20,7 +20,7 @@ static int	syntax_check(t_word_lst *word_lst, t_data *data);
 /// @brief 
 /// @param root 
 /// @param data 
-void	read_input(t_tree_node **root, t_data *data)
+void	read_input(t_tree_node **root, t_data *data, int *i)
 {
 	char		*input;
 	char		*prompt;
@@ -31,8 +31,8 @@ void	read_input(t_tree_node **root, t_data *data)
 		input = readline(prompt);
 	else
 		input = readline(NULL);
-	// if (!input)
-	// 	exit(1);////////////////////////////// FREE THE MEMORY
+	if (!input)
+		exit_cmd(data, root, i);
 	if (input && *input)
 	{
 		add_history(input);

@@ -19,7 +19,8 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 	char	first_char;
 
 	first_char = *s;
-	s++;
+	if (*s == '\'' || *s == '"')
+		s++;
 	while (*s)
 	{
 		if (data->exp->export_cmd && *s == '=' && first_char != '=')

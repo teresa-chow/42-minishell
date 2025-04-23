@@ -19,11 +19,11 @@ static void	data_init(t_data *data, char **envp);
 
 // int	global;
 
-// void handler(int signum)
-// {
-// 	(void)signum;
-// 	printf("hello\n");
-// }
+void handle_signal(int i)
+{
+	(void)i;
+	write (1, "^C\n", 3);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,8 +35,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	i = 1;
-	// sa.sa_handler = handler;
 
+	// signal (SIGINT, SIG_IGN);
+	// signal (SIGINT, handle_signal);
 	data_init(&data, envp);
 	while (i)
 	{
@@ -47,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(&data, 1, &data.env);
 			break;
 		}
-		read_input(&root, &data);
+		read_input(&root, &data, &i);
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
 		reset_mem(&data, &root, i);

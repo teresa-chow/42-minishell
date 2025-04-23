@@ -79,7 +79,7 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void			read_input(t_tree_node **tree, t_data *data);
+void			read_input(t_tree_node **tree, t_data *data, int *i);
 char			*get_prompt(t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
