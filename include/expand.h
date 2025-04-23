@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 11:07:49 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:06:47 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	join_split_words(t_data *data, char **tmp, char *val);
 int	rebuild_tword(t_data *data, t_word **word, char *tmp1);
 //EXPAND  UTILS
 char	**get_words(char const *s);
+int	remove_quotes(char **str, bool to_free);
+int	process_remove(t_word *word);
 int	get_segment_len(char *bgn, char *end, t_data *data);
 void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end);
 void	reset_big_part_flags(t_data *data);

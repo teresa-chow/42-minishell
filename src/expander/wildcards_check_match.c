@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard_check_match.c                             :+:      :+:    :+:   */
+/*   wildcards_check_match.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-19 14:37:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-19 14:37:09 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/19 14:37:09 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/23 13:57:38 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 
 static	int	find_return(int i, int j);
 static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
+
+int	has_quotes(char *s)
+{
+	while (*s)
+	{
+		if (*s == '\'' || *s == '"')
+			return (1);
+		s++;
+	}
+	return (0);
+}
 
 /* 
 'pat' var name is short for 'pattern'
@@ -23,13 +34,19 @@ char	*match_begin(char *pat, char *name, t_data *data)
 {
 	char	*substr;
 	char	*ast_pos;
+	char	*tmp;
 
 	data->wild->bgn = true;
 	if ((*pat != '"' && *pat != '\'') && *pat != *name)
 		return (0);
 	ast_pos = next_ast(pat);
 	*ast_pos = 0;
-	substr = ft_strstr(name, pat);
+	tmp = pat;	
+	if (has_quotes(pat))
+		remove_quotes(&tmp, false);
+	substr = ft_strstr(name, tmp);
+	if (tmp != pat)
+		free (tmp);
 	*ast_pos = '*';
 	return (substr);
 }
@@ -40,7 +57,7 @@ char	*match_end(char *pat, char *name, t_data *data)
 	int	name_len;
 	char	*substr;
 
-	if (!*pat || (*pat + 1))
+	if (!*pat || !*(pat + 1))
 		return (NULL);
 	data->wild->end = true;
 	pat_len = ft_strlen(pat);

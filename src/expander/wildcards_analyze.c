@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:34:28 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 11:21:20 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:27:57 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	handle_wildcard(t_word *word, t_data *data)
 	last = word;
 	while (word)
 	{
-		if (ft_strchr(word->word, '*'))
+		if (next_ast(word->word))
 		{
 			i = directory_analyze(word->word, data);
 			if (i == -1)

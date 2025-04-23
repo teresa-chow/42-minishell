@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:00:35 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,44 +60,6 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 	return (0);
 }
 
-int	remove_quotes(t_word *word)
-{
-	int	len;
-	char	*tmp;
-	char	*new;
-	int	i;
-
-	len = 0;
-	tmp = NULL;
-	while (word)
-	{
-		if (ft_strchr(word->word, '\'') || ft_strchr(word->word, '"'))
-		{
-			tmp = word->word;
-			while (*tmp)
-			{
-				if (*tmp != '\'' && *tmp != '"')
-					len++;
-				tmp++;
-			}
-			new = ft_calloc(len + 1, sizeof(char));
-			// if (!new)
-			tmp = word->word;
-			i = -1;
-			while (*tmp)
-			{
-				if (*tmp != '\'' && *tmp != '"')
-					new[++i] = (*tmp)++;
-				tmp++;
-			}
-			free(word->word);
-			word->word = new;
-		}
-		word = word->next;
-	}
-	return (0);
-}
-
 int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 {
 	int	old_stdin;
@@ -108,7 +70,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 		return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
 		return (-1);
-	if (remove_quotes((*node)->word) == -1)
+	if (process_remove((*node)->word) == -1)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);
