@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/21 11:16:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:30:20 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef enum e_type
 typedef struct s_tree_node
 {
 	int					index;
+	pid_t				id;//review
 	t_type				type;
 	t_word				*word;
 	struct s_tree_node	*left;

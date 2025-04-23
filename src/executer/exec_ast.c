@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/22 21:36:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:22:04 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 {
 	t_tree_node	*tmp;
 
+	if (!*node)
+		return ;
 	tmp = *node;
-	if (tmp->type == PIPE)
+	if (tmp->type == PIPE) //segfault
 	{
 		ast_handle_pipe(data, node, i);
 		return ;
@@ -69,9 +71,10 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 		return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
 		return (-1);
-	remove_quotes((*node)->word);
+	if (remove_quotes((*node)->word) == -1)
+		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
-		return (-1); //check redirections prior to executing command
+		return (-1);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
 	else
@@ -84,6 +87,8 @@ int is_builtin_cmd(t_tree_node **node)
 {
 	t_word	*tmp;
 
+	if (!*node)
+		return (-1);
 	tmp = (*node)->word;
 	while (tmp && tmp->redir != NONE)
 		tmp = tmp->next->next;

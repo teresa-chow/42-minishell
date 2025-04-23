@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/23 11:32:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:18:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,36 @@
 #include "../../include/errors.h"
 
 static int	create_pipe(int	fd[2]);
-static void	pipe_input(t_data *data, t_tree_node **node_right, int *i,
+static pid_t	pipe_input(t_data *data, t_tree_node **node_right, int *i,
 	int fd[2]);
-static void	pipe_output(t_data *data, t_tree_node **node_right, int *i,
+static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i,
 	int fd[2]);
 
 /* Obs.: fd[0] is set up for reading, fd[1] is set up for writing */
 void	ast_handle_pipe(t_data *data, t_tree_node **node, int *i)
 {
+	int	old_stdin;
+	int	old_stdout;
 	int	fd[2];
+	pid_t	pid_left;
+	pid_t	pid_right;
 
+	pid_left = -1;
+	pid_right = -1;
+	old_stdin = dup(STDIN_FILENO);
+	old_stdout = dup(STDOUT_FILENO);
 	if (create_pipe(fd) == -1)
 		return ;
-	pipe_input(data, &(*node)->left, i, fd);
-	pipe_output(data, &(*node)->right, i, fd);
+	pid_left = pipe_input(data, &(*node)->left, i, fd);
+	pid_right = pipe_output(data, &(*node)->right, i, fd);
+	dup2(old_stdin, STDIN_FILENO);
+	dup2(old_stdout, STDOUT_FILENO);
+	close(old_stdin);
+	close(old_stdout);
+	if (pid_left > 0)
+		waitpid(pid_left, NULL, 0);
+	if (pid_right > 0)
+		waitpid(pid_right, NULL, 0);
 	close(fd[1]);
 	close(fd[0]);
 }
@@ -45,58 +61,66 @@ static int	create_pipe(int	fd[2])
 	return (0);
 }
 
-static void	pipe_input(t_data *data, t_tree_node **node_left, int *i, int fd[2])
+static pid_t	pipe_input(t_data *data, t_tree_node **node_left, int *i,
+	int fd[2])
 {
-	int	id;
+	pid_t	id;
 
 	if (is_builtin_cmd(node_left))
 	{
 		id = fork();
 		if (id == -1)
-			return (ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO));
+			return (ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO), id);
 		if (id == 0)
 		{
 			close(fd[0]);
 			dup2(fd[1], STDIN_FILENO);
-			exec_ast_cmd(data, node_left, i);
 			close(fd[1]);
+			exec_ast_cmd(data, node_left, i);
+			exit(1);
 		}
-		else
-			waitpid(id, NULL, 0);
+		return (id);
+		//else
+		//	waitpid(id, NULL, 0);
 	}
 	else
 	{
 		close(fd[0]);
 		dup2(fd[1], STDIN_FILENO);
-		ast_depth_search(data, node_left, i);
 		close(fd[1]);
+		ast_depth_search(data, node_left, i);
+		return (-1);
 	}
 }
 
-static void	pipe_output(t_data *data, t_tree_node **node_right, int *i, int fd[2])
+static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i,
+	int fd[2])
 {
-	int	id;
+	pid_t	id;
 
 	if (is_builtin_cmd(node_right))
 	{
 		id = fork();
 		if (id == -1)
-			return (ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO));
+			return (ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO), id);
 		if (id == 0)
 		{
 			close(fd[1]);
 			dup2(fd[0], STDOUT_FILENO);
-			exec_ast_cmd(data, node_right, i);
 			close(fd[0]);
+			exec_ast_cmd(data, node_right, i);
+			exit(1);
 		}
-		else
-			waitpid(id, NULL, 0);
+		return (id);
+		//else
+		//	waitpid(id, NULL, 0);
 	}
 	else
 	{
 		close(fd[1]);
 		dup2(fd[0], STDOUT_FILENO);
-		ast_depth_search(data, node_right, i);
 		close(fd[0]);
+		ast_depth_search(data, node_right, i);
+		return (-1);
 	}
 }
