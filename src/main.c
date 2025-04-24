@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/22 12:25:12 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:27:37 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void handle_signal(int i)
 {
 	(void)i;
 	write (1, "^C\n", 3);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 int	main(int argc, char **argv, char **envp)

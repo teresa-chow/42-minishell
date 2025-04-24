@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_out.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:31 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:04:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ static int	create_files(int *fd, char **files, int count, int type)
 {
 	int	i;
 
-	(void)type;
 	i = 0;
 	while (i < count)
 	{

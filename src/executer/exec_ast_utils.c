@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_out_utils.c                                  :+:      :+:    :+:   */
+/*   exec_ast_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 15:45:35 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:00 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/04/22 15:11:30 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
-#include "../../include/execute.h"
-#include "../../include/utils.h"
+#include "../../include/builtins.h"
+#include "../../include/execve.h"
+#include "../../include/errors.h"
 
-void	redirect_stdout(int *fd, int i)
+int	cd_arg_check(t_word *word, t_data *data)
 {
-	if (dup2(fd[i], STDOUT_FILENO) == -1)
+	if (word->next && word->next->next
+	&& word->next->next->redir == NONE)
 	{
-		perror("minishell: dup2");
-		return ;
+		cd_error(NULL, data, 0);
+		return (0);
 	}
-}
-
-void	close_fd(int *fd, int count)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		close(fd[i]);
-		i++;
-	}
-	if (count)
-		free(fd);
+	return (1);
 }

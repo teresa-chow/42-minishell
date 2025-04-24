@@ -6,11 +6,12 @@
 #    By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/23 12:01:34 by carlaugu         ###   ########.fr        #
+#    Updated: 2025/04/24 14:23:26 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
+BONUS		= minishell_bonus
 
 # ============================================================================ #
 # FILES                                                                        #
@@ -22,19 +23,21 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
 	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
-SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c redir_utils.c \
-	redir_in.c redir_out.c redir_out_utils.c)
+SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
+	exec_ast_pipe.c redir_check.c heredoc.c redir_utils.c redir_in.c \
+	redir_out.c redir_out_utils.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	exit_utils.c export.c export_utils.c export_utils_2.c export_merge_sort.c \
 	pwd.c unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
-SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c init_env.c \
-	set_path.c print_fd.c utils.c)
-SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c expand_tilde.c \
-	expand_val_split.c handle_tokens_main.c handle_tokens_utils.c \
-	string_tword_builder.c token_checkers.c token_expansion_analyze.c \
-	handle_tokens_utils2.c wildcards_analyze.c wildcards_check_match.c wildcards_utils.c \
-	wildcards_utils2.c wildcards_utils3.c quote_removal.c)
+SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c \
+	init_env.c set_path.c print_fd.c utils.c)
+SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \
+	expand_tilde.c expand_val_split.c handle_tokens_main.c \
+	handle_tokens_utils.c string_tword_builder.c token_checkers.c \
+	token_expansion_analyze.c handle_tokens_utils2.c wildcards_analyze.c \
+	wildcards_check_match.c wildcards_utils.c wildcards_utils2.c wildcards_utils3.c \
+	quote_removal.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c handle_err3.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
@@ -104,15 +107,25 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
+bonus: $(BONUS)
+
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
 	$(OBJS_ERRORS) $(OBJS_TEST)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
-######### ------->>> i add -L/usr/lib/aarch.... because my vm on my pc but it's to delete //////-L/usr/lib/aarch64-linux-gnu -lreadline -lncurses
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
 	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
 	$(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
+
+$(BONUS): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
+	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
+	$(OBJS_ERRORS) $(OBJS_TEST)
+	@printf "$(GRN)>> Generated object files (bonus)$(NC)\n\n"
+	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
+	$(LIBFT_ARC) -o $(BONUS) $(RLFLAGS)
+	@printf "$(GRN)>> Compiled minishell (bonus)$(NC)\n\n"
 
 
 $(BUILD_DIR):
@@ -166,7 +179,7 @@ clean:	## Remove object files
 	@printf "$(GRN)>> Removed object files$(NC)\n\n"
 
 fclean: clean	## Remove executable files
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
 	$(MAKE) $(LIBFT_DIR) fclean
 	@printf "$(GRN)>> Removed Libft archive$(NC)\n\n"
@@ -185,7 +198,7 @@ norm:	## Execute norminette
 vg: all	## Run valgrind (suppress readline() memory leaks)
 	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	valgrind --leak-check=full --show-leak-kinds=all \
 	--suppressions=rl.supp --track-fds=yes --trace-children=yes \
 	--log-file=memleaks.log ./$(NAME)
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_out_utils.c                                  :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 15:45:35 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:00 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/04/17 11:03:57 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 #include "../../include/execute.h"
 #include "../../include/utils.h"
 
-void	redirect_stdout(int *fd, int i)
-{
-	if (dup2(fd[i], STDOUT_FILENO) == -1)
-	{
-		perror("minishell: dup2");
-		return ;
-	}
-}
+//end of file will not expand (analyze heredoc prior to expansions), content will
+//readline
 
-void	close_fd(int *fd, int count)
+int	redir_heredoc(t_data *data, t_word *word)
 {
-	int	i;
+	(void)data;
+	(void)word;
+	/*char		*input;
 
-	i = 0;
-	while (i < count)
+	if (isatty(STDOUT_FILENO))
+		input = readline("> ");
+	else
+		input = readline(NULL);
+	if (input && *input)
 	{
-		close(fd[i]);
-		i++;
+		//heredoc processing
 	}
-	if (count)
-		free(fd);
+	if (input)
+		free(input);*/
+	return (0);
 }

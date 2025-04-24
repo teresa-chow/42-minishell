@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/22 12:30:27 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:19:49 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	read_input(t_tree_node **root, t_data *data, int *i)
 	else
 		input = readline(NULL);
 	if (!input)
-		exit_cmd(data, root, i);
+		exit_cmd(data, (*root)->word, i);
 	if (input && *input)
 	{
 		add_history(input);

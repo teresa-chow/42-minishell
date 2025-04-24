@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 13:54:48 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/23 12:00:35 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/04/24 16:27:26 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "../../include/errors.h"
 
 static int	exec_ast(t_data *data, t_tree_node **node, int *i);
-static int 	is_builtin_cmd(t_tree_node **node);
 static void	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
@@ -26,6 +25,16 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 	t_tree_node	*tmp;
 
 	tmp = *node;
+	if (!tmp || *i == 0)
+		return ;
+	if (!data->fd_arr)
+		data->fd_arr = ft_calloc(sizeof(int *), data->n_pipe);
+		// if (!data->fd_arr)
+	if (tmp->type == PIPE)
+	{
+		ast_handle_pipe(data, node, i);
+		return ;
+	}
 	if (tmp->left)
 		ast_depth_search(data, &tmp->left, i);
 	if (exec_ast(data, node, i) == -1)
@@ -46,12 +55,6 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 		if (data->exit_status == 0)
 			return (-1);
 	}
-	/*
-	else if ((*node)->type == PIPE)
-	{
-		//pipe function here
-	}
-	*/
 	else if ((*node)->type == CMD)
 	{
 		if (exec_ast_cmd(data, node, i) == -1)
@@ -66,6 +69,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	int	old_stdout;
 	
 	save_old_in_out(&old_stdin, &old_stdout);
+	//redir_heredoc(data, (*node)->word);
 	if (handle_tokens((*node)->word, data, node) == -1)
 		return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
@@ -76,47 +80,57 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 		return (-1);
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
-	else if ((*node)->word->redir == NONE)
+	else
 		exec(data, (*node)->word);
 	reset_old_in_out(old_stdin, old_stdout);
 	return (0);
 }
 
-static int is_builtin_cmd(t_tree_node **node)
+int is_builtin_cmd(t_tree_node **node)
 {
-	if (!ft_strcmp((*node)->word->word, "echo")
-		|| !ft_strcmp((*node)->word->word, "cd")
-		|| !ft_strcmp((*node)->word->word, "pwd")
-		|| !ft_strcmp((*node)->word->word, "export")
-		|| !ft_strcmp((*node)->word->word, "unset")
-		|| !ft_strcmp((*node)->word->word, "env")
-		|| !ft_strcmp((*node)->word->word, "exit"))
+	t_word	*tmp;
+
+	if (!*node)
+		return (-1);
+	tmp = (*node)->word;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!tmp)
+		return (0);
+	if (!ft_strcmp(tmp->word, "echo")
+		|| !ft_strcmp(tmp->word, "cd")
+		|| !ft_strcmp(tmp->word, "pwd")
+		|| !ft_strcmp(tmp->word, "export")
+		|| !ft_strcmp(tmp->word, "unset")
+		|| !ft_strcmp(tmp->word, "env")
+		|| !ft_strcmp(tmp->word, "exit"))
 		return (1);
 	return (0);
 }
 
 static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
 {
-	if (!ft_strcmp((*node)->word->word, "echo"))
-		echo((*node)->word, data);
-	else if (!ft_strcmp((*node)->word->word, "cd"))
+	t_word	*tmp;
+
+	tmp = (*node)->word;
+	while (tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!ft_strcmp(tmp->word, "echo"))
+		echo(tmp, data);
+	else if (!ft_strcmp(tmp->word, "cd"))
 	{
-		if ((*node)->word->next	&& (*node)->word->next->next
-		&& (*node)->word->next->next->redir == NONE)
-		{
-			cd_error(NULL, data, 0);
+		if (!cd_arg_check(tmp, data))
 			return ;
-		}
-		cd((*node)->word, data);
+		cd(tmp, data);
 	}
-	else if (!ft_strcmp((*node)->word->word, "pwd"))
+	else if (!ft_strcmp(tmp->word, "pwd"))
 		pwd(data);
-	else if (!ft_strcmp((*node)->word->word, "export"))
-		export(data, (*node)->word);
-	else if (!ft_strcmp((*node)->word->word, "unset"))
-		unset(data, (*node)->word->next);
-	else if (!ft_strcmp((*node)->word->word, "env"))
+	else if (!ft_strcmp(tmp->word, "export"))
+		export(data, tmp);
+	else if (!ft_strcmp(tmp->word, "unset"))
+		unset(data, tmp->next);
+	else if (!ft_strcmp(tmp->word, "env"))
 		env_cmd(data->env, data);
-	else if (!ft_strcmp((*node)->word->word, "exit"))
-		exit_cmd(data, node, i);
+	else if (!ft_strcmp(tmp->word, "exit"))
+		exit_cmd(data, tmp, i);
 }
