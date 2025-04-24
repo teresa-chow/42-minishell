@@ -15,17 +15,6 @@
 static	int	find_return(int i, int j);
 static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
 
-int	has_quotes(char *s)
-{
-	while (*s)
-	{
-		if (*s == '\'' || *s == '"')
-			return (1);
-		s++;
-	}
-	return (0);
-}
-
 /* 
 'pat' var name is short for 'pattern'
 'name' var name is file name
@@ -53,45 +42,51 @@ char	*match_begin(char *pat, char *name, t_data *data)
 
 char	*match_end(char *pat, char *name, t_data *data)
 {
-	int	pat_len;
+	int	tmp_len;
 	int	name_len;
 	char	*substr;
+	char	*tmp;
 
-	if (!*pat || !*(pat + 1))
+	if (!*pat)
 		return (NULL);
 	data->wild->end = true;
-	pat_len = ft_strlen(pat);
+	tmp = pat;
+	if (has_quotes(pat))
+		remove_quotes(&tmp, false);
+	tmp_len = ft_strlen(tmp);
 	name_len = ft_strlen(name);
-	substr = ft_strstr(&name[name_len - pat_len], pat);
+	substr = ft_strstr(&name[name_len - tmp_len], tmp);
+	if (tmp != pat)
+		free (tmp);
 	return (substr);
 }
 
 int	match_mid(char *pat, char *last_ast, char *name, t_data *data)
 {
 	char	*ast_pos;
-	char	*substr;
+	char	*tmp;
+	bool	has_quotes;
 	int	i;
 	int	j;
 
+	has_quotes = false;
 	init_vars(&i, &j, data, pat ,last_ast);
 	pat = find_first_no_ast(pat);
 	while (pat && *pat)
 	{
+		tmp = pat;
 		j++;
-		ast_pos = next_ast(pat);
-		if (ast_pos)
-			*ast_pos = 0;
-		substr = ft_strstr(name, pat);
-		if (substr)
-		{
-			name = substr + ft_strlen(pat);
-			i++;
-		}
+		if (handle_ast_quotes(&ast_pos, pat, &tmp, &has_quotes) == -1)
+			return (-1);
+		find_substr(&name, tmp, &i);
 		if (ast_pos)
 			*ast_pos = '*';
 		pat = find_first_no_ast(ast_pos);
 	}
+	if (has_quotes)
+		free(tmp);
 	*last_ast = '*';
+	has_quotes = false;
 	return (find_return(i, j));
 }
 

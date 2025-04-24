@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/22 21:30:00 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/24 12:13:47 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,9 @@ SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \
 	handle_tokens_utils.c string_tword_builder.c token_checkers.c \
 	token_expansion_analyze.c handle_tokens_utils2.c wildcards_analyze.c \
 	wildcards_check_match.c wildcards_utils.c wildcards_utils2.c \
-	quote_removal.c)
-SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c)
+	wildcards_utils3.c quote_removal.c)
+SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c \
+	handle_err3.c)
 TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
@@ -199,7 +200,8 @@ vg: all	## Run valgrind (suppress readline() memory leaks)
 	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all \
-	--suppressions=rl.supp --track-fds=yes --trace-children=yes \
+	--gen-suppressions=all --suppressions=rl.supp \
+	--track-fds=yes --trace-children=yes \
 	--log-file=memleaks.log ./$(NAME)
 
 
@@ -232,7 +234,7 @@ help:	## Display this help info
 
 define RL_SUPP
 {
-   name
+   rl_leaks
    Memcheck:Leak
    fun:*alloc
    ...
@@ -250,6 +252,34 @@ define RL_SUPP
     Memcheck:Leak
     ...
     fun:add_history
+}
+{
+	below_main
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	fun:malloc
+	obj:/usr/bin/*
+	obj:/usr/bin/*
+	fun:(below main)
+}
+{
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	fun:malloc
+	obj:/usr/bin/*
+	obj:/usr/bin/*
+	obj:/usr/bin/*
+	fun:(below main)
+}
+{
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	fun:malloc
+	obj:/usr/bin/*
+	obj:/usr/bin/*
+	obj:/usr/bin/*
+	obj:/usr/bin/*
+	fun:(below main)
 }
 endef
 
