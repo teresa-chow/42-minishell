@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:56:56 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/23 18:53:22 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:09:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ t_tree_node	*add_node(void)
 	return (new);
 }
 
-void	fill_node(t_word_lst *pivot, int index, t_tree_node **node)
+void	fill_node(t_data *data, t_word_lst *pivot, t_tree_node **node)
 {
 	if (!pivot || !*node)
 		return ;
 	(*node)->word = pivot->word;
-	(*node)->index = index;
 	if (!ft_strcmp(pivot->word->word, "|"))
+	{
+		data->n_pipes++;
 		(*node)->type = PIPE;
+	}
 	else if (!ft_strcmp(pivot->word->word, "&&"))
 		(*node)->type = AND;
 	else if (!ft_strcmp(pivot->word->word, "||"))
