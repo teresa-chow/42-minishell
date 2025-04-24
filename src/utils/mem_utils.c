@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 09:03:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	free_ast(t_tree_node **root)
 {
 	t_tree_node	*tmp;
 
-	tmp = *root;
-	if (!tmp)
+	if (!*root)
 		return ;
+	tmp = *root;
 	free_ast(&tmp->left);
 	free_ast(&tmp->right);
 	free_words(&tmp->word);
