@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/24 12:13:47 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/24 12:27:53 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -200,9 +200,8 @@ vg: all	## Run valgrind (suppress readline() memory leaks)
 	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all \
-	--gen-suppressions=all --suppressions=rl.supp \
-	--track-fds=yes --trace-children=yes \
-	--log-file=memleaks.log ./$(NAME)
+	--suppressions=rl.supp --track-fds=yes \
+	--trace-children=yes --log-file=memleaks.log ./$(NAME)
 
 
 ##@ TOOL INSTALLATION
@@ -234,7 +233,7 @@ help:	## Display this help info
 
 define RL_SUPP
 {
-   rl_leaks
+   rl lib
    Memcheck:Leak
    fun:*alloc
    ...
@@ -242,19 +241,19 @@ define RL_SUPP
    ...
 }
 {
-    leak readline
+    rl fun
     Memcheck:Leak
     ...
     fun:readline
 }
 {
-    leak add_history
+    rl add_history
     Memcheck:Leak
     ...
     fun:add_history
 }
 {
-	below_main
+	glibc below main 2
 	Memcheck:Leak
 	match-leak-kinds: reachable
 	fun:malloc
@@ -263,6 +262,7 @@ define RL_SUPP
 	fun:(below main)
 }
 {
+	glibc below main 3
 	Memcheck:Leak
 	match-leak-kinds: reachable
 	fun:malloc
@@ -272,6 +272,7 @@ define RL_SUPP
 	fun:(below main)
 }
 {
+	glibc below main 4
 	Memcheck:Leak
 	match-leak-kinds: reachable
 	fun:malloc
