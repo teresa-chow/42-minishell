@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 09:28:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:22:49 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static pid_t	pipe_input(t_data *data, t_tree_node **node_left, int *i,
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		ast_depth_search(data, node_left, i);
 		close(fd[1]);
+		ast_depth_search(data, node_left, i);
 		exit(1);
 	}
 	return (id);
@@ -102,8 +102,8 @@ static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i,
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		ast_depth_search(data, node_right, i);
 		close(fd[0]);
+		ast_depth_search(data, node_right, i);
 		exit(1);
 	}
 	return (id);
