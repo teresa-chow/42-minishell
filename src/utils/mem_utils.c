@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 09:03:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:22:45 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 	else
 		data->no_home = true;
 	free_ast(root);
+	data->n_pipes = 0;
 	if (!i)
 		free_env_list(data, 0, &data->env);
 }

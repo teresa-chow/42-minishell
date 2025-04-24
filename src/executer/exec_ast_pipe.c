@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 14:16:03 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:24:06 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ static pid_t	pipe_input(t_data *data, t_tree_node **node_right, int *i);
 static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i);
 
 /* Obs.: fd[0] is set up for reading, fd[1] is set up for writing */
+
+//lost fd reference in data (deleted, mus review)
+//count pipes
+//flatten pipeline
 void	ast_handle_pipe(t_data *data, t_tree_node **node, int *i)
 {
 	pid_t	pid_left = -1;
