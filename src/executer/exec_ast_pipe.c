@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 09:16:34 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 09:28:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,32 +56,28 @@ static pid_t	pipe_input(t_data *data, t_tree_node **node_left, int *i,
 {
 	pid_t	id;
 
-	//if (is_builtin_cmd(node_left))
-	//{
 	if (!*node_left)
 		return (-1);
+	if ((*node_left)->type != CMD)
+	{
+		ast_depth_search(data, node_left, i);
+		return (-1);
+	}
 	id = fork();
 	if (id == -1)
-		return (ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO), id);
+	{
+		ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
+		return (-1);
+	}
 	if (id == 0)
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		//exec_ast_cmd(data, node_left, i);
 		ast_depth_search(data, node_left, i);
 		close(fd[1]);
 		exit(1);
 	}
 	return (id);
-	/*}
-	else
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		ast_depth_search(data, node_left, i);
-		close(fd[1]);
-		return (-1);
-	}*/
 }
 
 static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i,
@@ -89,30 +85,26 @@ static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i,
 {
 	pid_t	id;
 
-	//if (is_builtin_cmd(node_right))
-	//{
 	if (!*node_right)
 		return (-1);
+	if ((*node_right)->type != CMD)
+	{
+		ast_depth_search(data, node_right, i);
+		return (-1);
+	}
 	id = fork();
 	if (id == -1)
-		return (ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO), id);
+	{
+		ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
+		return (-1);
+	}
 	if (id == 0)
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		//exec_ast_cmd(data, node_right, i);
 		ast_depth_search(data, node_right, i);
 		close(fd[0]);
 		exit(1);
 	}
 	return (id);
-	/*}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		ast_depth_search(data, node_right, i);
-		close(fd[0]);
-		return (-1);
-	}*/
 }
