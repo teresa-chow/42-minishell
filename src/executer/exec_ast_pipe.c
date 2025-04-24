@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 14:10:32 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:16:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-static int	create_pipe(int	fd[2]);
+static int		create_pipe(int	fd[2]);
 static pid_t	pipe_input(t_data *data, t_tree_node **node_right, int *i);
 static pid_t	pipe_output(t_data *data, t_tree_node **node_right, int *i);
 

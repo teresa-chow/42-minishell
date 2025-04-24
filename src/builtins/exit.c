@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 15:05:06 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:19:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ void	exit_cmd(t_data *data, t_word *word, int *i)
 	many_args = 0;
 	syntax_error = 0;
 	write(STDERR_FILENO, "exit\n", 5);
-	check_syntax_exit(word, data, &many_args, &syntax_error);
-	if (many_args && !syntax_error)
+	if (word)
 	{
-		exit_error_many_args(data);
-		return ;
+		check_syntax_exit(word, data, &many_args, &syntax_error);
+		if (many_args && !syntax_error)
+		{
+			exit_error_many_args(data);
+			return ;
+		}
 	}
 	*i = 0;
 }
