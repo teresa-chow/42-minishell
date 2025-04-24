@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 16:05:52 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:06:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef enum e_type
 
 typedef struct s_tree_node
 {
-	int					index;
 	t_type				type;
 	t_word				*word;
 	struct s_tree_node	*left;
@@ -79,7 +78,7 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void			read_input(t_tree_node **tree, t_data *data);
+void			read_input(t_tree_node **tree, t_data *data, int *i);
 char			*get_prompt(t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
