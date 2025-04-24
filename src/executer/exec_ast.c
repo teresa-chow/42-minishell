@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/23 16:39:44 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/23 20:24:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 	tmp = *node;
 	if (!tmp)
 		return ;
-	if (tmp->type == PIPE) //segfault
+	if (tmp->type == PIPE)
 	{
 		ast_handle_pipe(data, node, i);
 		return ;
@@ -66,12 +66,12 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	int	old_stdout;
 	
 	save_old_in_out(&old_stdin, &old_stdout);
-	//redir_heredoc(data, (*node)->word);
-	if (handle_tokens((*node)->word, data, node) == -1)
-		return (-1);
+	redir_heredoc(data, (*node)->word);
+	//if (handle_tokens((*node)->word, data, node) == -1)
+	//	return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
 		return (-1);
-	if (remove_quotes((*node)->word) == -1)
+	if (process_remove((*node)->word) == -1)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);
