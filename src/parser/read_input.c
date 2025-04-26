@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 10:36:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:25:36 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	read_input(t_tree_node **root, t_data *data, int *i)
 			process_cmd_lst(cmd_lst, data, root);
 	}
 	free(prompt);
-	if (!input) //program is entering here after pipe no builtin
+	if (!input)
 		exit_cmd(data, (*root)->word, i);
 	else
 		free(input);
@@ -56,7 +56,7 @@ static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root)
 	free_strarray(cmd_lst);
 	if (syntax_check(word_lst, data) == 0)
 	{
-		create_syntax_tree(data, word_lst, NULL, root);
+		create_syntax_tree(word_lst, NULL, root);
 		free_word_lst(&word_lst);
 	}
 	else

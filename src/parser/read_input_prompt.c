@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:19 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 17:05:33 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,19 @@ char	*get_prompt(t_data *data)
 
 static void	init_prompt(t_prompt *prompt, char *usr)
 {
+	char *cwd;
+	char *dir;
+
+	cwd = getcwd(NULL, 0);
+	dir = ft_strdup(ft_strrchr(cwd, '/'));
 	prompt->prog = ft_strdup("minishell");
 	prompt->usr = ft_strdup(usr);
-	prompt->cwd = getcwd(NULL, 0);
+	if (ft_strcmp(dir, "/"))
+		prompt->cwd = ft_strjoin("~", dir);
+	else
+		prompt->cwd = ft_strdup(dir);
+	free(cwd);
+	free(dir);
 }
 
 static void	join_rl_prompt(char **rl_prompt, t_prompt prompt)
