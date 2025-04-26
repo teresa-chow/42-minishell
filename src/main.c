@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 18:12:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 11:41:41 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ int	main(int argc, char **argv, char **envp)
 		}
 		read_input(&root, &data, &i);
 		if (root->word)
+		{
+			int	old_stdin = dup(STDIN_FILENO);
+			int	old_stdout = dup(STDOUT_FILENO);
 			ast_depth_search(&data, &root, &i);
+			reset_old_in_out(old_stdin, old_stdout);
+		}
 		reset_mem(&data, &root, i);
 	}
 	//rl_clear_history();

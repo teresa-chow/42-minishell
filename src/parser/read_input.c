@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 18:09:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 10:36:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	read_input(t_tree_node **root, t_data *data, int *i)
 			process_cmd_lst(cmd_lst, data, root);
 	}
 	free(prompt);
-	if (!input)
+	if (!input) //program is entering here after pipe no builtin
 		exit_cmd(data, (*root)->word, i);
 	else
 		free(input);

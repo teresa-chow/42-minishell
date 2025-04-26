@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 16:09:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 11:37:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,26 @@ static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 {
 	t_word_lst	*tmp_lst;
 	t_word_lst	*pivot;
+	int			precedence;
 
 	tmp_lst = start;
 	pivot = start;
+	precedence = 2;
 	while (tmp_lst != end)
 	{
-		if ((!ft_strcmp(tmp_lst->word->word, "|"))
-			|| (!ft_strcmp(tmp_lst->word->word, "&&"))
-			|| (!ft_strcmp(tmp_lst->word->word, "||")))
+		if (precedence > 0
+			&& ((!ft_strcmp(tmp_lst->word->word, "&&"))
+			|| (!ft_strcmp(tmp_lst->word->word, "||"))))
+		{
 			pivot = tmp_lst;
+			precedence = 0;
+		}
+		else if (precedence > 1
+			&& !ft_strcmp(tmp_lst->word->word, "|"))
+		{
+			pivot = tmp_lst;
+			precedence = 1;
+		}
 		tmp_lst = tmp_lst->next;
 	}
 	return (pivot);
