@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 14:11:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 19:36:04 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "../../include/errors.h"
 
 static int	exec_ast(t_data *data, t_tree_node **node, int *i);
-static void	exec_builtin_cmd(t_data *data, t_tree_node **node, int *i);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 {
@@ -29,7 +28,7 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 		return ;
 	if (tmp->type == PIPE)
 	{
-		ast_handle_pipe(data, node, i);
+		ast_handle_pipeline(data, node, i);
 		return ;
 	}
 	if (tmp->left)
@@ -75,21 +74,19 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);
-	if (is_builtin_cmd(node))
-		exec_builtin_cmd(data, node, i);
+	if (is_builtin_cmd((*node)->word))
+		exec_builtin_cmd(data, (*node)->word, i);
 	else
 		exec(data, (*node)->word);
 	reset_old_in_out(old_stdin, old_stdout);
 	return (0);
 }
 
-int is_builtin_cmd(t_tree_node **node)
+int is_builtin_cmd(t_word *word)
 {
 	t_word	*tmp;
 
-	if (!*node)
-		return (-1);
-	tmp = (*node)->word;
+	tmp = word;
 	while (tmp && tmp->redir != NONE)
 		tmp = tmp->next->next;
 	if (!tmp)
@@ -105,11 +102,11 @@ int is_builtin_cmd(t_tree_node **node)
 	return (0);
 }
 
-static void exec_builtin_cmd(t_data *data, t_tree_node **node, int *i)
+void exec_builtin_cmd(t_data *data, t_word *word, int *i)
 {
 	t_word	*tmp;
 
-	tmp = (*node)->word;
+	tmp = word;
 	while (tmp->redir != NONE)
 		tmp = tmp->next->next;
 	if (!ft_strcmp(tmp->word, "echo"))

@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/24 18:02:54 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/26 23:42:51 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
 	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
 SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
-	exec_ast_pipe.c redir_check.c heredoc.c redir_utils.c redir_in.c \
-	redir_out.c redir_out_utils.c)
+	exec_ast_pipeline.c exec_ast_pipeline_utils.c redir_check.c heredoc.c \
+	redir_utils.c redir_in.c redir_out.c redir_out_utils.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	exit_utils.c export.c export_utils.c export_utils_2.c export_merge_sort.c \
 	pwd.c unset.c builtins_utils.c builtins_utils_2.c)
@@ -231,58 +231,58 @@ help:	## Display this help info
 # UTILS: READLINE LEAKS SUPPRESSION FILE                                       #
 # ============================================================================ #
 
-define RL_SUPP
-{
-   rl lib
-   Memcheck:Leak
-   fun:*alloc
-   ...
-   obj:*/libreadline.so.*
-   ...
-}
-{
-    rl fun
-    Memcheck:Leak
-    ...
-    fun:readline
-}
-{
-    rl add_history
-    Memcheck:Leak
-    ...
-    fun:add_history
-}
-{
-	glibc below main 2
-	Memcheck:Leak
-	match-leak-kinds: reachable
-	fun:malloc
-	obj:/usr/bin/*
-	obj:/usr/bin/*
-	fun:(below main)
-}
-{
-	glibc below main 3
-	Memcheck:Leak
-	match-leak-kinds: reachable
-	fun:malloc
-	obj:/usr/bin/*
-	obj:/usr/bin/*
-	obj:/usr/bin/*
-	fun:(below main)
-}
-{
-	glibc below main 4
-	Memcheck:Leak
-	match-leak-kinds: reachable
-	fun:malloc
-	obj:/usr/bin/*
-	obj:/usr/bin/*
-	obj:/usr/bin/*
-	obj:/usr/bin/*
-	fun:(below main)
-}
-endef
+#define RL_SUPP
+#{
+#	rl lib
+#	Memcheck:Leak
+#	fun:*alloc
+#	...
+#	obj:*/libreadline.so.*
+#	...
+#}
+#{
+#	rl fun
+#	Memcheck:Leak
+#	...
+#	fun:readline
+#}
+#{
+#	rl add_history
+#	Memcheck:Leak
+#	...
+#	fun:add_history
+#}
+#{
+#	glibc below main 2
+#	Memcheck:Leak
+#	match-leak-kinds: reachable
+#	fun:malloc
+#	obj:/usr/bin/*
+#	obj:/usr/bin/*
+#	fun:(below main)
+#}
+#{
+#	glibc below main 3
+#	Memcheck:Leak
+#	match-leak-kinds: reachable
+#	fun:malloc
+#	obj:/usr/bin/*
+#	obj:/usr/bin/*
+#	obj:/usr/bin/*
+#	fun:(below main)
+#}
+#{
+#	glibc below main 4
+#	Memcheck:Leak
+#	match-leak-kinds: reachable
+#	fun:malloc
+#	obj:/usr/bin/*
+#	obj:/usr/bin/*
+#	obj:/usr/bin/*
+#	obj:/usr/bin/*
+#	fun:(below main)
+#}
+#endef
 
 # ============================================================================ #
 # UTILS: SHELL FORMATTING                                                      #

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 18:06:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 17:10:04 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
-# define BG_CYA "\001""\033[46;1;37m ""\002"
-# define BG_RED "\001""\033[41;1;37m ""\002"
-# define BG_YEL "\001""\033[43;1;37m ""\002"
-# define NC "\001"" \033[0m""\002"
+# define BG_CYA "\033[46;1;37m "//"\001"" \033[46;1;37m ""\002"
+# define BG_RED "\033[41;1;37m "//"\001""\033[41;1;37m ""\002"
+# define BG_YEL "\033[103;1;37m "//"\001""\033[103;1;37m ""\002"
+# define NC 	" \033[0m"//"\001"" \033[0m""\002"
 
 typedef struct s_prompt
 {
@@ -120,10 +120,10 @@ int				check_quotes(char *word);
 // Abstract Syntax Tree (AST)
 t_word_lst		*last_partition_node(t_word_lst *start, t_word_lst *pivot);
 t_word_lst		*first_partition_node(t_word_lst *end);
-void			create_syntax_tree(t_data *data, t_word_lst *start,
-					t_word_lst *end, t_tree_node **node);
+void			create_syntax_tree(t_word_lst *start, t_word_lst *end,
+					t_tree_node **node);
 t_tree_node		*add_node(void);
-void			fill_node(t_data *data, t_word_lst *pivot, t_tree_node **node);
+void			fill_node(t_word_lst *pivot, t_tree_node **node);
 
 #endif
 

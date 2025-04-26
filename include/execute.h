@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 18:01:03 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:30:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,23 @@
 
 # include "parse.h"
 
+typedef struct s_pipeline
+{
+	t_word_lst				*cmd_lst;
+	int						n_pipes;
+	int						**fd;
+}	t_pipeline;
+
 /* ================= ABSTRACT SYNTAX TREE(AST) EXECUTION =================== */
 void		ast_depth_search(t_data *data, t_tree_node **node, int *i);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
-void		ast_handle_pipe(t_data *data, t_tree_node **node, int *i);
+void		exec_builtin_cmd(t_data *data, t_word *word, int *i);
+
+/* ============================== PIPELINE ================================= */
+void		ast_handle_pipeline(t_data *data, t_tree_node **node, int *i);
+void		traverse_pipeline(t_pipeline *pipeline, t_tree_node **node);
+void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
+				t_word *word, int *i, int count); //refactor int *i
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);
@@ -33,7 +46,7 @@ void		redirect_stdout(int *fd, int i);
 void		close_fd(int *fd, int count);
 
 /* ================================ UTILS ================================== */
-int			is_builtin_cmd(t_tree_node **node);
+int			is_builtin_cmd(t_word *word);
 int			cd_arg_check(t_word *word, t_data *data);
 
 #endif
