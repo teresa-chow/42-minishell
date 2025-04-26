@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 16:12:20 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:01:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 void		ast_depth_search(t_data *data, t_tree_node **node, int *i);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
 void		ast_handle_pipe(t_data *data, t_tree_node **node, int *i);
-//int			redir_pipe(t_data *data, t_word *word);
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);

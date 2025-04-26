@@ -35,6 +35,7 @@ void	free_prompt(t_prompt *prompt);
 void	free_word_lst(t_word_lst **word_lst);
 void	free_w_lst_words(t_word_lst **word_lst);
 void	free_words(t_word **word);
+// void	free_fds(t_data *data);
 void	free_ast(t_tree_node **root);
 int		free_env_list(t_data *data, int i, t_env_node **lst);
 int		free_exp(t_data *data, int i);

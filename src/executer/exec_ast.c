@@ -27,22 +27,25 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 	tmp = *node;
 	if (!tmp || *i == 0)
 		return ;
-	if (!data->fd_arr)
-		data->fd_arr = ft_calloc(sizeof(int *), data->n_pipe);
-		// if (!data->fd_arr)
 	if (tmp->type == PIPE)
 	{
+		data->i++;
+		if (!data->fd)
+			data->fd = ft_calloc(data->n_pipes, sizeof(int *));
+			// if (!data->fd)
 		ast_handle_pipe(data, node, i);
 		return ;
 	}
-	if (tmp->left)
-		ast_depth_search(data, &tmp->left, i);
-	if (exec_ast(data, node, i) == -1)
-		return ; //check early return
-	if (tmp->right)
-		ast_depth_search(data, &tmp->right, i);
+	else
+	{
+		if (tmp->left)
+			ast_depth_search(data, &tmp->left, i);
+		if (exec_ast(data, node, i) == -1)
+			return ; //check early return
+		if (tmp->right)
+			ast_depth_search(data, &tmp->right, i);
+	}
 }
-
 static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 {
 	if ((*node)->type == AND)

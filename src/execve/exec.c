@@ -13,6 +13,7 @@
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
+#include "../../include/utils.h"
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);

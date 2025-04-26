@@ -29,6 +29,9 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 	else
 		data->no_home = true;
 	free_ast(root);
+	// free_fds(data);
+	data->n_pipes = 0;
+	global = 0;
 	if (!i)
 		free_env_list(data, 0, &data->env);
 }

@@ -16,15 +16,15 @@
 #include "../include/utils.h"
 
 static void	data_init(t_data *data, char **envp);
-
-// int	global;
+int	global;
 
 void handle_signal(int i)
 {
-	(void)i;
-	write (1, "^C\n", 3);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
+	write (1, "\n", 1);
+	if (i == SIGINT)
+		global = 130;
+	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
 }
 
@@ -32,18 +32,16 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data		data;
 	t_tree_node	*root;
-	// struct	sigaction	sa;
 	int	i;
 
 	(void)argc;
 	(void)argv;
 	i = 1;
 
-	// signal (SIGINT, SIG_IGN);
-	// signal (SIGINT, handle_signal);
 	data_init(&data, envp);
 	while (i)
 	{
+		signal (SIGINT, handle_signal);
 		// sigaction(SIGINT, &sa, NULL);
 		root = ft_calloc(1, sizeof(t_tree_node));
 		if (!root)
@@ -52,6 +50,8 @@ int	main(int argc, char **argv, char **envp)
 			break;
 		}
 		read_input(&root, &data, &i);
+		if (global)
+			data.exit_status = global;
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
 		reset_mem(&data, &root, i);
@@ -65,6 +65,7 @@ static void	data_init(t_data *data, char **envp)
 	t_env_node	*var;
 
 	ft_bzero(data, sizeof(t_data));
+	data->i = -1;
 	if (init_env_lst(envp, data) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
 	var = ft_getenv(data->env, "HOME");
