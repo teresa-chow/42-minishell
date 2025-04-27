@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 22:48:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:42:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,13 @@ int	main(int argc, char **argv, char **envp)
 	t_data		data;
 	t_tree_node	*root;
 	// struct	sigaction	sa;
-	int	i;
 
 	(void)argc;
 	(void)argv;
-	i = 1;
 	// signal (SIGINT, SIG_IGN);
 	// signal (SIGINT, handle_signal);
 	data_init(&data, envp);
-	while (i)
+	while (data.status)
 	{
 		// sigaction(SIGINT, &sa, NULL);
 		root = ft_calloc(1, sizeof(t_tree_node));
@@ -51,10 +49,10 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(&data, 1, &data.env);
 			break;
 		}
-		read_input(&root, &data, &i);
+		read_input(&root, &data);
 		if (root->word)
-			ast_depth_search(&data, &root, &i);
-		reset_mem(&data, &root, i);
+			ast_depth_search(&data, &root);
+		reset_mem(&data, &root);
 	}
 	//rl_clear_history();
 	return (data.exit_status);
@@ -72,4 +70,5 @@ static void	data_init(t_data *data, char **envp)
 		data->env_home_var = var->val;
 	else
 		data->no_home = true;
+	data->status = 1;
 }

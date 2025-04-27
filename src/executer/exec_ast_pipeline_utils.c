@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 10:43:03 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:24:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 }
 
 void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
-	t_word *word, int *i, int count) //refactor int *i
+	t_word *word, int count)
 {
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
@@ -76,7 +76,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			close(pipeline.fd[count - 1][0]);
 		}
 		if (is_builtin_cmd(word))
-			exec_builtin_cmd(data, word, i);
+			exec_builtin_cmd(data, word);
 		else
 			exec(data, word);
 		exit(data->exit_status);

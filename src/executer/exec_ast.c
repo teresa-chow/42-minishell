@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 00:07:22 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:22:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,29 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-static int	exec_ast(t_data *data, t_tree_node **node, int *i);
+static int	exec_ast(t_data *data, t_tree_node **node);
 
-void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
+void	ast_depth_search(t_data *data, t_tree_node **node)
 {
 	t_tree_node	*tmp;
 
 	tmp = *node;
-	if (!tmp || *i == 0)
+	if (!tmp || data->status == 0)
 		return ;
 	if (tmp->type == PIPE)
 	{
-		ast_handle_pipeline(data, node, i);
+		ast_handle_pipeline(data, node);
 		return ;
 	}
 	if (tmp->left)
-		ast_depth_search(data, &tmp->left, i);
-	if (exec_ast(data, node, i) == -1)
+		ast_depth_search(data, &tmp->left);
+	if (exec_ast(data, node) == -1)
 		return ; //check early return
 	if (tmp->right)
-		ast_depth_search(data, &tmp->right, i);
+		ast_depth_search(data, &tmp->right);
 }
 
-static int	exec_ast(t_data *data, t_tree_node **node, int *i)
+static int	exec_ast(t_data *data, t_tree_node **node)
 {
 	if ((*node)->type == AND)
 	{
@@ -53,13 +53,13 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 	}
 	else if ((*node)->type == CMD)
 	{
-		if (exec_ast_cmd(data, node, i) == -1)
+		if (exec_ast_cmd(data, node) == -1)
 			return (-1);
 	}
 	return (0);
 }
 
-int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
+int	exec_ast_cmd(t_data *data, t_tree_node **node)
 {
 	int	old_stdin;
 	int	old_stdout;
@@ -75,7 +75,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);
 	if (is_builtin_cmd((*node)->word))
-		exec_builtin_cmd(data, (*node)->word, i);
+		exec_builtin_cmd(data, (*node)->word);
 	else
 		exec_child(data, (*node)->word);
 	reset_old_in_out(old_stdin, old_stdout);
@@ -102,7 +102,7 @@ int is_builtin_cmd(t_word *word)
 	return (0);
 }
 
-void exec_builtin_cmd(t_data *data, t_word *word, int *i)
+void exec_builtin_cmd(t_data *data, t_word *word)
 {
 	t_word	*tmp;
 
@@ -126,5 +126,5 @@ void exec_builtin_cmd(t_data *data, t_word *word, int *i)
 	else if (!ft_strcmp(tmp->word, "env"))
 		env_cmd(data->env, data);
 	else if (!ft_strcmp(tmp->word, "exit"))
-		exit_cmd(data, tmp, i);
+		exit_cmd(data, tmp);
 }

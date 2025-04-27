@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/24 14:19:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:17:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 static int	check_is_digit(t_word *word, t_data *data, int *syntax);
 static int	check_overflow(t_word *word, t_data *data, int *syntax);
 
-void	exit_cmd(t_data *data, t_word *word, int *i)
+void	exit_cmd(t_data *data, t_word *word)
 {
 	int		many_args;
 	int		syntax_error;
@@ -37,7 +37,7 @@ void	exit_cmd(t_data *data, t_word *word, int *i)
 			return ;
 		}
 	}
-	*i = 0;
+	data->status = 0;
 }
 
 static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,

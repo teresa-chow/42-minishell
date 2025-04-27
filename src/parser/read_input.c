@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 16:25:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:43:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root);
 static int	syntax_check(t_word_lst *word_lst, t_data *data);
 
-void	read_input(t_tree_node **root, t_data *data, int *i)
+void	read_input(t_tree_node **root, t_data *data)
 {
 	char		*input;
 	char		*prompt;
@@ -37,7 +37,7 @@ void	read_input(t_tree_node **root, t_data *data, int *i)
 	}
 	free(prompt);
 	if (!input)
-		exit_cmd(data, (*root)->word, i);
+		exit_cmd(data, (*root)->word);
 	else
 		free(input);
 }

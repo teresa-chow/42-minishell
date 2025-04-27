@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 10:15:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:22:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ typedef struct s_pipeline
 }	t_pipeline;
 
 /* ================= ABSTRACT SYNTAX TREE(AST) EXECUTION =================== */
-void		ast_depth_search(t_data *data, t_tree_node **node, int *i);
-int			exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
-void		exec_builtin_cmd(t_data *data, t_word *word, int *i);
+void		ast_depth_search(t_data *data, t_tree_node **node);
+int			exec_ast_cmd(t_data *data, t_tree_node **node);
+void		exec_builtin_cmd(t_data *data, t_word *word);
 void		exec_child(t_data *data, t_word *word);
 
 /* ============================== PIPELINE ================================= */
-void		ast_handle_pipeline(t_data *data, t_tree_node **node, int *i);
+void		ast_handle_pipeline(t_data *data, t_tree_node **node);
 void		traverse_pipeline(t_pipeline *pipeline, t_tree_node **node);
 void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
-				t_word *word, int *i, int count); //refactor int *i
+				t_word *word, int count);
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);

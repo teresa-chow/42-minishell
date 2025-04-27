@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 23:46:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:20:13 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void			read_input(t_tree_node **tree, t_data *data, int *i);
+void			read_input(t_tree_node **tree, t_data *data);
 char			*get_prompt(t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
@@ -103,8 +103,6 @@ int				is_operator(int c);
 int				is_delimiter(int c);
 int				is_quote(int c);
 int				is_redirection(int c);
-//int			is_special(int c);
-//int			is_unhandled(int c);
 int				is_equal_next(const char *str, int i);
 
 /* ============================ SYNTAX ANALYSIS ============================ */

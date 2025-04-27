@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 10:49:06 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:28:32 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 
 static int		create_pipeline(t_pipeline *pipeline, t_tree_node **node);
 static int		create_pipe(int	fd[2]);
-static void		exec_pipeline(t_pipeline pipeline, t_data *data, int *i);
+static void		exec_pipeline(t_pipeline pipeline, t_data *data);
 static void		close_wait(t_data *data, t_pipeline *pipeline);
 
-void	ast_handle_pipeline(t_data *data, t_tree_node **node, int *i)
+void	ast_handle_pipeline(t_data *data, t_tree_node **node)
 {
 	t_pipeline	pipeline;
 
 	ft_bzero(&pipeline, sizeof(t_pipeline));
 	create_pipeline(&pipeline, node);
-	exec_pipeline(pipeline, data, i);
+	exec_pipeline(pipeline, data);
 	close_wait(data, &pipeline);
 	//free_pipeline
 }
@@ -61,7 +61,7 @@ static int	create_pipe(int	fd[2])
 	return (0);
 }
 
-static void	exec_pipeline(t_pipeline pipeline, t_data *data, int *i)
+static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 {
 	t_word_lst	*tmp;
 	int	count;
@@ -70,7 +70,7 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data, int *i)
 	tmp = pipeline.cmd_lst;
 	while (tmp)
 	{
-		exec_pipeline_child(pipeline, data, tmp->word, i, count);
+		exec_pipeline_child(pipeline, data, tmp->word, count);
 		tmp = tmp->next;
 		count++;
 	}

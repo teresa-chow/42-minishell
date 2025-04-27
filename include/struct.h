@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/26 22:40:53 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:17:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef	struct s_wildcard
 */
 typedef struct s_data
 {
-	//bool	status; //replace *i
+	bool	status;
 	t_env_node	*env;
 	t_expand	*exp;
 	t_wildcard	*wild;

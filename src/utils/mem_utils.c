@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 11:55:12 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:28:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../../include/errors.h"
 #include "../../include/expand.h"
 
-void	reset_mem(t_data *data, t_tree_node **root, int i)
+void	reset_mem(t_data *data, t_tree_node **root)
 {
 	t_env_node	*var;
 
@@ -29,7 +29,7 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 	else
 		data->no_home = true;
 	free_ast(root);
-	if (!i)
+	if (data->status == 0)
 		free_env_list(data, 0, &data->env);
 }
 
