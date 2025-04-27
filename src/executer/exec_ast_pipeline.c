@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 21:49:06 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:20:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,20 @@ static int	create_pipe(int	fd[2])
 
 static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 {
-	t_word_lst	*tmp;
+	t_tree_node	*tmp;
 	int	count;
 
 	count = 0;
 	tmp = pipeline.cmd_lst;
 	while (tmp)
 	{
-		exec_pipeline_child(pipeline, data, tmp->word, count);
+		exec_pipeline_child(pipeline, data, tmp, count);
 		if (count > 0)
 		{
 			close(pipeline.fd[count - 1][0]);
 			close(pipeline.fd[count - 1][1]);
 		}
-		tmp = tmp->next;
+		tmp = tmp->left;
 		count++;
 	}
 }

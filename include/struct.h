@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/27 11:17:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:07:45 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ typedef	struct s_wildcard
 */
 typedef struct s_data
 {
-	bool	status;
-	t_env_node	*env;
-	t_expand	*exp;
-	t_wildcard	*wild;
+	bool			status;
+	t_env_node		*env;
+	t_expand		*exp;
+	t_wildcard		*wild;
 	struct s_word	**word;
-	char		*env_home_var;
-	int			exit_status;
-	bool	no_home;
-	bool	redir_in;
-	bool	redir_out;
+	char			*env_home_var;
+	int				exit_status;
+	bool			no_home;
+	bool			redir_in;
+	bool			redir_out;
 }	t_data;
 
 #endif

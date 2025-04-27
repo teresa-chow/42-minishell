@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 11:22:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:24:04 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-static int	exec_ast(t_data *data, t_tree_node **node);
-
-void	ast_depth_search(t_data *data, t_tree_node **node)
+void	ast_depth_search(t_data *data, t_tree_node **node, bool pipeline)
 {
 	t_tree_node	*tmp;
 
@@ -32,14 +30,14 @@ void	ast_depth_search(t_data *data, t_tree_node **node)
 		return ;
 	}
 	if (tmp->left)
-		ast_depth_search(data, &tmp->left);
-	if (exec_ast(data, node) == -1)
+		ast_depth_search(data, &tmp->left, pipeline);
+	if (exec_ast(data, node, pipeline) == -1)
 		return ; //check early return
 	if (tmp->right)
-		ast_depth_search(data, &tmp->right);
+		ast_depth_search(data, &tmp->right, pipeline);
 }
 
-static int	exec_ast(t_data *data, t_tree_node **node)
+int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 {
 	if ((*node)->type == AND)
 	{
@@ -53,13 +51,13 @@ static int	exec_ast(t_data *data, t_tree_node **node)
 	}
 	else if ((*node)->type == CMD)
 	{
-		if (exec_ast_cmd(data, node) == -1)
+		if (exec_ast_cmd(data, node, pipeline) == -1)
 			return (-1);
 	}
 	return (0);
 }
 
-int	exec_ast_cmd(t_data *data, t_tree_node **node)
+int	exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline)
 {
 	int	old_stdin;
 	int	old_stdout;
@@ -77,7 +75,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node)
 	if (is_builtin_cmd((*node)->word))
 		exec_builtin_cmd(data, (*node)->word);
 	else
-		exec_child(data, (*node)->word);
+		exec_child(data, (*node)->word, pipeline);
 	reset_old_in_out(old_stdin, old_stdout);
 	return (0);
 }

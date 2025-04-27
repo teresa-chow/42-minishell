@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 21:38:57 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:21:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,28 @@ void	traverse_pipeline(t_data *data, t_pipeline *pipeline, t_tree_node **node)
 
 static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 {
-	t_word_lst	*tmp;
-	t_word_lst	*new;
+	t_tree_node	*tmp;
+	t_tree_node	*new;
 
 	new = NULL;
 	if (!pipeline->cmd_lst)
 	{
-		pipeline->cmd_lst = ft_calloc(1, sizeof(t_word_lst));
+		pipeline->cmd_lst = ft_calloc(1, sizeof(t_tree_node));
 		pipeline->cmd_lst->word = (*node)->word;
 	}
 	else
 	{
 		tmp = pipeline->cmd_lst;
-		new = ft_calloc(1, sizeof(t_word_lst));
+		new = ft_calloc(1, sizeof(t_tree_node));
 		new->word = (*node)->word;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
+		while (tmp->left)
+			tmp = tmp->left;
+		tmp->left = new;
 	}
 }
 
 void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
-	t_word *word, int count)
+	t_tree_node *node, int count)
 {
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
@@ -78,10 +78,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
-		if (is_builtin_cmd(word))
-			exec_builtin_cmd(data, word);
-		else
-			exec(data, word);
+		exec_ast(data, &node, 1);
 		exit(data->exit_status);
 	}
 }

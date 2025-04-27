@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 18:31:23 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 22:24:12 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,25 @@
 
 typedef struct s_pipeline
 {
-	t_word_lst				*cmd_lst;
+	t_tree_node				*cmd_lst;
 	int						n_pipes;
 	int						**fd;
 	pid_t					*pid;
 }	t_pipeline;
 
 /* ================= ABSTRACT SYNTAX TREE(AST) EXECUTION =================== */
-void		ast_depth_search(t_data *data, t_tree_node **node);
-int			exec_ast_cmd(t_data *data, t_tree_node **node);
+void		ast_depth_search(t_data *data, t_tree_node **node, bool pipeline);
+int			exec_ast(t_data *data, t_tree_node **node, bool pipeline);
+int			exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline);
 void		exec_builtin_cmd(t_data *data, t_word *word);
-void		exec_child(t_data *data, t_word *word);
+void		exec_child(t_data *data, t_word *word, bool pipeline);
 
 /* ============================== PIPELINE ================================= */
 void		ast_handle_pipeline(t_data *data, t_tree_node **node);
 void		traverse_pipeline(t_data *data, t_pipeline *pipeline,
 				t_tree_node **node);
 void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
-				t_word *word, int count);
+				t_tree_node *node, int count);
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);
