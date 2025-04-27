@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/27 12:39:31 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 13:24:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,15 @@ static void	check_cmd(t_exec_data *inf, t_data *data);
 
 void	exec(t_data *data, t_word *word)
 {
+	t_word	*tmp;
 	t_exec_data	inf;
 
-	if (set_exec_inf(&inf, data, word) == -1)
+	tmp = word;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!tmp)
+		return ;
+	if (set_exec_inf(&inf, data, tmp) == -1)
 		return ;
 	if (!find_slash(inf.input))
 	{
