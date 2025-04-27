@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 18:26:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:58:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,30 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-static int		create_pipeline(t_pipeline *pipeline, t_tree_node **node);
+static int		create_pipeline(t_data *data, t_pipeline *pipeline,
+					t_tree_node **node);
 static int		create_pipe(int	fd[2]);
 static void		exec_pipeline(t_pipeline pipeline, t_data *data);
-static void		wait_children(t_data *data, t_pipeline *pipeline);
+static void		close_wait(t_data *data, t_pipeline *pipeline);
 
 void	ast_handle_pipeline(t_data *data, t_tree_node **node)
 {
 	t_pipeline	pipeline;
 
 	ft_bzero(&pipeline, sizeof(t_pipeline));
-	create_pipeline(&pipeline, node);
+	create_pipeline(data, &pipeline, node);
 	exec_pipeline(pipeline, data);
-	wait_children(data, &pipeline);
+	close_wait(data, &pipeline);
 	//free_pipeline
 }
 
-static int	create_pipeline(t_pipeline *pipeline, t_tree_node **node)
+static int	create_pipeline(t_data *data, t_pipeline *pipeline,
+	t_tree_node **node)
 {
 	int	count;
 
 	count = 0;
-	traverse_pipeline(pipeline, node);
+	traverse_pipeline(data, pipeline, node);
 	pipeline->fd = ft_calloc(pipeline->n_pipes, sizeof(int *));
 	pipeline->pid = ft_calloc(pipeline->n_pipes + 1, sizeof(pid_t));
 	while (count < pipeline->n_pipes)
@@ -70,24 +72,31 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 	tmp = pipeline.cmd_lst;
 	while (tmp)
 	{
+		exec_pipeline_child(pipeline, data, tmp->word, count);
 		if (count > 0)
 		{
 			close(pipeline.fd[count - 1][0]);
 			close(pipeline.fd[count - 1][1]);
 		}
-		exec_pipeline_child(pipeline, data, tmp->word, count);
 		tmp = tmp->next;
 		count++;
 	}
 }
 
-static void	wait_children(t_data *data, t_pipeline *pipeline)
+static void	close_wait(t_data *data, t_pipeline *pipeline)
 {
 	int	count;
 	int	status;
 
 	count = 0;
 	status = 0;
+	/*while (count < pipeline->n_pipes)
+	{
+		close(pipeline->fd[count][0]);
+		close(pipeline->fd[count][1]);
+		count++;
+	}
+	count = 0;*/
 	while (count <= pipeline->n_pipes)
 	{
 		waitpid(pipeline->pid[count], &status, 0);

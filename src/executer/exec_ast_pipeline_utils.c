@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 18:20:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 21:38:57 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,24 @@
 #include "../../include/errors.h"
 
 static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node);
+static void	close_pipes_child(t_pipeline pipeline, int count);
 
-void	traverse_pipeline(t_pipeline *pipeline, t_tree_node **node)
+void	traverse_pipeline(t_data *data, t_pipeline *pipeline, t_tree_node **node)
 {
 	t_tree_node	*tmp;
 
+	(void)data;
 	if (!*node)
 		return ;
 	tmp = *node;
 	if (tmp->left)
-		traverse_pipeline(pipeline, &tmp->left);
+		traverse_pipeline(data, pipeline, &tmp->left);
 	if (tmp->type == PIPE)
 		pipeline->n_pipes++;
 	else if (tmp->type == CMD)
 		get_pipeline_cmds(pipeline, node);
 	if (tmp->right)
-		traverse_pipeline(pipeline, &tmp->right);
+		traverse_pipeline(data, pipeline, &tmp->right);
 }
 
 static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
@@ -63,6 +65,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
 	{
+		close_pipes_child(pipeline, count);
 		if (count < pipeline.n_pipes)
 		{
 			close(pipeline.fd[count][0]);
@@ -80,5 +83,20 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 		else
 			exec(data, word);
 		exit(data->exit_status);
+	}
+}
+
+static void	close_pipes_child(t_pipeline pipeline, int count)
+{
+	int i;
+	
+	i = 0;
+	while (i < pipeline.n_pipes)
+	{
+		if (i != count - 1)
+			close(pipeline.fd[i][0]);
+		if (i != count)
+			close(pipeline.fd[i][1]);
+		i++;
 	}
 }
