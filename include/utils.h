@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 11:53:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 21:44:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "parse.h"
 # include "builtins.h"
+# include "execute.h"
 # include "struct.h"
 
 # include "../lib/libft/libft/libft.h"
@@ -36,6 +37,7 @@ void	free_words(t_word **word);
 void	free_ast(t_tree_node **root);
 int		free_env_list(t_data *data, int i, t_env_node **lst);
 int		free_exp(t_data *data, int i);
+void	free_pipeline(t_pipeline *pipeline);
 
 /* =============================== ENV INIT ================================ */
 int		init_env_lst(char **envp, t_data *data);

@@ -6,13 +6,14 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 11:55:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 21:57:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/utils.h"
-#include "../../include/builtins.h"
 #include "../../include/parse.h"
+#include "../../include/execute.h"
+#include "../../include/builtins.h"
+#include "../../include/utils.h"
 #include "../../include/errors.h"
 
 void	free_strarray(char **array)
@@ -65,13 +66,16 @@ void	free_prompt(t_prompt *prompt)
 		free(prompt->cwd);
 }
 
-/*void	free_fds(t_data *data)
+void	free_pipeline(t_pipeline *pipeline)
 {
 	int	i;
 
-	i = -1;
-	while (++i < data->n_pipes)
-		free(data->fd[i]);
-	free (data->fd);
-	data->fd = 0;
-}*/
+	i = 0;
+	while (i < pipeline->n_pipes)
+	{
+		free(pipeline->fd[i]);
+		i++;
+	}
+	free(pipeline->fd);
+	free(pipeline->pid);
+}
