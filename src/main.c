@@ -37,12 +37,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	i = 1;
-
 	data_init(&data, envp);
+	signal (SIGINT, handle_signal);
 	while (i)
 	{
-		signal (SIGINT, handle_signal);
-		// sigaction(SIGINT, &sa, NULL);
 		root = ft_calloc(1, sizeof(t_tree_node));
 		if (!root)
 		{

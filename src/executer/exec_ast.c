@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 16:27:26 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:11:28 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,17 @@ void	ast_depth_search(t_data *data, t_tree_node **node, int *i)
 		return ;
 	if (tmp->type == PIPE)
 	{
-		data->i++;
-		if (!data->fd)
-			data->fd = ft_calloc(data->n_pipes, sizeof(int *));
-			// if (!data->fd)
 		ast_handle_pipe(data, node, i);
 		return ;
 	}
-	else
-	{
-		if (tmp->left)
-			ast_depth_search(data, &tmp->left, i);
-		if (exec_ast(data, node, i) == -1)
-			return ; //check early return
-		if (tmp->right)
-			ast_depth_search(data, &tmp->right, i);
-	}
+	if (tmp->left)
+		ast_depth_search(data, &tmp->left, i);
+	if (exec_ast(data, node, i) == -1)
+		return ; //check early return
+	if (tmp->right)
+		ast_depth_search(data, &tmp->right, i);
 }
+
 static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 {
 	if ((*node)->type == AND)

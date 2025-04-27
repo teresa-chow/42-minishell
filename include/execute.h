@@ -21,6 +21,7 @@
 void		ast_depth_search(t_data *data, t_tree_node **node, int *i);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, int *i);
 void		ast_handle_pipe(t_data *data, t_tree_node **node, int *i);
+void		exec_child(t_data *data, t_word *word);
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);
