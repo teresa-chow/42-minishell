@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 23:41:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 10:43:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,26 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 	if (!pipeline->cmd_lst)
 	{
 		pipeline->cmd_lst = ft_calloc(1, sizeof(t_word_lst));
-		tmp = pipeline->cmd_lst;
+		pipeline->cmd_lst->word = (*node)->word;
 	}
 	else
 	{
 		tmp = pipeline->cmd_lst;
 		new = ft_calloc(1, sizeof(t_word_lst));
+		new->word = (*node)->word;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	tmp->word = (*node)->word;
 }
 
 void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	t_word *word, int *i, int count) //refactor int *i
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
+	pipeline.pid[count] = fork();
+	if (pipeline.pid[count] == 0)
 	{
-		if (count < pipeline.n_pipes - 1)
+		if (count < pipeline.n_pipes)
 		{
 			close(pipeline.fd[count][0]);
 			dup2(pipeline.fd[count][1], STDOUT_FILENO);
@@ -80,7 +78,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 		if (is_builtin_cmd(word))
 			exec_builtin_cmd(data, word, i);
 		else
-			exec(data, word); //check double fork
-		exit(1);
+			exec(data, word);
+		exit(data->exit_status);
 	}
 }

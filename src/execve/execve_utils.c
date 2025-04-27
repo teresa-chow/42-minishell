@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:43:59 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:07 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:55:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	**create_wrd_arr(t_word *word)
 		{
 			arr[++i] = ft_strdup(word->word);
 			if (!arr[i])
-			return (NULL);
+				return (NULL);
 		}
 		else
 			word = word->next;
