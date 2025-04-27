@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:37 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:55:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,14 @@ void	free_prompt(t_prompt *prompt)
 	if (prompt->cwd)
 		free(prompt->cwd);
 }
+
+/*void	free_fds(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->n_pipes)
+		free(data->fd[i]);
+	free (data->fd);
+	data->fd = 0;
+}*/

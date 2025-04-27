@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 11:28:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:53:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
+
+/* Global variable */
+extern int	global;
 
 /* =============================== PRINT TO FD ============================== */
 void	print_fd(int fd, const char *msg, char *token);

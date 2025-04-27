@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 11:42:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/27 11:51:56 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@
 
 static void	data_init(t_data *data, char **envp);
 
-// int	global;
+int	global;
 
 // TODO: create file for signal-related functions
 void handle_signal(int i)
 {
-	(void)i;
-	write (1, "^C\n", 3);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
+	write (1, "\n", 1);
+	if (i == SIGINT)
+		global = 130;
+	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
 }
 
