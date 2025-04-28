@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:15:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_exec_data
 	char	*input;
 }	t_exec_data;
 
-void	exec(t_data *data, t_word *word);
+int		exec_external(t_data *data, t_word *word);
 
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */

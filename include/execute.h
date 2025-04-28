@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 10:00:55 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:25:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 				t_tree_node *node, int count);
 
 /* =============================== SIGNALS ================================= */
+void 		handle_signal(int i);
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);

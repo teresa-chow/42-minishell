@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/27 18:18:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:14:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
 static void	execute(t_data *data, t_exec_data *inf);
 static void	check_cmd(t_exec_data *inf, t_data *data);
 
-void	exec(t_data *data, t_word *word)
+int	exec_external(t_data *data, t_word *word)
 {
 	t_word	*tmp;
 	t_exec_data	inf;
@@ -28,9 +28,9 @@ void	exec(t_data *data, t_word *word)
 	while (tmp && tmp->redir != NONE)
 		tmp = tmp->next->next;
 	if (!tmp)
-		return ;
+		return (0);
 	if (set_exec_inf(&inf, data, tmp) == -1)
-		return ;
+		return (data->exit_status);
 	if (!find_slash(inf.input))
 	{
 		if (cmd_in_env_path(&inf, data) == 1)
@@ -45,6 +45,7 @@ void	exec(t_data *data, t_word *word)
 			no_file_or_dir(inf.input, data, 0);
 	}
 	free_arrays(&inf, data, 0);
+	exit(data->exit_status);
 }
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
