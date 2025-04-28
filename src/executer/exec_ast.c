@@ -78,7 +78,7 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	if (is_builtin_cmd(node))
 		exec_builtin_cmd(data, node, i);
 	else
-		exec(data, (*node)->word);
+		exec_child(data, (*node)->word);
 	reset_old_in_out(old_stdin, old_stdout);
 	return (0);
 }

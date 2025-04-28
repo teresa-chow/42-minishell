@@ -27,7 +27,7 @@ void	read_input(t_tree_node **root, t_data *data, int *i)
 	if (isatty(STDOUT_FILENO))
 		input = readline(prompt);
 	else
-		input = readline(NULL);
+	input = readline(NULL);
 	if (input && *input)
 	{
 		add_history(input);

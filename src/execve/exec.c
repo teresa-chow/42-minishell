@@ -17,16 +17,21 @@
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
-static void	execute(t_data *data, t_exec_data *inf);
 static void	check_cmd(t_exec_data *inf, t_data *data);
-void	execute(t_data *data, t_exec_data *inf);
+void	execute(t_exec_data *inf);
 
-void	exec(t_data *data, t_word *word)
+int	exec(t_data *data, t_word *word)
 {
 	t_exec_data	inf;
+	t_word	*tmp;
 
+	tmp = word;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!tmp)
+		return(0) ;
 	if (set_exec_inf(&inf, data, word) == -1)
-		return ;
+		return (data->exit_status);
 	if (!find_slash(inf.input))
 	{
 		if (cmd_in_env_path(&inf, data) == 1)
@@ -41,6 +46,7 @@ void	exec(t_data *data, t_word *word)
 			no_file_or_dir(inf.input, data, 0);
 	}
 	free_arrays(&inf, data, 0);
+	exit(data->exit_status);
 }
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
@@ -63,7 +69,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 		{
 			inf->tmp = inf->input;
 			if (!access(word->word, X_OK))
-				execute (data, inf);
+				execute (inf);
 			return (-1);
 		}
 	}
@@ -94,32 +100,16 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	return (0);
 }
 
-void	execute(t_data *data, t_exec_data *inf)
+void	execute(t_exec_data *inf)
 {
-	pid_t	pid;
-	int		status;
-
-	status = 0;
-	pid = fork();
-	if (pid < 0)
+	if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 	{
-		perror("minishell");
-		return ;
+		perror("minishell : execve ");
+		if (inf->tmp != inf->input) //added
+			free(inf->tmp); //added
+		inf->tmp = NULL; //added
+		exit(1);
 	}
-	else if (pid == 0)
-	{
-		if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
-		{
-			perror("minishell : execve ");
-			exit(1);
-		}
-	}
-	else
-		waitpid(pid, &status, 0);
-	if (inf->tmp != inf->input)
-		free(inf->tmp);
-	inf->tmp = NULL;
-	data->exit_status = WEXITSTATUS(status);
 }
 
 static void	check_cmd(t_exec_data *inf, t_data *data)
@@ -135,7 +125,7 @@ static void	check_cmd(t_exec_data *inf, t_data *data)
 	if (S_ISDIR(i_stat.st_mode))
 		is_a_directory(inf->tmp, data);
 	else if (!access(inf->tmp, X_OK))
-		execute(data, inf);
+		execute(inf);
 	else
 		access_error(inf->input, data);
 }

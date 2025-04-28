@@ -31,7 +31,7 @@ typedef struct s_exec_data
 	char	*input;
 }	t_exec_data;
 
-void	exec(t_data *data, t_word *word);
+int	exec(t_data *data, t_word *word);
 
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */

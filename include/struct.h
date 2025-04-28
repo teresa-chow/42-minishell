@@ -100,9 +100,9 @@ typedef	struct s_wildcard
 /* -------------------------------------------------------------------------- */
 
 /*
-- redin_in and redir_out used to check if has redir
-- no_home to know if we have home env or not
-- exp used to handle with expansions
+- redin_in and redir_out used to check if has redir;
+- no_home to know if we have home env or not;
+- exp used to handle with expansions;
 */
 typedef struct s_data
 {
