@@ -31,6 +31,8 @@ void	export(t_data *data, t_word *word)
 		data->exit_status = 0;
 	else
 		data->exit_status = exit;
+	data->has_redir = false;
+	data->has_vars = false;
 }
 
 int	add_var(t_input_inf *inf_arg, t_data *data)

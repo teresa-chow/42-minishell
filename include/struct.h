@@ -103,6 +103,7 @@ typedef	struct s_wildcard
 - redin_in and redir_out used to check if has redir;
 - no_home to know if we have home env or not;
 - exp used to handle with expansions;
+- has_vars and has_redir used in export builtin
 */
 typedef struct s_data
 {
@@ -115,6 +116,8 @@ typedef struct s_data
 	bool	no_home;
 	bool	redir_in;
 	bool	redir_out;
+	bool	has_vars;
+	bool	has_redir;
 	int		n_pipes; //review
 	int		**fd; //review
 	int		i; //review

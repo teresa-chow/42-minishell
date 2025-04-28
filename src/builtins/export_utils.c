@@ -71,20 +71,20 @@ static int	create_copy(t_env_node **copy, t_data *data)
 
 static	void	print_var_val(char *s)
 {
-	ft_putchar_fd('"', 1);
-	ft_putstr_fd(s, 1);
-	ft_putchar_fd('"', 1);
+	ft_putchar_fd('"', STDOUT_FILENO);
+	ft_putstr_fd(s, STDOUT_FILENO);
+	ft_putchar_fd('"', STDOUT_FILENO);
 }
 
 static void	print_export(t_env_node *env_lst)
 {
 	while (env_lst)
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(env_lst->key, 1);
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(env_lst->key, STDOUT_FILENO);
 		if (env_lst->val)
 		{
-			write (1, "=", 1);
+			write (STDOUT_FILENO, "=", 1);
 			print_var_val(env_lst->val);
 		}
 		write(1, "\n", 1);

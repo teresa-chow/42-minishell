@@ -24,7 +24,7 @@ void	pwd(t_data *data)
 	}
 	else
 	{
-		ft_printf ("%s\n", path);
+		ft_putendl_fd (path, STDOUT_FILENO);
 		free(path);
 		data->exit_status = 0;
 	}

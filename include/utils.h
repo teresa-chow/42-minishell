@@ -49,6 +49,7 @@ char	**set_path(t_data *data, int *i);
 /* ================================ GENERAL ================================ */
 void	add_chars(char *start, char *end, char *dst);
 void    handle_signal(int i);
+void    set_signals(t_data *data);
 int		handle_with_home(t_data *data);
 char	*join_three(char *s1, char *s2, char *s3);
 #endif

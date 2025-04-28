@@ -25,7 +25,7 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
 SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
 	exec_ast_pipe.c redir_check.c heredoc.c redir_utils.c redir_in.c \
-	redir_out.c redir_out_utils.c)
+	redir_out.c redir_out_utils.c signals.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	exit_utils.c export.c export_utils.c export_utils_2.c export_merge_sort.c \
 	pwd.c unset.c builtins_utils.c builtins_utils_2.c)

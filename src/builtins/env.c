@@ -18,9 +18,9 @@ void	env_cmd(t_env_node *env, t_data *data)
 	{
 		if (env->val)
 		{
-			ft_putstr_fd(env->key, 1);
-			write (1, "=", 1);
-			ft_putendl_fd(env->val, 1);
+			ft_putstr_fd(env->key, STDOUT_FILENO);
+			write (STDOUT_FILENO, "=", 1);
+			ft_putendl_fd(env->val, STDOUT_FILENO);
 		}
 		env = env->next;
 	}

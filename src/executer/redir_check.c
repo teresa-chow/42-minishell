@@ -26,6 +26,7 @@ int redir_in_out_check(t_word *word, t_data *data)
 
 	if (!word)
 		return (0);
+	i = 0;
 	tmp = word;
 	while (tmp)
 	{

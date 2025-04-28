@@ -19,19 +19,36 @@
 
 int	redir_heredoc(t_data *data, t_word *word)
 {
-	(void)data;
-	(void)word;
-	/*char		*input;
+	char	*input;
+	int	fd[2];
+	char	*eof;
+	t_word	*tmp;
 
-	if (isatty(STDOUT_FILENO))
-		input = readline("> ");
-	else
-		input = readline(NULL);
-	if (input && *input)
+	(void)eof;
+	(void)data;
+	tmp = word;
+	input = NULL;
+	while (tmp)
 	{
-		//heredoc processing
+		if (tmp->redir == HEREDOC)
+		{
+			pipe(fd);
+			eof = tmp->next->word;
+			input = readline("> ");
+			while (input && ft_strcmp(eof, input))
+			{
+				ft_putstr_fd(input, fd[1]);
+				write (fd[1], "\n", 1);
+				free (input);
+				input = readline("> ");
+				// if (!input)
+				// 	// write error message
+			}
+		}
+		tmp = tmp->next;
 	}
-	if (input)
-		free(input);*/
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	return (0);
-}
+ }
