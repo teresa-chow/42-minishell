@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 22:21:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:45:41 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			close(pipeline.fd[count - 1][0]);
 		}
 		exec_ast(data, &node, 1);
+		free_pipeline(&pipeline, 1);
+		data->status = 0;
+		reset_mem(data, &node);
 		exit(data->exit_status);
 	}
 }

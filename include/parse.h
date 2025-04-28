@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 12:00:56 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:11:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
-# define BG_CYA " \033[46;1;37m "//"\001"" \033[46;1;37m ""\002"
-# define BG_RED "\033[41;1;37m "//"\001""\033[41;1;37m ""\002"
-# define BG_YEL "\033[103;1;37m "//"\001""\033[103;1;37m ""\002"
-# define NC 	" \033[0m"//"\001"" \033[0m""\002"
+# define BG_CYA "\001"" \033[46;1;37m ""\002"
+# define BG_RED "\001""\033[41;1;37m ""\002"
+# define BG_YEL "\001""\033[43;1;37m ""\002"
+# define NC 	"\001"" \033[0m""\002"
 
 typedef struct s_prompt
 {

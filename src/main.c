@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 22:09:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:00:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 			ast_depth_search(&data, &root, 0);
 		reset_mem(&data, &root);
 	}
-	//rl_clear_history();
+	rl_clear_history();
 	return (data.exit_status);
 }
 

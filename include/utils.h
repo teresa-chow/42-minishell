@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:09:43 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 21:44:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:45:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ void	free_words(t_word **word);
 void	free_ast(t_tree_node **root);
 int		free_env_list(t_data *data, int i, t_env_node **lst);
 int		free_exp(t_data *data, int i);
-void	free_pipeline(t_pipeline *pipeline);
+void	free_pipeline(t_pipeline *pipeline, bool child);
 
-/* =============================== ENV INIT ================================ */
+/* ============================== ENVIRONMENT ============================== */
 int		init_env_lst(char **envp, t_data *data);
-
-/* =============================== SET PATH ================================ */
 char	**set_path(t_data *data, int *i);
 
 /* ================================ GENERAL ================================ */

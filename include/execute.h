@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 22:24:12 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 10:00:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTE_H
 
 # include <fcntl.h>
+# include <signal.h>
 
 # include "parse.h"
 
@@ -38,6 +39,8 @@ void		traverse_pipeline(t_data *data, t_pipeline *pipeline,
 				t_tree_node **node);
 void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 				t_tree_node *node, int count);
+
+/* =============================== SIGNALS ================================= */
 
 /* ============================= REDIRECTIONS ============================== */
 int			redir_heredoc(t_data *data, t_word *word);
