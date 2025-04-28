@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 11:45:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:40:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node);
 static void	close_pipes_child(t_pipeline pipeline, int count);
+static void	free_child(t_pipeline pipeline, t_data *data);
 
 void	traverse_pipeline(t_data *data, t_pipeline *pipeline, t_tree_node **node)
 {
@@ -79,9 +80,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			close(pipeline.fd[count - 1][0]);
 		}
 		exec_ast(data, &node, 1);
-		free_pipeline(&pipeline, 1);
-		data->status = 0;
-		reset_mem(data, &node);
+		free_child(pipeline, data);
 		exit(data->exit_status);
 	}
 }
@@ -99,4 +98,11 @@ static void	close_pipes_child(t_pipeline pipeline, int count)
 			close(pipeline.fd[i][1]);
 		i++;
 	}
+}
+
+static void	free_child(t_pipeline pipeline, t_data *data)
+{
+	free_pipeline(&pipeline);
+	data->status = 0;
+	reset_mem(data, &data->ast_root);
 }

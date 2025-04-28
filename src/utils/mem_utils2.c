@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 11:44:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:36:38 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	free_prompt(t_prompt *prompt)
 		free(prompt->cwd);
 }
 
-void	free_pipeline(t_pipeline *pipeline, bool child)
+void	free_pipeline(t_pipeline *pipeline)
 {
 	int			i;
 	t_tree_node	*tmp;
@@ -79,14 +79,11 @@ void	free_pipeline(t_pipeline *pipeline, bool child)
 	}
 	free(pipeline->fd);
 	free(pipeline->pid);
-	if (!child)
+	tmp = pipeline->cmd_lst;
+	while (pipeline->cmd_lst)
 	{
 		tmp = pipeline->cmd_lst;
-		while (pipeline->cmd_lst)
-		{
-			tmp = pipeline->cmd_lst;
-			pipeline->cmd_lst = pipeline->cmd_lst->left;
-			free(tmp);
-		}
+		pipeline->cmd_lst = pipeline->cmd_lst->left;
+		free(tmp);
 	}
 }

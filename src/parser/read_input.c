@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/27 11:43:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/28 13:34:54 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	read_input(t_tree_node **root, t_data *data)
 	char		*prompt;
 	char		**cmd_lst;
 
+	data->ast_root = *root;
 	prompt = get_prompt(data);
 	if (isatty(STDOUT_FILENO))
 		input = readline(prompt);
