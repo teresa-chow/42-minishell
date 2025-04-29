@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:03:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:08:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,19 @@ int redir_in_out_check(t_word *word, t_data *data)
 
 static int	handle_redir(t_data *data, t_word *word)
 {
+	int	old_stdin;
+	int	old_stdout;
 	int	i;
 
 	i = 0;
+	save_old_in_out(&old_stdin, &old_stdout);
 	if (data->redir_in)
 		i = redir_in(word, data);
 	if (data->redir_out)
 		i = redir_out(data, word);
 	data->redir_in = false;
 	data->redir_out = false;
+	reset_old_in_out(old_stdin, old_stdout);
 	return (i);
 }
 
