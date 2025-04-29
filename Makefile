@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/29 15:24:17 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/29 16:35:55 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \
 	wildcards_utils3.c quote_removal.c)
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c \
 	handle_err3.c)
-TEST			= $(addprefix $(TEST_DIR)/, test.c) #delete
 
 OBJS	 		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC:.c=.o)))
 OBJS_PARSER	 	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_PARSER:.c=.o)))
@@ -51,7 +50,6 @@ OBJS_EXECVE		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXECVE:.c=.o)))
 OBJS_UTILS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_UTILS:.c=.o)))
 OBJS_EXPANDER	= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_EXPANDER:.c=.o)))
 OBJS_ERRORS		= $(addprefix $(BUILD_DIR)/, $(notdir $(SRC_ERRORS:.c=.o)))
-OBJS_TEST		= $(addprefix $(BUILD_DIR)/, $(notdir $(TEST:.c=.o))) #delete
 
 LIBFT_ARC	= $(LIBFT_DIR)/libft.a
 
@@ -113,19 +111,19 @@ bonus: $(BONUS)
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
-	$(OBJS_ERRORS) $(OBJS_TEST)
+	$(OBJS_ERRORS)
 	@printf "$(GRN)>> Generated object files$(NC)\n\n"
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) \
 	$(LIBFT_ARC) -o $(NAME) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell$(NC)\n\n"
 
 $(BONUS): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
-	$(OBJS_ERRORS) $(OBJS_TEST)
+	$(OBJS_ERRORS)
 	@printf "$(GRN)>> Generated object files (bonus)$(NC)\n\n"
 	$(CC) $(CFLAGS) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) $(OBJS_BUILTINS) \
-	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) $(OBJS_TEST) \
+	$(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) $(OBJS_ERRORS) \
 	$(LIBFT_ARC) -o $(BONUS) $(RLFLAGS)
 	@printf "$(GRN)>> Compiled minishell (bonus)$(NC)\n\n"
 
@@ -158,14 +156,6 @@ $(BUILD_DIR)/%.o: $(EXPANDER_DIR)/%.c
 $(BUILD_DIR)/%.o: $(ERRORS_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(TEST_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-
-# Library directories
-$(LIBFT_DIR):
-	git clone https://github.com/teresa-chow/42-libft-extended.git libs/libft
-	@printf "$(GRN)>> Cloned Libft$(NC)\n\n"
 
 # Library archives
 $(LIBFT_ARC): $(LIBFT_DIR)
