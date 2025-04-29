@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 15:07:32 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:37:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
+
+static void exec_fork_child(t_data *data, t_word *word, int *status);
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
@@ -26,35 +28,39 @@ int	cd_arg_check(t_word *word, t_data *data)
 	return (1);
 }
 
-void	exec_child(t_data *data, t_word *word, bool pipeline) //norm
+void	exec_child(t_data *data, t_word *word, bool pipeline)
 {
-	pid_t	pid;
 	int		status;
 
 	status = 0;
 	if (!pipeline)
-	{
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("minishell");
-			return ;
-		}
-		else if (pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			exec_external(data, word);
-		}
-		else
-		{
-			signal(SIGINT, SIG_IGN);
-			waitpid(pid, &status, 0);
-			signal(SIGINT, handle_signal);
-		}
-	}
+		exec_fork_child(data, word, &status);
 	else
 		exec_external(data, word);
 	set_exit_status(&status, data);
+}
+
+static void exec_fork_child(t_data *data, t_word *word, int *status)
+{
+	pid_t	pid;
+	
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("minishell");
+		return ;
+	}
+	else if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		exec_external(data, word);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, status, 0);
+		signal(SIGINT, handle_signal);
+	}
 }
 
 void	set_exit_status(int *status, t_data *data)
