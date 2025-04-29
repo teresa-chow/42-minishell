@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:03:49 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:01:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ static void	print_export(t_env_node *env_lst)
 {
 	while (env_lst)
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(env_lst->key, 1);
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(env_lst->key, STDOUT_FILENO);
 		if (env_lst->val)
 		{
 			if (env_lst->val[0])

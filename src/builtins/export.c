@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:03:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:04:57 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	export(t_data *data, t_word *word)
 		data->exit_status = 0;
 	else
 		data->exit_status = exit;
+	data->has_redir = false;
+	data->has_vars = false;
 }
 
 int	add_var(t_input_inf *inf_arg, t_data *data)

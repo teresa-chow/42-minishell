@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 14:25:37 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 10:05:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void handle_signal(int i)
 	write (1, "\n", 1);
 	if (i == SIGINT)
 		global = 130;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	//rl_replace_line("", 0);
+	//rl_on_new_line();
+	//rl_redisplay();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 			ast_depth_search(&data, &root, 0);
 		reset_mem(&data, &root);
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	return (data.exit_status);
 }
 

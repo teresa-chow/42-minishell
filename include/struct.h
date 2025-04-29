@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/28 13:39:14 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 10:57:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ typedef struct s_data
 	bool					no_home;
 	bool					redir_in;
 	bool					redir_out;
+	bool					has_vars;
+	bool					has_redir;
 }	t_data;
 
 #endif
