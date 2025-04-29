@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: masoares <masoares@student.42.fr>          +#+  +:+       +#+         #
+#    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/29 11:59:29 by masoares         ###   ########.fr        #
+#    Updated: 2025/04/29 15:24:17 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	exit_utils.c export.c export_utils.c export_utils2.c export_merge_sort.c \
 	pwd.c unset.c builtins_utils.c builtins_utils_2.c)
-SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c)
+SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c \
+	execve_utils2.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c \
 	init_env.c set_path.c print_fd.c utils.c)
 SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \

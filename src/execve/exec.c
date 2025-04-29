@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 15:07:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:33:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ int	exec_external(t_data *data, t_word *word)
 		else
 			no_file_or_dir(inf.input, data, 0);
 	}
-	free_arrays(&inf, data, 0); //group
-	free_env_list(data, 0, &data->env); //group
-	free_ast(&data->ast_root); //group
+	free_failed_child(&inf, data);
 	exit(data->exit_status);
 }
 
