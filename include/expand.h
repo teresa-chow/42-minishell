@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/23 12:06:47 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:51:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@
 # include "errors.h"
 
 
-/* -------------------------------------------------------------------------- */
-/*                            EXPAND AND QUOTES                               */
-/* -------------------------------------------------------------------------- */
+/* ================== LITERAL AND EXPANDED VAR HANDLING ==================== */
 int	analyze_token_context(t_word **word, t_data *data);
 int	build_new(t_data *data, char *bgn, char *end, int len);
 int	expand_val_len(char **bgn, t_data *data);
@@ -33,7 +31,8 @@ int	handle_quotes(char **ptr, t_data *data);
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node);
 int	join_split_words(t_data *data, char **tmp, char *val);
 int	rebuild_tword(t_data *data, t_word **word, char *tmp1);
-//EXPAND  UTILS
+
+/* ========================= VAR EXPANSION UTILS =========================== */
 char	**get_words(char const *s);
 int	remove_quotes(char **str, bool to_free);
 int	process_remove_quotes(t_word *word);
@@ -41,13 +40,14 @@ int	get_segment_len(char *bgn, char *end, t_data *data);
 void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end);
 void	reset_big_part_flags(t_data *data);
 void	reset_small_part_flags(t_data *data);
-//EXPAND CHECKERS FUNCTIONS
+// Checkers
 bool	has_delimiter(char *s);
 bool	is_valid_dollar(char *s);
 bool	is_valid_tilde(char *s);
 char	*find_next_quote_and_parse(char *s, t_data *data);
 char	*find_non_alnum(char *s);
-// Wildcards
+
+/* ============================== WILDCARDS ================================ */
 int	create_word_node(char *name, t_data *data);
 int	free_wild(t_data *data, int i, DIR *dir);
 int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts);
