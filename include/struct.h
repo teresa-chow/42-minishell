@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 15:51:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:04:52 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 /* Structs associated with parsing can be found in parse.h header file */
 # include "parse.h"
 
-/* -------------------------------------------------------------------------- */
-/*                           EXPORT AND ENV INIT                              */
-/* -------------------------------------------------------------------------- */
+/* =========================== INIT ENV AND EXPORT ========================= */
 typedef struct s_input_inf
 {
 	int		val_strt;
@@ -27,9 +25,7 @@ typedef struct s_input_inf
 	char	sep;
 }	t_input_inf;
 
-/* -------------------------------------------------------------------------- */
-/*                            ENV STRUCT                                      */
-/* -------------------------------------------------------------------------- */
+/* =================================== ENV ================================= */
 typedef struct s_env_node
 {
 	char				*key;
@@ -46,10 +42,7 @@ typedef struct s_env_init
 	t_input_inf	inf;
 }	t_env_init;
 
-/* -------------------------------------------------------------------------- */
-/*                                EXPANDER                                    */
-/* -------------------------------------------------------------------------- */
-
+/* ================================ EXPANDER =============================== */
 /* 
 - in_dbl and in_sing--> to know if we are inside quotes and how to handle
 - to_exp--> to know if we can expand only if is a valid dollar sign and 
@@ -95,10 +88,7 @@ typedef	struct s_wildcard
 }	t_wildcard;
 
 
-/* -------------------------------------------------------------------------- */
-/*                                 GENERAL                                    */
-/* -------------------------------------------------------------------------- */
-
+/* =========================== DATA (GENERAL USE) ========================== */
 /*
 - redin_in and redir_out used to check if has redir
 - no_home to know if we have home env or not
