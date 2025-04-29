@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 13:40:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		close_pipes_child(pipeline, count);
 		if (count < pipeline.n_pipes)
 		{

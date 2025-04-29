@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 14:25:23 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			exec_ast(t_data *data, t_tree_node **node, bool pipeline);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline);
 void		exec_builtin_cmd(t_data *data, t_word *word);
 void		exec_child(t_data *data, t_word *word, bool pipeline);
+void		set_exit_status(int *status, t_data *data);
 
 /* ============================== PIPELINE ================================= */
 void		ast_handle_pipeline(t_data *data, t_tree_node **node);
@@ -41,6 +42,7 @@ void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 				t_tree_node *node, int count);
 
 /* =============================== SIGNALS ================================= */
+void		set_signals(t_data *data);
 void 		handle_signal(int i);
 
 /* ============================= REDIRECTIONS ============================== */

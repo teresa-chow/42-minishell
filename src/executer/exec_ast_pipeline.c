@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 12:27:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ static void	close_wait(t_data *data, t_pipeline *pipeline)
 	status = 0;
 	while (count <= pipeline->n_pipes)
 	{
+		signal(SIGINT, SIG_IGN);
 		waitpid(pipeline->pid[count], &status, 0);
+		signal(SIGINT, handle_signal);
 		count++;
 	}
-	data->exit_status = WEXITSTATUS(status);
+	set_exit_status(&status, data);
 }

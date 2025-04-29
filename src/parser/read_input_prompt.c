@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 11:12:02 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:54 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	join_rl_prompt(char **rl_prompt, t_prompt prompt)
 	free(tmp);
 	tmp = ft_strjoin(tmp2, BG_YEL);
 	free(tmp2);
-	tmp2 = ft_strjoin(tmp, "🖿 ");
+	tmp2 = ft_strjoin(tmp, "🖿  ");
 	free(tmp);
 	tmp = ft_strjoin(tmp2, prompt.cwd);
 	free(tmp2);

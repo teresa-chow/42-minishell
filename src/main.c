@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 10:05:07 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,18 @@ static void	data_init(t_data *data, char **envp);
 
 int	global;
 
-// TODO: create file for signal-related functions
-void handle_signal(int i)
-{
-	write (1, "\n", 1);
-	if (i == SIGINT)
-		global = 130;
-	//rl_replace_line("", 0);
-	//rl_on_new_line();
-	//rl_redisplay();
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		data;
 	t_tree_node	*root;
-	// struct	sigaction	sa;
 
 	(void)argc;
 	(void)argv;
-	// signal (SIGINT, SIG_IGN);
-	// signal (SIGINT, handle_signal);
 	data_init(&data, envp);
+	set_signals(&data);
+	signal (SIGINT, handle_signal);
 	while (data.status)
 	{
-		// sigaction(SIGINT, &sa, NULL);
 		root = ft_calloc(1, sizeof(t_tree_node));
 		if (!root)
 		{
@@ -55,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 			ast_depth_search(&data, &root, 0);
 		reset_mem(&data, &root);
 	}
-	//rl_clear_history();
+	rl_clear_history();
 	return (data.exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/28 14:36:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:32 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
-
-static void	set_exit_status(int *status, t_data *data);
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
@@ -59,7 +57,7 @@ void	exec_child(t_data *data, t_word *word, bool pipeline) //norm
 	set_exit_status(&status, data);
 }
 
-static void	set_exit_status(int *status, t_data *data)
+void	set_exit_status(int *status, t_data *data)
 {
 	if (WIFEXITED(*status))
 		data->exit_status = WEXITSTATUS(*status);

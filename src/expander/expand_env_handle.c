@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_handle.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:07:24 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	get_expand_val(t_data *data, char **ptr, char **tmp)
 		end_val = ft_strchr(exit_val, 0);
 		add_chars(exit_val, end_val, *tmp);
 		*tmp += ft_strlen(exit_val);
+		free(exit_val);
 	}
 	else
 		find_and_get_expand_value(data, ptr, tmp);

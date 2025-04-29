@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/28 14:14:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:07:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
-static void	execute(t_data *data, t_exec_data *inf);
+static void	execute(t_exec_data *inf);
 static void	check_cmd(t_exec_data *inf, t_data *data);
 
 int	exec_external(t_data *data, t_word *word)
@@ -44,7 +44,9 @@ int	exec_external(t_data *data, t_word *word)
 		else
 			no_file_or_dir(inf.input, data, 0);
 	}
-	free_arrays(&inf, data, 0);
+	free_arrays(&inf, data, 0); //group
+	free_env_list(data, 0, &data->env); //group
+	free_ast(&data->ast_root); //group
 	exit(data->exit_status);
 }
 
@@ -68,7 +70,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 		{
 			inf->tmp = inf->input;
 			if (!access(word->word, X_OK))
-				execute (data, inf);
+				execute (inf);
 			return (-1);
 		}
 	}
@@ -99,36 +101,16 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	return (0);
 }
 
-static void	execute(t_data *data, t_exec_data *inf)
+static void	execute(t_exec_data *inf)
 {
-	(void)data; //added
-	/*pid_t	pid;
-	int		status;
-
-	status = 0;
-	pid = fork();
-	if (pid < 0)
+	if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 	{
-		perror("minishell");
-		return ;
+		perror("minishell : execve ");
+		if (inf->tmp != inf->input)
+			free(inf->tmp);
+		inf->tmp = NULL;
+		exit(1);
 	}
-	else if (pid == 0)
-	{*/
-		if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
-		{
-			perror("minishell : execve ");
-			if (inf->tmp != inf->input) //added
-				free(inf->tmp); //added
-			inf->tmp = NULL; //added
-			exit(1);
-		}
-	/*}
-	else
-		waitpid(pid, &status, 0);
-	if (inf->tmp != inf->input)
-		free(inf->tmp);
-	inf->tmp = NULL;
-	data->exit_status = WEXITSTATUS(status);*/
 }
 
 static void	check_cmd(t_exec_data *inf, t_data *data)
@@ -144,7 +126,7 @@ static void	check_cmd(t_exec_data *inf, t_data *data)
 	if (S_ISDIR(i_stat.st_mode))
 		is_a_directory(inf->tmp, data);
 	else if (!access(inf->tmp, X_OK))
-		execute(data, inf);
+		execute(inf);
 	else
 		access_error(inf->input, data);
 }
