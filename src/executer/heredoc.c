@@ -133,7 +133,6 @@ static int	finalyze_handle_input(char *input, t_data *data, \
 	else
 		free (eof);
 	free_words(&doc_word);
-	free_env_list(data, 0, &data->env);
 	free(input);
 	close(fd[1]);
 	data->quotes = false;
