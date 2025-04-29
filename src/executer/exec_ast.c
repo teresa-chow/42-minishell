@@ -66,12 +66,13 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, int *i)
 	int	old_stdout;
 	
 	save_old_in_out(&old_stdin, &old_stdout);
-	redir_heredoc(data, (*node)->word);
 	if (handle_tokens((*node)->word, data, node) == -1)
 		return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
 		return (-1);
-	if (process_remove_quotes((*node)->word) == -1)
+	if (redir_heredoc(data, (*node)->word) != 0)
+		return (-1);
+	if (process_remove_quotes((*node)->word, data) == -1)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);

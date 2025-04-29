@@ -11,21 +11,22 @@
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+#include "../../include/errors.h"
 
-int	remove_quotes(char **str, bool to_free);
+int	remove_quotes(char **str, bool to_free, t_data *data);
 
-int	process_remove_quotes(t_word *word)
+int	process_remove_quotes(t_word *word, t_data *data)
 {
 	while (word)
 	{
-		if (remove_quotes(&word->word, 1) == -1)
+		if (remove_quotes(&word->word, 1, data) == -1)
 			return (-1);
 		word = word->next;
 	}
 	return (0);
 }
 
-int	remove_quotes(char **str, bool to_free)
+int	remove_quotes(char **str, bool to_free, t_data *data)
 {
 	int	len;
 	char	*new;
@@ -44,7 +45,8 @@ int	remove_quotes(char **str, bool to_free)
 			(*str)++;
 		}
 		new = ft_calloc(len + 1, sizeof(char));
-		// if (!new)
+		if (!new)
+			return (error_allocation(data));
 		i = -1;
 		*str = start;
 		while (**str)

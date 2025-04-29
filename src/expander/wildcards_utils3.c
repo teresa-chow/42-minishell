@@ -36,7 +36,7 @@ void	find_substr(char **name, char *tmp, int *i)
 	}
 }
 
-int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts)
+int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts, t_data *data)
 {
 	*ast_p = next_ast(pat);
 	if (*ast_p)
@@ -44,7 +44,7 @@ int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts)
 	if (has_quotes(pat))
 	{
 		*qts = true;
-		if (remove_quotes(tmp, false) == -1)
+		if (remove_quotes(tmp, false, data) == -1)
 			return (-1);
 	}
 	return (0);

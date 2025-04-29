@@ -40,5 +40,6 @@ int	cd_error(char *token, t_data *data, int i);
 int	error_export_syntax(char *inpt, t_data *data);
 int	exit_error_many_args(t_data *data);
 int	exit_error_syntax(char *inpt, t_data *data);
+void	heredoc_error(char *token);
 
 #endif

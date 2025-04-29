@@ -18,3 +18,9 @@ int    error_open_dir(t_data *data)
 	data->exit_status = 1;
 	return (-1);
 }
+
+void	heredoc_error(char *token)
+{
+	print_fd(2, "minishell: warning: here-document "
+	"delimited by end-of-file (wanted `%s')\n", token);
+}

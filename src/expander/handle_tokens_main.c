@@ -48,7 +48,7 @@ static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_nod
 {
 	if (process_token(word, data) == -1)
 		return(-1);
-	if (!(*word)->word)
+	if (!(*word)->word && node)
 		delete_node(word, last, node);
 	return (0);
 }

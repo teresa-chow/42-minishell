@@ -14,8 +14,7 @@
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
-
-static void	set_exit_status(int *status, t_data *data);
+#include "../../include/execute.h"
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
@@ -37,7 +36,7 @@ void	exec_child(t_data *data, t_word *word)
 	pid = fork();
 	if (pid < 0)
 	{
-		perror("minishell");
+		ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
 		return ;
 	}
 	else if (pid == 0)
@@ -54,7 +53,7 @@ void	exec_child(t_data *data, t_word *word)
 	set_exit_status(&status, data);
 }
 
-static void	set_exit_status(int *status, t_data *data)
+void	set_exit_status(int *status, t_data *data)
 {
 	if (WIFEXITED(*status))
 		data->exit_status = WEXITSTATUS(*status);

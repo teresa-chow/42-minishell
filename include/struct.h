@@ -104,6 +104,7 @@ typedef	struct s_wildcard
 - no_home to know if we have home env or not;
 - exp used to handle with expansions;
 - has_vars and has_redir used in export builtin
+- quotes is used in heredoc functions;
 */
 typedef struct s_data
 {
@@ -118,6 +119,7 @@ typedef struct s_data
 	bool	redir_out;
 	bool	has_vars;
 	bool	has_redir;
+	bool	quotes;
 	int		n_pipes; //review
 	int		**fd; //review
 	int		i; //review
