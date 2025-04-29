@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/27 11:17:01 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:52:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		export(t_data *data, t_word *word);
 void		reset_inf(t_input_inf *inf);
 void		sort_env(t_data *data);
 void		handle_with_args(t_word *word, t_data *data, int *exit);
-t_env_node	*sort_halfs(t_env_node *head);
+t_env_node	*sort_halves(t_env_node *head);
 int			add_var(t_input_inf *inf_arg, t_data *data);
 
 /* ================================= UNSET ================================== */

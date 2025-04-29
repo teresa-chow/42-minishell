@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 11:54:54 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:03:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:52:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_env_node	*get_mid(t_env_node *head);
 static t_env_node	*merge_list(t_env_node *left, t_env_node *right);
 
-t_env_node	*sort_halfs(t_env_node *head)
+t_env_node	*sort_halves(t_env_node *head)
 {
 	t_env_node	*mid;
 	t_env_node	*right;
@@ -28,8 +28,8 @@ t_env_node	*sort_halfs(t_env_node *head)
 	right = mid->next;
 	right->prev = NULL;
 	mid->next = NULL;
-	left_sort = sort_halfs(head);
-	right_sort = sort_halfs(right);
+	left_sort = sort_halves(head);
+	right_sort = sort_halves(right);
 	return (merge_list(left_sort, right_sort));
 }
 

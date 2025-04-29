@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 11:01:24 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:52:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	sort_env(t_data *data)
 	copy = NULL;
 	if (create_copy(&copy, data) == -1)
 		return ;
-	copy = sort_halfs(copy);
+	copy = sort_halves(copy);
 	print_export(copy);
 	free_env_list(data, 0, &copy);
 	data->exit_status = 0;
