@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:36:50 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 19:05:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:59:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,6 @@ void	free_failed_child(t_exec_data *inf, t_data *data)
 	free_ast(&data->ast_root);
 	if (data->pipeline)
 		free_pipeline(data->pipeline);
+	close(data->old_stdin);
+	close(data->old_stdout);
 }

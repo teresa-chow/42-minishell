@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 18:08:24 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/29 22:55:52 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 #include "../../include/errors.h"
 #include "../../include/utils.h"
 
-static int	handle_redir(t_data *data, t_word *word);
-static int	check_redir_in(t_word *word, t_data *data);
-static int	check_redir_out(t_word *word, t_data *data);
+static int	handle_redir(t_data *data, t_word *word, bool in, bool out);
+static int	check_redir_in(t_word *word, t_data *data, bool *in);
+static int	check_redir_out(t_word *word, t_data *data, bool *out);
 
 int redir_in_out_check(t_word *word, t_data *data)
 {
 	t_word	*tmp;
+	bool	in;
+	bool	out;
 	int	i;
 
+	in = false;
+	out = false;
 	if (!word)
 		return (0);
 	tmp = word;
@@ -32,42 +36,32 @@ int redir_in_out_check(t_word *word, t_data *data)
 		if (tmp->redir != NONE && tmp->next)
 		{
 			if (tmp->redir == IN)
-				i = check_redir_in(tmp->next, data);
+				i = check_redir_in(tmp->next, data, &in);
 			if (tmp->redir == OUT || tmp->redir == APPEND)
-				i = check_redir_out(tmp->next, data);
+				i = check_redir_out(tmp->next, data, &out);
 			if (i != 0)
-			{
-				data->redir_in = false;
-				data->redir_out = false;
 				return (-1);
-			}
 		}
 		tmp = tmp->next;
 	}
-	return (handle_redir(data, word));
+	return (handle_redir(data, word, in, out));
 }
 
-static int	handle_redir(t_data *data, t_word *word)
+static int	handle_redir(t_data *data, t_word *word, bool in, bool out)
 {
-	int	old_stdin;
-	int	old_stdout;
 	int	i;
 
 	i = 0;
-	save_old_in_out(&old_stdin, &old_stdout);
-	if (data->redir_in)
+	if (in)
 		i = redir_in(word, data);
-	if (data->redir_out)
+	if (out)
 		i = redir_out(data, word);
-	data->redir_in = false;
-	data->redir_out = false;
-	reset_old_in_out(old_stdin, old_stdout);
 	return (i);
 }
 
-static int	check_redir_in(t_word *word, t_data *data)
+static int	check_redir_in(t_word *word, t_data *data, bool *in)
 {
-	data->redir_in = true;
+	*in = true;
 	if (!access(word->word, F_OK))
 	{
 		if (access(word->word, R_OK) == -1)
@@ -83,9 +77,9 @@ static int	check_redir_in(t_word *word, t_data *data)
 	return (0);
 }
 
-static int	check_redir_out(t_word *word, t_data *data)
+static int	check_redir_out(t_word *word, t_data *data, bool *out)
 {
-	data->redir_out = true;
+	*out = true;
 	if (!access(word->word, F_OK))
 	{
 		if (access(word->word, W_OK) < 0)
