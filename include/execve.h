@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 17:46:55 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:19:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <signal.h>
 
 # include "utils.h"
 # include "../lib/libft/libft/libft.h"

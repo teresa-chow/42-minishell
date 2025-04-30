@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 12:40:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:15:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	rebuild_tword(t_data *data, t_word **word, char *tmp1);
 /* ========================= VAR EXPANSION UTILS =========================== */
 char	**get_words(char const *s);
 int	    remove_quotes(char **str, bool to_free, t_data *data);
-int	    process_remove_quotes(t_word *word);
+int	    process_remove_quotes(t_word *word, t_data *data);
 int	    get_segment_len(char *bgn, char *end, t_data *data);
 void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end);
 void	reset_big_part_flags(t_data *data);
@@ -50,7 +50,8 @@ char	*find_non_alnum(char *s);
 /* ============================== WILDCARDS ================================ */
 int	create_word_node(char *name, t_data *data);
 int	free_wild(t_data *data, int i, DIR *dir);
-int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts);
+int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts,
+    t_data *data);
 int	handle_wildcard(t_word *word, t_data *data);
 int	has_only_ast(char *s);
 int	has_quotes(char *s);

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 12:33:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:22:48 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_expand
 	bool	export_cmd;
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
+	bool	cd_cmd;
 }	t_expand;
 
 /*
@@ -90,9 +91,12 @@ typedef	struct s_wildcard
 
 /* =========================== DATA (GENERAL USE) ========================== */
 /*
-- redin_in and redir_out used to check if has redir
-- no_home to know if we have home env or not
-- exp used to handle with expansions
+- redin_in and redir_out used to check if has redir;
+- no_home to know if we have home env or not;
+- exp used to handle with expansions;
+- quotes is used in heredoc functions;
+- has_hifen is used to know if has hifen to write to right STDOUT_FILE
+- has_vars and has_redir used in export builtin
 */
 typedef struct s_data
 {
@@ -109,6 +113,7 @@ typedef struct s_data
 	int						exit_status;
 	bool					no_home;
 	bool					quotes;
+	bool					hs_hifen;
 	bool					has_vars;
 	bool					has_redir;
 }	t_data;
