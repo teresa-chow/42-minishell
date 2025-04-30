@@ -87,7 +87,7 @@ static void	print_export(t_env_node *env_lst)
 			write (STDOUT_FILENO, "=", 1);
 			print_var_val(env_lst->val);
 		}
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 		env_lst = env_lst->next;
 	}
 }

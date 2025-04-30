@@ -52,6 +52,12 @@ static int	exec_ast(t_data *data, t_tree_node **node, int *i)
 		if (data->exit_status == 0)
 			return (-1);
 	}
+	/*
+	else if ((*node)->type == PIPE)
+	{
+		//pipe function here
+	}
+	*/
 	else if ((*node)->type == CMD)
 	{
 		if (exec_ast_cmd(data, node, i) == -1)
