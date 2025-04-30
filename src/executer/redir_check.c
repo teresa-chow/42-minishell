@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 22:55:52 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:57:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	check_redir_in(t_word *word, t_data *data, bool *in)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", word->word);
 			perror("");
-			data->exit_status = 1;
+			data->exit_status = ERR;
 			return (-1);
 		}
 	}
@@ -86,7 +86,7 @@ static int	check_redir_out(t_word *word, t_data *data, bool *out)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", word->word);
 			perror("");
-			data->exit_status = 1;
+			data->exit_status = ERR;
 			return (-1);
 		}
 	}

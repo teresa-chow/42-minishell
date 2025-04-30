@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-29 19:50:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-29 19:50:20 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/29 19:50:20 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/30 19:02:53 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
