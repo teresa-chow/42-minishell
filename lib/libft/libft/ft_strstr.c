@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-18 14:27:25 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-18 14:27:25 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/18 14:27:25 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/30 23:17:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char    *ft_strstr(char *str, char *sub)
+char	*ft_strstr(char *str, char *sub)
 {
-        int     i;
-        int     j;
+	int	i;
+	int	j;
 
-        i = -1;
-        while (str[++i])
-        {
-                j = 0;
-                while (str[i + j] == sub[j])
-                {
-                        if (!sub[j + 1])
-                                return (&str[i]);
-                        j++;
-                }
-        }
-        return (0);
+	i = -1;
+	while (str[++i])
+	{
+		j = 0;
+		while (str[i + j] == sub[j])
+		{
+			if (!sub[j + 1])
+				return (&str[i]);
+			j++;
+		}
+	}
+	return (0);
 }
