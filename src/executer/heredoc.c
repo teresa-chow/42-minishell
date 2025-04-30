@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 19:01:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:38:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 static int	handle_heredoc(char *eof, t_data *data);
 static int	set_pipe_and_fork(int *fd, pid_t *pid);
 static int	handle_input(int *fd, char *eof, t_data *data);
-static int	finalyze_handle_input(char *input, t_data *data, \
-	t_word *doc_word, char *eof, int *fd);
+static int	finalyze_handle_input(char *input, t_data *data,
+				t_word *doc_word, char *eof, int *fd);
 
 int	redir_heredoc(t_data *data, t_word *word)
 {
 	char	*eof;
-	int	old_in;
-	int	count;
+	int		old_in;
+	int		count;
 
 	count = 0;
 	old_in = dup(STDIN_FILENO);
@@ -48,9 +48,9 @@ int	redir_heredoc(t_data *data, t_word *word)
 
 static int	handle_heredoc(char *eof, t_data *data)
 {
-	int	fd[2];
+	int		fd[2];
 	pid_t	pid;
-	int	status;
+	int		status;
 
 	if (set_pipe_and_fork(fd, &pid) == -1)
 		return (-1);
@@ -72,7 +72,7 @@ static int	handle_heredoc(char *eof, t_data *data)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}
-	return(data->exit_status);
+	return (data->exit_status);
 }
 
 static int	set_pipe_and_fork(int *fd, pid_t *pid)
@@ -119,12 +119,12 @@ static int	handle_input(int *fd, char *eof, t_data *data)
 	return (0);
 }
 
-static int	finalyze_handle_input(char *input, t_data *data, \
-	t_word *doc_word, char *eof, int *fd)
+static int	finalyze_handle_input(char *input, t_data *data,
+				t_word *doc_word, char *eof, int *fd)
 {
 	if (!input)
 		heredoc_error(eof);
-	else // ?
+	//else // ?
 	if (!data->quotes)
 	{
 		if (handle_tokens(doc_word, data, NULL) == -1)

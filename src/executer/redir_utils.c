@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:39:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ void	reset_old_in_out(int old_stdin, int old_stdout)
 	}
 	close(old_stdout);
 }
-

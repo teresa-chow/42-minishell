@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 16:01:18 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:42:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static int		create_pipeline(t_data *data, t_pipeline *pipeline,
 					t_tree_node **node);
-static int		create_pipe(int	fd[2]);
+static int		create_pipe(int fd[2]);
 static void		exec_pipeline(t_pipeline pipeline, t_data *data);
 static void		close_wait(t_data *data, t_pipeline *pipeline);
 
@@ -54,7 +54,7 @@ static int	create_pipeline(t_data *data, t_pipeline *pipeline,
 }
 
 /* Obs.: fd[0] is set up for reading, fd[1] is set up for writing */
-static int	create_pipe(int	fd[2])
+static int	create_pipe(int fd[2])
 {
 	if (pipe(fd) == -1)
 	{
@@ -67,7 +67,7 @@ static int	create_pipe(int	fd[2])
 static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 {
 	t_tree_node	*tmp;
-	int	count;
+	int			count;
 
 	count = 0;
 	tmp = pipeline.cmd_lst;

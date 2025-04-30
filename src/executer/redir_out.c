@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:04:02 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:44:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	create_files(int *fd, char **files, int count, int type);
 
 int	redir_out(t_data *data, t_word *word)
 {
-	int	count;
-	int type;
-	int	*fd;
-	char **files;
+	int		count;
+	int		type;
+	int		*fd;
+	char	**files;
 
 	type = 0;
 	ft_bzero(&files, sizeof(char *));
@@ -80,7 +80,7 @@ static char	**get_file_array(t_word *word, int count)
 {
 	t_word	*tmp;
 	int		i;
-	char 	**files;
+	char	**files;
 
 	tmp = word;
 	i = 0;

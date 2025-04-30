@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:24:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 18:56:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:38:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	get_fd(t_word *word, int *fd, t_data *data)
 			}
 			if (open_new_file(data, word->next, fd) == -1)
 				return (-1);
-		} 
+		}
 		word = word->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 15:07:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:41:42 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node);
 static void	close_pipes_child(t_pipeline pipeline, int count);
 static void	free_child(t_pipeline pipeline, t_data *data);
 
-void	traverse_pipeline(t_data *data, t_pipeline *pipeline, t_tree_node **node)
+void	traverse_pipeline(t_data *data, t_pipeline *pipeline,
+			t_tree_node **node)
 {
 	t_tree_node	*tmp;
 
@@ -88,8 +89,8 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 
 static void	close_pipes_child(t_pipeline pipeline, int count)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < pipeline.n_pipes)
 	{

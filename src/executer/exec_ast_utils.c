@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 19:37:49 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:42:54 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-static void exec_fork_child(t_data *data, t_word *word);
+static void	exec_fork_child(t_data *data, t_word *word);
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
@@ -36,7 +36,7 @@ void	exec_child(t_data *data, t_word *word, bool pipeline)
 		exec_external(data, word);
 }
 
-static void exec_fork_child(t_data *data, t_word *word)
+static void	exec_fork_child(t_data *data, t_word *word)
 {
 	int		status;
 	pid_t	pid;
