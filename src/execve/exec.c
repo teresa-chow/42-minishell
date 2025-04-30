@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 09:21:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:44:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static void	check_cmd(t_exec_data *inf, t_data *data)
 	if (stat(inf->tmp, &i_stat) == -1)
 	{
 		perror("minishell: stat");
-		data->exit_status = 1;
+		data->exit_status = ERR;
 	}
 	if (S_ISDIR(i_stat.st_mode))
 		is_a_directory(inf->tmp, data);
