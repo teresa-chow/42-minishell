@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:16:37 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 17:52:23 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:47:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	print_export(t_env_node *env_lst)
 		ft_putstr_fd(env_lst->key, STDOUT_FILENO);
 		if (env_lst->val)
 		{
-			if (env_lst->val[0])
+			if (env_lst->val[0]) //confirm (not in carlos version)
 			{
 				write (STDOUT_FILENO, "=", 1);
 				print_var_val(env_lst->val);

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:39:16 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,20 @@ void	cd(t_word *input, t_data *data)
 	{
 		if (!data->env_home_var)
 		{
-			if (handle_with_home(data) == -1)
-				return ;
+			print_fd(2, "minishell: cd: HOME not set\n", NULL);
+			data->exit_status = ERR;
+			return ;
 		}
 		to_exec = data->env_home_var;
 	}
+	if (data->has_hifen && !ft_strcmp("-", to_exec))
+	{
+		print_fd(STDERR_FILENO, "minishell: OLDPWD not set\n", NULL);
+		data->exit_status = ERR;
+		return ;
+	}
+	else if (data->has_hifen)
+		ft_putendl_fd(to_exec, STDOUT_FILENO);
 	if (chdir(to_exec) == -1)
 	{
 		cd_error(to_exec, data, 1);
@@ -42,7 +51,7 @@ void	cd(t_word *input, t_data *data)
 	if (!update_pwd_and_oldpwd(data))
 		data->exit_status = 0;
 	else
-		data->exit_status = 1;
+		data->exit_status = ERR;
 }
 
 static int	update_pwd_and_oldpwd(t_data *data)
