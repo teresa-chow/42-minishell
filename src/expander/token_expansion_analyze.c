@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:20:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:31:49 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:57:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	check_token_context_details(t_word **word, t_data *data)
 			if (expand_tilde(word, data) == -1)
 				return (-1);
 			data->exp->til_aft_equal = false;
-			break;
+			break ;
 		}
 		if (*s == '\'' && !data->exp->has_sing)
 			data->exp->has_sing = true;

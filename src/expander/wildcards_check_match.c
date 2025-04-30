@@ -6,14 +6,14 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:37:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:34:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:56:53 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
-static	int	find_return(int i, int j);
-static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
+static int	find_return(int i, int j);
+static void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
 
 /* 
 'pat' var name is short for 'pattern'
@@ -30,7 +30,7 @@ char	*match_begin(char *pat, char *name, t_data *data)
 		return (0);
 	ast_pos = next_ast(pat);
 	*ast_pos = 0;
-	tmp = pat;	
+	tmp = pat;
 	if (has_quotes(pat))
 		remove_quotes(&tmp, false, data);
 	substr = ft_strstr(name, tmp);
@@ -42,8 +42,8 @@ char	*match_begin(char *pat, char *name, t_data *data)
 
 char	*match_end(char *pat, char *name, t_data *data)
 {
-	int	tmp_len;
-	int	name_len;
+	int		tmp_len;
+	int		name_len;
 	char	*substr;
 	char	*tmp;
 
@@ -66,11 +66,11 @@ int	match_mid(char *pat, char *last_ast, char *name, t_data *data)
 	char	*ast_pos;
 	char	*tmp;
 	bool	has_quotes;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	has_quotes = false;
-	init_vars(&i, &j, data, pat ,last_ast);
+	init_vars(&i, &j, data, pat, last_ast);
 	pat = find_first_no_ast(pat);
 	while (pat && *pat)
 	{
@@ -95,7 +95,6 @@ static int	find_return(int i, int j)
 	if (i == j)
 		return (1);
 	return (0);
-
 }
 
 static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last)
@@ -107,7 +106,7 @@ static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last)
 		if (*fst != '*')
 		{
 			data->wild->mid = true;
-			break;
+			break ;
 		}
 		fst++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 22:35:17 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:36:56 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:54:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	update_tword(t_data *data, t_word **word, t_word *last)
 
 void	reset_bool(t_data *data)
 {
-	data->wild->bgn =false;
-	data->wild->mid =false;
-	data->wild->end =false;
-	data->wild->bgn_ok =false;
-	data->wild->mid_ok =false;
-	data->wild->end_ok =false;
+	data->wild->bgn = false;
+	data->wild->mid = false;
+	data->wild->end = false;
+	data->wild->bgn_ok = false;
+	data->wild->mid_ok = false;
+	data->wild->end_ok = false;
 	data->wild->print_dir = false;
 }
 

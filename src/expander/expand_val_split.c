@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:04:57 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:20:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:54:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static unsigned int	ft_substr_count(char const *s)
 	count = 0;
 	while (s[i] != '\0')
 	{
-		if ((!is_delimiter(s[i]) && is_delimiter(s[i + 1])) 
-				|| s[i + 1] == '\0')
+		if ((!is_delimiter(s[i]) && is_delimiter(s[i + 1]))
+			|| s[i + 1] == '\0')
 			count++;
 		i++;
 	}

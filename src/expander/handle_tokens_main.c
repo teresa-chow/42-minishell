@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:23:29 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:47:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	{
 		data->word = &word;
 		if (analyze_token_context(&word, data) == -1)
-			return(free_exp(data, 1));
+			return (free_exp(data, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
 			if (handle_process(data, &word, &last, node) == -1)
@@ -45,10 +45,11 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	return (0);
 }
 
-static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node)
+static int	handle_process(t_data *data, t_word **word, t_word **last,
+	t_tree_node **node)
 {
 	if (process_token(word, data) == -1)
-		return(-1);
+		return (-1);
 	if (!(*word)->word && node)
 		delete_node(word, last, node);
 	return (0);
@@ -58,7 +59,7 @@ static int	process_token(t_word **word, t_data *data)
 {
 	char	*cpy;
 	char	*start;
-	int	i;
+	int		i;
 
 	cpy = ft_strdup((*word)->word);
 	if (!cpy)

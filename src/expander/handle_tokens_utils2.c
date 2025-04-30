@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:44:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:26:37 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:52:47 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 {
 	char	*start;
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = get_len_and_end(data, &len, &end, ptr);
 	if (i == -1 || i == 1)
@@ -94,15 +94,14 @@ static int	get_len_and_end(t_data *data, int *len, char **end, char **ptr)
 
 int	handle_quotes(char **ptr, t_data *data)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*end;
 
 	if (**ptr == '\'')
 		data->exp->in_sing = true;
 	else if (**ptr == '"')
 		data->exp->in_dbl = true;
-	// (*ptr)++;
 	end = find_next_quote_and_parse(*ptr, data);
 	len = get_segment_len(*ptr, end, data);
 	if (len < 0)

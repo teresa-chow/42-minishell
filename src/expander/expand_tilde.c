@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:36:18 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:19:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:55:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	expand_tilde_to_export(t_data *data, t_word **word)
 	equal_pos = ft_strchr((*word)->word, '=');
 	slash_pos = ft_strchr(ft_strchr((*word)->word, '~'), '/');
 	box = *(equal_pos + 1);
-	*(equal_pos + 1) = 0;	
+	*(equal_pos + 1) = 0;
 	(*word)->word = join_three((*word)->word, data->env_home_var, slash_pos);
 	if (!(*word)->word)
 		return (-1);

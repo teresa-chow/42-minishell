@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:02:03 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:24:52 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:47:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	get_expand_len(t_data *data, char **bgn, int *len)
 	{
 		new = expand_val_len(bgn, data);
 		if (new < 0)
-			return (-1); 
+			return (-1);
 		*len = *len + new;
 	}
 	return (0);

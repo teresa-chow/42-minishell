@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:35:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:35:57 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:48:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_last_ast(char *s)
 			in_sing = true;
 		else if (*s == '\'' && in_sing)
 			in_sing = false;
-		if (*s == '*' && !in_sing && !in_dbl) 
+		if (*s == '*' && !in_sing && !in_dbl)
 			ast = s;
 		s++;
 	}
@@ -70,7 +70,7 @@ char	*next_ast(char *s)
 			in_sing = true;
 		else if (*s == '\'' && in_sing)
 			in_sing = false;
-		if (*s == '*' && !in_sing && !in_dbl) 
+		if (*s == '*' && !in_sing && !in_dbl)
 			return (s);
 		s++;
 	}
@@ -95,7 +95,7 @@ t_word	*last_word(t_word *tmp_word)
 	while (tmp_word)
 	{
 		if (!tmp_word->next)
-			break;
+			break ;
 		tmp_word = tmp_word->next;
 	}
 	return (tmp_word);

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:48:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:30:23 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:53:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 		if (*s == '$' && is_valid_dollar(s) && !data->exp->in_sing)
 			data->exp->to_exp = true;
 		if (*s == '\'' && data->exp->in_sing)
-			return (s + 1); //break;
+			return (s + 1);
 		else if (*s == '"' && data->exp->in_dbl)
-			return (s + 1); //break;
-		else if ((*s == '\'' || *s == '"') && !data->exp->in_dbl && !data->exp->in_sing)
-			break;
+			return (s + 1);
+		else if ((*s == '\'' || *s == '"') && !data->exp->in_dbl
+			&& !data->exp->in_sing)
+			break ;
 		s++;
 	}
 	return (s);
@@ -46,7 +47,7 @@ char	*find_non_alnum(char *s)
 	while (*s)
 	{
 		if (!ft_isalnum(*s) && *s != '_')
-			break;
+			break ;
 		s++;
 	}
 	return (s);
@@ -62,6 +63,7 @@ bool	has_delimiter(char *s)
 	}
 	return (false);
 }
+
 /* Used to check if is a valid var name */
 bool	is_valid_dollar(char *s)
 {

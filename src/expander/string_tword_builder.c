@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:23:30 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:29:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:52:04 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	update_word(t_data *data, t_word **word);
 
 int	build_new(t_data *data, char *bgn, char *end, int len)
 {
-	int	total;
+	int		total;
 	char	*tmp;
 
 	total = ft_strlen(data->exp->new) + len + 1;
@@ -73,7 +73,7 @@ static int	update_word(t_data *data, t_word **word)
 
 static int	create_new_nodes(t_data *data, t_word **last)
 {
-	int	i;
+	int		i;
 	t_word	*tmp;
 
 	i = 0;
