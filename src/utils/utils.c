@@ -57,7 +57,7 @@ static int	get_home(t_data *data)
 {
 	char	*tmp;
 	char	*end;
-	int	len;
+	int		len;
 
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
@@ -88,7 +88,7 @@ static char	*find_end(char *arg)
 		if (*arg == '/')
 			i++;
 		if (i == 3)
-			break;
+			break ;
 		arg++;
 	}
 	return (arg);

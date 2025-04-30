@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:14:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:29:15 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	reset_mem(t_data *data, t_tree_node **root)
 {
 	t_env_node	*var;
 
-	if(data->no_home)
+	if (data->no_home)
 		free(data->env_home_var);
 	data->env_home_var = NULL;
 	var = ft_getenv(data->env, "HOME");
