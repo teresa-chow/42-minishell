@@ -6,13 +6,14 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 09:21:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:25:42 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
+#include "../../include/utils.h"
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
@@ -23,6 +24,7 @@ int	exec_external(t_data *data, t_word *word)
 {
 	t_word	*tmp;
 	t_exec_data	inf;
+	t_word	*tmp;
 
 	tmp = word;
 	while (tmp && tmp->redir != NONE)

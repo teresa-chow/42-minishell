@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 11:27:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:50:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	data_init(t_data *data, char **envp)
 	t_env_node	*var;
 
 	ft_bzero(data, sizeof(t_data));
+	data->i = -1;
 	if (init_env_lst(envp, data) == -1)
 		ft_putstr_fd("minishell: error: failed to initialize environment\n",
 			STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 22:58:06 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:18:22 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,13 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 int	exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline)
 {
 	save_old_in_out(&data->old_stdin, &data->old_stdout);
-	redir_heredoc(data, (*node)->word);
 	if (handle_tokens((*node)->word, data, node) == -1)
 		return (-1);
 	if (handle_wildcard((*node)->word, data) == -1)
 		return (-1);
-	if (process_remove_quotes((*node)->word) == -1)
+	if (redir_heredoc(data, (*node)->word) != 0)
+		return (-1);
+	if (process_remove_quotes((*node)->word, data) == -1)
 		return (-1);
 	if (redir_in_out_check((*node)->word, data) != 0)
 		return (-1);

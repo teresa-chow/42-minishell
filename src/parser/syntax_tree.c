@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 16:23:43 by tchow-so         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/30 15:15:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
@@ -50,6 +51,7 @@ static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 	t_word_lst	*tmp_lst;
 	t_word_lst	*pivot;
 	int			precedence;
+	int			precedence;
 
 	tmp_lst = start;
 	pivot = start;
@@ -66,7 +68,19 @@ static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 		else if (precedence > 1
 			&& !ft_strcmp(tmp_lst->word->word, "|"))
 		{
+		if (precedence > 0
+			&& ((!ft_strcmp(tmp_lst->word->word, "&&"))
+			|| (!ft_strcmp(tmp_lst->word->word, "||"))))
+		{
 			pivot = tmp_lst;
+			precedence = 0;
+		}
+		else if (precedence > 1
+			&& !ft_strcmp(tmp_lst->word->word, "|"))
+		{
+			pivot = tmp_lst;
+			precedence = 1;
+		}
 			precedence = 1;
 		}
 		tmp_lst = tmp_lst->next;

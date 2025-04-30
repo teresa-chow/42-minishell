@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 11:43:32 by tchow-so         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/30 15:16:33 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../include/utils.h"
 #include "../../include/errors.h"
@@ -28,7 +29,7 @@ void	read_input(t_tree_node **root, t_data *data, bool env)
 	if (isatty(STDOUT_FILENO))
 		input = readline(prompt);
 	else
-		input = readline(NULL);
+	input = readline(NULL);
 	if (input && *input)
 	{
 		add_history(input);

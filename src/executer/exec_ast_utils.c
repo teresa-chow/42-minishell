@@ -6,12 +6,13 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 19:00:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:07:06 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/builtins.h"
+#include "../../include/execute.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
@@ -45,7 +46,7 @@ static void exec_fork_child(t_data *data, t_word *word)
 	pid = fork();
 	if (pid < 0)
 	{
-		perror("minishell");
+		ft_putstr_fd("Minishell: fork error\n", STDERR_FILENO);
 		return ;
 	}
 	else if (pid == 0)

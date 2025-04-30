@@ -6,11 +6,12 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/04/30 12:38:15 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/04/30 13:47:39 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
+BONUS		= minishell_bonus
 BONUS		= minishell_bonus
 
 # ============================================================================ #
@@ -110,6 +111,8 @@ all: $(NAME)	## Compile minishell
 
 bonus: $(BONUS)
 
+bonus: $(BONUS)
+
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
 	$(OBJS_ERRORS)
@@ -172,6 +175,7 @@ clean:	## Remove object files
 	@printf "$(GRN)>> Removed object files$(NC)\n\n"
 
 fclean: clean	## Remove executable files
+	$(RM) $(NAME) $(BONUS)
 	$(RM) $(NAME) $(BONUS)
 	@printf "$(GRN)>> Removed executable files$(NC)\n\n"
 	$(MAKE) $(LIBFT_DIR) fclean

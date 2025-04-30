@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_main.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 11:39:28 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:18:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
-static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node);
+static int	handle_process(t_data *data, t_word **word, t_word **last,
+				t_tree_node **node);
 static int	process_token(t_word **word, t_data *data);
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node);
 static void	update_word_and_reset_flag(t_data *data, t_word **word);
@@ -44,11 +45,12 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	return (0);
 }
 
-static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_node **node)
+static int	handle_process(t_data *data, t_word **word, t_word **last,
+	t_tree_node **node)
 {
 	if (process_token(word, data) == -1)
 		return(-1);
-	if (!(*word)->word)
+	if (!(*word)->word && node)
 		delete_node(word, last, node);
 	return (0);
 }

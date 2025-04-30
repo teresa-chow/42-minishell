@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 12:56:56 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/26 16:09:17 by tchow-so         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/04/30 15:16:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../include/parse.h"
 #include "../../include/utils.h"
@@ -49,7 +50,10 @@ void	fill_node(t_word_lst *pivot, t_tree_node **node)
 		return ;
 	(*node)->word = pivot->word;
 	if (!ft_strcmp(pivot->word->word, "|"))
+	{
+		data->n_pipes++;
 		(*node)->type = PIPE;
+	}
 	else if (!ft_strcmp(pivot->word->word, "&&"))
 		(*node)->type = AND;
 	else if (!ft_strcmp(pivot->word->word, "||"))
