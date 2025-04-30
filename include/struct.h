@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 16:22:48 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:38:28 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_data
 	int						exit_status;
 	bool					no_home;
 	bool					quotes;
-	bool					hs_hifen;
+	bool					has_hifen;
 	bool					has_vars;
 	bool					has_redir;
 }	t_data;
