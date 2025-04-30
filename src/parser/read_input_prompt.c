@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:10:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:27:36 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ char	*get_prompt(t_data *data, bool env)
 
 static void	init_prompt(t_prompt *prompt, char *usr)
 {
-	char *cwd;
-	char *dir;
+	char	*cwd;
+	char	*dir;
 
 	cwd = getcwd(NULL, 0);
 	dir = ft_strdup(ft_strrchr(cwd, '/'));
