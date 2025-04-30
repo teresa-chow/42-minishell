@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/27 16:53:08 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	export(t_data *data, t_word *word)
 		data->exit_status = 0;
 	else
 		data->exit_status = exit;
+	data->has_redir = false;
+	data->has_vars = false;
 }
 
 int	add_var(t_input_inf *inf_arg, t_data *data)

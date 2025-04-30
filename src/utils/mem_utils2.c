@@ -64,3 +64,14 @@ void	free_prompt(t_prompt *prompt)
 	if (prompt->cwd)
 		free(prompt->cwd);
 }
+
+// void	free_fds(t_data *data)
+// {
+// 	int	i;
+
+// 	i = -1;
+// 	while (++i < data->n_pipes)
+// 		free(data->fd[i]);
+// 	free (data->fd);
+// 	data->fd = 0;
+// }

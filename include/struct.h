@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 16:59:45 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:09:17 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,67 @@ typedef struct s_expand
 {
 	char	*new;
 	char	**words;
-	bool	in_dbl; //
-	bool	in_sing; //
-	bool	to_exp; //
+	bool	in_dbl;
+	bool	in_sing;
+	bool	to_exp;
 	bool	has_exp;
-	bool	has_sing; //
-	bool	has_dbl; //
+	bool	has_sing;
+	bool	has_dbl;
 	bool	to_split;
 	bool	til_aft_equal;
 	bool	export_cmd;
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
+	bool	cd_cmd;
 }	t_expand;
+
+/*
+- wild_word is used to create a temp t_word with 
+	new values to append to the original t_word
+*/
+typedef	struct s_wildcard
+{
+	bool	bgn;
+	bool	mid;
+	bool	end;
+	bool	bgn_ok;
+	bool	mid_ok;
+	bool	end_ok;
+	bool	print_dir;
+	struct	s_word	*wild_word;
+}	t_wildcard;
+
 
 /* -------------------------------------------------------------------------- */
 /*                                 GENERAL                                    */
 /* -------------------------------------------------------------------------- */
+
+/*
+- redin_in and redir_out used to check if has redir;
+- no_home to know if we have home env or not;
+- exp used to handle with expansions;
+- has_vars and has_redir used in export builtin
+- quotes is used in heredoc functions;
+- has_hifen is used to know if has hifen to write to right STDOUT_FILE
+*/
 typedef struct s_data
 {
 	t_env_node	*env;
 	t_expand	*exp;
+	t_wildcard	*wild;
 	struct s_word	**word;
 	char		*env_home_var;
 	int			exit_status;
 	bool	no_home;
+	bool	redir_in;
+	bool	redir_out;
+	bool	has_vars;
+	bool	has_redir;
+	bool	quotes;
+	bool	has_hifen;
+	int		n_pipes; //review
+	int		**fd; //review
+	int		i; //review
 }	t_data;
 
 #endif

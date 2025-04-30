@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redir_out.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:11:15 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 11:26:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:04:02 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/execute.h"
 #include "../../include/utils.h"
+#include "../../include/errors.h"
 
 static int	redir_count(t_word *word, int *type);
 static void	alloc_fd(int **fd, int count);
 static char	**get_file_array(t_word *word, int count);
-static void	create_files(int *fd, char **files, int count, int type);
+static int	create_files(int *fd, char **files, int count, int type);
 
-void	redir_out(t_word *word)
+int	redir_out(t_data *data, t_word *word)
 {
 	int	count;
 	int type;
@@ -30,12 +31,18 @@ void	redir_out(t_word *word)
 	ft_bzero(&files, sizeof(char *));
 	count = redir_count(word, &type);
 	if (!count)
-		return ;
+		return (0);
 	alloc_fd(&fd, count);
 	files = get_file_array(word, count);
-	create_files(fd, files, count, type);
-    close_fd(fd, count);
+	if (create_files(fd, files, count, type) == -1)
+	{
+		data->exit_status = ERR;
+		free_strarray(files);
+		return (-1);
+	}
+	close_fd(fd, count);
 	free_strarray(files);
+	return (0);
 }
 
 static int	redir_count(t_word *word, int *type)
@@ -97,11 +104,10 @@ static char	**get_file_array(t_word *word, int count)
 	return (files);
 }
 
-static void	create_files(int *fd, char **files, int count, int type)
+static int	create_files(int *fd, char **files, int count, int type)
 {
 	int	i;
 
-	(void)type;
 	i = 0;
 	while (i < count)
 	{
@@ -113,9 +119,11 @@ static void	create_files(int *fd, char **files, int count, int type)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", files[i]);
 			perror("");
-			return ;
+			close_fd(fd, i);
+			return (-1);
 		}
 		i++;
 	}
 	redirect_stdout(fd, i - 1);
+	return (0);
 }

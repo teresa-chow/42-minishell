@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 10:36:44 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:24:44 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../include/utils.h"
 
 static void	data_init(t_data *data, char **envp);
+int	global;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,6 +28,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	i = 1;
 	data_init(&data, envp);
+	set_signals(&data);
+	signal (SIGINT, handle_signal);
 	while (i)
 	{
 		root = ft_calloc(1, sizeof(t_tree_node));
@@ -35,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(&data, 1, &data.env);
 			break;
 		}
-		read_input(&root, &data);
+		read_input(&root, &data, &i);
 		if (root->word)
 			ast_depth_search(&data, &root, &i);
 		reset_mem(&data, &root, i);
@@ -49,8 +52,9 @@ static void	data_init(t_data *data, char **envp)
 	t_env_node	*var;
 
 	ft_bzero(data, sizeof(t_data));
+	data->i = -1;
 	if (init_env_lst(envp, data) == -1)
-		ft_putstr_fd("minishell: error: failed to initialize environment\n", 2);
+		ft_putstr_fd("minishell: error: failed to init env\n", 2);
 	var = ft_getenv(data->env, "HOME");
 	if (var)
 		data->env_home_var = var->val;

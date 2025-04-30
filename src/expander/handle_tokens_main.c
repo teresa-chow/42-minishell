@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exp_qts_main.c                                     :+:      :+:    :+:   */
+/*   handle_tokens_main.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 17:54:09 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:37:18 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 		if (word)
 			word = word->next;
 	}
+	free_exp(data, 0);
 	return (0);
 }
 
@@ -47,7 +48,7 @@ static int	handle_process(t_data *data, t_word **word, t_word **last, t_tree_nod
 {
 	if (process_token(word, data) == -1)
 		return(-1);
-	if (!(*word)->word)
+	if (!(*word)->word && node)
 		delete_node(word, last, node);
 	return (0);
 }
@@ -64,8 +65,6 @@ static int	process_token(t_word **word, t_data *data)
 	start = cpy;
 	while (*cpy)
 	{
-		if (*cpy == '$' && (*(cpy + 1) == '\'' || *(cpy + 1) == '"'))
-			cpy++;
 		if (*cpy == '\'' || *cpy == '"')
 			i = handle_quotes(&cpy, data);
 		else

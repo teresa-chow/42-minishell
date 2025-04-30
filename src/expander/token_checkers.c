@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exp_qts_checkers.c                                 :+:      :+:    :+:   */
+/*   token_checkers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-10 22:48:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-10 22:48:01 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/10 22:48:01 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/22 14:27:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 	char	first_char;
 
 	first_char = *s;
+	if (*s == '\'' || *s == '"')
+		s++;
 	while (*s)
 	{
 		if (data->exp->export_cmd && *s == '=' && first_char != '=')
@@ -26,9 +28,9 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 		if (*s == '$' && is_valid_dollar(s) && !data->exp->in_sing)
 			data->exp->to_exp = true;
 		if (*s == '\'' && data->exp->in_sing)
-			break;
+			return (s + 1); //break;
 		else if (*s == '"' && data->exp->in_dbl)
-			break;
+			return (s + 1); //break;
 		else if ((*s == '\'' || *s == '"') && !data->exp->in_dbl && !data->exp->in_sing)
 			break;
 		s++;
@@ -70,7 +72,7 @@ bool	is_valid_dollar(char *s)
 
 bool	is_valid_tilde(char *s)
 {
-	if (*s == '~' && !*(s + 1))
+	if (*s == '~' && ((!*(s + 1)) || *(s + 1) == '/'))
 		return (true);
 	return (false);
 }

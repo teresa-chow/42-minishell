@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/11 15:45:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:09:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root);
 static int	syntax_check(t_word_lst *word_lst, t_data *data);
 
-void	read_input(t_tree_node **root, t_data *data)
+void	read_input(t_tree_node **root, t_data *data, int *i)
 {
 	char		*input;
 	char		*prompt;
@@ -27,7 +27,7 @@ void	read_input(t_tree_node **root, t_data *data)
 	if (isatty(STDOUT_FILENO))
 		input = readline(prompt);
 	else
-		input = readline(NULL);
+	input = readline(NULL);
 	if (input && *input)
 	{
 		add_history(input);
@@ -36,7 +36,9 @@ void	read_input(t_tree_node **root, t_data *data)
 			process_cmd_lst(cmd_lst, data, root);
 	}
 	free(prompt);
-	if (input)
+	if (!input)
+		exit_cmd(data, (*root)->word, i);
+	else
 		free(input);
 }
 
@@ -54,7 +56,7 @@ static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root)
 	free_strarray(cmd_lst);
 	if (syntax_check(word_lst, data) == 0)
 	{
-		create_syntax_tree(word_lst, NULL, 0, root);
+		create_syntax_tree(data, word_lst, NULL, root);
 		free_word_lst(&word_lst);
 	}
 	else

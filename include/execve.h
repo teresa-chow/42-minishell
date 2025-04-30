@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 14:45:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/03/20 17:30:08 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <signal.h>
 
 # include "utils.h"
 # include "../lib/libft/libft/libft.h"
@@ -30,7 +31,7 @@ typedef struct s_exec_data
 	char	*input;
 }	t_exec_data;
 
-void	exec(t_data *data, t_word *word);
+int	exec(t_data *data, t_word *word);
 
 /* -------------------------------------------------------------------------- */
 /*                                Execve Utils                                */

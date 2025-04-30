@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:04:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/03 15:33:39 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,14 @@ void	handle_with_args(t_word *word, t_data *data, int *exit)
 	ft_bzero(&inf_arg, sizeof(t_input_inf));
 	while (word)
 	{
-		if (check_syntax(word->word, data, exit))
+		if (word->redir != NONE)
 		{
+			data->has_redir = true;
+			word = word->next;
+		}
+		else if (check_syntax(word->word, data, exit))
+		{
+			data->has_vars = true;
 			if (set_inf(word->word, &inf_arg) == -1)
 			{
 				error_allocation(data);
@@ -35,6 +41,8 @@ void	handle_with_args(t_word *word, t_data *data, int *exit)
 		}
 		word = word->next;
 	}
+	if (data->has_redir && !data->has_vars)
+		sort_env(data);
 }
 
 static int	check_syntax(char *s, t_data *data, int *exit)

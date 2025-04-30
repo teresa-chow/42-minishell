@@ -34,12 +34,15 @@ int	command_not_found(char *token, t_data *data)
 	return (ERR_F);
 }
 
-int	no_file_or_directory(char *token, t_data *data)
+int	no_file_or_dir(char *token, t_data *data, int i)
 {
 	print_fd(STDERR_FILENO, "minishell: %s: No such file or directory\n",
 		token);
-	data->exit_status = ERR_F;
-	return (ERR_F);
+	if (i)
+		data->exit_status = ERR;
+	else
+		data->exit_status = ERR_F;
+	return (data->exit_status);
 }
 
 int	is_a_directory(char *token, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/16 10:36:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:37:33 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 	else
 		data->no_home = true;
 	free_ast(root);
+	// free_fds(data);
+	data->n_pipes = 0;
+	global = 0;
+	data->has_hifen = false;
 	if (!i)
 		free_env_list(data, 0, &data->env);
 }

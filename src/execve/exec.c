@@ -3,28 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/10 17:28:46 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:27:33 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 #include "../../include/execve.h"
 #include "../../include/errors.h"
+#include "../../include/utils.h"
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
-static void	execute(t_data *data, t_exec_data *inf);
 static void	check_cmd(t_exec_data *inf, t_data *data);
+void	execute(t_exec_data *inf);
 
-void	exec(t_data *data, t_word *word)
+int	exec(t_data *data, t_word *word)
 {
 	t_exec_data	inf;
+	t_word	*tmp;
 
+	tmp = word;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!tmp)
+		return(0) ;
 	if (set_exec_inf(&inf, data, word) == -1)
-		return ;
+		return (data->exit_status);
 	if (!find_slash(inf.input))
 	{
 		if (cmd_in_env_path(&inf, data) == 1)
@@ -36,9 +43,10 @@ void	exec(t_data *data, t_word *word)
 		if (!access(inf.input, F_OK))
 			check_cmd(&inf, data);
 		else
-			no_file_or_directory(inf.input, data);
+			no_file_or_dir(inf.input, data, 0);
 	}
 	free_arrays(&inf, data, 0);
+	exit(data->exit_status);
 }
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
@@ -47,12 +55,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 
 	i = 0;
 	ft_bzero(inf, sizeof(t_exec_data));
-	// if (!ft_strcmp(word->word, "."))
-	// {
-	// 	print_fd(2, "minishell: `.': Not valid input\n", NULL);
-	// 	data->exit_status = 2;
-	// 	return (-1);
-	// }
+	inf->input = word->word;
 	inf->wrd_arr = create_wrd_arr(word);
 	inf->env_arr = create_env_arr(data->env);
 	if (!inf->wrd_arr || !inf->env_arr)
@@ -60,7 +63,16 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 	inf->path_splited = set_path(data, &i);
 	if (!inf->path_splited && i != -1)
 		return (free_arrays(inf, data, 1));
-	inf->input = word->word;
+	else if (!inf->path_splited && i == -1)
+	{
+		if (!access(word->word, F_OK))
+		{
+			inf->tmp = inf->input;
+			if (!access(word->word, X_OK))
+				execute (inf);
+			return (-1);
+		}
+	}
 	return (0);
 }
 
@@ -70,7 +82,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 
 	if (!inf->path_splited)
 	{
-		no_file_or_directory(inf->input, data);
+		no_file_or_dir(inf->input, data, 0);
 		return (-1);
 	}
 	i = -1;
@@ -88,32 +100,16 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	return (0);
 }
 
-static void	execute(t_data *data, t_exec_data *inf)
+void	execute(t_exec_data *inf)
 {
-	pid_t	pid;
-	int		status;
-
-	status = 0;
-	pid = fork();
-	if (pid < 0)
+	if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 	{
-		perror("minishell");
-		return ;
+		perror("minishell : execve ");
+		if (inf->tmp != inf->input) //added
+			free(inf->tmp); //added
+		inf->tmp = NULL; //added
+		exit(1);
 	}
-	else if (pid == 0)
-	{
-		if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
-		{
-			perror("minishell : execve ");
-			exit(1);
-		}
-	}
-	else
-		waitpid(pid, &status, 0);
-	if (inf->tmp != inf->input)
-		free(inf->tmp);
-	inf->tmp = NULL;
-	data->exit_status = WEXITSTATUS(status);
 }
 
 static void	check_cmd(t_exec_data *inf, t_data *data)
@@ -129,7 +125,7 @@ static void	check_cmd(t_exec_data *inf, t_data *data)
 	if (S_ISDIR(i_stat.st_mode))
 		is_a_directory(inf->tmp, data);
 	else if (!access(inf->tmp, X_OK))
-		execute(data, inf);
+		execute(inf);
 	else
 		access_error(inf->input, data);
 }

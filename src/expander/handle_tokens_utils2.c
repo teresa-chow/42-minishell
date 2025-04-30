@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42.fr>          #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-14 14:44:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-14 14:44:44 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/14 14:44:44 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/22 14:07:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	handle_quotes(char **ptr, t_data *data)
 		data->exp->in_sing = true;
 	else if (**ptr == '"')
 		data->exp->in_dbl = true;
-	(*ptr)++;
+	// (*ptr)++;
 	end = find_next_quote_and_parse(*ptr, data);
 	len = get_segment_len(*ptr, end, data);
 	if (len < 0)
@@ -113,9 +113,6 @@ int	handle_quotes(char **ptr, t_data *data)
 		i = exp_join_segment(data, ptr, len, end);
 	if (i == -1)
 		return (-1);
-	if (*end)
-		*ptr = end + 1;
-	else
-		*ptr = end;
+	*ptr = end;
 	return (0);
 }
