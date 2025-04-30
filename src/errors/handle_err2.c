@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:15:30 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:03:55 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:59:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,30 @@ int	cd_error(char *token, t_data *data, int i)
 		perror(NULL);
 	}
 	else
-		print_fd(2, "minishell: cd: too many arguments\n", NULL);
-	data->exit_status = 1;
+		print_fd(STDERR_FILENO, "minishell: cd: too many arguments\n", NULL);
+	data->exit_status = ERR;
 	return (-1);
 }
 
 int	error_export_syntax(char *inpt, t_data *data)
 {
-	print_fd(2, "minishell: export: `%s': not a valid identifier\n", inpt);
+	print_fd(STDERR_FILENO, "minishell: export: `%s':"
+		" not a valid identifier\n", inpt);
 	data->exit_status = ERR;
 	return (0);
 }
 
 int	exit_error_many_args(t_data *data)
 {
-	print_fd(2, "minishell: exit: too many arguments\n", NULL);
+	print_fd(STDERR_FILENO, "minishell: exit: too many arguments\n", NULL);
 	data->exit_status = ERR;
 	return (1);
 }
 
 int	exit_error_syntax(char *inpt, t_data *data)
 {
-	print_fd(2, "minishell: exit: %s: numeric argument required\n", inpt);
+	print_fd(STDERR_FILENO, "minishell: exit: %s:"
+		" numeric argument required\n", inpt);
 	data->exit_status = ERR_BI;
 	return (0);
 }
