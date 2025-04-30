@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_expansion_analyze.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:20:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 15:42:50 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:31:49 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	check_token_context_details(t_word **word, t_data *data);
 static int	export_has_exp_bfr_equal(char *s);
+static int	expand_oldpwd(t_word *word, t_data *data);
 
 int	analyze_token_context(t_word **word, t_data *data)
 {
@@ -21,11 +22,19 @@ int	analyze_token_context(t_word **word, t_data *data)
 		data->exp->export_exp_bfr_equal = true;
 	if (!ft_strcmp((*word)->word, "export"))
 		data->exp->export_cmd = true;
+	if (!ft_strcmp((*word)->word, "cd"))
+		data->exp->cd_cmd = true;
 	if (is_valid_tilde((*word)->word))
 	{
 		if (expand_tilde(word, data) == -1)
 			return (-1);
 		return (0);
+	}
+	if (data->exp->cd_cmd && !ft_strcmp((*word)->word, "-"))
+	{
+		data->has_hifen = true;
+		if (expand_oldpwd(*word, data) == 1)
+			return (-1);
 	}
 	if (check_token_context_details(word, data) == -1)
 		return (-1);
@@ -71,6 +80,23 @@ static int	export_has_exp_bfr_equal(char *s)
 				return (1);
 			s++;
 		}
+	}
+	return (0);
+}
+
+static int	expand_oldpwd(t_word *word, t_data *data)
+{
+	t_env_node	*var;
+
+	var = ft_getenv(data->env, "OLDPWD");
+	if (!var || !var->val)
+		return (0);
+	if (var->val)
+	{
+		free(word->word);
+		word->word = ft_strdup(var->val);
+		if (!word->word)
+			return (-1);
 	}
 	return (0);
 }

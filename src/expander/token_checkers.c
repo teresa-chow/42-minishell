@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_checkers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:48:01 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/22 14:27:30 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:30:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

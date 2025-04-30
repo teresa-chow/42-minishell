@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_val_split.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:04:57 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 11:07:24 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:20:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

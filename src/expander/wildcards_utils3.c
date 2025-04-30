@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:26:48 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 13:35:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:37:33 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	find_substr(char **name, char *tmp, int *i)
 	}
 }
 
-int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts, t_data *data)
+int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts,
+	t_data *data)
 {
 	*ast_p = next_ast(pat);
 	if (*ast_p)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tilde.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:36:18 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 14:07:36 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:19:45 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static int	update_word(t_data *data, t_word **word);
 
 int	expand_tilde(t_word **word, t_data *data)
 {
-	(void)word;
-	(void)data;
 	char	*to_free;
 
 	if (data->no_home)

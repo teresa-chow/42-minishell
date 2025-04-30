@@ -6,15 +6,18 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:48:41 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 12:43:14 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:28:01 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+#include "../../include/errors.h"
 
-int	remove_quotes(char **str, bool to_free, t_data *data);
+int			remove_quotes(char **str, bool to_free, t_data *data);
+static int	quoted_len(char *word);
+static void	add_no_quotes(char **str, char **new);
 
-int	process_remove_quotes(t_word *word)
+int	process_remove_quotes(t_word *word, t_data *data)
 {
 	while (word)
 	{
@@ -30,30 +33,17 @@ int	remove_quotes(char **str, bool to_free, t_data *data)
 	int	len;
 	char	*new;
 	char	*start;
-	int	i;
 
 	len = 0;
-	i = -1;
 	start = *str;
 	if (ft_strchr(*str, '\'') || ft_strchr(*str, '"'))
 	{
-		while (**str)
-		{
-			if (**str != '\'' && **str != '"')
-				len++;
-			(*str)++;
-		}
+		len = quoted_len(*str);
 		new = ft_calloc(len + 1, sizeof(char));
 		if (!new)
 			return (error_allocation(data));
-		i = -1;
 		*str = start;
-		while (**str)
-		{
-			if (**str != '\'' && **str != '"')
-				new[++i] = *(*str);
-			(*str)++;
-		}
+		add_no_quotes(str, &new);
 		if (to_free)
 			free(start);
 		*str = new;
@@ -61,68 +51,29 @@ int	remove_quotes(char **str, bool to_free, t_data *data)
 	return (0);
 }
 
-/*static int	quoted_len(char *word);
-static void	get_word_no_quotes(char *new_word, char *word);
-
-void	quote_removal(t_word *word)
-{
-	t_word	*tmp;
-	char	*new_word;
-
-	tmp = word;
-	new_word = NULL;
-	while (tmp)
-	{
-		new_word = ft_calloc(quoted_len(tmp->word) + 1, sizeof(char));
-		get_word_no_quotes(new_word, tmp->word);
-		free(tmp->word);
-		tmp->word = new_word;
-		tmp = tmp->next;
-	}
-}
-
 static int	quoted_len(char *word)
 {
 	int	len;
-	int i;
 
 	len = 0;
-	i = 0;
-	while (word[i])
+	while (*word)
 	{
-		if (is_quote(word[i]))
-		{
-			len += next_quote(word, i, is_quote(word[i])) - i + 1;
-			i += next_quote(word, i, is_quote(word[i]));
-		}
-		len++;
-		i++;
+		if (*word != '\'' && *word != '"')
+			len++;
+		word++;
 	}
 	return (len);
 }
 
-static void	get_word_no_quotes(char *new_word, char *word)
+static	void	add_no_quotes(char **str, char **new)
 {
 	int	i;
-	int j;
 
-	i = 0;
-	j = 0;
-	while (word[i])
+	i = -1;
+	while (**str)
 	{
-		if (word[i] == '\'')
-		{
-			i++;
-			while (word[i] == '\'')
-				new_word[j++] = word[i++];
-		}
-		else if (word[i] == '\"')
-		{
-			i++;
-			while (word[i] == '\"')
-				new_word[j++] = word[i++];
-		}
-		else
-			new_word[j++] = word[i++];
+		if (**str != '\'' && **str != '"')
+			new[0][++i] = *(*str);
+		(*str)++;
 	}
-}*/
+}

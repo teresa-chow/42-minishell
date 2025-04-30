@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_analyze.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:34:28 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/23 11:27:57 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:33:30 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_directory(struct dirent *entry, char *s, bool *check, t_data *data)
 		if (stat(entry->d_name, &i_stat) == -1)
 		{
 			perror("minishell: stat");
-			data->exit_status = 1;
+			data->exit_status = ERR;
 			return (-1);
 		}
 		if (S_ISDIR(i_stat.st_mode))

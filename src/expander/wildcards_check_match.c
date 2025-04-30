@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:37:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 13:34:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:34:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	match_mid(char *pat, char *last_ast, char *name, t_data *data)
 	{
 		tmp = pat;
 		j++;
-		if (handle_ast_quotes(&ast_pos, pat, &tmp, &has_quotes) == -1)
+		if (handle_ast_quotes(&ast_pos, pat, &tmp, &has_quotes, data) == -1)
 			return (-1);
 		find_substr(&name, tmp, &i);
 		if (ast_pos)
