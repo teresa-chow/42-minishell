@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/29 15:33:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:21:33 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 		return (-1);
 	}
 	i = -1;
-	while (inf->path_splited[++i])
+	while (*inf->input && inf->path_splited[++i])
 	{
 		inf->tmp = ft_strjoin(inf->path_splited[i], inf->input);
 		if (!inf->tmp)
