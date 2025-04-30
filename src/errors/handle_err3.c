@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_err3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-23 18:02:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-23 18:02:24 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/23 18:02:24 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/30 11:36:53 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int    error_open_dir(t_data *data)
 
 void	heredoc_error(char *token)
 {
-	print_fd(2, "minishell: warning: here-document "
+	print_fd(STDERR_FILENO, "minishell: warning: here-document "
 	"delimited by end-of-file (wanted `%s')\n", token);
 }

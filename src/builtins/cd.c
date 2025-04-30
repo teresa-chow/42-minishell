@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/17 14:38:42 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:43:27 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ void	cd(t_word *input, t_data *data)
 		}
 		to_exec = data->env_home_var;
 	}
+	if (data->has_hifen && !ft_strcmp("-", to_exec))
+	{
+		print_fd(STDERR_FILENO, "minishell: OLDPWD not set\n", NULL);
+		data->exit_status = 1;
+		return ;
+	}
+	else if (data->has_hifen)
+		ft_putendl_fd(to_exec, STDOUT_FILENO);
 	if (chdir(to_exec) == -1)
 	{
 		cd_error(to_exec, data, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/26 11:40:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:09:17 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_expand
 	bool	export_cmd;
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
+	bool	cd_cmd;
 }	t_expand;
 
 /*
@@ -105,6 +106,7 @@ typedef	struct s_wildcard
 - exp used to handle with expansions;
 - has_vars and has_redir used in export builtin
 - quotes is used in heredoc functions;
+- has_hifen is used to know if has hifen to write to right STDOUT_FILE
 */
 typedef struct s_data
 {
@@ -120,6 +122,7 @@ typedef struct s_data
 	bool	has_vars;
 	bool	has_redir;
 	bool	quotes;
+	bool	has_hifen;
 	int		n_pipes; //review
 	int		**fd; //review
 	int		i; //review

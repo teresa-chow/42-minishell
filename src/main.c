@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/24 12:27:37 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:24:44 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data		data;
 	t_tree_node	*root;
 	int	i;
-	
+
 	(void)argc;
 	(void)argv;
 	i = 1;

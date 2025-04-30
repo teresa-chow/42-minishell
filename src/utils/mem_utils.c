@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/17 11:05:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:37:33 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	reset_mem(t_data *data, t_tree_node **root, int i)
 	// free_fds(data);
 	data->n_pipes = 0;
 	global = 0;
+	data->has_hifen = false;
 	if (!i)
 		free_env_list(data, 0, &data->env);
 }
