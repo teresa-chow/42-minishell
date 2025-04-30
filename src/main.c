@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 17:39:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:27:39 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../include/errors.h"
 #include "../include/utils.h"
 
+static void	init_prog(t_data *data, char **envp);
 static void	data_init(t_data *data, char **envp);
 
 int	global;
@@ -23,12 +24,14 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data		data;
 	t_tree_node	*root;
+	bool		env;
 
 	(void)argc;
 	(void)argv;
-	data_init(&data, envp);
-	set_signals(&data);
-	signal (SIGINT, handle_signal);
+	env = 1;
+	if (!*envp)
+		env = 0;
+	init_prog(&data, envp);
 	while (data.status)
 	{
 		root = ft_calloc(1, sizeof(t_tree_node));
@@ -37,13 +40,20 @@ int	main(int argc, char **argv, char **envp)
 			free_env_list(&data, 1, &data.env);
 			break;
 		}
-		read_input(&root, &data);
+		read_input(&root, &data, env);
 		if (root->word)
 			ast_depth_search(&data, &root, 0);
 		reset_mem(&data, &root);
 	}
 	rl_clear_history();
 	return (data.exit_status);
+}
+
+static void	init_prog(t_data *data, char **envp)
+{
+	data_init(data, envp);
+	set_signals(data);
+	signal (SIGINT, handle_signal);
 }
 
 static void	data_init(t_data *data, char **envp)

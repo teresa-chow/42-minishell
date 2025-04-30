@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 15:07:54 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:43:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include "../../include/struct.h"
 
 static void	init_prompt(t_prompt *prompt, char *usr);
-static void	join_rl_prompt(char **rl_prompt, t_prompt prompt);
+static void	join_rl_prompt(char **rl_prompt, t_prompt prompt, bool env);
+static void	join_color(char **rl_prompt, t_prompt prompt);
+static void	join_white(char **rl_prompt, t_prompt prompt);
 
-char	*get_prompt(t_data *data)
+char	*get_prompt(t_data *data, bool env)
 {
 	t_env_node	*usr;
 	t_prompt	prompt;
@@ -29,7 +31,7 @@ char	*get_prompt(t_data *data)
 		init_prompt(&prompt, usr->val);
 	else
 		init_prompt(&prompt, "Undefined");
-	join_rl_prompt(&rl_prompt, prompt);
+	join_rl_prompt(&rl_prompt, prompt, env);
 	free_prompt(&prompt);
 	return (rl_prompt);
 }
@@ -51,7 +53,15 @@ static void	init_prompt(t_prompt *prompt, char *usr)
 	free(dir);
 }
 
-static void	join_rl_prompt(char **rl_prompt, t_prompt prompt)
+static void	join_rl_prompt(char **rl_prompt, t_prompt prompt, bool env)
+{
+	if (env)
+		join_color(rl_prompt, prompt);
+	else
+		join_white(rl_prompt, prompt);
+}
+
+static void	join_color(char **rl_prompt, t_prompt prompt)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -76,5 +86,21 @@ static void	join_rl_prompt(char **rl_prompt, t_prompt prompt)
 	tmp2 = ft_strjoin(tmp, NC);
 	free(tmp);
 	*rl_prompt = ft_strjoin(tmp2, " ");
+	free(tmp2);
+}
+
+static void	join_white(char **rl_prompt, t_prompt prompt)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	tmp = ft_strjoin(prompt.prog, " ➔ ☻ ");
+	tmp2 = ft_strjoin(tmp, prompt.usr);
+	free(tmp);
+	tmp = ft_strjoin(tmp2, " ➔ 🖿  ");
+	free(tmp2);
+	tmp2 = ft_strjoin(tmp, prompt.cwd);
+	free(tmp);
+	*rl_prompt = ft_strjoin(tmp2, " • ");
 	free(tmp2);
 }
