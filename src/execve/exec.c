@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 20:44:34 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:59:06 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	check_cmd(t_exec_data *inf, t_data *data);
 
 int	exec_external(t_data *data, t_word *word)
 {
-	t_word	*tmp;
+	t_word		*tmp;
 	t_exec_data	inf;
 
 	tmp = word;
