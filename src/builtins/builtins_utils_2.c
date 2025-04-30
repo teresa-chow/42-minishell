@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 21:20:25 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 16:30:35 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:34:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	set_inf(char *word, t_input_inf *inf_arg)
 
 	len_wrd = ft_strlen(word);
 	inf_arg->sep = find_sep(word);
-	inf_arg->key = ft_substr(word, 0, len_wrd - \
-				ft_strlen(ft_strchr(word, inf_arg->sep)));
+	inf_arg->key = ft_substr(word, 0, len_wrd
+			- ft_strlen(ft_strchr(word, inf_arg->sep)));
 	if (!inf_arg->key)
 		return (-1);
 	if (inf_arg->sep)

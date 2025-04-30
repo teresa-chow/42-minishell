@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 16:43:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:32:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../../include/errors.h"
 
 static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
-	int *syntax);
+				int *syntax);
 static int	check_is_digit(t_word *word, t_data *data, int *syntax);
 static int	check_overflow(t_word *word, t_data *data, int *syntax);
 
