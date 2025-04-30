@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_check_match.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:37:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/23 13:57:38 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:34:38 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*match_begin(char *pat, char *name, t_data *data)
 	*ast_pos = 0;
 	tmp = pat;	
 	if (has_quotes(pat))
-		remove_quotes(&tmp, false);
+		remove_quotes(&tmp, false, data);
 	substr = ft_strstr(name, tmp);
 	if (tmp != pat)
 		free (tmp);
@@ -52,7 +52,7 @@ char	*match_end(char *pat, char *name, t_data *data)
 	data->wild->end = true;
 	tmp = pat;
 	if (has_quotes(pat))
-		remove_quotes(&tmp, false);
+		remove_quotes(&tmp, false, data);
 	tmp_len = ft_strlen(tmp);
 	name_len = ft_strlen(name);
 	substr = ft_strstr(&name[name_len - tmp_len], tmp);

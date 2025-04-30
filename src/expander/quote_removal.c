@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:48:41 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/23 12:30:30 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:43:14 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int	remove_quotes(char **str, bool to_free);
+int	remove_quotes(char **str, bool to_free, t_data *data);
 
 int	process_remove_quotes(t_word *word)
 {
 	while (word)
 	{
-		if (remove_quotes(&word->word, 1) == -1)
+		if (remove_quotes(&word->word, 1, data) == -1)
 			return (-1);
 		word = word->next;
 	}
 	return (0);
 }
 
-int	remove_quotes(char **str, bool to_free)
+int	remove_quotes(char **str, bool to_free, t_data *data)
 {
 	int	len;
 	char	*new;
@@ -44,7 +44,8 @@ int	remove_quotes(char **str, bool to_free)
 			(*str)++;
 		}
 		new = ft_calloc(len + 1, sizeof(char));
-		// if (!new)
+		if (!new)
+			return (error_allocation(data));
 		i = -1;
 		*str = start;
 		while (**str)

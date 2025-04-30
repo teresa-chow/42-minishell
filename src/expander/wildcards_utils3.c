@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    #+#  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-23 19:26:48 by carlaugu          #+#    #+#             */
-/*   Updated: 2025-04-23 19:26:48 by carlaugu         ###   ########.fr       */
+/*   Created: 2025/04/23 19:26:48 by carlaugu          #+#    #+#             */
+/*   Updated: 2025/04/30 13:35:28 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	find_substr(char **name, char *tmp, int *i)
 	}
 }
 
-int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts)
+int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts, t_data *data)
 {
 	*ast_p = next_ast(pat);
 	if (*ast_p)
@@ -44,7 +44,7 @@ int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts)
 	if (has_quotes(pat))
 	{
 		*qts = true;
-		if (remove_quotes(tmp, false) == -1)
+		if (remove_quotes(tmp, false, data) == -1)
 			return (-1);
 	}
 	return (0);

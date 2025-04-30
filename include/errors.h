@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 17:46:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:39:24 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@
 # include "parse.h"
 # include "builtins.h"
 
-int	err_syntax(char *token);
-int error_open_dir(t_data *data);
-int	error_allocation(t_data *data);
-int	command_not_found(char *token, t_data *data);
-int	no_file_or_dir(char *token, t_data *data, int i);
-int	is_a_directory(char *token, t_data *data);
-int	access_error(char *token, t_data *data);
-int	cd_error(char *token, t_data *data, int i);
-int	error_export_syntax(char *inpt, t_data *data);
-int	exit_error_many_args(t_data *data);
-int	exit_error_syntax(char *inpt, t_data *data);
+int	    err_syntax(char *token);
+int     error_open_dir(t_data *data);
+int	    error_allocation(t_data *data);
+int	    command_not_found(char *token, t_data *data);
+int	    no_file_or_dir(char *token, t_data *data, int i);
+int	    is_a_directory(char *token, t_data *data);
+int	    access_error(char *token, t_data *data);
+int	    cd_error(char *token, t_data *data, int i);
+int	    error_export_syntax(char *inpt, t_data *data);
+int	    exit_error_many_args(t_data *data);
+int	    exit_error_syntax(char *inpt, t_data *data);
+void	heredoc_error(char *token);
 
 #endif

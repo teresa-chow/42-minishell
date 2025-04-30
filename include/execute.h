@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/29 15:07:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 12:37:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 
 # include "parse.h"
 
@@ -46,7 +47,12 @@ void		set_signals(t_data *data);
 void 		handle_signal(int i);
 
 /* ============================= REDIRECTIONS ============================== */
+// Heredoc
 int			redir_heredoc(t_data *data, t_word *word);
+int			build_heredoc_wrd(t_word **doc_word, char *input, t_data *data);
+void		print_to_pipe(t_word *doc_word, int *fd);
+int	        verify_quotes(char **eof, bool *quotes, t_data *data);
+// Input and Output redirection
 int 		redir_in_out_check(t_word *word, t_data *data);
 int			redir_in(t_word *word, t_data *data);
 int			redir_out(t_data *data, t_word *word);
