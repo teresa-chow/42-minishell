@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:47:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/01 00:35:21 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	update_word_and_reset_flag(t_data *data, t_word **word);
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 {
 	t_word	*last;
+	t_word	*prev;
 
 	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
 	if (!data->exp)
@@ -28,6 +29,7 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	last = NULL;
 	while (word)
 	{
+		prev = word;
 		data->word = &word;
 		if (analyze_token_context(&word, data) == -1)
 			return (free_exp(data, 1));
@@ -37,9 +39,9 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 				return (free_exp(data, 1));
 			reset_big_part_flags(data);
 		}
-		last = word;
-		if (word)
+		if (word && prev)
 			word = word->next;
+		last = prev;
 	}
 	free_exp(data, 0);
 	return (0);
@@ -90,10 +92,22 @@ static	void	update_word_and_reset_flag(t_data *data, t_word **word)
 
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node)
 {
+	t_word	*next;
+	t_word	*tmp;
+
+	tmp = (*node)->word;
+	while (tmp)
+	{
+		if (tmp->next == *curr)
+			tmp->next = (*curr)->next;
+		tmp = tmp->next;
+	}
+	next = (*curr)->next;
+	//*prev = NULL; // ?
 	if (*last)
 		(*last)->next = (*curr)->next;
 	if ((*node)->word == *curr)
 		(*node)->word = (*curr)->next;
 	free(*curr);
-	*curr = *last;
+	*curr = next;
 }

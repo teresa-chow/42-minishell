@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:43:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/01 00:40:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	handle_redir(t_data *data, t_word *word, bool in, bool out)
 static int	check_redir_in(t_word *word, t_data *data, bool *in)
 {
 	*in = true;
+	
 	if (!access(word->word, F_OK))
 	{
 		if (access(word->word, R_OK) == -1)
