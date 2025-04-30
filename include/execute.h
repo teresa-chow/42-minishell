@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 16:18:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:44:53 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 				t_tree_node *node, int count);
 
 /* =============================== SIGNALS ================================= */
-void		set_signals(t_data *data);
+void		set_signals(void);
 void 		handle_signal(int i);
 
 /* ============================= REDIRECTIONS ============================== */
