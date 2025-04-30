@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 16:38:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:13:38 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,17 @@ typedef struct s_expand
 - wild_word is used to create a temp t_word with 
 	new values to append to the original t_word
 */
-typedef	struct s_wildcard
+typedef struct s_wildcard
 {
-	bool	bgn;
-	bool	mid;
-	bool	end;
-	bool	bgn_ok;
-	bool	mid_ok;
-	bool	end_ok;
-	bool	print_dir;
-	struct	s_word	*wild_word;
+	bool			bgn;
+	bool			mid;
+	bool			end;
+	bool			bgn_ok;
+	bool			mid_ok;
+	bool			end_ok;
+	bool			print_dir;
+	struct s_word	*wild_word;
 }	t_wildcard;
-
 
 /* =========================== DATA (GENERAL USE) ========================== */
 /*

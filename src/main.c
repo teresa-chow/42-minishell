@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 18:44:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:14:30 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static void	init_prog(t_data *data, char **envp);
 static void	data_init(t_data *data, char **envp);
 
-int	global;
+int	g_global;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 			break;
 		}
 		read_input(&root, &data, env);
-		if (global == SIGINT)
+		if (g_global == SIGINT)
 			data.exit_status = ERR_INT;
 		if (root->word)
 			ast_depth_search(&data, &root, 0);

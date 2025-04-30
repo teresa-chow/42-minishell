@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 17:05:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:14:42 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	reset_mem(t_data *data, t_tree_node **root)
 	else
 		data->no_home = true;
 	free_ast(root);
-	global = 0;
+	g_global = 0;
 	data->has_hifen = false;
 	if (data->status == 0)
 		free_env_list(data, 0, &data->env);

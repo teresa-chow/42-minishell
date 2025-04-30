@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 20:55:26 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/04/30 23:10:39 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,24 @@ static void	join_color(char **rl_prompt, t_prompt prompt)
 	char	*tmp;
 	char	*tmp2;
 
-	tmp = ft_strjoin(BG_CYA, prompt.prog);
-	tmp2 = ft_strjoin(tmp, NC);
+	tmp = ft_strjoin("\001"BG_CYA"\002", prompt.prog);
+	tmp2 = ft_strjoin(tmp, "\001"NC"\002");
 	free(tmp);
-	tmp = ft_strjoin(tmp2, BG_RED);
+	tmp = ft_strjoin(tmp2, "\001"BG_RED"\002");
 	free(tmp2);
 	tmp2 = ft_strjoin(tmp, "☻ ");
 	free(tmp);
 	tmp = ft_strjoin(tmp2, prompt.usr);
 	free(tmp2);
-	tmp2 = ft_strjoin(tmp, NC);
+	tmp2 = ft_strjoin(tmp, "\001"NC"\002");
 	free(tmp);
-	tmp = ft_strjoin(tmp2, BG_YEL);
+	tmp = ft_strjoin(tmp2, "\001"BG_YEL"\002");
 	free(tmp2);
 	tmp2 = ft_strjoin(tmp, "🖿  ");
 	free(tmp);
 	tmp = ft_strjoin(tmp2, prompt.cwd);
 	free(tmp2);
-	tmp2 = ft_strjoin(tmp, NC);
+	tmp2 = ft_strjoin(tmp, "\001"NC"\002");
 	free(tmp);
 	*rl_prompt = ft_strjoin(tmp2, " ");
 	free(tmp2);
