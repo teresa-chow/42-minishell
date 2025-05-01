@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/01 00:35:21 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/01 10:45:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int	handle_process(t_data *data, t_word **word, t_word **last,
 				t_tree_node **node);
 static int	process_token(t_word **word, t_data *data);
-static void	delete_node(t_word **curr, t_word **last, t_tree_node **node);
+static void	delete_node(t_word **curr, t_word **last, t_tree_node **node,
+				t_word **prev);
 static void	update_word_and_reset_flag(t_data *data, t_word **word);
 
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
@@ -90,7 +91,8 @@ static	void	update_word_and_reset_flag(t_data *data, t_word **word)
 	(*word)->word = data->exp->new;
 }
 
-static void	delete_node(t_word **curr, t_word **last, t_tree_node **node)
+static void	delete_node(t_word **curr, t_word **last, t_tree_node **node,
+	t_word **prev)
 {
 	t_word	*next;
 	t_word	*tmp;
@@ -103,7 +105,7 @@ static void	delete_node(t_word **curr, t_word **last, t_tree_node **node)
 		tmp = tmp->next;
 	}
 	next = (*curr)->next;
-	//*prev = NULL; // ?
+	*prev = NULL;
 	if (*last)
 		(*last)->next = (*curr)->next;
 	if ((*node)->word == *curr)
