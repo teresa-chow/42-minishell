@@ -10,3 +10,7 @@
 [ ] cat < fail > new_file (same)
 
 [ ] env -i ./minishell + minishell (second call forward prints color prompt without XTERM)
+
+[ ] (norminette) lib/libft/ft_split.c
+[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
+[ ] (norminette) fix functions with 25+ lines and 4+ parameters
