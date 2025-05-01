@@ -115,6 +115,7 @@ typedef struct s_data
 	bool					has_hifen;
 	bool					has_vars;
 	bool					has_redir;
+	bool					in_heredoc; /// add this change
 }	t_data;
 
 #endif

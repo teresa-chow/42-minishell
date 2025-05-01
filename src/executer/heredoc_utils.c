@@ -54,3 +54,19 @@ void	print_to_pipe(t_word *doc_word, int *fd)
 		doc_word = doc_word->next;
 	}
 }
+
+void	parent_handle(int *fd, t_data *data, pid_t pid, int status)
+{
+	close(fd[1]);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	signal(SIGINT, handle_signal);
+	set_exit_status(&status, data);
+	if (data->exit_status)
+	{
+		close(fd[0]);
+		return ;
+	}
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+}

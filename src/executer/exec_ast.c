@@ -52,7 +52,10 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 	else if ((*node)->type == CMD)
 	{
 		if (exec_ast_cmd(data, node, pipeline) == -1)
+		{
+			reset_old_in_out(data->old_stdin, data->old_stdout); // add this because if fail
 			return (-1);
+		}
 	}
 	return (0);
 }

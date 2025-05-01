@@ -50,6 +50,7 @@ void		handle_signal(int i);
 // Heredoc
 int			redir_heredoc(t_data *data, t_word *word);
 int			build_heredoc_wrd(t_word **doc_word, char *input, t_data *data);
+void		parent_handle(int *fd, t_data *data, pid_t pid, int status);
 void		print_to_pipe(t_word *doc_word, int *fd);
 int			verify_quotes(char **eof, bool *quotes, t_data *data);
 // Input and Output redirection

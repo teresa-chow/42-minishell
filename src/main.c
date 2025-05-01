@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	env = 1;
 	if (!*envp)
 		env = 0;
+	g_global = 0; // add
 	init_prog(&data, envp);
 	while (data.status)
 		processing_loop(&data, env);

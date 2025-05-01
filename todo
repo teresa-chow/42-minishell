@@ -1,7 +1,7 @@
 CARLOS
-[ ] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
+[] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
 
-[ ] (open fd: redir_heredoc) cat << EOF + ctrl-D
+[ x ] (open fd: redir_heredoc) cat << EOF + ctrl-D
 [ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
 [ ] (open fd: redir_heredoc) cat << EOF << EOF
 

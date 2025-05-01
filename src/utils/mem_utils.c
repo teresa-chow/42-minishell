@@ -31,6 +31,9 @@ void	reset_mem(t_data *data, t_tree_node **root)
 	free_ast(root);
 	g_global = 0;
 	data->has_hifen = false;
+	if (data->in_heredoc)
+		data->in_heredoc = false; //////add this change. This is too in heredoc.c 
+					///but if return is -1 will not change to false
 	if (data->status == 0)
 		free_env_list(data, 0, &data->env);
 }
