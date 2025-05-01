@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:38:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:03:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ static int	finalyze_handle_input(char *input, t_data *data,
 {
 	if (!input)
 		heredoc_error(eof);
-	//else // ?
 	if (!data->quotes)
 	{
 		if (handle_tokens(doc_word, data, NULL) == -1)
@@ -133,9 +132,13 @@ static int	finalyze_handle_input(char *input, t_data *data,
 	}
 	else
 		free (eof);
+	free_env_list(data, 0, &data->env);
+	free_ast(&data->ast_root);
 	free_words(&doc_word);
 	free(input);
 	close(fd[1]);
+	close(data->old_stdin);
+	close(data->old_stdout);
 	data->quotes = false;
 	return (0);
 }
