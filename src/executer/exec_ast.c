@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/01 00:14:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:27:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ast_depth_search(t_data *data, t_tree_node **node, bool pipeline)
 	if (tmp->left)
 		ast_depth_search(data, &tmp->left, pipeline);
 	if (exec_ast(data, node, pipeline) == -1)
-		return ;//check early return
+		return ;
 	if (tmp->right)
 		ast_depth_search(data, &tmp->right, pipeline);
 }
