@@ -1,16 +1,29 @@
+CARLOS
 [ ] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
 
 [ ] (open fd: redir_heredoc) cat << EOF + ctrl-D
 [ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
 [ ] (open fd: redir_heredoc) cat << EOF << EOF
 
+[ ] (norminette) lib/libft/ft_split.c
+[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
+[ ] (norminette) fix functions with 25+ lines and 4+ parameters
+
+------------------------------------------------------------------------------------------
+
+TERESA
+src/executer/redir_check.c (vou rever este ficheiro: se precisares de o alterar, avisa-me pf)
+
 [ ] (open fd in child: redir_in) cmd_not_found < existing_file
 
 [ ] cat > new_file < fail (must print error message, return 1, create new_file)
 [ ] cat < fail > new_file (same)
 
+------------------------------------------------------------------------------------------
+
+Quem se despachar primeiro:
 [ ] env -i ./minishell + minishell (second call forward prints color prompt without XTERM)
 
-[ ] (norminette) lib/libft/ft_split.c
-[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
-[ ] (norminette) fix functions with 25+ lines and 4+ parameters
+------------------------------------------------------------------------------------------
+
+Testar e apontar erros !
