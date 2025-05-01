@@ -1,0 +1,12 @@
+[ ] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
+
+[ ] (open fd: redir_heredoc) cat << EOF + ctrl-D
+[ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
+[ ] (open fd: redir_heredoc) cat << EOF << EOF
+
+[ ] (open fd in child: redir_in) cmd_not_found < existing_file
+
+[ ] cat > new_file < fail (must print error message, return 1, create new_file)
+[ ] cat < fail > new_file (same)
+
+[ ] env -i ./minishell + minishell (second call forward prints color prompt without XTERM)
