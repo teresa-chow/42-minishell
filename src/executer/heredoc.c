@@ -28,7 +28,9 @@ int	redir_heredoc(t_data *data, t_word *word)
 	int		count;
 
 	count = 0;
-	old_in = dup(STDIN_FILENO);
+	dup2(data->old_stdout, STDOUT_FILENO); //// add
+	dup2(data->old_stdin, STDIN_FILENO); /// add
+ 	old_in = dup(STDIN_FILENO);
 	while (word)
 	{
 		if (word->redir == HEREDOC)
@@ -71,15 +73,6 @@ static int	handle_heredoc(char *eof, t_data *data, int old_in)
 	else
 		parent_handle(fd, data, pid, status); // add this because norm
 	return (data->exit_status);
-}
-
-void	handle_sign_child(int i)
-{
-	write (1, "\n", 1);
-	if (i == SIGINT)
-		g_global = SIGINT; //change this
-	rl_replace_line("", 0);
-	close(STDIN_FILENO); // add this
 }
 
 static int	set_pipe_and_fork(int *fd, pid_t *pid)

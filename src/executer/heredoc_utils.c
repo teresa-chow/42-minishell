@@ -65,8 +65,18 @@ void	parent_handle(int *fd, t_data *data, pid_t pid, int status)
 	if (data->exit_status)
 	{
 		close(fd[0]);
+		close(*fd);
 		return ;
 	}
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
+}
+
+void	handle_sign_child(int i) // add this
+{
+	write (1, "\n", 1);
+	if (i == SIGINT)
+		g_global = SIGINT;
+	rl_replace_line("", 0);
+	close(STDIN_FILENO);
 }

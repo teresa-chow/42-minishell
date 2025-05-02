@@ -1,9 +1,9 @@
 CARLOS
-[] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
+[x] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
 
-[ x ] (open fd: redir_heredoc) cat << EOF + ctrl-D
+[x] (open fd: redir_heredoc) cat << EOF + ctrl-D
 [ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
-[ ] (open fd: redir_heredoc) cat << EOF << EOF
+[x] (open fd: redir_heredoc) cat << EOF << EOF
 
 [ ] (norminette) lib/libft/ft_split.c
 [ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors

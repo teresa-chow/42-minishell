@@ -18,6 +18,11 @@ static int	expand_oldpwd(t_word *word, t_data *data);
 
 int	analyze_token_context(t_word **word, t_data *data)
 {
+	if ((*word)->redir == HEREDOC) ///// add
+	{
+		*word = (*word)->next;
+		return (0);
+	}
 	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word))
 		data->exp->export_exp_bfr_equal = true;
 	if (!ft_strcmp((*word)->word, "export"))

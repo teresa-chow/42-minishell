@@ -16,12 +16,19 @@
 void	pwd(t_data *data)
 {
 	char	*path;
+	t_env_node *pwd;
 
+	pwd = ft_getenv(data->env, "PWD"); /// add this to when we delete a folder, when in it
 	path = getcwd(NULL, 0);
 	if (!path)
 	{
-		perror("minishell");
-		data->exit_status = ERR;
+		if (pwd && pwd->val)
+			ft_putendl_fd (pwd->val, STDOUT_FILENO);
+		else
+		{
+			perror("minishell");
+			data->exit_status = ERR;
+		}
 	}
 	else
 	{

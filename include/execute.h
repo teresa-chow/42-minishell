@@ -45,6 +45,7 @@ void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 /* =============================== SIGNALS ================================= */
 void		set_signals(void);
 void		handle_signal(int i);
+void		handle_sign_child(int i); // add this
 
 /* ============================= REDIRECTIONS ============================== */
 // Heredoc

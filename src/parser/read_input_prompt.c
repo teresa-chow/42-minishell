@@ -14,7 +14,7 @@
 #include "../../include/utils.h"
 #include "../../include/struct.h"
 
-static void	init_prompt(t_prompt *prompt, char *usr);
+static void	init_prompt(t_prompt *prompt, char *usr, t_data *data); /// add data
 static void	join_rl_prompt(char **rl_prompt, t_prompt prompt, bool env);
 static void	join_color(char **rl_prompt, t_prompt prompt);
 static void	join_white(char **rl_prompt, t_prompt prompt);
@@ -28,21 +28,31 @@ char	*get_prompt(t_data *data, bool env)
 	ft_bzero(&prompt, sizeof(t_prompt));
 	usr = ft_getenv(data->env, "USER");
 	if (usr)
-		init_prompt(&prompt, usr->val);
+		init_prompt(&prompt, usr->val, data);
 	else
-		init_prompt(&prompt, "Undefined");
+		init_prompt(&prompt, "Undefined", data);
 	join_rl_prompt(&rl_prompt, prompt, env);
 	free_prompt(&prompt);
 	return (rl_prompt);
 }
 
-static void	init_prompt(t_prompt *prompt, char *usr)
+static void	init_prompt(t_prompt *prompt, char *usr, t_data *data)
 {
 	char	*cwd;
 	char	*dir;
+	t_env_node *pwd;
 
+	pwd = ft_getenv(data->env, "PWD"); /// add this to when we delete a folder, when in it
 	cwd = getcwd(NULL, 0);
-	dir = ft_strdup(ft_strrchr(cwd, '/'));
+	if (!cwd)
+	{
+		if (pwd && pwd->val)
+			dir = ft_strdup(pwd->val); //// add
+		else
+			dir = ft_strdup("/Undefined"); //// add
+	}
+	else
+		dir = ft_strdup(ft_strrchr(cwd, '/'));
 	prompt->prog = ft_strdup("minishell");
 	prompt->usr = ft_strdup(usr);
 	if (ft_strcmp(dir, "/"))
