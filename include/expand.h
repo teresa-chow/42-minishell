@@ -45,12 +45,12 @@ bool	is_valid_dollar(char *s);
 bool	is_valid_tilde(char *s);
 char	*find_next_quote_and_parse(char *s, t_data *data);
 char	*find_non_alnum(char *s);
+void	check_builtin_name(t_data *data, t_word **word);
 
 /* ============================== WILDCARDS ================================ */
 int		create_word_node(char *name, t_data *data);
 int		free_wild(t_data *data, int i, DIR *dir);
-int		handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts,
-			t_data *data);
+int		handle_ast_quotes(char **ast_p, char *pat, char **tmp, t_data *data);
 int		handle_wildcard(t_word *word, t_data *data);
 int		has_only_ast(char *s);
 int		has_quotes(char *s);
@@ -65,5 +65,6 @@ t_word	*last_word(t_word *tmp_word);
 void	find_substr(char **name, char *tmp, int *i);
 void	update_tword(t_data *data, t_word **word, t_word *last);
 void	reset_bool(t_data *data);
+void	reset_data(t_data *data, bool *build_new);
 
 #endif

@@ -25,7 +25,8 @@ char	*find_next_quote_and_parse(char *s, t_data *data)
 	{
 		if (data->exp->export_cmd && *s == '=' && first_char != '=')
 			data->exp->export_has_equal = true;
-		if ((*s == '$' && is_valid_dollar(s) && !data->exp->in_sing) || data->in_heredoc)
+		if ((*s == '$' && is_valid_dollar(s) && !data->exp->in_sing)
+			|| data->in_heredoc)
 			data->exp->to_exp = true;
 		if (*s == '\'' && data->exp->in_sing)
 			return (s + 1);

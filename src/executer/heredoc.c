@@ -18,8 +18,8 @@
 static int	handle_heredoc(char *eof, t_data *data, int old_in);
 static int	set_pipe_and_fork(int *fd, pid_t *pid);
 static void	handle_input(int *fd, char *eof, t_data *data);
-static int	finalyze_handle_input(char *input, t_data *data,
-				t_word *doc_word, char *eof, int *fd);
+static int	finalyze_handle_input(char *input, t_data *data,\
+		char *eof, int *fd);
 
 int	redir_heredoc(t_data *data, t_word *word)
 {
@@ -28,9 +28,7 @@ int	redir_heredoc(t_data *data, t_word *word)
 	int		count;
 
 	count = 0;
-	dup2(data->old_stdout, STDOUT_FILENO); //// add
-	dup2(data->old_stdin, STDIN_FILENO); /// add
- 	old_in = dup(STDIN_FILENO);
+	old_in = dup(STDIN_FILENO);
 	while (word)
 	{
 		if (word->redir == HEREDOC)
@@ -94,10 +92,8 @@ static int	set_pipe_and_fork(int *fd, pid_t *pid)
 static void	handle_input(int *fd, char *eof, t_data *data)
 {
 	char	*input;
-	t_word	*doc_word;
 
 	signal(SIGINT, handle_sign_child);
-	doc_word = NULL;
 	if (verify_quotes(&eof, &data->quotes, data) == -1)
 		return ;
 	close(fd[0]);
@@ -106,7 +102,7 @@ static void	handle_input(int *fd, char *eof, t_data *data)
 	{
 		if (!data->quotes)
 		{
-			if (build_heredoc_wrd(&doc_word, input, data) == -1)
+			if (build_heredoc_wrd(input, data) == -1)
 				return ;
 		}
 		else
@@ -114,28 +110,27 @@ static void	handle_input(int *fd, char *eof, t_data *data)
 		free(input);
 		input = readline("> ");
 	}
-	if (finalyze_handle_input(input, data, doc_word, eof, fd) == -1)
+	if (finalyze_handle_input(input, data, eof, fd) == -1)
 		return ;
 }
 
-static int	finalyze_handle_input(char *input, t_data *data,
-				t_word *doc_word, char *eof, int *fd)
+static int	finalyze_handle_input(char *input, t_data *data, char *eof, int *fd)
 {
 	if (!input && g_global != SIGINT)
 		heredoc_error(eof);
 	if (!data->quotes && input)
 	{
 		data->in_heredoc = true; ///// add this change
-		if (handle_tokens(doc_word, data, NULL) == -1)
+		if (handle_tokens(data->doc_word, data, NULL) == -1)
 			return (-1);
 		data->in_heredoc = false; //////add this change
-		print_to_pipe(doc_word, fd);
+		print_to_pipe(data->doc_word, fd);
 	}
 	else if (input)
 		free (eof);
 	free_env_list(data, 0, &data->env);
 	free_ast(&data->ast_root);
-	free_words(&doc_word);
+	free_words(&data->doc_word);
 	free(input);
 	close(fd[1]);
 	close(data->old_stdin);

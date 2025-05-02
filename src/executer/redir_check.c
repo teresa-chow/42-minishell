@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/01 11:20:23 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:21:52 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,54 +15,73 @@
 #include "../../include/errors.h"
 #include "../../include/utils.h"
 
-static int	handle_redir(t_data *data, t_word *word, bool in, bool out);
-static int	check_redir_in(t_word *word, t_data *data, bool *in);
-static int	check_redir_out(t_word *word, t_data *data, bool *out);
+static int	is_redirect(t_word *word);
+static int	handle_redir( t_data *data, t_word *word);
+static int	handle_redir_in(t_data *data, t_word *word);
+static int	handle_redir_out(t_data *data, t_word *word);
 
-int	redir_in_out_check(t_word *word, t_data *data)
+int	redir_check(t_word *word, t_data *data)
 {
-	t_word	*tmp;
-	bool	in;
-	bool	out;
-	int		i;
+	t_word			*tmp;
 
-	i = 0;
-	in = false;
-	out = false;
 	if (!word)
 		return (0);
 	tmp = word;
+	data->redir = ft_calloc(1, sizeof(t_redir_check));
+	if (!is_redirect(word))
+		return (0);
+	if (handle_redir(data, tmp) == -1)
+	{
+		reset_old_in_out(data);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	is_redirect(t_word *word)
+{
+	t_word	*tmp;
+
+	tmp = word;
 	while (tmp)
 	{
-		if (tmp->redir != NONE && tmp->next)
-		{
-			if (tmp->redir == IN)
-				i = check_redir_in(tmp->next, data, &in);
-			if (tmp->redir == OUT || tmp->redir == APPEND)
-				i = check_redir_out(tmp->next, data, &out);
-			if (i != 0)
-				return (-1);
-		}
+		if (tmp->redir == IN || tmp->redir == OUT || tmp->redir == APPEND)
+			return (1);
 		tmp = tmp->next;
 	}
-	return (handle_redir(data, word, in, out));
+	return (0);
 }
 
-static int	handle_redir(t_data *data, t_word *word, bool in, bool out)
+static int	handle_redir(t_data *data, t_word *word)
 {
-	int	i;
-
-	i = 0;
-	if (in)
-		i = redir_in(word, data);
-	if (out)
-		i = redir_out(data, word);
-	return (i);
+	while (word)
+	{
+		if ((word->redir != NONE && word->redir != HEREDOC) && word->next)
+		{
+			if (word->redir == IN)
+			{
+				if (data->redir->in)
+					close(data->redir->fd_in);
+				data->redir->in = 0;
+				if (handle_redir_in(data, word->next) == -1)
+					return (-1);
+			}
+			if (word->redir == OUT || word->redir == APPEND)
+			{
+				if (data->redir->out)
+					close(data->redir->fd_out);
+				data->redir->out = 0;
+				if (handle_redir_out(data, word) == -1)
+					return (-1);
+			}
+		}
+		word = word->next;
+	}
+	return (0);
 }
 
-static int	check_redir_in(t_word *word, t_data *data, bool *in)
+static int	handle_redir_in(t_data *data, t_word *word)
 {
-	*in = true;
 	if (!access(word->word, F_OK))
 	{
 		if (access(word->word, R_OK) == -1)
@@ -72,18 +91,20 @@ static int	check_redir_in(t_word *word, t_data *data, bool *in)
 			data->exit_status = ERR;
 			return (-1);
 		}
+		if (redir_in(data, word) == -1)
+			return (-1);
 	}
 	else
-		return (no_file_or_dir(word->word, data, 1), 1);
+		return (no_file_or_dir(word->word, data, 1), -1);
+	data->redir->in = 1;
 	return (0);
 }
 
-static int	check_redir_out(t_word *word, t_data *data, bool *out)
+static int	handle_redir_out(t_data *data, t_word *word)
 {
-	*out = true;
 	if (!access(word->word, F_OK))
 	{
-		if (access(word->word, W_OK) < 0)
+		if (access(word->word, W_OK) == -1)
 		{
 			print_fd(STDERR_FILENO, "minishell: %s: ", word->word);
 			perror("");
@@ -91,5 +112,8 @@ static int	check_redir_out(t_word *word, t_data *data, bool *out)
 			return (-1);
 		}
 	}
+	if (redir_out(data, word) == -1)
+		return (-1);
+	data->redir->out = 1;
 	return (0);
 }

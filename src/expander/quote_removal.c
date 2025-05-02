@@ -53,7 +53,7 @@ int	remove_quotes(char **str, bool to_free, t_data *data)
 
 static int	quoted_len(char *word)
 {
-	int	len;
+	int		len;
 	char	*tmp;
 	char	first_quote;
 
@@ -65,7 +65,7 @@ static int	quoted_len(char *word)
 		if (*tmp == '\'' || *tmp == '"')
 		{
 			first_quote = *tmp;
-			break;
+			break ;
 		}
 		tmp++;
 	}
@@ -80,7 +80,7 @@ static int	quoted_len(char *word)
 
 static	void	add_no_quotes(char **str, char **new)
 {
-	int	i;
+	int		i;
 	char	*tmp;
 	char	first_quote;
 
@@ -92,7 +92,7 @@ static	void	add_no_quotes(char **str, char **new)
 		if (*tmp == '\'' || *tmp == '"')
 		{
 			first_quote = *tmp;
-			break;
+			break ;
 		}
 		tmp++;
 	}

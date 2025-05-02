@@ -13,7 +13,7 @@
 #include "../../include/expand.h"
 
 static int	find_return(int i, int j);
-static void	init_vars(int *i, int *j, t_data *data, char *fst, char *last);
+static void	init_vars(t_data *data, char *fst, char *last);
 
 /* 
 'pat' var name is short for 'pattern'
@@ -65,29 +65,27 @@ int	match_mid(char *pat, char *last_ast, char *name, t_data *data)
 {
 	char	*ast_pos;
 	char	*tmp;
-	bool	has_quotes;
-	int		i;
-	int		j;
+	int		incre[2];
 
-	has_quotes = false;
-	init_vars(&i, &j, data, pat, last_ast);
+	ft_bzero(incre, sizeof(int) * 2);
+	init_vars(data, pat, last_ast);
 	pat = find_first_no_ast(pat);
 	while (pat && *pat)
 	{
 		tmp = pat;
-		j++;
-		if (handle_ast_quotes(&ast_pos, pat, &tmp, &has_quotes, data) == -1)
+		incre[1]++;
+		if (handle_ast_quotes(&ast_pos, pat, &tmp, data) == -1)
 			return (-1);
-		find_substr(&name, tmp, &i);
+		find_substr(&name, tmp, &incre[0]);
 		if (ast_pos)
 			*ast_pos = '*';
 		pat = find_first_no_ast(ast_pos);
 	}
-	if (has_quotes)
+	if (data->wild->has_quotes)
 		free(tmp);
 	*last_ast = '*';
-	has_quotes = false;
-	return (find_return(i, j));
+	data->wild->has_quotes = false;
+	return (find_return(incre[0], incre[1]));
 }
 
 static int	find_return(int i, int j)
@@ -97,10 +95,8 @@ static int	find_return(int i, int j)
 	return (0);
 }
 
-static	void	init_vars(int *i, int *j, t_data *data, char *fst, char *last)
+static	void	init_vars(t_data *data, char *fst, char *last)
 {
-	*i = 0;
-	*j = 0;
 	while (fst != last)
 	{
 		if (*fst != '*')

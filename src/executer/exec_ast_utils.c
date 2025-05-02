@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:42:54 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:19:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	cd_arg_check(t_word *word, t_data *data)
 
 void	exec_child(t_data *data, t_word *word, bool pipeline)
 {
+	t_word	*tmp;
+
+	tmp = word;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (!tmp)
+		return ;
 	if (!pipeline)
 		exec_fork_child(data, word);
 	else

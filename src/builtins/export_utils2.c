@@ -15,6 +15,7 @@
 #include "../../include/errors.h"
 
 static int	check_syntax(char *s, t_data *data, int *exit);
+static int	set_error(t_data *data, int *exit, char *s);
 
 void	handle_with_args(t_word *word, t_data *data, int *exit)
 {
@@ -53,12 +54,7 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 		return (0);
 	tmp = s;
 	if ((s && ft_isdigit(*s)) || *s == '=')
-	{
-		if (*exit == -1)
-			*exit = ERR;
-		error_export_syntax(s, data);
-		return (0);
-	}
+		return (set_error(data, exit, s));
 	while (*tmp)
 	{
 		if ((*tmp == '+' && *(tmp + 1) == '=') || *tmp == '=')
@@ -73,4 +69,12 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 		tmp++;
 	}
 	return (1);
+}
+
+static int	set_error(t_data *data, int *exit, char *s)
+{
+	if (*exit == -1)
+		*exit = ERR;
+	error_export_syntax(s, data);
+	return (0);
 }

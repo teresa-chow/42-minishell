@@ -25,10 +25,7 @@ int	analyze_token_context(t_word **word, t_data *data)
 	}
 	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word))
 		data->exp->export_exp_bfr_equal = true;
-	if (!ft_strcmp((*word)->word, "export"))
-		data->exp->export_cmd = true;
-	if (!ft_strcmp((*word)->word, "cd"))
-		data->exp->cd_cmd = true;
+	check_builtin_name(data, word);
 	if (is_valid_tilde((*word)->word))
 	{
 		if (expand_tilde(word, data) == -1)

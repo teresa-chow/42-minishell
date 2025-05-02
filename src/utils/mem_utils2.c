@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 17:07:41 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:55:45 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,5 @@ void	free_pipeline(t_pipeline *pipeline)
 		pipeline->cmd_lst = pipeline->cmd_lst->left;
 		free(tmp);
 	}
+	pipeline = NULL;
 }

@@ -13,7 +13,7 @@
 #include "../../include/expand.h"
 
 static int	handle_process(t_data *data, t_word **word, t_word **last,
-				t_tree_node **node, t_word **prev);
+				t_tree_node **node);
 static int	process_token(t_word **word, t_data *data);
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node,
 				t_word **prev);
@@ -22,7 +22,6 @@ static void	update_word_and_reset_flag(t_data *data, t_word **word);
 int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 {
 	t_word	*last;
-	t_word	*prev;
 
 	data->exp = ft_calloc(sizeof(t_expand), sizeof(char));
 	if (!data->exp)
@@ -30,31 +29,31 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 	last = NULL;
 	while (word)
 	{
-		prev = word;
+		data->exp->prev = word;
 		data->word = &word;
 		if (analyze_token_context(&word, data) == -1)
 			return (free_exp(data, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
-			if (handle_process(data, &word, &last, node, &prev) == -1)
+			if (handle_process(data, &word, &last, node) == -1)
 				return (free_exp(data, 1));
 			reset_big_part_flags(data);
 		}
-		if (word && prev)
+		if (word && data->exp->prev)
 			word = word->next;
-		last = prev;
+		last = data->exp->prev;
 	}
 	free_exp(data, 0);
 	return (0);
 }
 
 static int	handle_process(t_data *data, t_word **word, t_word **last,
-	t_tree_node **node, t_word **prev)
+	t_tree_node **node)
 {
 	if (process_token(word, data) == -1)
 		return (-1);
 	if (!(*word)->word && node)
-		delete_node(word, last, node, prev);
+		delete_node(word, last, node, &data->exp->prev);
 	return (0);
 }
 

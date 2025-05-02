@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:04:54 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:47:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <sys/wait.h>
 
 # include "parse.h"
+
+typedef struct s_redir_check
+{
+	bool					in;
+	bool					out;
+	int						fd_in;
+	int						fd_out;
+}	t_redir_check;
 
 typedef struct s_pipeline
 {
@@ -45,23 +53,21 @@ void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 /* =============================== SIGNALS ================================= */
 void		set_signals(void);
 void		handle_signal(int i);
-void		handle_sign_child(int i); // add this
+void		handle_sign_child(int i);
 
 /* ============================= REDIRECTIONS ============================== */
 // Heredoc
 int			redir_heredoc(t_data *data, t_word *word);
-int			build_heredoc_wrd(t_word **doc_word, char *input, t_data *data);
+int			build_heredoc_wrd(char *input, t_data *data);
 void		parent_handle(int *fd, t_data *data, pid_t pid, int status);
 void		print_to_pipe(t_word *doc_word, int *fd);
 int			verify_quotes(char **eof, bool *quotes, t_data *data);
 // Input and Output redirection
-int			redir_in_out_check(t_word *word, t_data *data);
-int			redir_in(t_word *word, t_data *data);
+int			redir_check(t_word *word, t_data *data);
+int			redir_in(t_data *data, t_word *word);
 int			redir_out(t_data *data, t_word *word);
-void		save_old_in_out(int *old_stdin, int *old_stdout);
-void		reset_old_in_out(int old_stdin, int old_stdout);
-void		redirect_stdout(int *fd, int i);
-void		close_fd(int *fd, int count);
+void		save_old_in_out(t_data *data);
+void		reset_old_in_out(t_data *data);
 
 /* ================================ UTILS ================================== */
 int			is_builtin_cmd(t_word *word);

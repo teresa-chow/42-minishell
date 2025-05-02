@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:24:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:38:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:15:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,34 @@
 #include "../../include/errors.h"
 #include "../../include/utils.h"
 
-static int	get_fd(t_word *word, int *fd, t_data *data);
-static int	open_new_file(t_data *data, t_word *word, int *fd);
-static void	redirect_stdin(int *fd, int i);
+static int	open_new_file(t_data *data, t_word *word);
+static void	redirect_stdin(int fd);
 
-int	redir_in(t_word *word, t_data *data)
+int	redir_in(t_data *data, t_word *word)
 {
-	int	fd;
-
-	fd = 0;
-	if (get_fd(word, &fd, data) == -1)
+	if (open_new_file(data, word) == -1)
 		return (-1);
-	redirect_stdin(&fd, 0);
 	return (0);
 }
 
-static int	get_fd(t_word *word, int *fd, t_data *data)
+static int	open_new_file(t_data *data, t_word *word)
 {
-	while (word)
-	{
-		if (word->redir == IN && word->next)
-		{
-			if (*fd)
-			{
-				if (close(*fd) < 0)
-				{
-					perror("minishell: close");
-					data->exit_status = ERR;
-					return (-1);
-				}
-			}
-			if (open_new_file(data, word->next, fd) == -1)
-				return (-1);
-		}
-		word = word->next;
-	}
-	return (0);
-}
-
-static int	open_new_file(t_data *data, t_word *word, int *fd)
-{
-	*fd = open(word->word, O_RDONLY);
-	if (*fd < 0)
+	data->redir->fd_in = open(word->word, O_RDONLY);
+	if (data->redir->fd_in < 0)
 	{
 		print_fd(STDERR_FILENO, "minishell: %s: ", word->next->word);
 		perror("");
 		data->exit_status = ERR;
 		return (-1);
 	}
+	else
+		redirect_stdin(data->redir->fd_in);
 	return (0);
 }
 
-static void	redirect_stdin(int *fd, int i)
+static void	redirect_stdin(int fd)
 {
-	if (dup2(fd[i], STDIN_FILENO) == -1)
+	if (dup2(fd, STDIN_FILENO) == -1)
 	{
 		perror("minishell: dup2");
 		return ;

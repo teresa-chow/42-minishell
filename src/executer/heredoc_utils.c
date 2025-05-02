@@ -25,7 +25,7 @@ int	verify_quotes(char **eof, bool *quotes, t_data *data)
 	return (0);
 }
 
-int	build_heredoc_wrd(t_word **doc_word, char *input, t_data *data)
+int	build_heredoc_wrd(char *input, t_data *data)
 {
 	t_word	*last;
 	t_word	*new;
@@ -36,11 +36,11 @@ int	build_heredoc_wrd(t_word **doc_word, char *input, t_data *data)
 	new->word = ft_strdup(input);
 	if (!new->word)
 		return (error_allocation(data));
-	last = last_word(*doc_word);
+	last = last_word(data->doc_word);
 	if (last)
 		last->next = new;
 	else
-		*doc_word = new;
+		data->doc_word = new;
 	return (0);
 }
 
@@ -65,7 +65,6 @@ void	parent_handle(int *fd, t_data *data, pid_t pid, int status)
 	if (data->exit_status)
 	{
 		close(fd[0]);
-		close(*fd);
 		return ;
 	}
 	dup2(fd[0], STDIN_FILENO);

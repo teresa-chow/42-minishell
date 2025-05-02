@@ -38,9 +38,9 @@ char	*get_prompt(t_data *data, bool env)
 
 static void	init_prompt(t_prompt *prompt, char *usr, t_data *data)
 {
-	char	*cwd;
-	char	*dir;
-	t_env_node *pwd;
+	char		*cwd;
+	char		*dir;
+	t_env_node	*pwd;
 
 	pwd = ft_getenv(data->env, "PWD"); /// add this to when we delete a folder, when in it
 	cwd = getcwd(NULL, 0);

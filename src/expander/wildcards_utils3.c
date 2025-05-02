@@ -36,17 +36,22 @@ void	find_substr(char **name, char *tmp, int *i)
 	}
 }
 
-int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, bool *qts,
-	t_data *data)
+int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, t_data *data)
 {
 	*ast_p = next_ast(pat);
 	if (*ast_p)
 		**ast_p = 0;
 	if (has_quotes(pat))
 	{
-		*qts = true;
+		data->wild->has_quotes = true;
 		if (remove_quotes(tmp, false, data) == -1)
 			return (-1);
 	}
 	return (0);
+}
+
+void	reset_data(t_data *data, bool *build_new)
+{
+	reset_bool(data);
+	*build_new = false;
 }

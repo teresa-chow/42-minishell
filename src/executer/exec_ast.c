@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/01 15:27:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:11:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 	{
 		if (exec_ast_cmd(data, node, pipeline) == -1)
 		{
-			reset_old_in_out(data->old_stdin, data->old_stdout); // add this because if fail
+			// we must to have this funtion here to close 
+			//everything when we receive a sigint, for example
+			reset_old_in_out(data);
 			return (-1);
 		}
 	}
@@ -62,7 +64,7 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 
 int	exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline)
 {
-	save_old_in_out(&data->old_stdin, &data->old_stdout);
+	save_old_in_out(data);
 	if (redir_heredoc(data, (*node)->word) != 0)
 		return (-1);
 	if (handle_tokens((*node)->word, data, node) == -1)
@@ -71,13 +73,13 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline)
 		return (-1);
 	if (process_remove_quotes((*node)->word, data) == -1)
 		return (-1);
-	if (redir_in_out_check((*node)->word, data) != 0)
+	if (redir_check((*node)->word, data) != 0)
 		return (-1);
 	if (is_builtin_cmd((*node)->word))
 		exec_builtin_cmd(data, (*node)->word);
 	else
 		exec_child(data, (*node)->word, pipeline);
-	reset_old_in_out(data->old_stdin, data->old_stdout);
+	reset_old_in_out(data);
 	return (0);
 }
 

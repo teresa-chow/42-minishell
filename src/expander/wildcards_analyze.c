@@ -92,8 +92,7 @@ static int	directory_analyze(char *s, t_data *data)
 			if (create_word_node(entry->d_name, data) == -1)
 				return (free_wild(data, 1, dir));
 		}
-		reset_bool(data);
-		build_new = false;
+		reset_data(data, &build_new);
 		entry = readdir(dir);
 	}
 	closedir(dir);

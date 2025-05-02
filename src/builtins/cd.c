@@ -16,7 +16,9 @@
 #include "../../include/expand.h"
 
 static	int	update_pwd_and_oldpwd(t_data *data);
+static	int	check_hifen(t_data *data, char *to_exec);
 static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);
+void		error_cd(t_data *data);
 
 void	cd(t_word *input, t_data *data)
 {
@@ -29,20 +31,13 @@ void	cd(t_word *input, t_data *data)
 	{
 		if (!data->env_home_var)
 		{
-			print_fd(2, "minishell: cd: HOME not set\n", NULL);
-			data->exit_status = ERR;
+			error_cd(data);
 			return ;
 		}
 		to_exec = data->env_home_var;
 	}
-	if (data->has_hifen && !ft_strcmp("-", to_exec))
-	{
-		print_fd(STDERR_FILENO, "minishell: OLDPWD not set\n", NULL);
-		data->exit_status = ERR;
+	if (check_hifen(data, to_exec) == -1)
 		return ;
-	}
-	else if (data->has_hifen)
-		ft_putendl_fd(to_exec, STDOUT_FILENO);
 	if (chdir(to_exec) == -1)
 	{
 		cd_error(to_exec, data, 1);
@@ -91,4 +86,23 @@ static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr)
 		else
 			old->val = curr;
 	}
+}
+
+static int	check_hifen(t_data *data, char *to_exec)
+{
+	if (data->has_hifen && !ft_strcmp("-", to_exec))
+	{
+		print_fd(STDERR_FILENO, "minishell: OLDPWD not set\n", NULL);
+		data->exit_status = ERR;
+		return (-1);
+	}
+	else if (data->has_hifen)
+		ft_putendl_fd(to_exec, STDOUT_FILENO);
+	return (0);
+}
+
+void	error_cd(t_data *data)
+{
+	print_fd(2, "minishell: cd: HOME not set\n", NULL);
+	data->exit_status = ERR;
 }

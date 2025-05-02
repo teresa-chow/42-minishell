@@ -70,6 +70,7 @@ typedef struct s_expand
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
 	bool	cd_cmd;
+	struct s_word	*prev;
 }	t_expand;
 
 /*
@@ -85,6 +86,7 @@ typedef struct s_wildcard
 	bool			mid_ok;
 	bool			end_ok;
 	bool			print_dir;
+	bool			has_quotes; // add
 	struct s_word	*wild_word;
 }	t_wildcard;
 
@@ -103,9 +105,11 @@ typedef struct s_data
 	t_env_node				*env;
 	struct s_tree_node		*ast_root;
 	struct s_pipeline		*pipeline;
+	struct s_redir_check	*redir;
 	t_expand				*exp;
 	t_wildcard				*wild;
 	struct s_word			**word;
+	struct s_word			*doc_word;
 	char					*env_home_var;
 	int						old_stdin;
 	int						old_stdout;

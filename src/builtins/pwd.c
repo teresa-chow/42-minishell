@@ -15,10 +15,11 @@
 
 void	pwd(t_data *data)
 {
-	char	*path;
-	t_env_node *pwd;
+	char		*path;
+	t_env_node	*pwd;
 
-	pwd = ft_getenv(data->env, "PWD"); /// add this to when we delete a folder, when in it
+	pwd = ft_getenv(data->env, "PWD"); /// add this to when 
+				//we delete a folder, when in it
 	path = getcwd(NULL, 0);
 	if (!path)
 	{
