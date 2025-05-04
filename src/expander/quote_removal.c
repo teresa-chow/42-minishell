@@ -17,6 +17,17 @@ int			remove_quotes(char **str, bool to_free, t_data *data);
 static int	quoted_len(char *word);
 static void	add_no_quotes(char **str, char **new);
 
+char	find_in(char *s)
+{
+	while (*s)
+	{
+		if (*s == '\'' || *s == '"')
+			break ;
+		s++;
+	}
+	return (*s);
+}
+
 int	process_remove_quotes(t_word *word, t_data *data)
 {
 	while (word)
@@ -54,25 +65,22 @@ int	remove_quotes(char **str, bool to_free, t_data *data)
 static int	quoted_len(char *word)
 {
 	int		len;
-	char	*tmp;
-	char	first_quote;
+	char	in_qt;
+	bool	in;
 
 	len = 0;
-	tmp = word;
-	first_quote = 0;
-	while (*tmp) ///// add
-	{
-		if (*tmp == '\'' || *tmp == '"')
-		{
-			first_quote = *tmp;
-			break ;
-		}
-		tmp++;
-	}
+	in_qt = find_in(word);
 	while (*word)
 	{
-		if (*word != first_quote)
+		if (*word != in_qt)
 			len++;
+		if (*word == in_qt && in)
+		{
+			in = false;
+			in_qt = find_in(word + 1);
+		}
+		if (*word == in_qt && !in)
+			in = true;
 		word++;
 	}
 	return (len);
@@ -81,25 +89,23 @@ static int	quoted_len(char *word)
 static	void	add_no_quotes(char **str, char **new)
 {
 	int		i;
-	char	*tmp;
-	char	first_quote;
+	char	in_qt;
+	bool	in;
 
 	i = -1;
-	tmp = *str;
-	first_quote = 0;
-	while (*tmp) ////// add
-	{
-		if (*tmp == '\'' || *tmp == '"')
-		{
-			first_quote = *tmp;
-			break ;
-		}
-		tmp++;
-	}
+	in = false;
+	in_qt = find_in(*str);
 	while (**str)
 	{
-		if (**str != first_quote)
+		if (**str != in_qt)
 			new[0][++i] = *(*str);
+		if (**str == in_qt && in)
+		{
+			in = false;
+			in_qt = find_in(*(str) + 1);
+		}
+		if (**str == in_qt && !in)
+			in = true;
 		(*str)++;
 	}
 }
