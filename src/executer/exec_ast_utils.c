@@ -57,6 +57,11 @@ static void	exec_fork_child(t_data *data, t_word *word)
 	}
 	else if (pid == 0)
 	{
+		if (word->in_fd)
+		{
+			dup2(word->in_fd, STDIN_FILENO);
+			close_heredoc_fds(data, NULL);
+		}
 		signal(SIGINT, SIG_DFL);
 		exec_external(data, word);
 	}

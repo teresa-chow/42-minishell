@@ -76,6 +76,10 @@ static void	processing_loop(t_data *data, bool env)
 	if (g_global == SIGINT)
 		data->exit_status = ERR_INT;
 	if (root->word)
-		ast_depth_search(data, &root, 0);
+	{
+		if (!search_heredoc(data, &root))
+			ast_depth_search(data, &root, 0);
+		close_heredoc_fds(data, NULL);
+	}
 	reset_mem(data, &root);
 }

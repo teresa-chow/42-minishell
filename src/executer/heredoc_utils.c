@@ -67,8 +67,6 @@ void	parent_handle(int *fd, t_data *data, pid_t pid, int status)
 		close(fd[0]);
 		return ;
 	}
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
 }
 
 void	handle_sign_child(int i) // add this

@@ -15,7 +15,7 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-static int	handle_heredoc(char *eof, t_data *data, int old_in);
+static int	handle_heredoc(char *eof, t_data *data, t_word *word);
 static int	set_pipe_and_fork(int *fd, pid_t *pid);
 static void	handle_input(int *fd, char *eof, t_data *data);
 static int	finalyze_handle_input(char *input, t_data *data,\
@@ -24,32 +24,22 @@ static int	finalyze_handle_input(char *input, t_data *data,\
 int	redir_heredoc(t_data *data, t_word *word)
 {
 	char	*eof;
-	int		old_in;
-	int		count;
 
-	count = 0;
-	old_in = dup(STDIN_FILENO);
+	close_heredoc_fds(data, NULL);
 	while (word)
 	{
-		if (word->redir == HEREDOC)
+		if (word->next && word->next->redir == HEREDOC)
 		{
-			count++;
-			if (count > 1)
-				dup2(old_in, STDIN_FILENO);
-			eof = word->next->word;
-			if (handle_heredoc(eof, data, old_in) != 0)
-			{
-				close(old_in); /// add
+			eof = word->next->next->word;
+			if (handle_heredoc(eof, data, word) != 0)
 				return (-1);
-			}
 		}
 		word = word->next;
 	}
-	close(old_in);
 	return (0);
 }
 
-static int	handle_heredoc(char *eof, t_data *data, int old_in)
+static int	handle_heredoc(char *eof, t_data *data, t_word *word)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -61,15 +51,19 @@ static int	handle_heredoc(char *eof, t_data *data, int old_in)
 		return (-1);
 	if (pid == 0)
 	{
+		close_heredoc_fds(data, NULL);
 		data->exit_status = 0; // add
 		handle_input(fd, eof, data); //// add this block
 		if (g_global == SIGINT)
 			data->exit_status = 130;
-		close(old_in);
 		exit (data->exit_status);
 	}
 	else
+	{
+		word->in_fd = dup(fd[0]);
+		close(fd[0]);
 		parent_handle(fd, data, pid, status); // add this because norm
+	}
 	return (data->exit_status);
 }
 

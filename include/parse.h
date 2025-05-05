@@ -52,6 +52,7 @@ typedef struct s_word
 	struct s_word		*next;
 	char				*word;
 	t_redir				redir;
+	int				in_fd;
 }	t_word;
 
 typedef struct s_word_lst

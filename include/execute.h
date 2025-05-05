@@ -58,7 +58,9 @@ void		handle_sign_child(int i);
 /* ============================= REDIRECTIONS ============================== */
 // Heredoc
 int			redir_heredoc(t_data *data, t_word *word);
+int    			search_heredoc(t_data *data, t_tree_node **node); ///add
 int			build_heredoc_wrd(char *input, t_data *data);
+void			close_heredoc_fds(t_data *data, t_tree_node *node);///add
 void		parent_handle(int *fd, t_data *data, pid_t pid, int status);
 void		print_to_pipe(t_word *doc_word, int *fd);
 int			verify_quotes(char **eof, bool *quotes, t_data *data);
@@ -72,5 +74,7 @@ void		reset_old_in_out(t_data *data);
 /* ================================ UTILS ================================== */
 int			is_builtin_cmd(t_word *word);
 int			cd_arg_check(t_word *word, t_data *data);
+
+
 
 #endif
