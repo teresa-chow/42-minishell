@@ -80,14 +80,14 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			dup2(pipeline.fd[count][1], STDOUT_FILENO);
 			close(pipeline.fd[count][1]);
 		}
-		if (heredoc_fd)
-			dup2(heredoc_fd, STDIN_FILENO);
-		else if (count > 0)
+		if (count > 0)
 		{
 			close(pipeline.fd[count - 1][1]);
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
+		if (heredoc_fd)
+			dup2(heredoc_fd, STDIN_FILENO);
 		close_heredoc_fds(data, NULL);
 		exec_ast(data, &node, 1);
 		free_child(pipeline, data);

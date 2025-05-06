@@ -46,7 +46,6 @@ void	exec_child(t_data *data, t_word *word, bool pipeline)
 static void	exec_fork_child(t_data *data, t_word *word)
 {
 	int		status;
-	t_word		*tmp;
 	pid_t	pid;
 
 	status = 0;
@@ -58,16 +57,10 @@ static void	exec_fork_child(t_data *data, t_word *word)
 	}
 	else if (pid == 0)
 	{
-		tmp = word;
-		while (tmp)
+		if (word->next->in_fd)
 		{
-			if (tmp->in_fd)
-			{
-				dup2(tmp->in_fd, STDIN_FILENO);
-				close_heredoc_fds(data, NULL);
-				break;
-			}
-			tmp = tmp->next;
+			dup2(word->next->in_fd, STDIN_FILENO);
+			close_heredoc_fds(data, NULL);
 		}
 		signal(SIGINT, SIG_DFL);
 		exec_external(data, word);
