@@ -40,7 +40,7 @@ void		ast_depth_search(t_data *data, t_tree_node **node, bool pipeline);
 int			exec_ast(t_data *data, t_tree_node **node, bool pipeline);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline);
 void		exec_builtin_cmd(t_data *data, t_word *word);
-void		exec_child(t_data *data, t_word *word, bool pipeline);
+void		exec_child(t_data *data, bool pipeline, t_tree_node *node);
 void		set_exit_status(int *status, t_data *data);
 
 /* ============================== PIPELINE ================================= */
@@ -57,7 +57,7 @@ void		handle_sign_child(int i);
 
 /* ============================= REDIRECTIONS ============================== */
 // Heredoc
-int			redir_heredoc(t_data *data, t_word *word);
+int			redir_heredoc(t_data *data, t_tree_node *node);
 int    			search_heredoc(t_data *data, t_tree_node **node); ///add
 int			build_heredoc_wrd(char *input, t_data *data);
 void			close_heredoc_fds(t_data *data, t_tree_node *node);///add

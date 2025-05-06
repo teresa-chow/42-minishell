@@ -15,38 +15,37 @@
 #include "../../include/utils.h"
 #include "../../include/errors.h"
 
-static int	handle_heredoc(char *eof, t_data *data, t_word *word);
+static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node);
 static int	set_pipe_and_fork(int *fd, pid_t *pid);
 static void	handle_input(int *fd, char *eof, t_data *data);
 static int	finalyze_handle_input(char *input, t_data *data,\
 		char *eof, int *fd);
 
-int	redir_heredoc(t_data *data, t_word *word)
+int	redir_heredoc(t_data *data, t_tree_node *node)
 {
 	char	*eof;
-	t_word	*last;
+	t_word	*word;
 
-	last = NULL;
+	word = node->word;
 	while (word)
 	{
 		if (word->redir == HEREDOC)
 		{
-			if (last)
+			if (node->in_fd)
 			{
-				close(last->in_fd);
-				last->in_fd = 0;
+				close(node->in_fd);
+				node->in_fd = 0;
 			}
 			eof = word->next->word;
-			if (handle_heredoc(eof, data, word) != 0)
+			if (handle_heredoc(eof, data, node) != 0)
 				return (-1);
-			last = word;
 		}
 		word = word->next;
 	}
 	return (0);
 }
 
-static int	handle_heredoc(char *eof, t_data *data, t_word *word)
+static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -67,7 +66,7 @@ static int	handle_heredoc(char *eof, t_data *data, t_word *word)
 	}
 	else
 	{
-		word->in_fd = dup(fd[0]);
+		node->in_fd = dup(fd[0]);
 		close(fd[0]);
 		parent_handle(fd, data, pid, status); // add this because norm
 	}

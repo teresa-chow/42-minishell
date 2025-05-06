@@ -19,7 +19,6 @@
 static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node);
 static void	close_pipes_child(t_pipeline pipeline, int count);
 static void	free_child(t_pipeline pipeline, t_data *data);
-static	int	find_heredoc_fd(t_word *word);
 
 void	traverse_pipeline(t_data *data, t_pipeline *pipeline,
 			t_tree_node **node)
@@ -50,6 +49,7 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 	{
 		pipeline->cmd_lst = ft_calloc(1, sizeof(t_tree_node));
 		pipeline->cmd_lst->word = (*node)->word;
+		pipeline->cmd_lst->in_fd = (*node)->in_fd;///addm
 	}
 	else
 	{
@@ -65,13 +65,9 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	t_tree_node *node, int count)
 {
-	int	heredoc_fd;
-
-	heredoc_fd = 0;
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
 	{
-		heredoc_fd = find_heredoc_fd(node->word);
 		signal(SIGINT, SIG_DFL);
 		close_pipes_child(pipeline, count);
 		if (count < pipeline.n_pipes)
@@ -86,27 +82,13 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
-		if (heredoc_fd)
-			dup2(heredoc_fd, STDIN_FILENO);
+		if (node->in_fd)
+			dup2(node->in_fd, STDIN_FILENO);
 		close_heredoc_fds(data, NULL);
 		exec_ast(data, &node, 1);
 		free_child(pipeline, data);
 		exit(data->exit_status);
 	}
-}
-
-static	int	find_heredoc_fd(t_word *word)
-{
-	int	i;
-
-	i = 0;
-	while (word)
-	{
-		if (word->in_fd)
-			i = word->in_fd;
-		word = word->next;
-	}
-	return (i);
 }
 
 static void	close_pipes_child(t_pipeline pipeline, int count)

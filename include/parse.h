@@ -52,7 +52,6 @@ typedef struct s_word
 	struct s_word		*next;
 	char				*word;
 	t_redir				redir;
-	int				in_fd;
 }	t_word;
 
 typedef struct s_word_lst
@@ -76,6 +75,7 @@ typedef struct s_tree_node
 	t_word				*word;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
+	int				in_fd;
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */

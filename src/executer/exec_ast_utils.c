@@ -15,7 +15,7 @@
 #include "../../include/execve.h"
 #include "../../include/errors.h"
 
-static void	exec_fork_child(t_data *data, t_word *word);
+static void	exec_fork_child(t_data *data, t_tree_node *node);
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
@@ -28,22 +28,22 @@ int	cd_arg_check(t_word *word, t_data *data)
 	return (1);
 }
 
-void	exec_child(t_data *data, t_word *word, bool pipeline)
+void	exec_child(t_data *data, bool pipeline, t_tree_node *node)// add
 {
 	t_word	*tmp;
 
-	tmp = word;
+	tmp = node->word;
 	while (tmp && tmp->redir != NONE)
 		tmp = tmp->next->next;
 	if (!tmp)
 		return ;
 	if (!pipeline)
-		exec_fork_child(data, word);
+		exec_fork_child(data, node);
 	else
-		exec_external(data, word);
+		exec_external(data, node->word);
 }
 
-static void	exec_fork_child(t_data *data, t_word *word)
+static void	exec_fork_child(t_data *data, t_tree_node *node)
 {
 	int		status;
 	pid_t	pid;
@@ -57,13 +57,11 @@ static void	exec_fork_child(t_data *data, t_word *word)
 	}
 	else if (pid == 0)
 	{
-		if (word->next->in_fd)
-		{
-			dup2(word->next->in_fd, STDIN_FILENO);
-			close_heredoc_fds(data, NULL);
-		}
+		if (node->in_fd)
+			dup2(node->in_fd, STDIN_FILENO);
+		close_heredoc_fds(data, NULL);
 		signal(SIGINT, SIG_DFL);
-		exec_external(data, word);
+		exec_external(data, node->word);
 	}
 	else
 	{
