@@ -64,6 +64,8 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	t_tree_node *node, int count)
 {
+	t_word	*tmp;
+
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
 	{
@@ -81,8 +83,17 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
-		if (node->word->in_fd)
-			dup2(node->word->in_fd, STDIN_FILENO);
+		tmp = node->word;
+		while (tmp)
+		{
+			if (tmp->in_fd > 0)
+			{
+				dup2(node->word->next->in_fd, STDIN_FILENO);
+				write (1, "mudei\n", 6);
+			}
+			tmp = tmp->next;
+		}
+		close_heredoc_fds(data, NULL);
 		exec_ast(data, &node, 1);
 		free_child(pipeline, data);
 		exit(data->exit_status);

@@ -68,7 +68,9 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 {
 	t_tree_node	*tmp;
 	int			count;
+	char		buf[1020];
 
+	ft_bzero(buf, sizeof(buf));
 	count = 0;
 	tmp = pipeline.cmd_lst;
 	while (tmp)

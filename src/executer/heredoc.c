@@ -28,9 +28,9 @@ int	redir_heredoc(t_data *data, t_word *word)
 	close_heredoc_fds(data, NULL);
 	while (word)
 	{
-		if (word->next && word->next->redir == HEREDOC)
+		if (word->redir == HEREDOC)
 		{
-			eof = word->next->next->word;
+			eof = word->next->word;
 			if (handle_heredoc(eof, data, word) != 0)
 				return (-1);
 		}
