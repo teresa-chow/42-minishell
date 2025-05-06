@@ -56,6 +56,7 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 		tmp = pipeline->cmd_lst;
 		new = ft_calloc(1, sizeof(t_tree_node));
 		new->word = (*node)->word;
+		new->in_fd = (*node)->in_fd;
 		while (tmp->left)
 			tmp = tmp->left;
 		tmp->left = new;
