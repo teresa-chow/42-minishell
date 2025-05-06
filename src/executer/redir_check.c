@@ -31,10 +31,7 @@ int	redir_check(t_word *word, t_data *data)
 	if (!is_redirect(word))
 		return (0);
 	if (handle_redir(data, tmp) == -1)
-	{
-		reset_old_in_out(data);
 		return (-1);
-	}
 	return (0);
 }
 

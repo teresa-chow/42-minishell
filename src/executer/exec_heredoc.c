@@ -35,12 +35,19 @@ int    search_heredoc(t_data *data, t_tree_node **node)
 
 void	close_heredoc_fds(t_data *data, t_tree_node *node)
 {
-	if (!node)
+	t_word  *tmp;
+
+        if (!node)
 		node = data->ast_root;
+        tmp = node->word;        
 	if (node->left)
 		close_heredoc_fds(NULL, node->left);
-	if (node->word->in_fd)
-		close(node->word->in_fd);
+        while (tmp)
+        {
+                if (tmp->in_fd)
+		        close(tmp->in_fd);
+                tmp = tmp->next;
+        }
 	if (node->right)
 		close_heredoc_fds(NULL, node->right);
 }

@@ -24,15 +24,23 @@ static int	finalyze_handle_input(char *input, t_data *data,\
 int	redir_heredoc(t_data *data, t_word *word)
 {
 	char	*eof;
+	t_word	*last;
 
+	last = NULL;
 	close_heredoc_fds(data, NULL);
 	while (word)
 	{
 		if (word->redir == HEREDOC)
 		{
+			if (last)
+			{
+				close(last->in_fd);
+				last->in_fd = 0;
+			}
 			eof = word->next->word;
 			if (handle_heredoc(eof, data, word) != 0)
 				return (-1);
+			last = word;
 		}
 		word = word->next;
 	}
