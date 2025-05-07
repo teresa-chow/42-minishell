@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/01 11:03:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 15:18:17 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 	else
 	{
 		node->in_fd = dup(fd[0]);
-		close(fd[0]);
 		parent_handle(fd, data, pid, status); // add this because norm
 	}
 	return (data->exit_status);
@@ -133,8 +132,8 @@ static int	finalyze_handle_input(char *input, t_data *data, char *eof, int *fd)
 	free_words(&data->doc_word);
 	free(input);
 	close(fd[1]);
-	close(data->old_stdin);
-	close(data->old_stdout);
+	// close(data->old_stdin);
+	// close(data->old_stdout);
 	data->quotes = false;
 	return (0);
 }

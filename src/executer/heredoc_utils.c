@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 19:50:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 19:02:53 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:22:20 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void	parent_handle(int *fd, t_data *data, pid_t pid, int status)
 	{
 		close(fd[0]);
 		return ;
+	}
+	else{
+		close(fd[0]);
+		
 	}
 }
 
