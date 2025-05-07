@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/02 16:11:03 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:18:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 	{
 		if (exec_ast_cmd(data, node, pipeline) == -1)
 		{
-			// we must to have this funtion here to close 
-			//everything when we receive a sigint, for example
-			reset_old_in_out(data);
+			reset_old_in_out(data, *node);
 			return (-1);
 		}
 	}
@@ -71,13 +69,13 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline)
 		return (-1);
 	if (process_remove_quotes((*node)->word, data) == -1)
 		return (-1);
-	if (redir_check((*node)->word, data) != 0)
+	if (redir_check(*node, data) != 0)
 		return (-1);
 	if (is_builtin_cmd((*node)->word))
 		exec_builtin_cmd(data, (*node)->word);
 	else
 		exec_child(data, pipeline, *node);
-	reset_old_in_out(data);
+	reset_old_in_out(data, *node);
 	return (0);
 }
 

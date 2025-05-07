@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 12:56:56 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 21:02:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:23:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ void	fill_node(t_word_lst *pivot, t_tree_node **node)
 	else if (pivot->word->word[0] == '(')
 		(*node)->type = GROUP;
 	else
+	{
 		(*node)->type = CMD;
+		(*node)->fd_in = -1;
+		(*node)->fd_out = -1;
+	}
 }

@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_utils2.c                                    :+:      :+:    :+:   */
+/*   redir_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 15:36:50 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/07 18:09:06 by tchow-so         ###   ########.fr       */
+/*   Created: 2025/05/06 22:00:34 by tchow-so          #+#    #+#             */
+/*   Updated: 2025/05/06 22:17:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
-#include "../../include/execve.h"
+#include "../../include/parse.h"
+#include "../../include/execute.h"
 #include "../../include/errors.h"
+#include "../../include/utils.h"
 
-void	free_failed_child(t_exec_data *inf, t_data *data, t_tree_node *node)
+int	heredoc_redir_in(t_tree_node *node)
 {
-	free_arrays(inf, data, 0);
-	free_env_list(data, 0, &data->env);
-	free_ast(&data->ast_root);
-	if (data->pipeline != NULL)
-		free_pipeline(data->pipeline);
-	reset_old_in_out(data, node);
+	t_word	*tmp;
+	int		heredoc;
+
+	heredoc = 0;
+	tmp = node->word;
+	while (tmp)
+	{
+		if (tmp->redir == IN)
+			heredoc = 0;
+		if (tmp->redir == HEREDOC)
+			heredoc = 1;
+		tmp = tmp->next;
+	}
+	return (heredoc);
 }

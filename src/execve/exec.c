@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/07 12:10:08 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:10:12 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
 static void	execute(t_exec_data *inf);
 static void	check_cmd(t_exec_data *inf, t_data *data);
 
-int	exec_external(t_data *data, t_word *word)
+int	exec_external(t_data *data, t_word *word, t_tree_node *node)
 {
 	t_word		*tmp;
 	t_exec_data	inf;
@@ -44,7 +44,7 @@ int	exec_external(t_data *data, t_word *word)
 		else
 			no_file_or_dir(inf.input, data, 0);
 	}
-	free_failed_child(&inf, data);
+	free_failed_child(&inf, data, node);
 	exit(data->exit_status);
 }
 

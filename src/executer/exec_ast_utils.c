@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/02 16:19:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:20:19 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	exec_child(t_data *data, bool pipeline, t_tree_node *node)// add
 	if (!pipeline)
 		exec_fork_child(data, node);
 	else
-		exec_external(data, node->word);
+		exec_external(data, node->word, node);
 }
 
 static void	exec_fork_child(t_data *data, t_tree_node *node)
@@ -57,11 +57,10 @@ static void	exec_fork_child(t_data *data, t_tree_node *node)
 	}
 	else if (pid == 0)
 	{
-		if (node->in_fd)
-			dup2(node->in_fd, STDIN_FILENO);
-		close_heredoc_fds(data, NULL);
+		//if (node->fd_in != -1)
+		//	close(node->fd_in);
 		signal(SIGINT, SIG_DFL);
-		exec_external(data, node->word);
+		exec_external(data, node->word, node);
 	}
 	else
 	{

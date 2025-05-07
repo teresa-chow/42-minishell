@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast_pipeline_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/07 15:35:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:40:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	traverse_pipeline(t_data *data, t_pipeline *pipeline,
 {
 	t_tree_node	*tmp;
 
-	(void)data;
 	if (!*node)
 		return ;
 	tmp = *node;
@@ -49,14 +48,14 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 	{
 		pipeline->cmd_lst = ft_calloc(1, sizeof(t_tree_node));
 		pipeline->cmd_lst->word = (*node)->word;
-		pipeline->cmd_lst->in_fd = (*node)->in_fd;///addm
+		pipeline->cmd_lst->fd_in = (*node)->fd_in;
 	}
 	else
 	{
 		tmp = pipeline->cmd_lst;
 		new = ft_calloc(1, sizeof(t_tree_node));
 		new->word = (*node)->word;
-		new->in_fd = (*node)->in_fd;
+		new->fd_in = (*node)->fd_in;
 		while (tmp->left)
 			tmp = tmp->left;
 		tmp->left = new;
@@ -83,9 +82,9 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
-		if (node->in_fd)
-			dup2(node->in_fd, STDIN_FILENO);
-		close_heredoc_fds(data, NULL);
+		//if (node->fd_in != -1) //
+		//	dup2(node->fd_in, STDIN_FILENO); //
+		//close_heredoc_fds(data, NULL);
 		exec_ast(data, &node, 1);
 		free_child(pipeline, data);
 		exit(data->exit_status);

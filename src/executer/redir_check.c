@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/02 16:21:52 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 23:32:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,40 @@
 #include "../../include/utils.h"
 
 static int	is_redirect(t_word *word);
-static int	handle_redir( t_data *data, t_word *word);
-static int	handle_redir_in(t_data *data, t_word *word);
-static int	handle_redir_out(t_data *data, t_word *word);
+static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
+	int tmp_in);
+static int	handle_redir_in(t_data *data, t_tree_node *node, t_word *word,
+	int tmp_in);
+static int	handle_redir_out(t_data *data, t_tree_node *node, t_word *word);
 
-int	redir_check(t_word *word, t_data *data)
+int	redir_check(t_tree_node *node, t_data *data)
 {
 	t_word			*tmp;
+	int				tmp_in;
 
-	if (!word)
+	if (!node->word)
 		return (0);
-	tmp = word;
-	data->redir = ft_calloc(1, sizeof(t_redir_check));
-	if (!is_redirect(word))
+	tmp = node->word;
+	if (!is_redirect(node->word))
+	{
+		if (node->fd_in != -1)
+		{
+			dup2(node->fd_in, STDIN_FILENO);
+			close(node->fd_in);
+		}
 		return (0);
-	if (handle_redir(data, tmp) == -1)
+	}
+	tmp_in = -1;
+	if (heredoc_redir_in(node))
+		tmp_in = dup(node->fd_in);
+	if (handle_redir(data, node, tmp, tmp_in) == -1)
+	{
+		if (tmp_in != -1)
+			close(tmp_in);
 		return (-1);
+	}
+	if (tmp_in != -1)
+		close(tmp_in);
 	return (0);
 }
 
@@ -49,35 +67,34 @@ static int	is_redirect(t_word *word)
 	return (0);
 }
 
-static int	handle_redir(t_data *data, t_word *word)
+static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
+	int tmp_in)
 {
 	while (word)
 	{
-		if ((word->redir != NONE && word->redir != HEREDOC) && word->next)
+		if (word->redir == IN)
 		{
-			if (word->redir == IN)
-			{
-				if (data->redir->in)
-					close(data->redir->fd_in);
-				data->redir->in = 0;
-				if (handle_redir_in(data, word->next) == -1)
-					return (-1);
-			}
-			if (word->redir == OUT || word->redir == APPEND)
-			{
-				if (data->redir->out)
-					close(data->redir->fd_out);
-				data->redir->out = 0;
-				if (handle_redir_out(data, word) == -1)
-					return (-1);
-			}
+			if (node->fd_in != -1)
+				close(node->fd_in);
+			node->fd_in = -1;
+			if (handle_redir_in(data, node, word->next, tmp_in) == -1)
+				return (-1);
+		}
+		if (word->redir == OUT || word->redir == APPEND)
+		{
+			if (node->fd_out != -1)
+				close(node->fd_out);
+			node->fd_out = -1;
+			if (handle_redir_out(data, node, word) == -1)
+				return (-1);
 		}
 		word = word->next;
 	}
 	return (0);
 }
 
-static int	handle_redir_in(t_data *data, t_word *word)
+static int	handle_redir_in(t_data *data, t_tree_node *node, t_word *word,
+	int tmp_in)
 {
 	if (!access(word->word, F_OK))
 	{
@@ -88,16 +105,15 @@ static int	handle_redir_in(t_data *data, t_word *word)
 			data->exit_status = ERR;
 			return (-1);
 		}
-		if (redir_in(data, word) == -1)
+		if (redir_in(data, node, word, tmp_in) == -1)
 			return (-1);
 	}
 	else
 		return (no_file_or_dir(word->word, data, 1), -1);
-	data->redir->in = 1;
 	return (0);
 }
 
-static int	handle_redir_out(t_data *data, t_word *word)
+static int	handle_redir_out(t_data *data, t_tree_node *node, t_word *word)
 {
 	if (!access(word->word, F_OK))
 	{
@@ -109,8 +125,7 @@ static int	handle_redir_out(t_data *data, t_word *word)
 			return (-1);
 		}
 	}
-	if (redir_out(data, word) == -1)
+	if (redir_out(data, node, word) == -1)
 		return (-1);
-	data->redir->out = 1;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/07 15:33:23 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:24:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node);
 static int	set_pipe_and_fork(int *fd, pid_t *pid);
 static void	handle_input(int *fd, char *eof, t_data *data);
-static int	finalyze_handle_input(char *input, t_data *data,\
+static int	finalize_handle_input(char *input, t_data *data,\
 		char *eof, int *fd);
 
 int	redir_heredoc(t_data *data, t_tree_node *node)
@@ -31,10 +31,10 @@ int	redir_heredoc(t_data *data, t_tree_node *node)
 	{
 		if (word->redir == HEREDOC)
 		{
-			if (node->in_fd)
+			if (node->fd_in != -1)
 			{
-				close(node->in_fd);
-				node->in_fd = 0;
+				close(node->fd_in);
+				node->fd_in = -1;
 			}
 			eof = word->next->word;
 			if (handle_heredoc(eof, data, node) != 0)
@@ -52,21 +52,22 @@ static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 	int		status;
 
 	status = 0;
-	g_global = 0; // add
+	g_global = 0;
 	if (set_pipe_and_fork(fd, &pid) == -1)
 		return (-1);
 	if (pid == 0)
 	{
-		close_heredoc_fds(data, NULL);
-		data->exit_status = 0; // add
-		handle_input(fd, eof, data); //// add this block
+		//close_heredoc_fds(data, NULL);
+		data->exit_status = 0;
+		handle_input(fd, eof, data);
 		if (g_global == SIGINT)
 			data->exit_status = 130;
-		exit (data->exit_status);
+		exit(data->exit_status);
 	}
 	else
 	{
-		node->in_fd = dup(fd[0]);
+		node->fd_in = dup(fd[0]);
+		close(fd[0]);
 		parent_handle(fd, data, pid, status); // add this because norm
 	}
 	return (data->exit_status);
@@ -88,7 +89,7 @@ static int	set_pipe_and_fork(int *fd, pid_t *pid)
 	return (0);
 }
 
-static void	handle_input(int *fd, char *eof, t_data *data)
+static void	handle_input(int *fd, char *eof, t_data *data) // child process
 {
 	char	*input;
 
@@ -109,20 +110,20 @@ static void	handle_input(int *fd, char *eof, t_data *data)
 		free(input);
 		input = readline("> ");
 	}
-	if (finalyze_handle_input(input, data, eof, fd) == -1)
+	if (finalize_handle_input(input, data, eof, fd) == -1)
 		return ;
 }
 
-static int	finalyze_handle_input(char *input, t_data *data, char *eof, int *fd)
+static int	finalize_handle_input(char *input, t_data *data, char *eof, int *fd)
 {
-	if (!input && g_global != SIGINT)
+	if (!input && g_global == 0)
 		heredoc_error(eof);
 	if (!data->quotes && input)
 	{
-		data->in_heredoc = true; ///// add this change
+		data->in_heredoc = true;
 		if (handle_tokens(data->doc_word, data, NULL) == -1)
 			return (-1);
-		data->in_heredoc = false; //////add this change
+		data->in_heredoc = false;
 		print_to_pipe(data->doc_word, fd);
 	}
 	else if (input)
@@ -132,8 +133,6 @@ static int	finalyze_handle_input(char *input, t_data *data, char *eof, int *fd)
 	free_words(&data->doc_word);
 	free(input);
 	close(fd[1]);
-	// close(data->old_stdin);
-	// close(data->old_stdout);
 	data->quotes = false;
 	return (0);
 }

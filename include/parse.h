@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:11:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 17:17:28 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ typedef struct s_tree_node
 	t_word				*word;
 	struct s_tree_node	*left;
 	struct s_tree_node	*right;
-	int				in_fd;
+	int					fd_in;
+	int					fd_out;
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */

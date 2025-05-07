@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/02 14:32:46 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/07 18:11:54 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
 	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
 SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
-	exec_ast_pipeline.c exec_ast_pipeline_utils.c redir_check.c heredoc.c \
-	heredoc_utils.c redir_utils.c redir_in.c redir_out.c signals.c exec_heredoc.c)
+	exec_ast_pipeline.c exec_ast_pipeline_utils.c redir_check.c \
+	redir_check_utils.c heredoc.c heredoc_utils.c redir_utils.c redir_in.c \
+	redir_out.c signals.c exec_heredoc.c)
 SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
 	exit_utils.c export.c export_utils.c export_utils2.c export_merge_sort.c \
 	pwd.c unset.c builtins_utils.c builtins_utils_2.c)

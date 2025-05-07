@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:25:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 00:24:49 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	env = 1;
 	if (!*envp)
 		env = 0;
-	g_global = 0; // add
+	g_global = 0;
 	init_prog(&data, envp);
 	while (data.status)
 		processing_loop(&data, env);
@@ -79,7 +79,7 @@ static void	processing_loop(t_data *data, bool env)
 	{
 		if (!search_heredoc(data, &root))
 			ast_depth_search(data, &root, 0);
-		close_heredoc_fds(data, NULL);
+		//close_heredoc_fds(data, NULL);
 	}
 	reset_mem(data, &root);
 }
