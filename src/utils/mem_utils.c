@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:29:15 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:14:16 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	reset_mem(t_data *data, t_tree_node **root)
 		data->no_home = true;
 	free_ast(root);
 	g_global = 0;
+	data->pipeline = NULL; /// add
 	data->has_hifen = false;
 	if (data->in_heredoc)
 		data->in_heredoc = false; //////add this change. This is too in heredoc.c 

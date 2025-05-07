@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 09:41:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:08:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:29:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ char	**set_path(t_data *data, int *i)
 	char	**arr;
 
 	tmp = NULL;
+	arr = NULL;
 	get_path(&tmp, data, i);
-	arr = ft_split(ft_strchr(tmp, '/'), ':');
+	if (ft_strchr(tmp, '/'))
+		arr = ft_split(ft_strchr(tmp, '/'), ':');
+	else
+		arr = ft_split(tmp, ' ');
 	if (!arr)
 		return (NULL);
 	j = -1;

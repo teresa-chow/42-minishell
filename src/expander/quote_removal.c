@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:48:41 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:46:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/07 11:07:34 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static int	quoted_len(char *word)
 	bool	in;
 
 	len = 0;
+	in = false;///
+	in_qt = 0;
 	in_qt = find_in(word);
 	while (*word)
 	{
