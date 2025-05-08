@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input_prompt.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 23:27:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 17:44:35 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static void	init_prompt(t_prompt *prompt, char *usr, t_data *data)
 	char		*dir;
 	t_env_node	*pwd;
 
-	pwd = ft_getenv(data->env, "PWD"); /// add this to when we delete a folder, when in it
+	pwd = ft_getenv(data->env, "PWD");
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
 		if (pwd && pwd->val)
-			dir = ft_strdup(pwd->val); //// add
+			dir = ft_strdup(pwd->val);
 		else
-			dir = ft_strdup("/Undefined"); //// add
+			dir = ft_strdup("/Undefined");
 	}
 	else
 		dir = ft_strdup(ft_strrchr(cwd, '/'));

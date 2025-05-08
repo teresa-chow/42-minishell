@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 22:19:13 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/07 18:10:12 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:01:15 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 
 static void	execute(t_exec_data *inf)
 {
+	signal(SIGQUIT, SIG_DFL);
 	if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 	{
 		perror("minishell : execve ");
