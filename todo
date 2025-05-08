@@ -1,16 +1,14 @@
 Not working as expected:
-(echo && echo) | wc -l
-cat << a > file
-"" | ""
+
+[ ] (echo && echo) | wc -l
+[ ] cat << a > file
+[ ] "" | ""
+[ ] export a="ola '$USER'"
+    echo $a
 
 ------------------------------------------------------------------------------------------
 
 CARLOS
-[x] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
-
-[x] (open fd: redir_heredoc) cat << EOF + ctrl-D
-[ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
-[x] (open fd: redir_heredoc) cat << EOF << EOF
 
 [ ] (norminette) lib/libft/ft_split.c
 [ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
@@ -19,12 +17,6 @@ CARLOS
 ------------------------------------------------------------------------------------------
 
 TERESA
-src/executer/redir_check.c (vou rever este ficheiro: se precisares de o alterar, avisa-me pf)
-
-[ ] (open fd in child: redir_in) cmd_not_found < existing_file
-
-[ ] cat > new_file < fail (must print error message, return 1, create new_file)
-[ ] cat < fail > new_file (same)
 
 ------------------------------------------------------------------------------------------
 
