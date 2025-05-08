@@ -18,7 +18,7 @@ static int	expand_oldpwd(t_word *word, t_data *data);
 
 int	analyze_token_context(t_word **word, t_data *data)
 {
-	if ((*word)->redir == HEREDOC) ///// add
+	if ((*word)->redir == HEREDOC)
 	{
 		*word = (*word)->next;
 		return (0);

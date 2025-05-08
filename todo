@@ -5,9 +5,9 @@ CARLOS
 [ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
 [x] (open fd: redir_heredoc) cat << EOF << EOF
 
-[ ] (norminette) lib/libft/ft_split.c
-[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
-[ ] (norminette) fix functions with 25+ lines and 4+ parameters
+[x] (norminette) lib/libft/ft_split.c
+[x] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
+[x] (norminette) fix functions with 25+ lines and 4+ parameters
 
 ------------------------------------------------------------------------------------------
 
