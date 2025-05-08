@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 13:34:43 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:25:15 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void	processing_loop(t_data *data, bool env)
 	read_input(&root, data, env);
 	if (g_global == SIGINT)
 		data->exit_status = ERR_INT;
+	printf("PID do pai: %d\n\n\n", getpid());
 	if (root->word)
 	{
 		if (!search_heredoc(data, &root))

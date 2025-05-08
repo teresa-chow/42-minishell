@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:12:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/08 12:06:36 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:47:44 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,24 @@ void	close_heredoc_fds(t_data *data, t_tree_node *node)
 	if (!node)
 		node = data->ast_root;
 	if (node->left)
+	{
+		printf("vou fechar na esuqerda\n");	
 		close_heredoc_fds(NULL, node->left);
+	}
 	if(node->fd_in != -1 && node->type == CMD)
-		close(node->fd_in);
+	{
+		printf("close_heredoc_fds: -----------> %d, pid: %d\n", node->fd_in, getpid());
+		if (close(node->fd_in) < 0)
+		{
+			perror("em close: ");
+		}
+		else
+			printf("Success\n");
+		node->fd_in = -1;
+	}
 	if (node->right)
+	{
+		printf("vou fechar na direita\n");	
 		close_heredoc_fds(NULL, node->right);
+	}
 }

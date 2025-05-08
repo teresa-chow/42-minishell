@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/07 23:42:53 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:23:56 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	reset_mem(t_data *data, t_tree_node **root)
 {
 	t_env_node	*var;
 
+	printf("reset_mem: %d\n", getpid());
+	close_heredoc_fds(data, NULL);
 	if (data->no_home)
 		free(data->env_home_var);
 	data->env_home_var = NULL;

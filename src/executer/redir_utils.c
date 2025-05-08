@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 00:19:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:37:41 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	reset_old_in_out(t_data *data, t_tree_node *node)
 		close(node->fd_in);
 	if (node->fd_out != -1)
 		close(node->fd_out);
+	node->fd_in = -1;
+	printf("reset_old_in_out: node.fd_in ficou a %d com %s %s\n", node->fd_in, node->word->word, node->word->next->word);
+	node->fd_out = -1;
+	printf("reset_old_in_out: node.fd_in ficou a %d\n", node->fd_out);
 	if (dup2(data->old_stdin, STDIN_FILENO) == -1)
 	{
 		perror("minishell: dup2");
@@ -38,6 +42,6 @@ void	reset_old_in_out(t_data *data, t_tree_node *node)
 		return ;
 	}
 	close(data->old_stdout);
-	free(data->redir);
-	data->redir = NULL;
+	// free(data->redir);
+	// data->redir = NULL;
 }

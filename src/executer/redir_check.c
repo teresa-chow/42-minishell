@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/07 23:32:10 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:02:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	redir_check(t_tree_node *node, t_data *data)
 		{
 			dup2(node->fd_in, STDIN_FILENO);
 			close(node->fd_in);
+			node->fd_in = -1;
 		}
 		return (0);
 	}
