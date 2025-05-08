@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:01:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:25:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 		exec_pipeline_child(pipeline, data, tmp, count);
 		if (count > 0)
 		{
-			printf("%d | pipeline parent (exec_pipeline)", getpid());
 			close(pipeline.fd[count - 1][0]);
 			close(pipeline.fd[count - 1][1]);
 		}

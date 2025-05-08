@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:12:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/08 15:08:50 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:28:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	close_heredoc_fds(t_data *data, t_tree_node *node)
 		close_heredoc_fds(NULL, node->left);
 	if(node->type == CMD && node->fd_in != -1)
 	{
-		printf("%d | close_heredoc_fds\n", getpid());
-		if (close(node->fd_in) < 0)
-			perror("close_heredoc_fds: perror (close): ");
+		close(node->fd_in);
 		node->fd_in = -1;
 	}
 	if (node->right)

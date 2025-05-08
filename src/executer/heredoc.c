@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 14:59:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:24:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 		return (-1);
 	if (pid == 0)
 	{
-		printf("%d | heredoc child\n", getpid());
 		close_heredoc_fds(data, NULL);
 		data->exit_status = 0;
 		handle_input(fd, eof, data);

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 19:50:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/07 20:15:01 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:32:20 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ void	parent_handle(int *fd, t_data *data, pid_t pid, int status)
 	signal(SIGINT, handle_signal);
 	set_exit_status(&status, data);
 	if (data->exit_status)
-	{
-		close(fd[0]);
 		return ;
-	}
 }
 
 void	handle_sign_child(int i)

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:18:57 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:25:56 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static void	processing_loop(t_data *data, bool env)
 	read_input(&root, data, env);
 	if (g_global == SIGINT)
 		data->exit_status = ERR_INT;
-	printf("PARENT PID: %d\n\n", getpid());
 	if (root->word)
 	{
 		if (!search_heredoc(data, &root))
