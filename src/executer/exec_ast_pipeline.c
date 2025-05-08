@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 00:36:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:32:56 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 		if (count > 0)
 		{
 			close(pipeline.fd[count - 1][0]);
+			// printf("-----> fechei fd[%d][0] no tmp com %s %s %s\n", count - 1, tmp->word->word, tmp->word->next->word, tmp->word->next->next->word);
 			close(pipeline.fd[count - 1][1]);
+			// printf("-----> fechei fd[%d][1] no tmp com %s %s %s\n", count - 1, tmp->word->word, tmp->word->next->word, tmp->word->next->next->word);
+			pipeline.fd[count - 1][0] = -1;
+			pipeline.fd[count - 1][1] = -1;
 		}
 		tmp = tmp->left;
 		count++;

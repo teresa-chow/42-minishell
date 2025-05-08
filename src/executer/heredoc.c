@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 00:24:10 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 11:30:13 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 		return (-1);
 	if (pid == 0)
 	{
-		//close_heredoc_fds(data, NULL);
+		close_heredoc_fds(data, NULL);
 		data->exit_status = 0;
 		handle_input(fd, eof, data);
 		if (g_global == SIGINT)
@@ -68,7 +68,7 @@ static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 	{
 		node->fd_in = dup(fd[0]);
 		close(fd[0]);
-		parent_handle(fd, data, pid, status); // add this because norm
+		parent_handle(fd, data, pid, status);
 	}
 	return (data->exit_status);
 }

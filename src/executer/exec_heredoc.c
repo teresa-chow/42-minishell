@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:12:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/07 22:42:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:06:36 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	search_heredoc(t_data *data, t_tree_node **node)
 	return (i);
 }
 
-/*void	close_heredoc_fds(t_data *data, t_tree_node *node)
+void	close_heredoc_fds(t_data *data, t_tree_node *node)
 {
 	if (!node)
 		node = data->ast_root;
 	if (node->left)
 		close_heredoc_fds(NULL, node->left);
-	if(node->fd_in != -1)
+	if(node->fd_in != -1 && node->type == CMD)
 		close(node->fd_in);
 	if (node->right)
 		close_heredoc_fds(NULL, node->right);
-}*/
+}

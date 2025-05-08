@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 00:24:49 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:34:43 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	processing_loop(t_data *data, bool env)
 	{
 		if (!search_heredoc(data, &root))
 			ast_depth_search(data, &root, 0);
-		//close_heredoc_fds(data, NULL);
+		// close_heredoc_fds(data, NULL);
 	}
 	reset_mem(data, &root);
 }
