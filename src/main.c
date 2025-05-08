@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 14:25:15 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:18:57 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ static void	processing_loop(t_data *data, bool env)
 	read_input(&root, data, env);
 	if (g_global == SIGINT)
 		data->exit_status = ERR_INT;
-	printf("PID do pai: %d\n\n\n", getpid());
+	printf("PARENT PID: %d\n\n", getpid());
 	if (root->word)
 	{
 		if (!search_heredoc(data, &root))
 			ast_depth_search(data, &root, 0);
-		// close_heredoc_fds(data, NULL);
+		close_heredoc_fds(data, NULL);
 	}
 	reset_mem(data, &root);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 08:12:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/08 14:47:44 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:08:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,14 @@ void	close_heredoc_fds(t_data *data, t_tree_node *node)
 	if (!node)
 		node = data->ast_root;
 	if (node->left)
-	{
-		printf("vou fechar na esuqerda\n");	
 		close_heredoc_fds(NULL, node->left);
-	}
-	if(node->fd_in != -1 && node->type == CMD)
+	if(node->type == CMD && node->fd_in != -1)
 	{
-		printf("close_heredoc_fds: -----------> %d, pid: %d\n", node->fd_in, getpid());
+		printf("%d | close_heredoc_fds\n", getpid());
 		if (close(node->fd_in) < 0)
-		{
-			perror("em close: ");
-		}
-		else
-			printf("Success\n");
+			perror("close_heredoc_fds: perror (close): ");
 		node->fd_in = -1;
 	}
 	if (node->right)
-	{
-		printf("vou fechar na direita\n");	
 		close_heredoc_fds(NULL, node->right);
-	}
 }

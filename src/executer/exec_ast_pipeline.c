@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 14:27:35 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:01:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,9 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 		exec_pipeline_child(pipeline, data, tmp, count);
 		if (count > 0)
 		{
+			printf("%d | pipeline parent (exec_pipeline)", getpid());
 			close(pipeline.fd[count - 1][0]);
-			printf("exec_pipeline: fechei fd[%d][0] no tmp com %s %s | pid: %d\n\n", count - 1, tmp->word->word, tmp->word->next->word, getpid());//, tmp->word->next->next->word);
 			close(pipeline.fd[count - 1][1]);
-			printf("exec_pipeline: fechei fd[%d][1] no tmp com %s %s | pid: %d\n\n", count - 1, tmp->word->word, tmp->word->next->word, getpid());//, tmp->word->next->next->word);
-			pipeline.fd[count - 1][0] = -1;
-			pipeline.fd[count - 1][1] = -1;
 		}
 		tmp = tmp->left;
 		count++;

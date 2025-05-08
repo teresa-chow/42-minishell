@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast_pipeline_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 14:42:43 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:17:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,24 +70,19 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	pipeline.pid[count] = fork();
 	if (pipeline.pid[count] == 0)
 	{
-		printf("\n");
 		signal(SIGINT, SIG_DFL);
 		close_pipes_child(pipeline, count);
 		if (count < pipeline.n_pipes)
 		{
 			// close(pipeline.fd[count][0]);
-			// printf("--->fechei no child fd[%d][0] na exec_pipeline_child com %s %s %s\n", count, node->word->word, node->word->next->word, node->word->next->next->word);
-			printf("exec_pipeline_child: fechei no child fd[%d][1] na exec_pipeline_child com %s %s | pid: %d\n\n", count, node->word->word, node->word->next->word, getpid());//, node->word->next->next->word);
 			dup2(pipeline.fd[count][1], STDOUT_FILENO);
 			close(pipeline.fd[count][1]);
 		}
 		if (count > 0)
 		{
 			// close(pipeline.fd[count - 1][1]);
-			// printf("--->fechei no child fd[%d][1] na exec_pipeline_child com %s %s %s\n", count - 1, node->word->word, node->word->next->word, node->word->next->next->word);
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
-			printf("exec_pipeline_child: fechei no child fd[%d][0] na exec_pipeline_child com %s %s | pid: %d\n\n", count - 1, node->word->word, node->word->next->word, getpid());//, node->word->next->next->word);
 		}
 		exec_ast(data, &node, 1);
 		free_child(pipeline, data);
@@ -105,18 +100,12 @@ static void	close_pipes_child(t_pipeline pipeline, int count)
 		if (i != count - 1)
 		{
 			if (pipeline.fd[i][0] != -1)
-			{
 				close(pipeline.fd[i][0]);
-				printf("close_pipes_child ->fechei fd[%d][0] no child em close_pipes | pid: %d\n\n", i, getpid());
-			}
 		}
 		if (i != count)
 		{
 			if (pipeline.fd[i][1] != -1)
-			{
-				close(pipeline.fd[i][1]);	
-				printf("close_pipes_child ->fechei fd[%d][1] no child no child em close_pipes | pid: %d\n\n", i, getpid());
-			}
+				close(pipeline.fd[i][1]);
 		}
 		i++;
 	}
@@ -124,9 +113,9 @@ static void	close_pipes_child(t_pipeline pipeline, int count)
 
 static void	free_child(t_pipeline pipeline, t_data *data)
 {
+	close_heredoc_fds(NULL, pipeline.cmd_lst);
 	free_pipeline(&pipeline);
-	// close_heredoc_fds(data, NULL);
 	data->status = 0;
-	printf("In free_child: ");
+	printf("%d | free_child\n", getpid());
 	reset_mem(data, &data->ast_root);
 }
