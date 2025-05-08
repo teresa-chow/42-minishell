@@ -1,3 +1,10 @@
+Not working as expected:
+(echo && echo) | wc -l
+cat << a > file
+"" | ""
+
+------------------------------------------------------------------------------------------
+
 CARLOS
 [x] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
 
