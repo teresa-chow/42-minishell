@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:25:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:37:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ static void	exec_pipeline(t_pipeline pipeline, t_data *data)
 		if (count > 0)
 		{
 			close(pipeline.fd[count - 1][0]);
+			pipeline.fd[count - 1][0] = -1;
 			close(pipeline.fd[count - 1][1]);
+			pipeline.fd[count - 1][1] = -1;
 		}
 		tmp = tmp->left;
 		count++;
