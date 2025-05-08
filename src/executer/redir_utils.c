@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:06:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:44:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,26 @@ void	reset_old_in_out(t_data *data, t_tree_node *node)
 	if (node->fd_out != -1)
 		close(node->fd_out);
 	node->fd_out = -1;
-	if (dup2(data->old_stdin, STDIN_FILENO) == -1)
+	if (data->old_stdin != -1)
 	{
-		perror("minishell: dup2");
-		return ;
+		if (dup2(data->old_stdin, STDIN_FILENO) == -1)
+		{
+			perror("minishell: dup2");
+			return ;
+		}
+		close(data->old_stdin);
+		data->old_stdin = -1;
 	}
-	close(data->old_stdin);
-	if (dup2(data->old_stdout, STDOUT_FILENO) == -1)
+	if (data->old_stdout != -1)
 	{
-		perror("minishell: dup2");
-		return ;
+		if (dup2(data->old_stdout, STDOUT_FILENO) == -1)
+		{
+			perror("minishell: dup2");
+			return ;
+		}
+		close(data->old_stdout);
+		data->old_stdout = -1;
 	}
-	close(data->old_stdout);
 	// free(data->redir);
 	// data->redir = NULL;
 }
