@@ -1,22 +1,10 @@
 Not working as expected:
 
 [ ] (echo && echo) | wc -l
-[ ] cat << a > file
-[ ] "" | ""
+[x] cat << a > file
+[x] "" | ""
 [ ] export a="ola '$USER'"
     echo $a
-
-------------------------------------------------------------------------------------------
-
-CARLOS
-
-[ ] (norminette) lib/libft/ft_split.c
-[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
-[ ] (norminette) fix functions with 25+ lines and 4+ parameters
-
-------------------------------------------------------------------------------------------
-
-TERESA
 
 ------------------------------------------------------------------------------------------
 
