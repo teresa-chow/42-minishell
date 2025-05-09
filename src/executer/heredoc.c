@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:24:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:08:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node);
 static int	set_pipe_and_fork(int *fd, pid_t *pid);
 static void	handle_input(int *fd, char *eof, t_data *data);
-static int	finalize_handle_input(char *input, t_data *data,\
-		char *eof, int *fd);
+static int	finalize_handle_input(char *input, t_data *data, char *eof,
+				int *fd);
 
 int	redir_heredoc(t_data *data, t_tree_node *node)
 {
@@ -89,7 +89,7 @@ static int	set_pipe_and_fork(int *fd, pid_t *pid)
 	return (0);
 }
 
-static void	handle_input(int *fd, char *eof, t_data *data) // child process
+static void	handle_input(int *fd, char *eof, t_data *data)
 {
 	char	*input;
 
@@ -114,7 +114,8 @@ static void	handle_input(int *fd, char *eof, t_data *data) // child process
 		return ;
 }
 
-static int	finalize_handle_input(char *input, t_data *data, char *eof, int *fd)
+static int	finalize_handle_input(char *input, t_data *data, char *eof,
+	int *fd)
 {
 	if (!input && g_global == 0)
 		heredoc_error(eof);

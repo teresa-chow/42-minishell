@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/08 14:02:19 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:11:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 static int	is_redirect(t_word *word);
 static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
-	int tmp_in);
+				int tmp_in);
 static int	handle_redir_in(t_data *data, t_tree_node *node, t_word *word,
-	int tmp_in);
+				int tmp_in);
 static int	handle_redir_out(t_data *data, t_tree_node *node, t_word *word);
 
 int	redir_check(t_tree_node *node, t_data *data)

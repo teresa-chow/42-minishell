@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 18:11:36 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:12:15 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,4 @@ void	reset_old_in_out(t_data *data, t_tree_node *node)
 		close(data->old_stdout);
 		data->old_stdout = -1;
 	}
-	// free(data->redir);
-	// data->redir = NULL;
 }
