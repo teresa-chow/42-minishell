@@ -15,6 +15,7 @@
 #include "../../include/errors.h"
 
 static void	get_path(char **tmp, t_data *data, int *i);
+static void	split_tmp(char *tmp, char ***arr);
 
 char	**set_path(t_data *data, int *i)
 {
@@ -25,10 +26,7 @@ char	**set_path(t_data *data, int *i)
 	tmp = NULL;
 	arr = NULL;
 	get_path(&tmp, data, i);
-	if (ft_strchr(tmp, '/'))
-		arr = ft_split(ft_strchr(tmp, '/'), ':');
-	else
-		arr = ft_split(tmp, ' ');
+	split_tmp(tmp, &arr);
 	if (!arr)
 		return (NULL);
 	j = -1;
@@ -44,6 +42,14 @@ char	**set_path(t_data *data, int *i)
 		arr[j] = tmp;
 	}
 	return (arr);
+}
+
+static void	split_tmp(char *tmp, char ***arr)
+{
+	if (ft_strchr(tmp, '/'))
+		*arr = ft_split(ft_strchr(tmp, '/'), ':');
+	else
+		*arr = ft_split(tmp, ' ');
 }
 
 static void	get_path(char **tmp, t_data *data, int *i)
