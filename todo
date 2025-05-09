@@ -7,6 +7,8 @@ LEAKS:
 [ ] fail && (echo && echo)
 [ ] fail || (echo && echo)
 [ ] (ls fail | echo ola && (echo a && echo b) || echo c)
+[ ] (echo a | echo b | echo c && echo d) && echo e -- pipeline inside of group
+            (likely cause: recursive syntax analysis in group)
 
 ------------------------------------------------------------------------------------------
 
