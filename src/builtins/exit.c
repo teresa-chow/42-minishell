@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:32:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 14:44:31 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	check_is_digit(t_word *word, t_data *data, int *syntax)
 	i = 0;
 	while (word->word[i])
 	{
-		if (i == 0 && word->word[i] == '-')
+		if (i == 0 && (word->word[i] == '-' || word->word[i] == '+'))
 			i++;
 		if (!ft_isdigit(word->word[i]))
 		{
