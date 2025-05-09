@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 10:34:34 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:40:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	syntax_analysis(t_word_lst *word_lst)
 	tmp_word = word_lst->word;
 	if (check_logical_op(tmp_word) != 0)
 		return (ERR_BI);
-	if (check_syntax(tmp_lst, tmp_word) != 0)
+	if (check_pipeline_groups(tmp_lst) != 0)
 		return (ERR_BI);
 	tmp_lst = word_lst;
-	if (check_pipeline_groups(tmp_lst) != 0)
+	if (check_syntax(tmp_lst, tmp_word) != 0)
 		return (ERR_BI);
 	return (0);
 }
