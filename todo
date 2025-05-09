@@ -3,6 +3,11 @@ Not working as expected:
 [ ] export a="ola '$USER'"
     echo $a
 
+LEAKS:
+[ ] fail && (echo && echo)
+[ ] fail || (echo && echo)
+[ ] (ls fail | echo ola && (echo a && echo b) || echo c)
+
 ------------------------------------------------------------------------------------------
 
 Quem se despachar primeiro:
