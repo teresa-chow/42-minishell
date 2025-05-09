@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:19:00 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 21:02:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:21:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 static int	check_syntax(t_word_lst *tmp_lst, t_word *tmp_word);
 static int	check_syntax_word(t_word_lst *tmp_lst, t_word *tmp_word);
 static void	categorize_redir(t_word *word);
+//static int	check_pipeline_groups(t_word_lst *tmp_lst);
 
 int	syntax_analysis(t_word_lst *word_lst)
 {
@@ -29,6 +30,9 @@ int	syntax_analysis(t_word_lst *word_lst)
 		return (ERR_BI);
 	if (check_syntax(tmp_lst, tmp_word) != 0)
 		return (ERR_BI);
+	//tmp_lst = word_lst; // added from here
+	//if (check_pipeline_groups(tmp_lst) != 0)
+	//	return (ERR_BI);
 	return (0);
 }
 
@@ -99,3 +103,12 @@ static void	categorize_redir(t_word *word)
 		word->redir = HEREDOC;
 	return ;
 }
+
+/*static int	check_pipeline_groups(t_word_lst *tmp_lst)
+{
+	while (tmp_lst)
+	{
+		if 
+		tmp_lst = tmp_lst->next;
+	}
+}*/

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 20:59:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:23:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	check_group(char *word)
 			return (ERR_BI);
 		if (rec_syntax_analysis(word) != 0)
 			return (ERR_BI);
+	}
+	else if (word[0] == ')')
+	{
+		err_syntax(")");
+		return (ERR_BI);
 	}
 	return (0);
 }
