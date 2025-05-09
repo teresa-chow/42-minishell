@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 00:18:55 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:36:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 	}
 	else if ((*node)->type == CMD)
 	{
+		if (pipeline && (*node)->fd_in != -1)
+			dup2((*node)->fd_in, STDIN_FILENO);
 		if (exec_ast_cmd(data, node, pipeline) == -1)
 		{
 			reset_old_in_out(data, *node);
