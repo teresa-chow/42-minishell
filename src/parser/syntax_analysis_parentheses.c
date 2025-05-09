@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 10:51:30 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 10:23:23 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:55:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ static int	rec_syntax_analysis(char *word)
 		cmd_lst = tokenize_op(tmp_group);
 		if (cmd_lst)
 		{
-			free(tmp_group);
 			tmp_lst = ft_calloc(1, sizeof(t_word_lst));
 			if (!tmp_lst)
 				return (-1);
@@ -128,11 +127,12 @@ static int	rec_syntax_analysis(char *word)
 			free_strarray(cmd_lst);
 			if (tmp_lst->word && syntax_analysis(tmp_lst) != 0)
 			{
-				free_word_lst(&tmp_lst);
+				free_w_lst_words(&tmp_lst);
 				return (ERR_BI);
 			}
-			free_word_lst(&tmp_lst);
+			free_w_lst_words(&tmp_lst);
 		}
+		free(tmp_group);
 	}
 	return (0);
 }
