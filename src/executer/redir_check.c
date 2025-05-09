@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/09 11:11:03 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:31:01 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../include/errors.h"
 #include "../../include/utils.h"
 
-static int	is_redirect(t_word *word);
+static int	is_redirection(t_tree_node *node);
 static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
 				int tmp_in);
 static int	handle_redir_in(t_data *data, t_tree_node *node, t_word *word,
@@ -30,16 +30,8 @@ int	redir_check(t_tree_node *node, t_data *data)
 	if (!node->word)
 		return (0);
 	tmp = node->word;
-	if (!is_redirect(node->word))
-	{
-		if (node->fd_in != -1)
-		{
-			dup2(node->fd_in, STDIN_FILENO);
-			close(node->fd_in);
-			node->fd_in = -1;
-		}
+	if (!is_redirection(node))
 		return (0);
-	}
 	tmp_in = -1;
 	if (heredoc_redir_in(node))
 		tmp_in = dup(node->fd_in);
@@ -54,18 +46,19 @@ int	redir_check(t_tree_node *node, t_data *data)
 	return (0);
 }
 
-static int	is_redirect(t_word *word)
+static int	is_redirection(t_tree_node *node)
 {
-	t_word	*tmp;
-
-	tmp = word;
-	while (tmp)
+	if (!is_other_redir(node->word))
 	{
-		if (tmp->redir == IN || tmp->redir == OUT || tmp->redir == APPEND)
-			return (1);
-		tmp = tmp->next;
+		if (node->fd_in != -1)
+		{
+			dup2(node->fd_in, STDIN_FILENO);
+			close(node->fd_in);
+			node->fd_in = -1;
+		}
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,

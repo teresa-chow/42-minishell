@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 11:11:51 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:41:47 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../../include/errors.h"
 
 static void	exec_fork_child(t_data *data, t_tree_node *node);
+static void	redir_fd_in(t_tree_node *node);
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
@@ -49,12 +50,7 @@ static void	exec_fork_child(t_data *data, t_tree_node *node)
 	pid_t	pid;
 
 	status = 0;
-	if (node->fd_in != -1)
-	{
-		dup2(node->fd_in, STDIN_FILENO);
-		close(node->fd_in);
-		node->fd_in = -1;
-	}
+	redir_fd_in(node);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -72,6 +68,16 @@ static void	exec_fork_child(t_data *data, t_tree_node *node)
 		waitpid(pid, &status, 0);
 		signal(SIGINT, handle_signal);
 		set_exit_status(&status, data);
+	}
+}
+
+static void	redir_fd_in(t_tree_node *node)
+{
+	if (node->fd_in != -1)
+	{
+		dup2(node->fd_in, STDIN_FILENO);
+		close(node->fd_in);
+		node->fd_in = -1;
 	}
 }
 

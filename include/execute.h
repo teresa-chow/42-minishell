@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 10:55:52 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:31:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		print_to_pipe(t_word *doc_word, int *fd);
 int			verify_quotes(char **eof, bool *quotes, t_data *data);
 // Input and Output redirection
 int			redir_check(t_tree_node *node, t_data *data);
+int			is_other_redir(t_word *word);
 int			heredoc_redir_in(t_tree_node *node);
 int			redir_in(t_data *data, t_tree_node *node, t_word *word,
 				int tmp_in);
