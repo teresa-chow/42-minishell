@@ -2,6 +2,12 @@ Not working as expected:
 
 [ ] export a="ola '$USER'"
     echo $a
+[ ] (scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
+[ ] (error message missing: invalid identifier) export +=
+
+TERESA (vou resolver estes e as leaks abaixo)
+[ ] fix prompt (no tilde)
+[ ] ls | cat<<a>b (should read from heredoc, and is reading from pipe)
 
 LEAKS:
 [ ] fail && (echo && echo)
