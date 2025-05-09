@@ -3,79 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 14:36:45 by tchow-so          #+#    #+#             */
-/*   Updated: 2023/11/06 12:57:31 by tchow-so         ###   ########.fr       */
+/*   Created: 2024/10/25 13:11:10 by carlaugu          #+#    #+#             */
+/*   Updated: 2024/10/29 11:08:33 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned int	ft_substr_count(char const *s, char c)
+static	size_t	ft_count_words(char const *str, char c)
 {
-	unsigned int	i;
-	unsigned int	count;
+	size_t	i;
+	size_t	count;
 
 	i = 0;
 	count = 0;
-	while (s[i] != '\0')
+	while (str[i])
 	{
-		if (s[i] != c
-			&& (s[i + 1] == c || s[i + 1] == '\0'))
+		while (str[i] && (str[i] == c))
+			i++;
+		if (str[i] && (str[i] != c))
 			count++;
-		i++;
+		while (str[i] && (str[i] != c))
+			i++;
 	}
 	return (count);
 }
 
-static unsigned int	ft_substr_len(char const *s, char c)
+static	void	ft_free(char **arr, size_t i)
 {
-	unsigned int	i;
+	size_t	j;
 
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	return (i);
+	j = 0;
+	while (j < i)
+	{
+		free(arr[j]);
+		j++;
+	}
+	free(arr);
 }
 
-static char	**ft_free(char **str, int i)
+static	char	**ft_creat_arr(char const *s, char c, char **arr, size_t words)
 {
-	while (i >= 0)
+	size_t	i;
+	size_t	j;
+	size_t	start;
+
+	i = 0;
+	j = 0;
+	while (i < words)
 	{
-		free(str[i]);
-		i--;
+		start = j;
+		while (s[start] && s[start] == c)
+			start++;
+		j = start;
+		while (s[j] && s[j] != c)
+			j++;
+		arr[i] = ft_substr(s, start, j - start);
+		if (!arr[i])
+		{
+			ft_free(arr, i);
+			return (NULL);
+		}
+		i++;
 	}
-	free(str);
-	return (NULL);
+	arr[words] = 0;
+	return (arr);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**str;
-	int		i;
-	int		j;
+	size_t	words;
+	char	**array;
 
 	if (!s)
 		return (NULL);
-	str = malloc((ft_substr_count(s, c) + 1) * sizeof(char *));
-	if (!s || !str)
-		return (0);
-	i = 0;
-	j = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] != c)
-		{
-			str[j] = ft_substr(s, i, ft_substr_len(&s[i], c));
-			if (!str[j])
-				return (ft_free(str, j));
-			j++;
-			i += ft_substr_len(&s[i], c);
-		}
-		else
-			i++;
-	}
-	str[j] = 0;
-	return (str);
+	words = ft_count_words(s, c);
+	array = malloc ((words + 1) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	return (ft_creat_arr(s, c, array, words));
 }
