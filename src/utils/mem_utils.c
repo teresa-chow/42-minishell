@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 16:48:32 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:19:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	reset_mem(t_data *data, t_tree_node **root)
 {
 	t_env_node	*var;
 
-	//close_heredoc_fds(data, NULL);
 	if (data->no_home)
 		free(data->env_home_var);
 	data->env_home_var = NULL;
@@ -31,11 +30,10 @@ void	reset_mem(t_data *data, t_tree_node **root)
 		data->no_home = true;
 	free_ast(root);
 	g_global = 0;
-	data->pipeline = NULL; /// add
+	data->pipeline = NULL;
 	data->has_hifen = false;
 	if (data->in_heredoc)
-		data->in_heredoc = false; //////add this change. This is too in heredoc.c 
-					///but if return is -1 will not change to false
+		data->in_heredoc = false;
 	if (data->status == 0)
 		free_env_list(data, 0, &data->env);
 }
