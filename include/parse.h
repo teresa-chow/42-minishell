@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 16:12:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:14:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # include "../lib/libft/libft/libft.h"
 # include "../lib/libft/ft_printf/ft_printf.h"
 
-# define BG_CYA "\033[46;1;37m "
-# define BG_RED "\033[41;1;37m "
-# define BG_YEL "\033[43;1;37m "
+# define BG_BLU "\033[44;1;37m "
+# define BG_GRN "\033[42;1;37m "
+# define BOLD	"\033[0;1;37m "
 # define NC 	" \033[0m"
 
 typedef struct s_prompt
