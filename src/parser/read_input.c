@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/07 20:21:58 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:35:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root);
 static int	syntax_check(t_word_lst *word_lst, t_data *data);
 
-void	read_input(t_tree_node **root, t_data *data, bool env)
+void	read_input(t_tree_node **root, t_data *data)
 {
 	char		*input;
 	char		*prompt;
 	char		**cmd_lst;
 
 	data->ast_root = *root;
-	prompt = get_prompt(data, env);
+	prompt = get_prompt(data);
 	if (isatty(STDOUT_FILENO))
 		input = readline(prompt);
 	else

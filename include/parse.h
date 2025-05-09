@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 17:14:25 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 17:34:46 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ typedef struct s_tree_node
 }	t_tree_node;
 
 /* =========================== INPUT PROCESSING ============================= */
-void			read_input(t_tree_node **tree, t_data *data, bool env);
-char			*get_prompt(t_data *data, bool env);
+void			read_input(t_tree_node **tree, t_data *data);
+char			*get_prompt(t_data *data);
 
 /* ==================== TOKENIZE: turn input into tokens ==================== */
 char			**tokenize_op(char *input);
