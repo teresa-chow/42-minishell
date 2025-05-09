@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/07 22:34:17 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:55:52 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void		handle_sign_child(int i);
 /* ============================= REDIRECTIONS ============================== */
 // Heredoc
 int			redir_heredoc(t_data *data, t_tree_node *node);
-int    		search_heredoc(t_data *data, t_tree_node **node); ///add
+int			search_heredoc(t_data *data, t_tree_node **node);
 int			build_heredoc_wrd(char *input, t_data *data);
-void		close_heredoc_fds(t_data *data, t_tree_node *node);///add
+void		close_heredoc_fds(t_data *data, t_tree_node *node);
 void		parent_handle(int *fd, t_data *data, pid_t pid, int status);
 void		print_to_pipe(t_word *doc_word, int *fd);
 int			verify_quotes(char **eof, bool *quotes, t_data *data);
