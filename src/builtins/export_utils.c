@@ -84,11 +84,8 @@ static void	print_export(t_env_node *env_lst)
 		ft_putstr_fd(env_lst->key, STDOUT_FILENO);
 		if (env_lst->val)
 		{
-			if (env_lst->val[0])
-			{
-				write (STDOUT_FILENO, "=", 1);
-				print_var_val(env_lst->val);
-			}
+			write (STDOUT_FILENO, "=", 1);
+			print_var_val(env_lst->val);
 		}
 		write(STDOUT_FILENO, "\n", 1);
 		env_lst = env_lst->next;

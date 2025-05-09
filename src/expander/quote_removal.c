@@ -13,9 +13,9 @@
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-int			remove_quotes(char **str, bool to_free, t_data *data);
-static int	quoted_len(char *word);
-static void	add_no_quotes(char **str, char **new);
+int	remove_quotes(char **str, bool to_free, t_data *data, t_word *word);
+static int	quoted_len(char *word, t_word *word_lst);
+static	void	add_no_quotes(char **str, char **new, t_word *word);
 
 char	find_in(char *s)
 {
@@ -32,14 +32,14 @@ int	process_remove_quotes(t_word *word, t_data *data)
 {
 	while (word)
 	{
-		if (remove_quotes(&word->word, 1, data) == -1)
+		if (remove_quotes(&word->word, 1, data, word) == -1)
 			return (-1);
 		word = word->next;
 	}
 	return (0);
 }
 
-int	remove_quotes(char **str, bool to_free, t_data *data)
+int	remove_quotes(char **str, bool to_free, t_data *data, t_word *word)
 {
 	int		len;
 	char	*new;
@@ -49,12 +49,12 @@ int	remove_quotes(char **str, bool to_free, t_data *data)
 	start = *str;
 	if (ft_strchr(*str, '\'') || ft_strchr(*str, '"'))
 	{
-		len = quoted_len(*str);
+		len = quoted_len(*str, word);
 		new = ft_calloc(len + 1, sizeof(char));
 		if (!new)
 			return (error_allocation(data));
 		*str = start;
-		add_no_quotes(str, &new);
+		add_no_quotes(str, &new, word);
 		if (to_free)
 			free(start);
 		*str = new;
@@ -62,7 +62,7 @@ int	remove_quotes(char **str, bool to_free, t_data *data)
 	return (0);
 }
 
-static int	quoted_len(char *word)
+static int	quoted_len(char *word, t_word *word_lst)
 {
 	int		len;
 	char	in_qt;
@@ -72,6 +72,8 @@ static int	quoted_len(char *word)
 	in = false;///
 	in_qt = 0;
 	in_qt = find_in(word);
+	if (word_lst->in_quote)
+		in_qt = word_lst->in_quote;
 	while (*word)
 	{
 		if (*word != in_qt)
@@ -80,15 +82,18 @@ static int	quoted_len(char *word)
 		{
 			in = false;
 			in_qt = find_in(word + 1);
+			if (word_lst->in_quote)
+				in_qt = word_lst->in_quote;
 		}
-		if (*word == in_qt && !in)
+		else if (*word == in_qt && !in)
 			in = true;
 		word++;
 	}
 	return (len);
 }
 
-static	void	add_no_quotes(char **str, char **new)
+
+static	void	add_no_quotes(char **str, char **new, t_word *word)
 {
 	int		i;
 	char	in_qt;
@@ -97,6 +102,8 @@ static	void	add_no_quotes(char **str, char **new)
 	i = -1;
 	in = false;
 	in_qt = find_in(*str);
+	if (word->in_quote)
+		in_qt = word->in_quote;
 	while (**str)
 	{
 		if (**str != in_qt)
@@ -105,8 +112,10 @@ static	void	add_no_quotes(char **str, char **new)
 		{
 			in = false;
 			in_qt = find_in(*(str) + 1);
+			if (word->in_quote)
+				in_qt = word->in_quote;
 		}
-		if (**str == in_qt && !in)
+		else if (**str == in_qt && !in)
 			in = true;
 		(*str)++;
 	}

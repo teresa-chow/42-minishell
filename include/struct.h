@@ -23,6 +23,7 @@ typedef struct s_input_inf
 	char	*key;
 	char	*val;
 	char	sep;
+	char	fst_qt;
 }	t_input_inf;
 
 /* =================================== ENV ================================= */
@@ -30,6 +31,7 @@ typedef struct s_env_node
 {
 	char				*key;
 	char				*val;
+	char				in_qt;
 	struct s_env_node	*next;
 	struct s_env_node	*prev;
 }	t_env_node;
@@ -70,6 +72,7 @@ typedef struct s_expand
 	bool	export_has_equal;
 	bool	export_exp_bfr_equal;
 	bool	cd_cmd;
+	char	in_qt; //used to remove quotees in export
 	struct s_word	*prev;
 }	t_expand;
 
@@ -86,7 +89,7 @@ typedef struct s_wildcard
 	bool			mid_ok;
 	bool			end_ok;
 	bool			print_dir;
-	bool			has_quotes; // add
+	bool			has_quotes;
 	struct s_word	*wild_word;
 }	t_wildcard;
 
@@ -119,7 +122,7 @@ typedef struct s_data
 	bool					has_hifen;
 	bool					has_vars;
 	bool					has_redir;
-	bool					in_heredoc; /// add this change
+	bool					in_heredoc;
 }	t_data;
 
 #endif

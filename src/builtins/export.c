@@ -52,6 +52,7 @@ int	add_var(t_input_inf *inf_arg, t_data *data)
 			return (error_allocation(data));
 		tmp->key = inf_arg->key;
 		tmp->val = inf_arg->val;
+		tmp->in_qt = inf_arg->fst_qt;
 		change_ptrs(last, tmp, &data->env);
 	}
 	return (0);
@@ -103,6 +104,7 @@ static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 		reset_inf(arg_inf);
 	else
 		free(arg_inf->key);
+	env->in_qt = arg_inf->fst_qt;
 	return (1);
 }
 

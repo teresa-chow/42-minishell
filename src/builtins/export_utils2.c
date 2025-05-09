@@ -37,6 +37,8 @@ void	handle_with_args(t_word *word, t_data *data, int *exit)
 				error_allocation(data);
 				return ;
 			}
+			if (word->in_quote)
+				inf_arg.fst_qt = word->in_quote;
 			if (add_var(&inf_arg, data) == -1)
 				return ;
 		}

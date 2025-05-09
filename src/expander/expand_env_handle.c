@@ -61,6 +61,8 @@ static int	find_and_get_expand_value(t_data *data, char **ptr, char **tmp)
 			add_chars(var->val, end_val, *tmp);
 			*tmp += ft_strlen(var->val);
 		}
+		if (var->in_qt)
+			data->exp->in_qt = var->in_qt;
 	}
 	return (0);
 }

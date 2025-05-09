@@ -87,8 +87,11 @@ static int	create_new_nodes(t_data *data, t_word **last)
 		tmp->word = ft_strdup(data->exp->words[i]);
 		if (!tmp->word)
 			return (-1);
+		if (data->exp && data->exp->in_qt)
+			tmp->in_quote = data->exp->in_qt;
 		*last = tmp;
 	}
+	data->exp->in_dbl = 0;
 	return (0);
 }
 
