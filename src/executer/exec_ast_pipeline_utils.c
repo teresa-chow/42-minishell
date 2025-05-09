@@ -47,7 +47,7 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 	if (!pipeline->cmd_lst)
 	{
 		pipeline->cmd_lst = ft_calloc(1, sizeof(t_tree_node));
-		pipeline->cmd_lst->type = CMD; //added
+		pipeline->cmd_lst->type = CMD;
 		pipeline->cmd_lst->word = (*node)->word;
 		pipeline->cmd_lst->fd_in = (*node)->fd_in;
 	}
@@ -55,9 +55,10 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 	{
 		tmp = pipeline->cmd_lst;
 		new = ft_calloc(1, sizeof(t_tree_node));
-		new->type = (*node)->type; //added
+		new->type = (*node)->type;
 		new->word = (*node)->word;
 		new->fd_in = (*node)->fd_in;
+		new->fd_out = (*node)->fd_out;
 		while (tmp->left)
 			tmp = tmp->left;
 		tmp->left = new;
@@ -74,13 +75,11 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 		close_pipes_child(pipeline, count);
 		if (count < pipeline.n_pipes)
 		{
-			// close(pipeline.fd[count][0]);
 			dup2(pipeline.fd[count][1], STDOUT_FILENO);
 			close(pipeline.fd[count][1]);
 		}
 		if (count > 0)
 		{
-			// close(pipeline.fd[count - 1][1]);
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
@@ -100,12 +99,18 @@ static void	close_pipes_child(t_pipeline pipeline, int count)
 		if (i != count - 1)
 		{
 			if (pipeline.fd[i][0] != -1)
+			{
 				close(pipeline.fd[i][0]);
+				pipeline.fd[i][0] = -1;
+			}
 		}
 		if (i != count)
 		{
 			if (pipeline.fd[i][1] != -1)
+			{
 				close(pipeline.fd[i][1]);
+				pipeline.fd[i][1] = -1;
+			}
 		}
 		i++;
 	}

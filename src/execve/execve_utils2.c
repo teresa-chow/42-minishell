@@ -19,8 +19,8 @@ void	free_failed_child(t_exec_data *inf, t_data *data, t_tree_node *node)
 	close_heredoc_fds(data, NULL);
 	free_arrays(inf, data, 0);
 	free_env_list(data, 0, &data->env);
+	reset_old_in_out(data, node);
 	if (data->pipeline != NULL)
 		free_pipeline(data->pipeline);
-	reset_old_in_out(data, node);
 	free_ast(&data->ast_root);
 }

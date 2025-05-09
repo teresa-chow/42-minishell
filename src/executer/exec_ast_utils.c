@@ -49,6 +49,12 @@ static void	exec_fork_child(t_data *data, t_tree_node *node)
 	pid_t	pid;
 
 	status = 0;
+	if (node->fd_in != -1)
+	{
+		dup2(node->fd_in, STDIN_FILENO);
+		close(node->fd_in);
+		node->fd_in = -1;
+	}
 	pid = fork();
 	if (pid < 0)
 	{
