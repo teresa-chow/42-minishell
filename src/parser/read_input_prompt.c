@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input_prompt.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 17:44:35 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:11:58 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ static void	init_prompt(t_prompt *prompt, char *usr, t_data *data)
 		dir = ft_strdup(ft_strrchr(cwd, '/'));
 	prompt->prog = ft_strdup("minishell");
 	prompt->usr = ft_strdup(usr);
-	if (ft_strcmp(dir, "/"))
-		prompt->cwd = ft_strjoin("~", dir);
-	else
-		prompt->cwd = ft_strdup(dir);
+	prompt->cwd = ft_strdup(dir);
 	free(cwd);
 	free(dir);
 }
