@@ -63,7 +63,11 @@ static int	check_token_context_details(t_word **word, t_data *data)
 		else if (*s == '"' && !data->exp->has_dbl)
 			data->exp->has_dbl = true;
 		else if (*s == '$' && is_valid_dollar(s) && !data->exp->has_exp)
+		{
+				if (data->exp->export_cmd)
+				(*word)->literal = true;
 			data->exp->has_exp = true;
+		}
 		s++;
 	}
 	return (0);

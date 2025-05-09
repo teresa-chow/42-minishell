@@ -58,14 +58,16 @@ static int	find_begin_of_val(char *s)
 	if (*s)
 	{
 		i++;
-		s++;
-		while (*s)
-		{
-			if (*s != '"')
-				return (i);
-			i++;
-			s++;
-		}
+		return (i);
+		// i++;
+		// s++;
+		// while (*s)
+		// {
+		// 	if (*s != '"')
+		// 		return (i);
+		// 	i++;
+		// 	s++;
+		// }
 	}
 	return (i);
 }
@@ -75,7 +77,7 @@ static int	find_val_len(char *word)
 	int	i;
 
 	i = 0;
-	while (*word && *word != '"')
+	while (*word)
 	{
 		i++;
 		word++;

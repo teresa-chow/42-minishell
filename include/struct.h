@@ -24,6 +24,7 @@ typedef struct s_input_inf
 	char	*val;
 	char	sep;
 	char	fst_qt;
+	bool	literal;
 }	t_input_inf;
 
 /* =================================== ENV ================================= */

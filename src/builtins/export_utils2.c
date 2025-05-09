@@ -32,6 +32,8 @@ void	handle_with_args(t_word *word, t_data *data, int *exit)
 		else if (check_syntax(word->word, data, exit))
 		{
 			data->has_vars = true;
+			if (word->literal)
+				inf_arg.literal = true;
 			if (set_inf(word->word, &inf_arg) == -1)
 			{
 				error_allocation(data);
@@ -56,6 +58,8 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 		return (0);
 	tmp = s;
 	if ((s && ft_isdigit(*s)) || *s == '=')
+		return (set_error(data, exit, s));
+	if ((*tmp == '+' && *(tmp + 1) == '='))
 		return (set_error(data, exit, s));
 	while (*tmp)
 	{
