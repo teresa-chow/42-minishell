@@ -6,8 +6,8 @@ Not working as expected:
 [ ] (error message missing: invalid identifier) export +=
 
 TERESA (vou resolver estes e as leaks abaixo)
-[ ] fix prompt (no tilde)
-[ ] ls | cat<<a>b (should read from heredoc, and is reading from pipe)
+[x] fix prompt (no tilde)
+[x] ls | cat<<a>b (should read from heredoc, and is reading from pipe)
 
 LEAKS:
 [ ] fail && (echo && echo)
