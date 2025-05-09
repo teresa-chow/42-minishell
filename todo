@@ -1,8 +1,5 @@
 Not working as expected:
 
-[ ] (echo && echo) | wc -l
-[x] cat << a > file
-[x] "" | ""
 [ ] export a="ola '$USER'"
     echo $a
 
