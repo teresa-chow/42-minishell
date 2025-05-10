@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/10 16:04:05 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/10 16:33:15 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,8 +79,6 @@ UTILS_DIR		= $(SRC_DIR)/utils
 EXECUTER_DIR 	= $(SRC_DIR)/executer
 
 ERRORS_DIR		= $(SRC_DIR)/errors
-
-TEST_DIR		= tests
 
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
