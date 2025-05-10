@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 17:54:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:36:11 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node)
 		tokenize_w_lst(cmd_lst, tmp_lst);
 		free_strarray(cmd_lst);
 		create_syntax_tree(tmp_lst, NULL, node);
-		free(tmp_lst);
+		free_word_lst(&tmp_lst);
 	}
 }
