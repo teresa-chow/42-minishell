@@ -72,21 +72,18 @@ static int	quoted_len(char *word, t_word *word_lst)
 	in = false;///
 	in_qt = 0;
 	in_qt = find_in(word);
-	if (word_lst->in_quote)
-		in_qt = word_lst->in_quote;
+	if (word_lst->literal && !word_lst->exp_cmd)
+		in_qt = 0;
 	while (*word)
 	{
 		if (*word != in_qt)
 			len++;
-		if (*word == in_qt && in && !word_lst->literal)
+		if (*word == in_qt && in)
 		{
 			in = false;
-			if (word_lst->in_quote && *(ft_strchr(word, 0) - 1) == word_lst->in_quote) 
-				in_qt = word_lst->in_quote;
-			else
-				in_qt = find_in(word + 1);
+			in_qt = find_in(word + 1);
 		}
-		else if (*word == in_qt && !in)
+		if (*word == in_qt && !in)
 			in = true;
 		word++;
 	}
@@ -103,21 +100,18 @@ static	void	add_no_quotes(char **str, char **new, t_word *word)
 	i = -1;
 	in = false;
 	in_qt = find_in(*str);
-	if (word->in_quote)
-		in_qt = word->in_quote;
+	if (word->literal && !word->exp_cmd)
+		in_qt = 0;
 	while (**str)
 	{
 		if (**str != in_qt)
 			new[0][++i] = *(*str);
-		if (**str == in_qt && in && !word->literal)
+		if (**str == in_qt && in)
 		{
 			in = false;
-			if (word->in_quote && *(ft_strchr(*str, 0) - 1) == word->in_quote) 
-				in_qt = word->in_quote;
-			else
-				in_qt = find_in(*(str) + 1);
+			in_qt = find_in(*(str) + 1);
 		}
-		else if (**str == in_qt && !in)
+		if (**str == in_qt && !in)
 			in = true;
 		(*str)++;
 	}

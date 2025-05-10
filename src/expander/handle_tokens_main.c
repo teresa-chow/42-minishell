@@ -36,10 +36,10 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
 				if (handle_process(data, &word, &last, node) == -1)
-				return (free_exp(data, 1));
+					return (free_exp(data, 1));
 			reset_big_part_flags(data);
 		}
-		data->exp->in_qt = 0;
+		data->exp->literal = false;////////
 		if (word && data->exp->prev)
 			word = word->next;
 		last = data->exp->prev;
@@ -89,8 +89,6 @@ static	void	update_word_and_reset_flag(t_data *data, t_word **word)
 	if ((*word)->word != data->exp->new)
 		free((*word)->word);
 	(*word)->word = data->exp->new;
-	if (data->exp->in_qt)
-		(*word)->in_quote = data->exp->in_qt;
 }
 
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node,

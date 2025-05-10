@@ -26,6 +26,8 @@ int	analyze_token_context(t_word **word, t_data *data)
 	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word , *word))
 		data->exp->export_exp_bfr_equal = true;
 	check_builtin_name(data, word);
+	if (data->exp->export_cmd)
+		(*word)->exp_cmd = true;
 	if (is_valid_tilde((*word)->word))
 	{
 		if (expand_tilde(word, data) == -1)
@@ -43,7 +45,7 @@ int	analyze_token_context(t_word **word, t_data *data)
 	return (0);
 }
 
-static int	check_token_context_details(t_word **word, t_data *data)
+static int	 check_token_context_details(t_word **word, t_data *data)
 {
 	char	*s;
 
@@ -58,16 +60,14 @@ static int	check_token_context_details(t_word **word, t_data *data)
 			data->exp->til_aft_equal = false;
 			break ;
 		}
+		if (data->exp->export_cmd)
+			(*word)->literal = true; ///////???
 		if (*s == '\'' && !data->exp->has_sing)
 			data->exp->has_sing = true;
 		else if (*s == '"' && !data->exp->has_dbl)
 			data->exp->has_dbl = true;
 		else if (*s == '$' && is_valid_dollar(s) && !data->exp->has_exp)
-		{
-				if (data->exp->export_cmd)
-				(*word)->literal = true;
 			data->exp->has_exp = true;
-		}
 		s++;
 	}
 	return (0);

@@ -32,15 +32,12 @@ void	handle_with_args(t_word *word, t_data *data, int *exit)
 		else if (check_syntax(word->word, data, exit))
 		{
 			data->has_vars = true;
-			if (word->literal)
-				inf_arg.literal = true;
+			inf_arg.literal = word->literal;
 			if (set_inf(word->word, &inf_arg) == -1)
 			{
 				error_allocation(data);
 				return ;
 			}
-			if (word->in_quote)
-				inf_arg.fst_qt = word->in_quote;
 			if (add_var(&inf_arg, data) == -1)
 				return ;
 		}

@@ -53,6 +53,7 @@ typedef struct s_word
 	char				*word;
 	char				in_quote;
 	bool				literal;
+	bool				exp_cmd;
 	t_redir				redir;
 }	t_word;
 

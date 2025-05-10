@@ -68,8 +68,6 @@ static int	update_word(t_data *data, t_word **word)
 		(*word)->word = ft_strjoin(data->exp->new, data->exp->words[0]);
 	if (!(*word)->word)
 		return (-1);
-	if (data->exp->in_qt)
-		(*word)->in_quote = data->exp->in_qt;
 	return (0);
 }
 
@@ -91,8 +89,6 @@ static int	create_new_nodes(t_data *data, t_word **last)
 			return (-1);
 		if ((*last)->literal)
 			tmp->literal = true;
-		if (data->exp && data->exp->in_qt)
-			tmp->in_quote = data->exp->in_qt;
 		*last = tmp;
 	}
 	data->exp->in_dbl = 0;
