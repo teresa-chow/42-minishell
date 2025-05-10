@@ -1,25 +1,23 @@
 Not working as expected:
 
-[ ] export a="ola '$USER'"
+[x] export a="ola '$USER'"
     echo $a
 [ ] (scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
-[ ] (error message missing: invalid identifier) export +=
-
-TERESA (vou resolver estes e as leaks abaixo)
+[x] (error message missing: invalid identifier) export +=
 [x] fix prompt (no tilde)
 [x] ls | cat<<a>b (should read from heredoc, and is reading from pipe)
 
 LEAKS:
-[ ] fail && (echo && echo)
-[ ] fail || (echo && echo)
-[ ] (ls fail | echo ola && (echo a && echo b) || echo c)
-[ ] (echo a | echo b | echo c && echo d) && echo e -- pipeline inside of group
+[x] fail && (echo && echo)
+[x] fail || (echo && echo)
+[x] (ls fail | echo ola && (echo a && echo b) || echo c)
+[x] (echo a | echo b | echo c && echo d) && echo e -- pipeline inside of group
             (likely cause: recursive syntax analysis in group)
 
 ------------------------------------------------------------------------------------------
 
 Quem se despachar primeiro:
-[ ] env -i ./minishell + minishell (second call forward prints color prompt without XTERM)
+[x] env -i ./minishell prompt
 
 ------------------------------------------------------------------------------------------
 
