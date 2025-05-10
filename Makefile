@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/10 15:59:08 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/10 16:04:05 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,7 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-bonus: $(BONUS)	## Compile minishell_bonus (requirement)
+bonus: $(BONUS)	## Compile minishell_bonus - requirement
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
@@ -188,7 +188,7 @@ norm:	## Execute norminette
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
 
-vg: all	## Run valgrind (suppress readline() memory leaks)
+vg: all	## Run valgrind - suppress readline() memory leaks
 	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all \
