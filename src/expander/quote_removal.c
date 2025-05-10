@@ -81,7 +81,8 @@ static int	quoted_len(char *word, t_word *word_lst)
 		if (*word == in_qt && in)
 		{
 			in = false;
-			in_qt = find_in(word + 1);
+			if (!word_lst->exp_cmd)
+				in_qt = find_in(word + 1);
 		}
 		if (*word == in_qt && !in)
 			in = true;
@@ -109,7 +110,8 @@ static	void	add_no_quotes(char **str, char **new, t_word *word)
 		if (**str == in_qt && in)
 		{
 			in = false;
-			in_qt = find_in(*(str) + 1);
+			if (!word->exp_cmd)
+				in_qt = find_in(*(str) + 1);
 		}
 		if (**str == in_qt && !in)
 			in = true;

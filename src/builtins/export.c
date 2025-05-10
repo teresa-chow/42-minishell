@@ -104,6 +104,8 @@ static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 		reset_inf(arg_inf);
 	else
 		free(arg_inf->key);
+	if (arg_inf->literal)
+		env->env_literal = arg_inf->literal;
 	return (1);
 }
 

@@ -89,6 +89,8 @@ static	void	update_word_and_reset_flag(t_data *data, t_word **word)
 	if ((*word)->word != data->exp->new)
 		free((*word)->word);
 	(*word)->word = data->exp->new;
+	if (data->exp->literal)
+		(*word)->literal = data->exp->literal;
 }
 
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node,
