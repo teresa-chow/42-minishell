@@ -52,10 +52,8 @@ int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 	{
 		if (**ptr == '$' && is_valid_dollar(*ptr))
 		{
-			*tmp++ = '\'';///delete?
 			if (get_expand_val(data, ptr, &tmp) == -1)
 				return (-1);
-			*tmp++ = '\'';///delete?
 		}
 		else
 			*tmp++ = *(*ptr)++;

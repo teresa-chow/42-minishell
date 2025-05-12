@@ -63,7 +63,7 @@ static int	update_word(t_data *data, t_word **word)
 	if ((*word)->word != data->exp->new)
 		free((*word)->word);
 	if (!data->exp->new)
-		(*word)->word = ft_strjoin(data->exp->words[0], "'"); //// ft_strjoin or dup?? what working?
+		(*word)->word = ft_strdup(data->exp->words[0]);
 	else
 		(*word)->word = ft_strjoin(data->exp->new, data->exp->words[0]);
 	if (!(*word)->word)

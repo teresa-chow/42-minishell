@@ -12,6 +12,7 @@
 
 #include "../../include/builtins.h"
 #include "../../include/errors.h"
+#include "../../include/utils.h"
 
 static char	find_sep(char *s);
 static int	find_begin_of_val(char *s);
@@ -59,15 +60,6 @@ static int	find_begin_of_val(char *s)
 	{
 		i++;
 		return (i);
-		// i++;
-		// s++;
-		// while (*s)
-		// {
-		// 	if (*s != '"')
-		// 		return (i);
-		// 	i++;
-		// 	s++;
-		// }
 	}
 	return (i);
 }

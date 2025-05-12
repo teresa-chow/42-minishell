@@ -26,7 +26,6 @@ int	get_segment_len(char *bgn, char *end, t_data *data)
 	{
 		if (*bgn == '$' && is_valid_dollar(bgn))
 		{
-			len += 2; ///delete
 			if (get_expand_len(data, &bgn, &len) == -1)
 				return (-1);
 		}
