@@ -13,70 +13,77 @@
 #include "../../include/parse.h"
 #include "../../include/expand.h"
 
-static unsigned int	ft_substr_count(char const *s)
+#include "../../include/parse.h"
+#include "../../include/expand.h"
+
+static	size_t	ft_count_words(char const *str)
 {
-	unsigned int	i;
-	unsigned int	count;
+	size_t	i;
+	size_t	count;
 
 	i = 0;
 	count = 0;
-	while (s[i] != '\0')
+	while (str[i])
 	{
-		if ((!is_delimiter(s[i]) && is_delimiter(s[i + 1]))
-			|| s[i + 1] == '\0')
+		if ((!is_delimiter(str[i]) && is_delimiter(str[i + 1]))
+			|| str[i + 1] == '\0')
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-static unsigned int	ft_substr_len(char const *s)
+static	void	ft_free(char **arr, size_t i)
 {
-	unsigned int	i;
+	size_t	j;
 
-	i = 0;
-	while (s[i] && !is_delimiter(s[i]))
-		i++;
-	return (i);
+	j = 0;
+	while (j < i)
+	{
+		free(arr[j]);
+		j++;
+	}
+	free(arr);
 }
 
-static char	**ft_free(char **str, int i)
+static	char	**ft_creat_arr(char const *s, char **arr, size_t words)
 {
-	while (i >= 0)
+	size_t	i;
+	size_t	j;
+	size_t	start;
+
+	i = 0;
+	j = 0;
+	while (i < words)
 	{
-		free(str[i]);
-		i--;
+		start = j;
+		while (s[start] && is_delimiter(s[start]))
+			start++;
+		j = start;
+		while (s[j] && !is_delimiter(s[j]))
+			j++;
+		arr[i] = ft_substr(s, start, j - start);
+		if (!arr[i])
+		{
+			ft_free(arr, i);
+			return (NULL);
+		}
+		i++;
 	}
-	free(str);
-	return (NULL);
+	arr[words] = 0;
+	return (arr);
 }
 
 char	**get_words(char const *s)
 {
-	char	**str;
-	int		i;
-	int		j;
+	size_t	words;
+	char	**array;
 
 	if (!s)
 		return (NULL);
-	str = malloc((ft_substr_count(s) + 1) * sizeof(char *));
-	if (!s || !str)
-		return (0);
-	i = 0;
-	j = 0;
-	while (s[i] != '\0')
-	{
-		if (!is_delimiter(s[i]))
-		{
-			str[j] = ft_substr(s, i, ft_substr_len(&s[i]));
-			if (!str[j])
-				return (ft_free(str, j));
-			j++;
-			i += ft_substr_len(&s[i]);
-		}
-		else
-			i++;
-	}
-	str[j] = 0;
-	return (str);
+	words = ft_count_words(s);
+	array = malloc ((words + 1) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	return (ft_creat_arr(s, array, words));
 }

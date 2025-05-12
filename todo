@@ -5,9 +5,9 @@ CARLOS
 [ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
 [x] (open fd: redir_heredoc) cat << EOF << EOF
 
-[x] (norminette) lib/libft/ft_split.c
-[x] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
-[x] (norminette) fix functions with 25+ lines and 4+ parameters
+[ ] (norminette) lib/libft/ft_split.c
+[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
+[ ] (norminette) fix functions with 25+ lines and 4+ parameters
 
 ------------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ src/executer/redir_check.c (vou rever este ficheiro: se precisares de o alterar,
 ------------------------------------------------------------------------------------------
 
 Quem se despachar primeiro:
-[ ] env -i ./minishell + minishell (second call forward prints color prompt without XTERM)
+[x] env -i ./minishell prompt
 
 ------------------------------------------------------------------------------------------
 

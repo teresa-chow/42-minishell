@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 08:46:10 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:14:36 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:07:25 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_signal(int i)
 {
 	write (1, "\n", 1);
 	if (i == SIGINT)
-		g_global = SIGINT; //change this
+		g_global = SIGINT;
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

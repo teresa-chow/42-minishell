@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/07 18:11:54 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/10 16:33:15 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,8 +80,6 @@ EXECUTER_DIR 	= $(SRC_DIR)/executer
 
 ERRORS_DIR		= $(SRC_DIR)/errors
 
-TEST_DIR		= tests
-
 # Libraries
 LIBFT_DIR	= $(LIB_DIR)/libft
 
@@ -108,7 +106,7 @@ MKDIR	= mkdir -p
 
 all: $(NAME)	## Compile minishell
 
-bonus: $(BONUS)
+bonus: $(BONUS)	## Compile minishell_bonus - requirement
 
 $(NAME): $(LIBFT_ARC) $(BUILD_DIR) $(OBJS) $(OBJS_PARSER) $(OBJS_EXECUTER) \
 	$(OBJS_BUILTINS) $(OBJS_EXECVE) $(OBJS_UTILS) $(OBJS_EXPANDER) \
@@ -188,13 +186,12 @@ norm:	## Execute norminette
 
 ##@ MEMORY MANAGEMENT: DEBUGGING & LEAK DETECTION
 
-vg: all	## Run valgrind (suppress readline() memory leaks)
+vg: all	## Run valgrind - suppress readline() memory leaks
 	$(file > rl.supp, $(RL_SUPP))
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all \
 	--suppressions=rl.supp --track-fds=yes \
-	./$(NAME)
-#--log-file=memleaks.log
+	--log-file=memleaks.log ./$(NAME)
 
 
 ##@ TOOL INSTALLATION

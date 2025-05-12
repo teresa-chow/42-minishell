@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:46:49 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/08 18:11:36 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:39:26 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/execute.h"
 #include "../../include/utils.h"
+
+static void	close_node_fd(t_tree_node *node);
 
 void	save_old_in_out(t_data *data)
 {
@@ -22,12 +24,7 @@ void	save_old_in_out(t_data *data)
 
 void	reset_old_in_out(t_data *data, t_tree_node *node)
 {
-	if (node->fd_in != -1)
-		close(node->fd_in);
-	node->fd_in = -1;
-	if (node->fd_out != -1)
-		close(node->fd_out);
-	node->fd_out = -1;
+	close_node_fd(node);
 	if (data->old_stdin != -1)
 	{
 		if (dup2(data->old_stdin, STDIN_FILENO) == -1)
@@ -48,6 +45,18 @@ void	reset_old_in_out(t_data *data, t_tree_node *node)
 		close(data->old_stdout);
 		data->old_stdout = -1;
 	}
-	// free(data->redir);
-	// data->redir = NULL;
+}
+
+static void	close_node_fd(t_tree_node *node)
+{
+	if (node->fd_in != -1)
+	{
+		close(node->fd_in);
+		node->fd_in = -1;
+	}
+	if (node->fd_out != -1)
+	{
+		close(node->fd_out);
+		node->fd_out = -1;
+	}
 }

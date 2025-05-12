@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:13:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 10:55:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,20 @@ typedef struct s_env_init
 */
 typedef struct s_expand
 {
-	char	*new;
-	char	**words;
-	bool	in_dbl;
-	bool	in_sing;
-	bool	to_exp;
-	bool	has_exp;
-	bool	has_sing;
-	bool	has_dbl;
-	bool	to_split;
-	bool	til_aft_equal;
-	bool	export_cmd;
-	bool	export_has_equal;
-	bool	export_exp_bfr_equal;
-	bool	cd_cmd;
+	char			*new;
+	char			**words;
+	bool			in_dbl;
+	bool			in_sing;
+	bool			to_exp;
+	bool			has_exp;
+	bool			has_sing;
+	bool			has_dbl;
+	bool			to_split;
+	bool			til_aft_equal;
+	bool			export_cmd;
+	bool			export_has_equal;
+	bool			export_exp_bfr_equal;
+	bool			cd_cmd;
 	struct s_word	*prev;
 }	t_expand;
 

@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 13:58:16 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 22:39:45 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:28:59 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	init_word(t_word_lst *word_lst, t_word **word)
 {
 	if (!*word)
 	{
-		*word = ft_calloc(1, sizeof(t_word)); //TODO: handle mem_alloc err
+		*word = ft_calloc(1, sizeof(t_word));
 		if (!*word)
 		{
 			word_lst = NULL;
@@ -43,7 +43,7 @@ int	init_word(t_word_lst *word_lst, t_word **word)
 	}
 	else
 	{
-		if (add_word(word) == -1) //TODO: handle mem_alloc err
+		if (add_word(word) == -1)
 			return (-1);
 	}
 	return (0);

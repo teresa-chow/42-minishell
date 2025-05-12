@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:24:51 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/08 14:01:35 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:10:06 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../include/utils.h"
 
 static int	open_new_file(t_data *data, t_tree_node *node, t_word *word,
-	int tmp_in);
+				int tmp_in);
 static void	redirect_stdin(int fd, int tmp_in);
 
 int	redir_in(t_data *data, t_tree_node *node, t_word *word, int tmp_in)
@@ -52,5 +52,4 @@ static void	redirect_stdin(int fd, int tmp_in)
 		close(fd);
 		dup2(tmp_in, STDIN_FILENO);
 	}
-	
 }

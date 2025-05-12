@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 22:00:34 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/06 22:17:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:31:32 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 #include "../../include/execute.h"
 #include "../../include/errors.h"
 #include "../../include/utils.h"
+
+int	is_other_redir(t_word *word)
+{
+	t_word	*tmp;
+
+	tmp = word;
+	while (tmp)
+	{
+		if (tmp->redir == IN || tmp->redir == OUT || tmp->redir == APPEND)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	heredoc_redir_in(t_tree_node *node)
 {
