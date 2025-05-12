@@ -39,7 +39,6 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 					return (free_exp(data, 1));
 			reset_big_part_flags(data);
 		}
-		data->exp->literal = false;////////
 		if (word && data->exp->prev)
 			word = word->next;
 		last = data->exp->prev;
@@ -57,6 +56,7 @@ static int	handle_process(t_data *data, t_word **word, t_word **last,
 		delete_node(word, last, node, &data->exp->prev);
 	return (0);
 }
+
 
 static int	process_token(t_word **word, t_data *data)
 {
@@ -89,8 +89,6 @@ static	void	update_word_and_reset_flag(t_data *data, t_word **word)
 	if ((*word)->word != data->exp->new)
 		free((*word)->word);
 	(*word)->word = data->exp->new;
-	if (data->exp->literal)
-		(*word)->literal = data->exp->literal;
 }
 
 static void	delete_node(t_word **curr, t_word **last, t_tree_node **node,

@@ -44,7 +44,7 @@ int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, t_data *data)
 	if (has_quotes(pat))
 	{
 		data->wild->has_quotes = true;
-		if (remove_quotes(tmp, false, data) == -1)
+		if (remove_quotes(tmp, false, data, NULL) == -1)
 			return (-1);
 	}
 	return (0);

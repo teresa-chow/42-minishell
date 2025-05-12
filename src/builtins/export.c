@@ -52,7 +52,6 @@ int	add_var(t_input_inf *inf_arg, t_data *data)
 			return (error_allocation(data));
 		tmp->key = inf_arg->key;
 		tmp->val = inf_arg->val;
-		tmp->env_literal = inf_arg->literal;
 		change_ptrs(last, tmp, &data->env);
 	}
 	return (0);
@@ -104,8 +103,6 @@ static int	update_var(t_env_node *env, t_input_inf *arg_inf, t_data *data)
 		reset_inf(arg_inf);
 	else
 		free(arg_inf->key);
-	if (arg_inf->literal)
-		env->env_literal = arg_inf->literal;
 	return (1);
 }
 

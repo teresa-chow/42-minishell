@@ -31,7 +31,7 @@ int	build_new(t_data *data, char *bgn, char *end, int len)
 		add_chars(bgn, end, ft_strchr(data->exp->new, 0));
 	}
 	else
-		add_chars(bgn, end, data->exp->new);
+		add_chars(bgn,end, data->exp->new);
 	return (0);
 }
 
@@ -63,7 +63,7 @@ static int	update_word(t_data *data, t_word **word)
 	if ((*word)->word != data->exp->new)
 		free((*word)->word);
 	if (!data->exp->new)
-		(*word)->word = ft_strdup(data->exp->words[0]);
+		(*word)->word = ft_strjoin(data->exp->words[0], "'"); //// ft_strjoin or dup?? what working?
 	else
 		(*word)->word = ft_strjoin(data->exp->new, data->exp->words[0]);
 	if (!(*word)->word)
@@ -87,8 +87,6 @@ static int	create_new_nodes(t_data *data, t_word **last)
 		tmp->word = ft_strdup(data->exp->words[i]);
 		if (!tmp->word)
 			return (-1);
-		if ((*last)->literal)
-			tmp->literal = true;
 		*last = tmp;
 	}
 	data->exp->in_dbl = 0;

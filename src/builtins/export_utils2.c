@@ -32,7 +32,6 @@ void	handle_with_args(t_word *word, t_data *data, int *exit)
 		else if (check_syntax(word->word, data, exit))
 		{
 			data->has_vars = true;
-			inf_arg.literal = word->literal;
 			if (set_inf(word->word, &inf_arg) == -1)
 			{
 				error_allocation(data);

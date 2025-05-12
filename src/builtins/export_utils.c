@@ -58,7 +58,6 @@ static int	create_copy(t_env_node **copy, t_data *data)
 			*copy = tmp;
 		tmp->key = ft_strdup(env->key);
 		tmp->val = ft_strdup(env->val);
-		tmp->env_literal = env->env_literal;
 		if (!tmp->key || (!tmp->val && env->val))
 			return (free_env_list(data, 1, copy));
 		tmp->prev = last;
