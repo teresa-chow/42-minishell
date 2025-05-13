@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:37:09 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:56:53 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:09:03 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*match_begin(char *pat, char *name, t_data *data)
 	*ast_pos = 0;
 	tmp = pat;
 	if (has_quotes(pat))
-		remove_quotes(&tmp, false, data, NULL);
+		remove_quotes(&tmp, false, data);
 	substr = ft_strstr(name, tmp);
 	if (tmp != pat)
 		free (tmp);
@@ -52,7 +52,7 @@ char	*match_end(char *pat, char *name, t_data *data)
 	data->wild->end = true;
 	tmp = pat;
 	if (has_quotes(pat))
-		remove_quotes(&tmp, false, data, NULL);
+		remove_quotes(&tmp, false, data);
 	tmp_len = ft_strlen(tmp);
 	name_len = ft_strlen(name);
 	substr = ft_strstr(&name[name_len - tmp_len], tmp);

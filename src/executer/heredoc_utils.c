@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 19:50:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/08 15:32:20 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:08:38 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	verify_quotes(char **eof, bool *quotes, t_data *data)
 	if (has_quotes(*eof))
 	{
 		*quotes = true;
-		if (remove_quotes(eof, false, data, NULL) == -1)
+		if (remove_quotes(eof, false, data) == -1)
 			return (-1);
 	}
 	return (0);
