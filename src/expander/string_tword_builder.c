@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:23:30 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:52:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:26:04 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	build_new(t_data *data, char *bgn, char *end, int len)
 		add_chars(bgn, end, ft_strchr(data->exp->new, 0));
 	}
 	else
-		add_chars(bgn,end, data->exp->new);
+		add_chars(bgn, end, data->exp->new);
 	return (0);
 }
 

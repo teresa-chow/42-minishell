@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/01 10:51:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:26:29 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	handle_tokens(t_word *word, t_data *data, t_tree_node **node)
 			return (free_exp(data, 1));
 		if (data->exp->has_dbl || data->exp->has_sing || data->exp->has_exp)
 		{
-				if (handle_process(data, &word, &last, node) == -1)
-					return (free_exp(data, 1));
+			if (handle_process(data, &word, &last, node) == -1)
+				return (free_exp(data, 1));
 			reset_big_part_flags(data);
 		}
 		if (word && data->exp->prev)
@@ -56,7 +56,6 @@ static int	handle_process(t_data *data, t_word **word, t_word **last,
 		delete_node(word, last, node, &data->exp->prev);
 	return (0);
 }
-
 
 static int	process_token(t_word **word, t_data *data)
 {
