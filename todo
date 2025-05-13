@@ -4,5 +4,6 @@ Not working as expected:
 [ ] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
 [ ] (should execute cd and create file) cd $HOME > file
 [ ] (should print error) unset -USER
+[ ] (should only accept alphanumeric characters) unset USER-
 [ ] (export should diplay d="" e="" f="", env is ok) export d= e= f=
 [?] (blocking commands: cat, grep something, awk something -- error message) ctrl-\ : ^\Quit (core dumped)
