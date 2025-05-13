@@ -86,7 +86,7 @@ typedef struct s_wildcard
 	bool			mid_ok;
 	bool			end_ok;
 	bool			print_dir;
-	bool			has_quotes; // add
+	bool			has_quotes;
 	struct s_word	*wild_word;
 }	t_wildcard;
 
@@ -119,7 +119,7 @@ typedef struct s_data
 	bool					has_hifen;
 	bool					has_vars;
 	bool					has_redir;
-	bool					in_heredoc; /// add this change
+	bool					in_heredoc;
 }	t_data;
 
 #endif

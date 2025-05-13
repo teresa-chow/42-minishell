@@ -19,7 +19,7 @@ int	verify_quotes(char **eof, bool *quotes, t_data *data)
 	if (has_quotes(*eof))
 	{
 		*quotes = true;
-		if (remove_quotes(eof, false, data) == -1)
+		if (remove_quotes(eof, false, data, NULL) == -1)
 			return (-1);
 	}
 	return (0);

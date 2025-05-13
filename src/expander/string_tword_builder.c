@@ -31,7 +31,7 @@ int	build_new(t_data *data, char *bgn, char *end, int len)
 		add_chars(bgn, end, ft_strchr(data->exp->new, 0));
 	}
 	else
-		add_chars(bgn, end, data->exp->new);
+		add_chars(bgn,end, data->exp->new);
 	return (0);
 }
 
@@ -89,6 +89,7 @@ static int	create_new_nodes(t_data *data, t_word **last)
 			return (-1);
 		*last = tmp;
 	}
+	data->exp->in_dbl = 0;
 	return (0);
 }
 

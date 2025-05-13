@@ -55,6 +55,8 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 	tmp = s;
 	if ((s && ft_isdigit(*s)) || *s == '=')
 		return (set_error(data, exit, s));
+	if ((*tmp == '+' && *(tmp + 1) == '='))
+		return (set_error(data, exit, s));
 	while (*tmp)
 	{
 		if ((*tmp == '+' && *(tmp + 1) == '=') || *tmp == '=')

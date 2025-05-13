@@ -13,7 +13,7 @@
 #include "../../include/expand.h"
 
 static int	check_token_context_details(t_word **word, t_data *data);
-static int	export_has_exp_bfr_equal(char *s);
+static int	export_has_exp_bfr_equal(char *s, t_word *word);
 static int	expand_oldpwd(t_word *word, t_data *data);
 
 int	analyze_token_context(t_word **word, t_data *data)
@@ -23,9 +23,11 @@ int	analyze_token_context(t_word **word, t_data *data)
 		*word = (*word)->next;
 		return (0);
 	}
-	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word))
+	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word , *word))
 		data->exp->export_exp_bfr_equal = true;
 	check_builtin_name(data, word);
+	if (data->exp->export_cmd)
+		(*word)->exp_cmd = true;
 	if (is_valid_tilde((*word)->word))
 	{
 		if (expand_tilde(word, data) == -1)
@@ -43,7 +45,7 @@ int	analyze_token_context(t_word **word, t_data *data)
 	return (0);
 }
 
-static int	check_token_context_details(t_word **word, t_data *data)
+static int	 check_token_context_details(t_word **word, t_data *data)
 {
 	char	*s;
 
@@ -69,13 +71,15 @@ static int	check_token_context_details(t_word **word, t_data *data)
 	return (0);
 }
 
-static int	export_has_exp_bfr_equal(char *s)
+static int	export_has_exp_bfr_equal(char *s, t_word *word)
 {
 	char	*equal;
 
 	equal = ft_strchr(s, '=');
 	if (equal)
 	{
+		if (*(equal + 1) == '\'' || *(equal + 1) == '"')
+			word->in_quote = *(equal + 1);
 		while (s != equal)
 		{
 			if (*s == '$' && is_valid_dollar(s + 1))

@@ -32,7 +32,7 @@ char	*match_begin(char *pat, char *name, t_data *data)
 	*ast_pos = 0;
 	tmp = pat;
 	if (has_quotes(pat))
-		remove_quotes(&tmp, false, data);
+		remove_quotes(&tmp, false, data, NULL);
 	substr = ft_strstr(name, tmp);
 	if (tmp != pat)
 		free (tmp);
@@ -52,7 +52,7 @@ char	*match_end(char *pat, char *name, t_data *data)
 	data->wild->end = true;
 	tmp = pat;
 	if (has_quotes(pat))
-		remove_quotes(&tmp, false, data);
+		remove_quotes(&tmp, false, data, NULL);
 	tmp_len = ft_strlen(tmp);
 	name_len = ft_strlen(name);
 	substr = ft_strstr(&name[name_len - tmp_len], tmp);
