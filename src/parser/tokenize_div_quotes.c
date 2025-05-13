@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/13 22:03:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:11:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static void	next_single_quote(const char *str, unsigned int *end)
 		++*end;
 	if (str[*end] && (str[*end] == '\''))
 		++*end;
-	while (str[*end]
-		&& (!is_operator(str[*end]) || (str[*end] == '&' && !is_equal_next(str, *end)))
+	while (str[*end] && (!is_operator(str[*end])
+		|| (str[*end] == '&' && !is_equal_next(str, *end)))
 		&& !is_delimiter(str[*end]) && !is_redirection(str[*end])
 		&& str[*end] != '\'' && str[*end] != '(' && str[*end] != ')')
 		++*end;
@@ -71,8 +71,8 @@ static void	next_double_quote(const char *str, unsigned int *end)
 		++*end;
 	if (str[*end] && (str[*end] == '\"'))
 		++*end;
-	while (str[*end]
-		&& (!is_operator(str[*end]) || (str[*end] == '&' && !is_equal_next(str, *end)))
+	while (str[*end] && (!is_operator(str[*end])
+		|| (str[*end] == '&' && !is_equal_next(str, *end)))
 		&& !is_delimiter(str[*end]) && !is_redirection(str[*end])
 		&& str[*end] != '\"' && str[*end] != '(' && str[*end] != ')')
 		++*end;
