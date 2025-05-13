@@ -1,24 +1,5 @@
 Not working as expected:
 
-[x] export a="ola '$USER'"
-    echo $a
 [ ] (scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
-[x] (error message missing: invalid identifier) export +=
-[x] fix prompt (no tilde)
-[x] ls | cat<<a>b (should read from heredoc, and is reading from pipe)
-
-LEAKS:
-[x] fail && (echo && echo)
-[x] fail || (echo && echo)
-[x] (ls fail | echo ola && (echo a && echo b) || echo c)
-[x] (echo a | echo b | echo c && echo d) && echo e -- pipeline inside of group
-            (likely cause: recursive syntax analysis in group)
-
-------------------------------------------------------------------------------------------
-
-Quem se despachar primeiro:
-[x] env -i ./minishell prompt
-
-------------------------------------------------------------------------------------------
-
-Testar e apontar erros !
+[ ] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
+[ ] (should execute cd and create file) cd $HOME > file
