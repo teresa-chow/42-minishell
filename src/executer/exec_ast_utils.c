@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/13 15:17:28 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:22:56 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	redir_fd_in(t_tree_node *node);
 
 int	cd_arg_check(t_word *word, t_data *data)
 {
-	t_word *tmp;
-	int	count;
+	t_word	*tmp;
+	int		count;
 
 	count = 0;
 	tmp = word->next;
