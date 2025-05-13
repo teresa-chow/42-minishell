@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 10:52:59 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 17:36:42 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 09:02:13 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	init_prompt(t_prompt *prompt, char *usr, t_data *data)
 	if (!cwd)
 	{
 		if (pwd && pwd->val)
-			dir = ft_strdup(pwd->val);
+			dir = ft_strdup(ft_strrchr(pwd->val, '/'));
 		else
 			dir = ft_strdup("/Undefined");
 	}
