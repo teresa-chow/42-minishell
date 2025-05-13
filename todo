@@ -1,6 +1,6 @@
 Not working as expected:
 
-[ ] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
+[x] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
 [x] (should execute cd and create file) cd $HOME > file
 [ ] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
 
