@@ -1,9 +1,13 @@
 Not working as expected:
 
-[ ] (scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
 [ ] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
 [ ] (should execute cd and create file) cd $HOME > file
-[ ] (should print error) unset -USER
-[ ] (should only accept alphanumeric characters) unset USER-
+
+Merge with Carlos and check again:
 [ ] (export should diplay d="" e="" f="", env is ok) export d= e= f=
+
+Not handling (personal choice)
+[x] (bettered with buffer: scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
 [?] (blocking commands: cat, grep something, awk something -- error message) ctrl-\ : ^\Quit (core dumped)
+[x] (bash doesn't signal this error: should only accept alphanumeric characters) unset USER-
+[x] (bash doesn't signal this error:should print error) unset -USER
