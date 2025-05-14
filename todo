@@ -1,8 +1,9 @@
 Not working as expected:
-
+[ ] cat > file | echo "something"
+[ ] cat < file | echo "something"
 [x] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
 [x] (should execute cd and create file) cd $HOME > file
-[ ] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
+[x] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
 
 Not handling (personal choice)
 [x] (bettered with buffer: scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
