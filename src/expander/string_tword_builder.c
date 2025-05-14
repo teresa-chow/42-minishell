@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_tword_builder.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:23:30 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/13 16:26:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:00:19 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

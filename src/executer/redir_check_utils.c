@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 22:00:34 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 11:31:32 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:47:10 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 19:50:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/13 22:08:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:42:11 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	verify_quotes(char **eof, bool *quotes, t_data *data)
 		*quotes = true;
 		if (remove_quotes(eof, false, data) == -1)
 			return (-1);
+		free(data->tmp_tree_node_word->next->word);
+		data->tmp_tree_node_word->next->word = NULL;
 	}
 	return (0);
 }
