@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/09 10:59:53 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:16:58 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,22 @@
 #include "../../include/errors.h"
 #include "../../include/expand.h"
 
-static	int	update_pwd_and_oldpwd(t_data *data);
-static	int	check_hifen(t_data *data, char *to_exec);
+static int	cd_add_checks(char *to_exec, t_data *data);
+static int	update_pwd_and_oldpwd(t_data *data);
+static int	check_hifen(t_data *data, char *to_exec);
 static void	handle_old(t_env_node *old, t_env_node *pwd, char *curr);
-void		error_cd(t_data *data);
 
 void	cd(t_word *input, t_data *data)
 {
+	t_word	*tmp;
 	char	*to_exec;
 
 	to_exec = NULL;
-	if (input->next && input->next->word)
-		to_exec = input->next->word;
+	tmp = input->next;
+	while (tmp && tmp->redir != NONE)
+		tmp = tmp->next->next;
+	if (tmp && tmp->word)
+		to_exec = tmp->word;
 	else
 	{
 		if (!data->env_home_var)
@@ -36,17 +40,24 @@ void	cd(t_word *input, t_data *data)
 		}
 		to_exec = data->env_home_var;
 	}
-	if (check_hifen(data, to_exec) == -1)
+	if (cd_add_checks(to_exec, data) == -1)
 		return ;
-	if (chdir(to_exec) == -1)
-	{
-		cd_error(to_exec, data, 1);
-		return ;
-	}
 	if (!update_pwd_and_oldpwd(data))
 		data->exit_status = 0;
 	else
 		data->exit_status = ERR;
+}
+
+static int	cd_add_checks(char *to_exec, t_data *data)
+{
+	if (check_hifen(data, to_exec) == -1)
+		return (-1);
+	if (chdir(to_exec) == -1)
+	{
+		cd_error(to_exec, data, 1);
+		return (-1);
+	}
+	return (0);
 }
 
 static int	update_pwd_and_oldpwd(t_data *data)
@@ -102,10 +113,4 @@ static int	check_hifen(t_data *data, char *to_exec)
 	else if (data->has_hifen)
 		ft_putendl_fd(to_exec, STDOUT_FILENO);
 	return (0);
-}
-
-void	error_cd(t_data *data)
-{
-	print_fd(2, "minishell: cd: HOME not set\n", NULL);
-	data->exit_status = ERR;
 }

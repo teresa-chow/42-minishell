@@ -1,29 +1,14 @@
-CARLOS
-[x] (leaks + open fd: redir_heredoc) cat << EOF + ctrl-C
+Not working as expected:
 
-[x] (open fd: redir_heredoc) cat << EOF + ctrl-D
-[ ] (processos simultaneos: open fd redir_heredoc) cat << EOF | cat << EOF
-[x] (open fd: redir_heredoc) cat << EOF << EOF
+[ ] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
+[x] (should execute cd and create file) cd $HOME > file
+[ ] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
 
-[ ] (norminette) lib/libft/ft_split.c
-[ ] (norminette -- libft carlos) get lib/libft/ft_strstr.c, no norm errors
-[ ] (norminette) fix functions with 25+ lines and 4+ parameters
+Merge with Carlos and check again:
+[ ] (export should diplay d="" e="" f="", env is ok) export d= e= f=
 
-------------------------------------------------------------------------------------------
-
-TERESA
-src/executer/redir_check.c (vou rever este ficheiro: se precisares de o alterar, avisa-me pf)
-
-[ ] (open fd in child: redir_in) cmd_not_found < existing_file
-
-[ ] cat > new_file < fail (must print error message, return 1, create new_file)
-[ ] cat < fail > new_file (same)
-
-------------------------------------------------------------------------------------------
-
-Quem se despachar primeiro:
-[x] env -i ./minishell prompt
-
-------------------------------------------------------------------------------------------
-
-Testar e apontar erros !
+Not handling (personal choice)
+[x] (bettered with buffer: scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
+[?] (blocking commands: cat, grep something, awk something -- error message) ctrl-\ : ^\Quit (core dumped)
+[x] (bash doesn't signal this error: should only accept alphanumeric characters) unset USER-
+[x] (bash doesn't signal this error:should print error) unset -USER

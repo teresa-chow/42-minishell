@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/10 16:33:15 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/13 14:56:09 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,9 @@ SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
 	exec_ast_pipeline.c exec_ast_pipeline_utils.c redir_check.c \
 	redir_check_utils.c heredoc.c heredoc_utils.c redir_utils.c redir_in.c \
 	redir_out.c signals.c exec_heredoc.c)
-SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c echo.c env.c exit.c \
-	exit_utils.c export.c export_utils.c export_utils2.c export_merge_sort.c \
-	pwd.c unset.c builtins_utils.c builtins_utils_2.c)
+SRC_BUILTINS	= $(addprefix $(BUILTINS_DIR)/, cd.c cd_utils.c echo.c env.c \
+	exit.c exit_utils.c export.c export_utils.c export_utils2.c \
+	export_merge_sort.c pwd.c unset.c builtins_utils.c builtins_utils_2.c)
 SRC_EXECVE		= $(addprefix $(EXECVE_DIR)/, exec.c execve_utils.c \
 	execve_utils2.c)
 SRC_UTILS		= $(addprefix $(UTILS_DIR)/, mem_utils.c mem_utils2.c \

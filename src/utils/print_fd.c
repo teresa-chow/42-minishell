@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:09:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/04/30 17:07:38 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:35:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ static void	print_format(int fd, char spec, char *token)
 	if (spec == 'c')
 		write(fd, token, 1);
 	else if (spec == 's')
-	{
-		while (*token)
-			write(fd, token++, 1);
-	}
+		write(fd, token, ft_strlen(token));
 	else
 		write(fd, &spec, 1);
 	return ;
