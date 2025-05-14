@@ -6,14 +6,13 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:34:28 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 14:58:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:03:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
 static int	directory_analyze(char *s, t_data *data);
-static int	is_matching_pattern(char *pat, char *name, t_data *data);
 static int	first_set(DIR **dir, struct dirent **entry,
 				bool *build_n, t_data *data);
 
@@ -91,7 +90,7 @@ static int	first_set(DIR **dir, struct dirent **entry,
 /*
 first_ast and last_ast means asterisk
 */
-static int	is_matching_pattern(char *pat, char *name, t_data *data)
+int	is_matching_pattern(char *pat, char *name, t_data *data)
 {
 	char	*last_ast;
 	char	*first_ast;
