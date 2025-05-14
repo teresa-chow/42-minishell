@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:48:41 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 11:15:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:59:52 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-int	remove_quotes(char **str, bool to_free, t_data *data, t_word *word);
 static int	quoted_len(char *word, t_word *word_lst);
-static	void	add_no_quotes(char **str, char **new, t_word *word);
+static void	add_no_quotes(char **str, char **new, t_word *word);
+int			remove_quotes(char **str, bool to_free, t_data *data, t_word *word);
 
 char	find_in(char *s)
 {

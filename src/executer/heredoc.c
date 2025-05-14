@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 11:08:34 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:53:46 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	redir_heredoc(t_data *data, t_tree_node *node)
 	{
 		if (word->redir == HEREDOC)
 		{
+			data->tmp_tree_node_word = word;
 			if (node->fd_in != -1)
 			{
 				close(node->fd_in);
@@ -118,7 +119,10 @@ static int	finalize_handle_input(char *input, t_data *data, char *eof,
 	int *fd)
 {
 	if (!input && g_global == 0)
+	{
 		heredoc_error(eof);
+		data->tmp_tree_node_word->next->word = eof;
+	}
 	if (!data->quotes && input)
 	{
 		data->in_heredoc = true;
@@ -130,6 +134,8 @@ static int	finalize_handle_input(char *input, t_data *data, char *eof,
 	else if (input)
 		free (eof);
 	free_env_list(data, 0, &data->env);
+	if (g_global == SIGINT)
+		data->tmp_tree_node_word->next->word = eof;
 	free_ast(&data->ast_root);
 	free_words(&data->doc_word);
 	free(input);

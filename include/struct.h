@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/09 10:55:09 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 14:41:03 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_data
 	t_wildcard				*wild;
 	struct s_word			**word;
 	struct s_word			*doc_word;
+	struct s_word			*tmp_tree_node_word;
 	char					*env_home_var;
 	int						old_stdin;
 	int						old_stdout;
