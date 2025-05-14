@@ -1,11 +1,11 @@
 Not working as expected:
+[ ] (problem with blocking external commmands) cat > file | echo "something"
+[ ] cat << a < todo > file1
 
-[ ] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
+Fixed:
+[x] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
 [x] (should execute cd and create file) cd $HOME > file
-[ ] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
-
-Merge with Carlos and check again:
-[ ] (export should diplay d="" e="" f="", env is ok) export d= e= f=
+[x] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
 
 Not handling (personal choice)
 [x] (bettered with buffer: scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!

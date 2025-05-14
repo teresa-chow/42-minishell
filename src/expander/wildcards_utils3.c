@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:26:48 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 17:37:33 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:09:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_ast_quotes(char **ast_p, char *pat, char **tmp, t_data *data)
 	if (has_quotes(pat))
 	{
 		data->wild->has_quotes = true;
-		if (remove_quotes(tmp, false, data, NULL) == -1)
+		if (remove_quotes(tmp, false, data) == -1)
 			return (-1);
 	}
 	return (0);

@@ -6,14 +6,13 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:34:28 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:51:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:03:43 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
 static int	directory_analyze(char *s, t_data *data);
-static int	is_matching_pattern(char *pat, char *name, t_data *data);
 static int	first_set(DIR **dir, struct dirent **entry,
 				bool *build_n, t_data *data);
 
@@ -45,28 +44,6 @@ int	handle_wildcard(t_word *word, t_data *data)
 		word = word->next;
 	}
 	free_wild(data, 0, NULL);
-	return (0);
-}
-
-int	check_directory(struct dirent *entry, char *s, bool *check, t_data *data)
-{
-	struct stat	i_stat;
-
-	if (entry->d_name[0] != '.' && !ft_strcmp("*/", s))
-	{
-		ft_bzero(&i_stat, sizeof(i_stat));
-		if (stat(entry->d_name, &i_stat) == -1)
-		{
-			perror("minishell: stat");
-			data->exit_status = ERR;
-			return (-1);
-		}
-		if (S_ISDIR(i_stat.st_mode))
-		{
-			*check = true;
-			data->wild->print_dir = true;
-		}
-	}
 	return (0);
 }
 
@@ -113,7 +90,7 @@ static int	first_set(DIR **dir, struct dirent **entry,
 /*
 first_ast and last_ast means asterisk
 */
-static int	is_matching_pattern(char *pat, char *name, t_data *data)
+int	is_matching_pattern(char *pat, char *name, t_data *data)
 {
 	char	*last_ast;
 	char	*first_ast;

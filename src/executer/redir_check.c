@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 10:48:08 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:47:00 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,17 @@ int	redir_check(t_tree_node *node, t_data *data)
 		return (-1);
 	}
 	if (tmp_in != -1)
+	{
+		dup2(tmp_in, STDIN_FILENO);
 		close(tmp_in);
+	}
 	return (0);
 }
 
 static int	is_redirect(t_tree_node *node)
 {
 	if (!is_other_redir(node->word))
-	{
-		if (node->fd_in != -1)
-		{
-			dup2(node->fd_in, STDIN_FILENO);
-			close(node->fd_in);
-			node->fd_in = -1;
-		}
 		return (0);
-	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 11:40:59 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:42:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	close_pipes_child(t_pipeline pipeline, int count)
 	int	i;
 
 	i = 0;
-	while (i > -1 && i < pipeline.n_pipes)
+	while (i < pipeline.n_pipes)
 	{
 		if (i != count - 1)
 		{

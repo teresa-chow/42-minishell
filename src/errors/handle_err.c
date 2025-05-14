@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/13 11:44:42 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:34:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	error_allocation(t_data *data)
 
 int	command_not_found(char *token, t_data *data)
 {
-	write(2, "minishell: ", 11);
-	write(2, token, ft_strlen(token));
-	write(2, ": command not found\n", 20);
+	write(STDERR_FILENO, "minishell: ", 11);
+	write(STDERR_FILENO, token, ft_strlen(token));
+	write(STDERR_FILENO, ": command not found\n", 20);
 	data->exit_status = ERR_F;
 	return (ERR_F);
 }

@@ -6,16 +6,16 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 17:48:41 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 14:59:52 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/13 22:08:50 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 #include "../../include/errors.h"
 
-static int	quoted_len(char *word, t_word *word_lst);
-static void	add_no_quotes(char **str, char **new, t_word *word);
-int			remove_quotes(char **str, bool to_free, t_data *data, t_word *word);
+int			remove_quotes(char **str, bool to_free, t_data *data);
+static int	quoted_len(char *word);
+static void	add_no_quotes(char **str, char **new);
 
 char	find_in(char *s)
 {
@@ -32,14 +32,14 @@ int	process_remove_quotes(t_word *word, t_data *data)
 {
 	while (word)
 	{
-		if (remove_quotes(&word->word, 1, data, word) == -1)
+		if (remove_quotes(&word->word, 1, data) == -1)
 			return (-1);
 		word = word->next;
 	}
 	return (0);
 }
 
-int	remove_quotes(char **str, bool to_free, t_data *data, t_word *word)
+int	remove_quotes(char **str, bool to_free, t_data *data)
 {
 	int		len;
 	char	*new;
@@ -49,12 +49,12 @@ int	remove_quotes(char **str, bool to_free, t_data *data, t_word *word)
 	start = *str;
 	if (ft_strchr(*str, '\'') || ft_strchr(*str, '"'))
 	{
-		len = quoted_len(*str, word);
+		len = quoted_len(*str);
 		new = ft_calloc(len + 1, sizeof(char));
 		if (!new)
 			return (error_allocation(data));
 		*str = start;
-		add_no_quotes(str, &new, word);
+		add_no_quotes(str, &new);
 		if (to_free)
 			free(start);
 		*str = new;
@@ -62,7 +62,7 @@ int	remove_quotes(char **str, bool to_free, t_data *data, t_word *word)
 	return (0);
 }
 
-static int	quoted_len(char *word, t_word *word_lst)
+static int	quoted_len(char *word)
 {
 	int		len;
 	char	in_qt;
@@ -71,7 +71,6 @@ static int	quoted_len(char *word, t_word *word_lst)
 	len = 0;
 	in = false;
 	in_qt = 0;
-	(void)word_lst;
 	while (*word)
 	{
 		if (is_quote(*word) && ft_strchr(word + 1, *word) && !in)
@@ -91,7 +90,7 @@ static int	quoted_len(char *word, t_word *word_lst)
 	return (len);
 }
 
-static	void	add_no_quotes(char **str, char **new, t_word *word)
+static	void	add_no_quotes(char **str, char **new)
 {
 	int		i;
 	char	in_qt;
@@ -100,7 +99,6 @@ static	void	add_no_quotes(char **str, char **new, t_word *word)
 	i = -1;
 	in = false;
 	in_qt = 0;
-	(void)word;
 	while (**str)
 	{
 		if (is_quote(**str) && ft_strchr(*str + 1, **str) && !in)

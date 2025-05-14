@@ -6,14 +6,14 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:20:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 14:57:29 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:28:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
 static int	check_token_context_details(t_word **word, t_data *data);
-static int	export_has_exp_bfr_equal(char *s, t_word *word);
+static int	export_exp_bfr_equal(char *s, t_word *word);
 static int	expand_oldpwd(t_word *word, t_data *data);
 
 int	analyze_token_context(t_word **word, t_data *data)
@@ -23,7 +23,7 @@ int	analyze_token_context(t_word **word, t_data *data)
 		*word = (*word)->next;
 		return (0);
 	}
-	if (data->exp->export_cmd && export_has_exp_bfr_equal((*word)->word, *word))
+	if (data->exp->export_cmd && export_exp_bfr_equal((*word)->word, *word))
 		data->exp->export_exp_bfr_equal = true;
 	check_builtin_name(data, word);
 	if (data->exp->export_cmd)
@@ -71,7 +71,7 @@ static int	check_token_context_details(t_word **word, t_data *data)
 	return (0);
 }
 
-static int	export_has_exp_bfr_equal(char *s, t_word *word)
+static int	export_exp_bfr_equal(char *s, t_word *word)
 {
 	char	*equal;
 
