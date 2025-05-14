@@ -6,13 +6,14 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:53:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 15:04:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:15:30 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/expand.h"
 
 static int	stat_check(struct dirent *entry, struct stat *i_stat, t_data *data);
+static void	show_subdir(struct stat i_stat, bool *check, t_data *data);
 
 int	check_directory(struct dirent *entry, char *s, bool *check, t_data *data)
 {
@@ -33,6 +34,8 @@ int	check_directory(struct dirent *entry, char *s, bool *check, t_data *data)
 				data->wild->print_dir = true;
 			}
 		}
+		else if (has_only_ast(str))
+			show_subdir(i_stat, check, data);
 		free(str);
 	}
 	return (0);
@@ -47,4 +50,13 @@ static int	stat_check(struct dirent *entry, struct stat *i_stat, t_data *data)
 		return (-1);
 	}
 	return (0);
+}
+
+static void	show_subdir(struct stat i_stat, bool *check, t_data *data)
+{
+	if (S_ISDIR(i_stat.st_mode))
+	{
+		*check = true;
+		data->wild->print_dir = true;
+	}
 }
