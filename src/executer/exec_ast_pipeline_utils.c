@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 00:52:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:42:55 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	get_pipeline_cmds(t_pipeline *pipeline, t_tree_node **node)
 		pipeline->cmd_lst->type = CMD;
 		pipeline->cmd_lst->word = (*node)->word;
 		pipeline->cmd_lst->fd_in = (*node)->fd_in;
+		pipeline->cmd_lst->fd_out = (*node)->fd_out;
 	}
 	else
 	{
