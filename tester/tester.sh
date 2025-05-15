@@ -104,13 +104,55 @@ UNSET_TESTS=(
 )
 
 EXIT_TESTS=(
+  'exit'
   'exit 0'
   'exit 1'
-  'exit 42'
+  'exit 257'
+  'exit +123'
+  'exit -123'
+  'exit a'
+  'exit 1 1'
+  'exit 999999999999999999999999999999999999'
 )
 
 BUILTINS=("ECHO" "CD" "PWD" "EXPORT" "ENV" "UNSET" "EXIT")
 
+# -----------------------------------------------------------------------------
+# GENERAL TESTS
+QUOTES_TESTS=(
+  'export VAR="ls -la" && $VAR && "$VAR"'
+  'echo "$USER"'
+  "echo '$USER'"
+  'echo "Hello                      World"'
+)
+
+SIGNALS_TESTS=(
+  'kill -SIGINT "$pid"'
+  'kill -SIGQUIT "$pid"'
+)
+
+PATHS_TESTS=(
+  'ls'
+  'unset PATH && ls'
+)
+
+ENVIRONMENT_TESTS=(
+
+)
+
+REDIRECTION_TESTS=(
+
+)
+
+PIPES_TESTS=(
+  'echo hello | cat -e'
+  'cat | cat | ls'
+  'xxx | echo hello'
+)
+
+GENERAL=("QUOTES" "SIGNALS" "PATHS" "ENVIRONMENT" "REDIRECTION" "PIPES")
+
+clear
 printf ${YEL}
 echo "▖  ▖▘  ▘  ▌   ▜ ▜   ▄▖    ▗     ";
 echo "▛▖▞▌▌▛▌▌▛▘▛▌█▌▐ ▐   ▐ █▌▛▘▜▘█▌▛▘";
