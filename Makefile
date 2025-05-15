@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/14 14:57:51 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/15 19:12:41 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -191,8 +191,26 @@ vg: all	## Run valgrind - suppress readline() memory leaks
 	@printf "$(GRN)>> Created rl.supp file\n\n$(NC)"
 	valgrind --leak-check=full --show-leak-kinds=all \
 	--suppressions=rl.supp --track-fds=yes \
-	--log-file=memleaks.log ./$(NAME)
+	--log-file="memleaks.log" ./$(NAME)
 
+
+##@ TESTING AGAINST BASH
+
+SESSION	= minishell_cmp
+
+test: ## Test minishell against bash with tmux, while monitoring memleaks
+	@tmux kill-session -t $(SESSION) 2>/dev/null || true
+	@tmux new-session -d -s $(SESSION)
+	@tmux split-window -h -t $(SESSION)
+	@tmux send-keys -t $(SESSION):0.0 'make vg' C-m
+	@tmux send-keys -t $(SESSION):0.0 'clear' C-m
+	@tmux send-keys -t $(SESSION):0.1 'bash' C-m
+	@tmux send-keys -t $(SESSION):0.1 'clear' C-m
+	@tmux set-window-option -t $(SESSION):0 synchronize-panes on
+	@tmux attach-session -t $(SESSION)
+
+watch: ## Monitor valgrind memory leaks log
+	@watch -n 1 "cat memleaks.log"
 
 ##@ TOOL INSTALLATION
 
@@ -215,7 +233,7 @@ help:	## Display this help info
 		substr($$0, 5) } ' Makefile
 	@printf "\n"
 
-.PHONY: all clean fclean re norm valgrind install help
+.PHONY: all clean fclean re norm vg test install help
 
 # ============================================================================ #
 # UTILS: READLINE LEAKS SUPPRESSION FILE                                       #
