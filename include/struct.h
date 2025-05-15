@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:59:24 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 14:41:03 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:34:47 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_data
 	int						old_stdin;
 	int						old_stdout;
 	int						exit_status;
+	int						fd_copy;//////////////////
 	bool					no_home;
 	bool					quotes;
 	bool					has_hifen;
