@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/15 17:04:55 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:42:30 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			close(pipeline.fd[count - 1][0]);
 		}
 		exec_ast(data, &node, 1);
-		if (data->fd_copy)
+		if (data->fd_copy > 0)
 		{
 			close(data->fd_copy);
 			data->fd_copy = -1;
