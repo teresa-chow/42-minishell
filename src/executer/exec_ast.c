@@ -52,11 +52,7 @@ int	exec_ast(t_data *data, t_tree_node **node, bool pipeline)
 	else if ((*node)->type == CMD)
 	{
 		if (pipeline && (*node)->fd_in != -1)
-		{
-			dup2(data->fd_copy, STDIN_FILENO);
-			close(data->fd_copy);
-			data->fd_copy = -1;
-		}
+			dup2((*node)->fd_in, STDIN_FILENO);
 		if (exec_ast_cmd(data, node, pipeline) == -1)
 		{
 			reset_old_in_out(data, *node);

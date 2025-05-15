@@ -73,18 +73,18 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 	if (pipeline.pid[count] == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		close_pipes_child(pipeline, count);
 		if (count < pipeline.n_pipes)
 		{
+			data->fd_copy = dup(pipeline.fd[count][0]);
 			dup2(pipeline.fd[count][1], STDOUT_FILENO);
 			close(pipeline.fd[count][1]);
 		}
 		if (count > 0)
 		{
-			data->fd_copy = dup(pipeline.fd[count - 1][0]);
 			dup2(pipeline.fd[count - 1][0], STDIN_FILENO);
 			close(pipeline.fd[count - 1][0]);
 		}
+		close_pipes_child(pipeline, count);
 		exec_ast(data, &node, 1);
 		if (data->fd_copy > 0)
 		{

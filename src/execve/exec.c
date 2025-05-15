@@ -16,7 +16,7 @@
 
 static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word);
 static int	cmd_in_env_path(t_exec_data *inf, t_data *data);
-static void	execute(t_exec_data *inf);
+static void	execute(t_exec_data *inf, t_data *data);
 static void	check_cmd(t_exec_data *inf, t_data *data);
 
 int	exec_external(t_data *data, t_word *word, t_tree_node *node)
@@ -68,7 +68,7 @@ static int	set_exec_inf(t_exec_data *inf, t_data *data, t_word *word)
 		{
 			inf->tmp = inf->input;
 			if (!access(word->word, X_OK))
-				execute (inf);
+				execute (inf, data);
 			return (-1);
 		}
 	}
@@ -99,9 +99,11 @@ static int	cmd_in_env_path(t_exec_data *inf, t_data *data)
 	return (0);
 }
 
-static void	execute(t_exec_data *inf)
+static void	execute(t_exec_data *inf, t_data *data)
 {
 	signal(SIGQUIT, SIG_DFL);
+	if (data->fd_copy > 0)
+		close(data->fd_copy);
 	if (execve (inf->tmp, inf->wrd_arr, inf->env_arr) < 0)
 	{
 		perror("minishell : execve ");
@@ -125,7 +127,7 @@ static void	check_cmd(t_exec_data *inf, t_data *data)
 	if (S_ISDIR(i_stat.st_mode))
 		is_a_directory(inf->tmp, data);
 	else if (!access(inf->tmp, X_OK))
-		execute(inf);
+		execute(inf, data);
 	else
 		access_error(inf->input, data);
 }

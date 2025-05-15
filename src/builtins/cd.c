@@ -83,7 +83,8 @@ static int	update_pwd_and_oldpwd(t_data *data)
 	else
 	{
 		curr = getcwd(NULL, 0);
-		free(curr);
+		if (!pwd && !old)
+			free(curr);
 	}
 	return (0);
 }
