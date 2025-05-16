@@ -6,15 +6,16 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/10 15:36:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:35:40 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
+#include "../../include/errors.h"
 #include "../../include/utils.h"
 
 static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end);
-static void			handle_cmd_group(t_word_lst *pivot, t_tree_node **node);
+static int			handle_cmd_group(t_word_lst *pivot, t_tree_node **node);
 static void			rm_parentheses(t_word_lst *word_lst, t_tree_node **node);
 
 void	create_syntax_tree(t_word_lst *start, t_word_lst *end,
@@ -76,13 +77,21 @@ static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 	return (pivot);
 }
 
-static void	handle_cmd_group(t_word_lst *pivot, t_tree_node **node)
+static int	handle_cmd_group(t_word_lst *pivot, t_tree_node **node)
 {
+	if (pivot->word->next)
+	{
+		if (pivot->word->next->word[0] == '(')
+			err_syntax("(");
+		else
+			err_syntax(pivot->word->next->word);
+	}
 	(*node)->word = ft_calloc(1, sizeof(t_word));
 	(*node)->word->word = ft_strdup("()");
 	(*node)->type = GROUP;
 	(*node)->left = add_node();
 	rm_parentheses(pivot, &(*node)->left);
+	return (0);
 }
 
 static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node)
