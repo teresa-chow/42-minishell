@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 21:49:05 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 17:34:46 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:32:44 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int				check_quotes(char *word);
 t_word_lst		*last_partition_node(t_word_lst *start, t_word_lst *pivot);
 t_word_lst		*first_partition_node(t_word_lst *end);
 void			create_syntax_tree(t_word_lst *start, t_word_lst *end,
-					t_tree_node **node);
+					t_tree_node **node, t_data *data);
 t_tree_node		*add_node(void);
 void			fill_node(t_word_lst *pivot, t_tree_node **node);
 

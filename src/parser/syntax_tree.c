@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 18:20:27 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/16 12:35:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:21:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 #include "../../include/utils.h"
 
 static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end);
-static int			handle_cmd_group(t_word_lst *pivot, t_tree_node **node);
-static void			rm_parentheses(t_word_lst *word_lst, t_tree_node **node);
+static int			process_cmd_group(t_word_lst *pivot, t_tree_node **node,
+						t_data *data);
+static int			handle_cmd_group(t_word_lst *pivot, t_tree_node **node,
+						t_data *data);
+static void			rm_parentheses(t_word_lst *word_lst, t_tree_node **node,
+						t_data *data);
 
 void	create_syntax_tree(t_word_lst *start, t_word_lst *end,
-	t_tree_node **node)
+	t_tree_node **node, t_data *data)
 {
 	t_word_lst	*pivot;
 	t_word_lst	*new_start;
@@ -28,22 +32,17 @@ void	create_syntax_tree(t_word_lst *start, t_word_lst *end,
 	new_start = NULL;
 	new_end = NULL;
 	pivot = find_pivot(start, end);
-	if (pivot->word->word[0] == '(')
-	{
-		handle_cmd_group(pivot, node);
-		free(pivot->word->word);
-		free(pivot->word);
+	if (process_cmd_group(pivot, node, data) != 0)
 		return ;
-	}
 	fill_node(pivot, node);
 	if ((*node)->type != CMD)
 	{
 		new_end = last_partition_node(start, pivot);
 		(*node)->left = add_node();
-		create_syntax_tree(start, new_end, &(*node)->left);
+		create_syntax_tree(start, new_end, &(*node)->left, data);
 		new_start = first_partition_node(pivot);
 		(*node)->right = add_node();
-		create_syntax_tree(new_start, end, &(*node)->right);
+		create_syntax_tree(new_start, end, &(*node)->right, data);
 	}
 	return ;
 }
@@ -77,24 +76,49 @@ static t_word_lst	*find_pivot(t_word_lst *start, t_word_lst *end)
 	return (pivot);
 }
 
-static int	handle_cmd_group(t_word_lst *pivot, t_tree_node **node)
+static int	process_cmd_group(t_word_lst *pivot, t_tree_node **node,
+	t_data *data)
+{
+	int	ret;
+
+	ret = 0;
+	if (pivot->word->word[0] == '(')
+	{
+		ret = 1;
+		if (handle_cmd_group(pivot, node, data) == ERR_BI)
+			ret = ERR_BI;
+		free_words(&pivot->word);
+		return (ret);
+	}
+	return (ret);
+}
+
+static int	handle_cmd_group(t_word_lst *pivot, t_tree_node **node,
+	t_data *data)
 {
 	if (pivot->word->next)
 	{
 		if (pivot->word->next->word[0] == '(')
-			err_syntax("(");
+		{
+			data->exit_status = ERR_BI;
+			return (err_syntax("("));
+		}
 		else
-			err_syntax(pivot->word->next->word);
+		{
+			data->exit_status = ERR_BI;
+			return (err_syntax(pivot->word->next->word));
+		}
 	}
 	(*node)->word = ft_calloc(1, sizeof(t_word));
 	(*node)->word->word = ft_strdup("()");
 	(*node)->type = GROUP;
 	(*node)->left = add_node();
-	rm_parentheses(pivot, &(*node)->left);
+	rm_parentheses(pivot, &(*node)->left, data);
 	return (0);
 }
 
-static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node)
+static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node,
+	t_data *data)
 {
 	char		*tmp_group;
 	char		**cmd_lst;
@@ -114,7 +138,7 @@ static void	rm_parentheses(t_word_lst *word_lst, t_tree_node **node)
 		}
 		tokenize_w_lst(cmd_lst, tmp_lst);
 		free_strarray(cmd_lst);
-		create_syntax_tree(tmp_lst, NULL, node);
+		create_syntax_tree(tmp_lst, NULL, node, data);
 		free_word_lst(&tmp_lst);
 	}
 }
