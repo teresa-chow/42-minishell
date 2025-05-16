@@ -44,13 +44,20 @@ void	exit_cmd(t_data *data, t_word *word)
 static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 	int *syntax)
 {
-	if (word->next)
+	t_word	*tmp;
+
+	tmp = NULL;
+	if (word->next && word->next->redir == NONE)
+		tmp = word->next;
+	else if (word->next && word->next->redir != NONE)
+		tmp = word->next->next->next;
+	if (tmp)
 	{
-		if (word->next->next)
+		if (tmp->next)
 			*many_args = 1;
-		data->exit_status = ft_atoi(word->next->word);
-		if (check_is_digit(word->next, data, syntax))
-			check_overflow(word->next, data, syntax);
+		data->exit_status = ft_atoi(tmp->word);
+		if (check_is_digit(tmp, data, syntax))
+			check_overflow(tmp, data, syntax);
 	}
 }
 

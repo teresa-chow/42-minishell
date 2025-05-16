@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:13:12 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 16:51:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/15 18:06:43 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	add_var(t_input_inf *inf_arg, t_data *data)
 			return (error_allocation(data));
 		tmp->key = inf_arg->key;
 		tmp->val = inf_arg->val;
+		if (!ft_strcmp(tmp->key, "HOME"))
+		{
+			data->no_home = false;
+			data->env_home_var = tmp->val;
+		}
 		change_ptrs(last, tmp, &data->env);
 	}
 	return (0);
