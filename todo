@@ -1,14 +1,8 @@
-Not working as expected:
-[ ] (problem with blocking external commmands) cat > file | echo "something"
-[ ] cat << a < todo > file1
+[ ] update exit status if input is not an executable command
+    xxx
+    > file
+    echo $?
 
-Fixed:
-[x] (should split last pipe and execute ls) ""|"""ls""-la""|"|"ls"
-[x] (should execute cd and create file) cd $HOME > file
-[x] cat << a > file1 | cat << b > file2 (cat << a > file1 not redirecting input -- check pipe)
+[ ] syntax check in groups (doing: TERESA) + memory
 
-Not handling (personal choice)
-[x] (bettered with buffer: scrambling error msgs on simultaneous processes) yyy | xxx | echo ola!
-[?] (blocking commands: cat, grep something, awk something -- error message) ctrl-\ : ^\Quit (core dumped)
-[x] (bash doesn't signal this error: should only accept alphanumeric characters) unset USER-
-[x] (bash doesn't signal this error:should print error) unset -USER
+[ ] redirection categorization within command groups
