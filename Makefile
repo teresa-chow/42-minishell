@@ -6,7 +6,7 @@
 #    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/16 17:24:49 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/16 17:30:18 by tchow-so         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC_PARSER		= $(addprefix $(PARSER_DIR)/, read_input.c read_input_prompt.c \
 	tokenize_op.c tokenize_div.c tokenize_div_parentheses.c \
 	tokenize_div_quotes.c tokenize_div_redirect.c tokenize_div_general.c \
 	tokenize_utils.c syntax_analysis.c syntax_analysis_parentheses.c \
-	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c)
+	syntax_analysis_utils.c syntax_tree.c syntax_tree_utils.c \
+	syntax_tree_check.c)
 SRC_EXECUTER	= $(addprefix $(EXECUTER_DIR)/, exec_ast.c exec_ast_utils.c \
 	exec_ast_pipeline.c exec_ast_pipeline_utils.c redir_check.c \
 	redir_check_utils.c heredoc.c heredoc_utils.c redir_utils.c redir_in.c \

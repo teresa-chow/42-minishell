@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/16 16:28:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:58:32 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root)
 	}
 	tokenize_w_lst(cmd_lst, word_lst);
 	free_strarray(cmd_lst);
-	if (syntax_check(word_lst, data) == 0) //groups will pass, need further check
+	if (syntax_check(word_lst, data) == 0)
 	{
 		create_syntax_tree(word_lst, NULL, root, data);
-		free_word_lst(&word_lst);
+		if (!check_syntax_tree(root, data)) //added: check groups
+			free_w_lst_words(&word_lst);
+		else
+			free_word_lst(&word_lst);
 	}
 	else
 		free_w_lst_words(&word_lst);
