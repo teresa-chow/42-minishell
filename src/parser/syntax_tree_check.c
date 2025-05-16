@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 17:30:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/16 18:11:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:19:33 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int check_syntax_tree(t_tree_node **root, t_data *data)
 {
 	if (!check_neighbors(root, data))
 	{
-		ft_printf("error\n");
+		ft_printf("data->exit_status: %d\n", data->exit_status);
 		return (0);
 	}
 	//if node->type == GROUP && node->word->next->word //exit_status updated and error msg already printed
