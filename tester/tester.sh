@@ -46,6 +46,7 @@ CYA_B="\033[1;36m"
 WHI_B="\033[1;37m"
 
 # Bold text background colors
+GRN_BG="\033[1;42m"
 CYA_BG="\033[1;46m"
 
 # -----------------------------------------------------------------------------
@@ -120,34 +121,36 @@ BUILTINS=("ECHO" "CD" "PWD" "EXPORT" "ENV" "UNSET" "EXIT")
 # -----------------------------------------------------------------------------
 # GENERAL TESTS
 QUOTES_TESTS=(
-  'export VAR="ls -la" && $VAR && "$VAR"'
+  'export VAR="ls -la" && $VAR'
+  'export VAR="ls -la" && "$VAR"'
   'echo "$USER"'
   "echo '$USER'"
   'echo "Hello                      World"'
 )
 
-SIGNALS_TESTS=(
-  'kill -SIGINT "$pid"'
-  'kill -SIGQUIT "$pid"'
-)
+#SIGNALS_TESTS=(
+#  'kill -SIGINT'
+#  'kill -SIGQUIT'
+#)
 
 PATHS_TESTS=(
   'ls'
   'unset PATH && ls'
 )
 
-ENVIRONMENT_TESTS=(
+#ENVIRONMENT_TESTS=(
+#
+#)
 
-)
-
-REDIRECTION_TESTS=(
-
-)
+#REDIRECTION_TESTS=(
+#
+#)
 
 PIPES_TESTS=(
   'echo hello | cat -e'
-  'cat | cat | ls'
   'xxx | echo hello'
+  'echo hello | yyy | ls'
+  'ls fail | echo hello'
 )
 
 GENERAL=("QUOTES" "SIGNALS" "PATHS" "ENVIRONMENT" "REDIRECTION" "PIPES")
@@ -217,4 +220,62 @@ for builtin in "${BUILTINS[@]}"; do
   done
 done
 
+# -----------------------------------------------------------------------------
+# GENERAL TESTS
+for general in "${GENERAL[@]}"; do
+  tests_var="${general}_TESTS[@]"
+  test_list=("${!tests_var}")
+
+  printf "\n${GRN_BG} ${general,,} ${NC} ${GRN}(general)${NC}\n"
+
+  for cmd in "${test_list[@]}"; do
+    # bash output
+    bash -c "$cmd" >"$TMP_DIR/bash_stdout" 2>"$TMP_DIR/bash_stderr"
+    bash_exit=$?
+
+    # minishell output with valgrind
+    $VALGRIND "$MINISHELL" < <(echo "$cmd") >"$TMP_DIR/ms_stdout_raw" 2>"$TMP_DIR/ms_stderr_raw"
+    ms_exit=$?
+    valgrind_status=$?
+    # filter valgrind info from stderr 
+    grep -v '^==.*==' "$TMP_DIR/ms_stderr_raw" > "$TMP_DIR/ms_stderr"
+    
+    # clean minishell stdout (remove ANSI sequences) 
+    tail -n +2 "$TMP_DIR/ms_stdout_raw" | sed -E 's/\x1B\[[0-9;]*[a-zA-Z]//g' > "$TMP_DIR/ms_stdout"
+
+    # diff check
+    diff -u "$TMP_DIR/bash_stdout" "$TMP_DIR/ms_stdout" >"$TMP_DIR/diff_stdout"
+    diff -u "$TMP_DIR/bash_stderr" "$TMP_DIR/ms_stderr" >"$TMP_DIR/diff_stderr"
+
+    # show outputs
+    if [ "$SHOW_OUTPUT" = true ]; then
+      echo -n "Minishell (stdout): "; cat "$TMP_DIR/ms_stdout"
+      echo -n "Bash (stdout): "; cat "$TMP_DIR/bash_stdout"
+      echo -n "Minishell (stderr): "; cat "$TMP_DIR/ms_stderr"
+      echo -n "Bash (stderr): "; cat "$TMP_DIR/bash_stderr"
+    fi
+
+    # result logic
+    if [ "$valgrind_status" -eq 257 ]; then
+      printf "${RED}🗶 KO (memory leak): ${NC}"
+    elif [ "$bash_exit" -ne "$ms_exit" ]; then
+      printf "${RED}🗶 KO (exit code — bash=$bash_exit vs minishell=$ms_exit): ${NC}"
+    elif [ -s "$TMP_DIR/diff_stdout" ]; then
+      printf "${RED}🗶 KO (output): ${NC}"
+    elif [ -s "$TMP_DIR/diff_stderr" ]; then
+      printf "${YEL}◉ Error case (stderr msgs): ${NC}"
+    else
+      printf "${GRN}✔ OK: ${NC}"
+    fi
+    echo $cmd
+    if [ -s "$TMP_DIR/diff_stdout" ]; then
+      [ -s "$TMP_DIR/diff_stdout" ] && cat "$TMP_DIR/diff_stdout"
+    elif [ -s "$TMP_DIR/diff_stderr" ]; then
+      printf "\t${YEL}bash:\t\t${NC}"; cat "$TMP_DIR/bash_stderr"
+      printf "\t${YEL}minishell:\t${NC}"; cat "$TMP_DIR/ms_stderr"
+    fi
+  done
+done
+
 rm -rf $TEST_FILES
+rm -rf $TMP_DIR
