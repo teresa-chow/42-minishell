@@ -3,6 +3,8 @@
     > file
     echo $?
 
-[ ] syntax check in groups (doing: TERESA) + memory
+[ ] check ((cmd && cmd)) bash behavior (exit status + error message if any)
+
+[x] syntax check in groups (doing: TERESA) + memory
 
 [ ] redirection categorization within command groups
