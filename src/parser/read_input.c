@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:00:39 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/16 18:21:11 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:34:05 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	process_cmd_lst(char **cmd_lst, t_data *data, t_tree_node **root)
 	if (syntax_check(word_lst, data) == 0)
 	{
 		create_syntax_tree(word_lst, NULL, root, data);
-		check_syntax_tree(root, data); //added: check groups (if 0, syntax error)
+		check_syntax_tree(root, data);
 		free_word_lst(&word_lst);
 	}
 	else

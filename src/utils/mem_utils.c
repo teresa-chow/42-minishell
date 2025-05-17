@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 12:06:26 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/15 17:56:09 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:48:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_ast(t_tree_node **root)
 	free_ast(&tmp->right);
 	free_words(&tmp->word);
 	free(tmp);
-	root = NULL;
+	*root = NULL;
 }
 
 int	free_exp(t_data *data, int i)

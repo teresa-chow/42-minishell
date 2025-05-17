@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:11:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/16 18:12:30 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:47:09 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ static void	processing_loop(t_data *data)
 	read_input(&root, data);
 	if (g_global == SIGINT)
 		data->exit_status = ERR_INT;
-	if (root && root->word)
+	if (root)
 	{
-		if (!search_heredoc(data, &root))
-			ast_depth_search(data, &root, 0);
-		close_heredoc_fds(data, NULL);
+		if (root->word)
+		{
+			if (!search_heredoc(data, &root))
+				ast_depth_search(data, &root, 0);
+			close_heredoc_fds(data, NULL);
+		}
 	}
 	reset_mem(data, &root);
 }
