@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 17:30:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/17 11:45:13 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/17 11:56:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	check_neighbors(t_tree_node **node, t_data *data);
 
-int check_syntax_tree(t_tree_node **root, t_data *data)
+int	check_syntax_tree(t_tree_node **root, t_data *data)
 {
 	if (!check_neighbors(root, data))
 	{
