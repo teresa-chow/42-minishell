@@ -1,4 +1,4 @@
-[ ] update exit status if input is not an executable command
+[x] update exit status if input is not an executable command
     xxx
     > file
     echo $?
@@ -7,4 +7,4 @@
 
 [x] syntax check in groups (doing: TERESA) + memory
 
-[ ] redirection categorization within command groups
+[x] redirection categorization within command groups

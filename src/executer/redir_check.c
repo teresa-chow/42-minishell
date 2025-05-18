@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 11:47:00 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:54:32 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	redir_check(t_tree_node *node, t_data *data)
 	if (!node->word)
 		return (0);
 	tmp = node->word;
-	if (!is_redirect(node))
+	if (!is_other_redir(node->word))
 		return (0);
 	tmp_in = -1;
 	if (heredoc_redir_in(node))
@@ -47,13 +47,6 @@ int	redir_check(t_tree_node *node, t_data *data)
 		close(tmp_in);
 	}
 	return (0);
-}
-
-static int	is_redirect(t_tree_node *node)
-{
-	if (!is_other_redir(node->word))
-		return (0);
-	return (1);
 }
 
 static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
@@ -78,6 +71,22 @@ static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
 				return (-1);
 		}
 		word = word->next;
+	}
+	if (is_redirect(node))
+		data->exit_status = 0;
+	return (0);
+}
+
+static int	is_redirect(t_tree_node *node)
+{
+	t_word *tmp;
+
+	tmp = node->word;
+	while (tmp)
+	{
+		if (tmp->redir != NONE)
+			return (1);
+		tmp = tmp->next;
 	}
 	return (0);
 }

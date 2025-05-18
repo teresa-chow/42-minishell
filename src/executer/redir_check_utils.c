@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 22:00:34 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 10:47:10 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:49:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../include/execute.h"
 #include "../../include/errors.h"
 #include "../../include/utils.h"
+
 
 int	is_other_redir(t_word *word)
 {
