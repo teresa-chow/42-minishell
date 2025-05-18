@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/18 11:54:32 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:59:27 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	handle_redir(t_data *data, t_tree_node *node, t_word *word,
 
 static int	is_redirect(t_tree_node *node)
 {
-	t_word *tmp;
+	t_word	*tmp;
 
 	tmp = node->word;
 	while (tmp)
