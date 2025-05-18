@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 11:24:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/13 22:06:30 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:12:12 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ast_handle_pipeline(t_data *data, t_tree_node **node)
 	exec_pipeline(pipeline, data);
 	close_wait(data, &pipeline);
 	free_pipeline(&pipeline);
+	data->pipeline = NULL;
 }
 
 static int	create_pipeline(t_data *data, t_pipeline *pipeline,
