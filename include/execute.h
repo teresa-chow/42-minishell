@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 14:12:52 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/09 11:31:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:40:51 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_pipeline
 
 /* ================= ABSTRACT SYNTAX TREE(AST) EXECUTION =================== */
 void		ast_depth_search(t_data *data, t_tree_node **node, bool pipeline);
+void		ast_handle_group(t_data *data, t_tree_node **node);
 int			exec_ast(t_data *data, t_tree_node **node, bool pipeline);
 int			exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline);
 void		exec_builtin_cmd(t_data *data, t_word *word);
