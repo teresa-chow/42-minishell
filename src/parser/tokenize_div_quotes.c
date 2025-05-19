@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:13:19 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 09:14:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 23:26:14 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ static void	next_single_quote(const char *str, unsigned int *end)
 			|| (str[*end] == '&' && !is_equal_next(str, *end)))
 		&& !is_delimiter(str[*end]) && !is_redirection(str[*end])
 		&& str[*end] != '\'' && str[*end] != '(' && str[*end] != ')')
+	{
+		if (str[*end] == '\"')
+			break ;
 		++*end;
+	}
 }
 
 static void	next_double_quote(const char *str, unsigned int *end)
@@ -75,7 +79,11 @@ static void	next_double_quote(const char *str, unsigned int *end)
 			|| (str[*end] == '&' && !is_equal_next(str, *end)))
 		&& !is_delimiter(str[*end]) && !is_redirection(str[*end])
 		&& str[*end] != '\"' && str[*end] != '(' && str[*end] != ')')
+	{
+		if (str[*end] == '\'')
+			break ;
 		++*end;
+	}
 }
 
 static int	quote_join_word(char *cmd, int *j, t_word **word, char *quote)
