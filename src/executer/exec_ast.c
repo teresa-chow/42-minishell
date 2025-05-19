@@ -6,7 +6,7 @@
 /*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/19 13:15:39 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:43:56 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void	conditional_exec(t_data *data, t_tree_node **node, bool pipeline,
 		if (tmp->right)
 			ast_depth_search(data, &tmp->right, pipeline);
 	}
-	else
+	else if (tmp->right)
 	{
-		if (tmp->right)
+		if (tmp->right->right && tmp->right->right->type == OR)
 			ast_depth_search(data, &tmp->right->right, pipeline);
 	}
 }
