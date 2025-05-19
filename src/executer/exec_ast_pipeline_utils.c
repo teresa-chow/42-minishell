@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 14:39:33 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/15 18:42:30 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:56:28 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,7 @@ static void	free_child(t_pipeline pipeline, t_data *data)
 	close_heredoc_fds(NULL, pipeline.cmd_lst);
 	free_pipeline(&pipeline);
 	data->status = 0;
+	if (data->cd_curr)
+		free(data->cd_curr);
 	reset_mem(data, &data->ast_root);
 }

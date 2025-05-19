@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 14:39:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/19 10:27:12 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:43:00 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		echo(t_word *input, t_data *data);
 /* =================================== CD =================================== */
 void		cd(t_word *input, t_data *data);
 void		error_cd(t_data *data);
-void		get_cd_curr(t_data *data, t_env_node *old, t_env_node *pwd);
+void		get_cd_curr(t_data *data, t_env_node *old, t_env_node *pwd, char **curr);
 /* ================================== PWD =================================== */
 void		pwd(t_data *data);
 

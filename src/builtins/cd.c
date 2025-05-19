@@ -6,7 +6,7 @@
 /*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:55:27 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/19 10:26:45 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:42:50 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	update_pwd_and_oldpwd(t_data *data)
 		}
 	}
 	else
-		get_cd_curr(data, old, pwd);
+		get_cd_curr(data, old, pwd, &curr);
 	return (0);
 }
 
