@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 22:00:34 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/18 11:59:43 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:00:35 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_other_redir(t_word *word)
 	tmp = word;
 	while (tmp)
 	{
-		if (tmp->redir == IN || tmp->redir == OUT || tmp->redir == APPEND)
+		if ((tmp->redir == IN || tmp->redir == OUT || tmp->redir == APPEND))
 			return (1);
 		tmp = tmp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 11:00:09 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/18 19:40:04 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:05:07 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 static void	conditional_exec(t_data *data, t_tree_node **node, bool pipeline,
 				t_tree_node *tmp);
+static int	is_only_redirection(t_tree_node *node);
 
 void	ast_depth_search(t_data *data, t_tree_node **node, bool pipeline)
 {
@@ -93,10 +94,31 @@ int	exec_ast_cmd(t_data *data, t_tree_node **node, bool pipeline)
 		return (-1);
 	if (redir_check(*node, data) != 0)
 		return (-1);
-	if (is_builtin_cmd((*node)->word))
-		exec_builtin_cmd(data, (*node)->word);
-	else
-		exec_child(data, pipeline, *node);
+	if (!is_only_redirection(*node))
+	{
+		if (is_builtin_cmd((*node)->word))
+			exec_builtin_cmd(data, (*node)->word);
+		else
+			exec_child(data, pipeline, *node);
+	}
 	reset_old_in_out(data, *node);
 	return (0);
+}
+
+static int	is_only_redirection(t_tree_node *node)
+{
+	t_word	*tmp;
+	bool	checker;
+
+	checker = 1;
+	tmp = node->word;
+	while (tmp)
+	{
+		if (tmp->redir == NONE)
+			checker = 0;
+		else if (tmp->redir != NONE && tmp->next)
+			tmp = tmp->next->next;
+		tmp = tmp->next;
+	}
+	return (checker);
 }

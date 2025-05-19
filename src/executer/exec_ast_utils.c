@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:08:53 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/13 15:22:56 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:44:31 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	cd_arg_check(t_word *word, t_data *data)
 	tmp = word->next;
 	while (tmp)
 	{
-		if (tmp->redir != NONE)
+		if (tmp->redir != NONE && tmp->next)
 			tmp = tmp->next->next;
 		if (tmp)
 		{
@@ -51,7 +51,7 @@ void	exec_child(t_data *data, bool pipeline, t_tree_node *node)
 	t_word	*tmp;
 
 	tmp = node->word;
-	while (tmp && tmp->redir != NONE)
+	while (tmp && tmp->redir != NONE && tmp->next)
 		tmp = tmp->next->next;
 	if (!tmp)
 		return ;

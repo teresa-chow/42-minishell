@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ast_builtins.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:34:29 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/18 19:35:56 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:44:08 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_builtin_cmd(t_word *word)
 	t_word	*tmp;
 
 	tmp = word;
-	while (tmp && tmp->redir != NONE)
+	while (tmp && tmp->redir != NONE && tmp->next)
 		tmp = tmp->next->next;
 	if (!tmp)
 		return (0);
@@ -42,7 +42,7 @@ void	exec_builtin_cmd(t_data *data, t_word *word)
 	t_word	*tmp;
 
 	tmp = word;
-	while (tmp->redir != NONE)
+	while (tmp->redir != NONE && tmp->next)
 		tmp = tmp->next->next;
 	if (!ft_strcmp(tmp->word, "echo"))
 		echo(tmp, data);

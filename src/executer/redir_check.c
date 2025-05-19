@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:57:22 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/18 11:59:27 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:01:13 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ static int	is_redirect(t_tree_node *node)
 static int	handle_redir_in(t_data *data, t_tree_node *node, t_word *word,
 	int tmp_in)
 {
+	if (!word || word->redir != NONE)
+	{
+		ft_putstr_fd("minishell: ambiguous redirect\n", STDERR_FILENO);
+		data->exit_status = ERR;
+		return (-1);
+	}
 	if (!access(word->word, F_OK))
 	{
 		if (access(word->word, R_OK) == -1)
@@ -113,6 +119,13 @@ static int	handle_redir_in(t_data *data, t_tree_node *node, t_word *word,
 
 static int	handle_redir_out(t_data *data, t_tree_node *node, t_word *word)
 {
+	if ((word->redir != NONE && !word->next)
+		|| (word->redir != NONE && word->next->redir != NONE))
+	{
+		ft_putstr_fd("minishell: ambiguous redirect\n", STDERR_FILENO);
+		data->exit_status = ERR;
+		return (-1);
+	}
 	if (!access(word->word, F_OK))
 	{
 		if (access(word->word, W_OK) == -1)
