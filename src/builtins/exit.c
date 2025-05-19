@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/19 10:20:06 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 22:46:31 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,29 @@ static void	check_syntax_exit(t_word *word, t_data *data, int *many_args,
 	int *syntax)
 {
 	t_word	*tmp;
+	int		count;
 
-	tmp = NULL;
-	if (word->next && word->next->redir == NONE)
-		tmp = word->next;
-	else if (word->next && word->next->redir != NONE)
-		tmp = word->next->next->next;
-	if (tmp)
+	count = -1;
+	tmp = word;
+	while (tmp)
 	{
-		if (tmp->next)
-			*many_args = 1;
-		data->exit_status = ft_atoi(tmp->word);
-		if (check_is_digit(tmp, data, syntax))
-			check_overflow(tmp, data, syntax);
+		while (tmp->redir != NONE && tmp->next)
+			tmp = tmp->next->next;
+		if (!tmp)
+			return ;
+		if (tmp->redir == NONE)
+		{
+			count++;
+			if (count > 1)
+			{
+				*many_args = 1;
+				break ;
+			}
+			data->exit_status = ft_atoi(tmp->word);
+			if (count == 1 && check_is_digit(tmp, data, syntax))
+				check_overflow(tmp, data, syntax);
+		}
+		tmp = tmp->next;
 	}
 }
 
