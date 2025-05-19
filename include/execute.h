@@ -50,6 +50,8 @@ void		traverse_pipeline(t_data *data, t_pipeline *pipeline,
 				t_tree_node **node);
 void		exec_pipeline_child(t_pipeline pipeline, t_data *data,
 				t_tree_node *node, int count);
+void		close_fd(t_data *data);
+void		to_delete(t_data *data, t_word *word, t_tree_node *node);
 
 /* =============================== SIGNALS ================================= */
 void		set_signals(void);

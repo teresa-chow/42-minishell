@@ -85,12 +85,9 @@ void	exec_pipeline_child(t_pipeline pipeline, t_data *data,
 			close(pipeline.fd[count - 1][0]);
 		}
 		close_pipes_child(pipeline, count);
+		to_delete(data, node->word, data->ast_root);
 		exec_ast(data, &node, 1);
-		if (data->fd_copy > 0)
-		{
-			close(data->fd_copy);
-			data->fd_copy = -1;
-		}
+		close_fd(data);
 		free_child(pipeline, data);
 		exit(data->exit_status);
 	}

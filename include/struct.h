@@ -104,6 +104,7 @@ typedef struct s_data
 	bool					status;
 	t_env_node				*env;
 	struct s_tree_node		*ast_root;
+	struct s_tree_node		*to_null;
 	struct s_pipeline		*pipeline;
 	struct s_redir_check	*redir;
 	t_expand				*exp;

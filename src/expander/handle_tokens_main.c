@@ -53,7 +53,11 @@ static int	handle_process(t_data *data, t_word **word, t_word **last,
 	if (process_token(word, data) == -1)
 		return (-1);
 	if (!(*word)->word && node)
+	{
 		delete_node(word, last, node, &data->exp->prev);
+		if (data->to_null && !(*node)->word)
+			data->to_null->word = NULL;
+	}
 	return (0);
 }
 
