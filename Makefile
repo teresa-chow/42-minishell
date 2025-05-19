@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+         #
+#    By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/14 14:47:48 by tchow-so          #+#    #+#              #
-#    Updated: 2025/05/18 19:35:50 by tchow-so         ###   ########.fr        #
+#    Updated: 2025/05/19 16:32:40 by carlaugu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,9 @@ SRC_EXPANDER	= $(addprefix $(EXPANDER_DIR)/, expand_env_handle.c \
 	expand_tilde.c expand_val_split.c handle_tokens_main.c \
 	handle_tokens_utils.c string_tword_builder.c token_checkers.c \
 	token_checkers2.c token_expansion_analyze.c handle_tokens_utils2.c \
-	wildcards_analyze.c wildcards_analyze_dir.c wildcards_check_match.c \
-	wildcards_utils.c wildcards_utils2.c wildcards_utils3.c quote_removal.c)
+	handle_tokens_utils3.c wildcards_analyze.c wildcards_analyze_dir.c \
+	wildcards_check_match.c wildcards_utils.c wildcards_utils2.c \
+	wildcards_utils3.c quote_removal.c )
 SRC_ERRORS		= $(addprefix $(ERRORS_DIR)/, handle_err.c handle_err2.c \
 	handle_err3.c)
 

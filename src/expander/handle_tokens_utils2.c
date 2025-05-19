@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:44:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:52:47 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:38:02 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 	i = get_len_and_end(data, &len, &end, ptr);
 	if (i == -1 || i == 1)
 		return (i);
-	tmp = ft_calloc(len + 1, sizeof(char));
-	if (!tmp)
+	if (set_tmp(&tmp, &start, len) == -1)
 		return (-1);
-	start = tmp;
 	while (*ptr != end)
 	{
-		if (**ptr == '$' && is_valid_dollar(*ptr))
+		if (**ptr == '$' && ft_isdigit(*(*ptr + 1)))
+			(*ptr)+= 2;
+		else if (**ptr == '$' && is_valid_dollar(*ptr))
 		{
 			if (get_expand_val(data, ptr, &tmp) == -1)
 				return (-1);

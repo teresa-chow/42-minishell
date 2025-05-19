@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:02:03 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 23:47:40 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:39:11 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	get_segment_len(char *bgn, char *end, t_data *data)
 	len = 0;
 	while (bgn != end)
 	{
-		if (*bgn == '$' && is_valid_dollar(bgn))
+		if (*bgn == '$' && ft_isdigit(*(bgn + 1)))
+			bgn += 2;
+		else if (*bgn == '$' && is_valid_dollar(bgn))
 		{
 			if (get_expand_len(data, &bgn, &len) == -1)
 				return (-1);

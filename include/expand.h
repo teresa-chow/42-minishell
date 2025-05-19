@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:07:23 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 15:03:59 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:39:04 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	**get_words(char const *s);
 int		remove_quotes(char **str, bool to_free, t_data *data);
 int		process_remove_quotes(t_word *word, t_data *data);
 int		get_segment_len(char *bgn, char *end, t_data *data);
+int		set_tmp(char **tmp, char **start, int len);
 void	tmp_str_change(char **ptr, char **no_alnum, char *box, bool end);
 void	reset_big_part_flags(t_data *data);
 void	reset_small_part_flags(t_data *data);
