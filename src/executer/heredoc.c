@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/19 11:11:10 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:29:17 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ static int	finalize_handle_input(char *input, t_data *data, char *eof,
 	{
 		heredoc_error(eof);
 		data->tmp_tree_node_word->next->word = eof;
+		print_to_pipe(data->doc_word, fd);
 	}
 	if (!data->quotes && input)
 	{
