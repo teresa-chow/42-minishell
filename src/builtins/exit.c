@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:44:11 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/16 09:58:16 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 10:20:06 by carlaugu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	exit_cmd(t_data *data, t_word *word)
 			return ;
 		}
 	}
+	if (data->cd_curr)
+		free(data->cd_curr);
 	data->status = 0;
 }
 
