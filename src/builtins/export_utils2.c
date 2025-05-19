@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:04:20 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/04/30 16:49:05 by tchow-so         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:30:34 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	check_syntax(char *s, t_data *data, int *exit)
 		if (!ft_isalnum(*tmp) && *tmp != '_')
 		{
 			if (*exit == -1)
-				*exit = ERR;
+				*exit = ERR_BI; //edited
 			error_export_syntax(s, data);
 			return (0);
 		}
