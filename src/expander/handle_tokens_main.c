@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_main.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:25:40 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/14 14:58:46 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 22:58:54 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static int	handle_process(t_data *data, t_word **word, t_word **last,
 		delete_node(word, last, node, &data->exp->prev);
 		if (data->to_null && !(*node)->word)
 			data->to_null->word = NULL;
+		else
+			data->to_null->word = (*node)->word;
 	}
 	return (0);
 }
