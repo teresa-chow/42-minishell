@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens_utils2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:44:44 by carlaugu          #+#    #+#             */
-/*   Updated: 2025/05/19 16:38:02 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:49:23 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	exp_join_segment(t_data *data, char **ptr, int len, char *end)
 	while (*ptr != end)
 	{
 		if (**ptr == '$' && ft_isdigit(*(*ptr + 1)))
-			(*ptr)+= 2;
+			(*ptr) += 2;
 		else if (**ptr == '$' && is_valid_dollar(*ptr))
 		{
 			if (get_expand_val(data, ptr, &tmp) == -1)
