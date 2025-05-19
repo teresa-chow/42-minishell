@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlaugu <carlaugu@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tchow-so <tchow-so@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:59:18 by tchow-so          #+#    #+#             */
-/*   Updated: 2025/05/14 14:53:46 by carlaugu         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:11:10 by tchow-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	handle_heredoc(char *eof, t_data *data, t_tree_node *node)
 		return (-1);
 	if (pid == 0)
 	{
+		free(data->cd_curr);
 		close_heredoc_fds(data, NULL);
 		data->exit_status = 0;
 		handle_input(fd, eof, data);
