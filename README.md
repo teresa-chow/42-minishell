@@ -13,9 +13,9 @@ ___
 
 </br>
 
-# Subject notes
+# Notes
 
-Notes on the subject and further reading : [here](https://github.com/teresa-chow/42-minishell/wiki).
+Notes on requirements and further reading : [here](https://github.com/teresa-chow/42-minishell/wiki).
 
 ___
 
