@@ -31,7 +31,7 @@ ___
 
 - Conditional and grouped command execution with logical operators
 
-- Quote handling for argument grouping (single and double quotes)
+- Quoting support (single and double) for argument grouping and literal treatment of special characters
 
 - Signal handling for interactive session control
 
