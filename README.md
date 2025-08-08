@@ -1,28 +1,46 @@
-# Minishell
+# Minishell - Command Parsing and Process Management
 [![42 School: Rank 3](https://img.shields.io/badge/42%20School-Rank%203-%2315bbbb)](https://www.42network.org/)
 
-_Minishell is a project about creating a simple shell, learning more about processes and file descriptors along the way._
+_Minishell is a project about creating a simple custom UNIX shell in C, focusing on process control, file descriptor management, and command parsing._
 
 ___
 
 
 ### Table of contents
-[Subject notes](#subject-notes) · [Usage](#usage) · [License](#license)
+[Features](#features) · [Usage](#usage) · [License](#license) · [Study Notes](#study-notes)
 
 ___
 
 </br>
 
-# Notes
+## Features
 
-Notes on requirements and further reading : [here](https://github.com/teresa-chow/42-minishell/wiki).
+- Lexical analysis and tokenization of command-line input
 
-___
+- Parsing and syntax interpretation for complex command structures
+
+- Process creation and management for command execution
+
+- Environment state management with variable expansion
+
+- Inter-process communication via pipes
+
+- Input/output redirection and here-document handling
+
+- Pattern matching for dynamic filename expansion (wildcards)
+
+- Conditional and grouped command execution with logical operators
+
+- Quote handling for argument grouping (single and double quotes)
+
+- Signal handling for interactive session control
+
+- Robust error handling and resource management
 
 </br>
 
-# Usage
-## Setup and compilation
+## Usage
+### Setup and compilation
 
 1. Clone repository
     ```bash
@@ -49,4 +67,10 @@ This work is published under the terms of [MIT License](./LICENSE).
 
 </br>
 
-[⬆ back to top](#minishell)
+#### Study notes
+
+Further reading : [Wiki](https://github.com/teresa-chow/42-minishell/wiki)
+
+</br></br>
+
+[⬆ back to top](#minishell---command-parsing-and-process-management)
