@@ -17,7 +17,7 @@ ___
 
 - Lexical analysis and tokenization of command-line input
 
-- Parsing and syntax interpretation for complex command structures
+- Parsing and syntax interpretation for complex command structures, using an Abstract Syntax Tree (AST), represented as a binary tree
 
 - Process creation and management for command execution
 
