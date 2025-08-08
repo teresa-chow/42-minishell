@@ -58,9 +58,19 @@ ___
     ./minishell
     ```
 
-___
+</br>
+
+### Testing
+
+Test minishell against bash with tmux, while monitoring memleaks
+
+```bash
+make test
+```
 
 </br>
+
+___
 
 ### Team
 
